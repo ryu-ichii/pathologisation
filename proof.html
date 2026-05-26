@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0089)file:///Users/ryu/Documents/Twine/Scratch/proof-541c7992-1909-41d8-8eda-68ea3c6e313f.html -->
+<!-- saved from url=(0089)file:///Users/ryu/Documents/Twine/Scratch/proof-475a26f5-a14e-41bb-b217-a7cbef833c6b.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>The Pathologisation
+<title>Pathologisation
 </title>
 
 <style>
@@ -48,32 +48,34 @@ tw-passagedata:before
 
 <body>
 
-<h1>The Pathologisation
+<h1>Pathologisation
 </h1>
-<tw-storydata name="The Pathologisation" startnode="9" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+<tw-storydata name="Pathologisation" startnode="9" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap');
 
 tw-sidebar { display: none; }
 #audio-controls { display: none !important; }
 
+.title-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 .fullscreen-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
   padding: 0.45em 1.4em;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: none;
   background: transparent;
   cursor: pointer;
   font-family: "VT323", monospace;
   font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.55);
 }
 .fullscreen-btn:hover {
   color: white;
-  border-color: white;
-  background: rgba(255,255,255,0.08);
 }
 .home-btn {
   position: fixed;
@@ -96,7 +98,6 @@ tw-sidebar { display: none; }
   border-color: white;
   background: rgba(255,255,255,0.08);
 }
-body:has(tw-story[tags~="waitingroom"]) .home-btn,
 body:has(tw-story[tags~="titlescreen"]) .home-btn,
 body:has(tw-story[tags~="psychosis"]) .home-btn {
   display: none;
@@ -123,43 +124,52 @@ tw-story[tags~="titlescreen"]::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.75);
   z-index: 1;
   pointer-events: none;
 }
 tw-story[tags~="titlescreen"] tw-passage {
   position: relative;
   z-index: 2;
+  padding-bottom: 0;
 }
-.wk-title {
-  font-family: "Contrail One", sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  letter-spacing: 0.05em;
-  line-height: 1;
-  margin-bottom: 1.4rem;
-  text-shadow: 0 0 6px #000, 0 0 14px #000, 0 0 30px #000, 2px 2px 4px #000;
+.wk-title-svg {
+  display: block;
+  /* Narrow screens: Harlowe padding is 5% each side */
+  margin: 0 -5vw 0.4rem -5vw;
+  width: 100vw;
+  height: auto;
+  border: none;
+}
+/* Wide screens (≥576px): Harlowe switches to 20% side padding */
+@media (min-width: 576px) {
+  .wk-title-svg {
+    margin-left: -20vw;
+    margin-right: -20vw;
+  }
 }
 .wk-author {
   font-size: clamp(0.8rem, 1.5vw, 1rem);
   letter-spacing: 0.1em;
   opacity: 0.55;
-  margin-bottom: 1.8rem;
+  margin-bottom: 0.5rem;
   text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
 .wk-author-name {
   font-size: clamp(1rem, 2vw, 1.4rem);
 }
 .wk-desc {
-  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
-  letter-spacing: 0.1em;
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+  letter-spacing: 0.02em;
   opacity: 0.65;
-  line-height: 1.7;
-  margin-bottom: 3rem;
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
   text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
 tw-story[tags~="titlescreen"] tw-link,
 tw-story[tags~="titlescreen"] tw-link:link {
+  display: inline-block;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 0.9rem;
@@ -172,6 +182,16 @@ tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
   border-color: white;
   background: rgba(255,255,255,0.08);
+}
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link,
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link {
+  border: none;
+  padding: 0;
+  background: none;
+}
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
+  background: none;
+  border: none;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
@@ -197,18 +217,44 @@ tw-story[tags~="breakdownfont"] {
   font-weight: 400;
   font-style: normal;
   font-size: 2.5em;
-  color: red;
+  color: #fff;
   background-color: #000;
-  animation: colorflicker 0.3s steps(1) infinite;
 }
 
-@keyframes colorflicker {
-  0%   { color: red; }
-  25%  { color: cyan; }
-  50%  { color: yellow; }
-  75%  { color: magenta; }
-  100% { color: red; }
+/* Links inside breakdownfont inherit 2.5em — pin them back to normal */
+tw-story[tags~="breakdownfont"] tw-link,
+tw-story[tags~="breakdownfont"] tw-link:link,
+tw-story[tags~="breakdownfont"] tw-link:hover {
+  font-size: 48px !important;
+  font-family: "VT323", monospace !important;
 }
+
+/* ── BREAKDOWN DISTRESS EFFECTS ─────────────────────────────────────────
+   One of these three is randomly applied each time a [breakdownfont]
+   passage loads. JS adds the class; it's cleared on passage change.
+   ────────────────────────────────────────────────────────────────────── */
+@keyframes bd-tremor {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-4px); }
+  40%       { transform: translateX(3px); }
+  60%       { transform: translateX(-2px); }
+  80%       { transform: translateX(4px); }
+}
+@keyframes bd-blur {
+  0%, 100% { filter: blur(0px); opacity: 1; }
+  45%       { filter: blur(2.5px); opacity: 0.75; }
+  55%       { filter: blur(3px); opacity: 0.65; }
+}
+@keyframes bd-glitch {
+  0%        { text-shadow: 3px 0 rgba(255,0,0,0.7),  -3px 0 rgba(0,255,255,0.7); }
+  25%       { text-shadow: -4px 0 rgba(0,255,255,0.7), 4px 0 rgba(255,0,0,0.7); }
+  50%       { text-shadow: 2px 0 rgba(255,0,0,0.9),  -2px 0 rgba(0,255,255,0.9); }
+  75%       { text-shadow: -3px 0 rgba(0,255,255,0.5), 3px 0 rgba(255,0,0,0.5); }
+  100%      { text-shadow: 3px 0 rgba(255,0,0,0.7),  -3px 0 rgba(0,255,255,0.7); }
+}
+tw-story.bd-tremor { animation: bd-tremor 0.18s steps(4) infinite; }
+tw-story.bd-blur   { animation: bd-blur   3.5s ease-in-out infinite; }
+tw-story.bd-glitch { animation: bd-glitch 0.25s steps(3) infinite; }
 
 /* ── LINKS ──────────────────────────────────────────────────────────────
    Unvisited: white at 80% opacity, trembles like charged words.
@@ -217,14 +263,16 @@ tw-story[tags~="breakdownfont"] {
    ────────────────────────────────────────────────────────────────────── */
 tw-link, tw-link:link,
 .game-link {
-  color: rgba(255,255,255,0.8);
+  font-family: "VT323", monospace;
+  color: rgba(255,255,255,0.9);
   text-decoration: none;
   display: inline-block;
   animation: fidget 3.2s steps(40) infinite;
+  text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 2px rgba(255,255,255,0.4), 0 0 6px #000, 0 0 12px #000;
 }
 tw-link:visited, tw-link.visited {
-  color: rgba(255,255,255,0.18);
-  text-decoration: none;
+  color: rgba(255,255,255,0.55);
+  text-decoration: line-through;
   animation: none;
 }
 tw-link:hover, tw-link:focus, tw-link:active,
@@ -262,12 +310,12 @@ tw-passage {
 .dialogue {
   display: block;
   margin: 0.7em 0 0.7em 1.8em;
-}
-/* Wrap attributions like //he finally asks.// inside the dialogue div.
-   They'll type out with the same effect but appear italicised + dimmed. */
-.dialogue em {
   font-style: italic;
-  opacity: 0.72;
+}
+/* Attribution text //like this// sits inline, normal weight, not italic */
+.dialogue em, .dialogue i {
+  font-style: normal;
+  opacity: 1;
 }
 
 img {  /* this selects all image (img) elements */
@@ -309,6 +357,39 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth3"] {
   position: fixed; /* JS drives the random movement */
 }
 
+/* ── PSYCHOSIS ESCAPE BUTTON ────────────────────────────────────────────
+   Appears after ~5s on any [psychosis]-tagged passage.
+   Looks like an escape route but never actually escapes.
+   ────────────────────────────────────────────────────────────────────── */
+.psychosis-escape-btn {
+  position: fixed;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.psychosis-escape-btn.visible {
+  opacity: 1;
+}
+
+/* ── FLOATING IMAGES ────────────────────────────────────────────────────
+   Add class="floating-img" to any <img> in Twine to make it drift around
+   the screen. JS drives the movement — speed and range are configurable
+   in Story JavaScript under startFloatingImages().
+   ────────────────────────────────────────────────────────────────────── */
+.floating-img {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  width: clamp(80px, 10vw, 160px);
+  border: none;
+  animation: float-breathe 5s ease-in-out infinite;
+}
+@keyframes float-breathe {
+  0%, 100% { opacity: 0.1;  transform: scale(0.35); }
+  50%       { opacity: 0.55; transform: scale(2.4); }
+}
+
 /* ── BREATHING BACKGROUNDS ──────────────────────────────────────────────
    Background images are now handled by #bg-layer (injected via JS).
    tw-story is made transparent so the layer shows through.
@@ -319,6 +400,17 @@ body { background-color: transparent; }
 
 /* JS adds .has-bg-image to tw-story when a background image is active */
 tw-story.has-bg-image { background-color: transparent; background-image: none; }
+
+/* Darken the dreamlike gif background */
+tw-story[tags~="medbg"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
 
 #bg-layer {
   position: fixed;
@@ -357,17 +449,17 @@ tw-story.colour-breathe {
 
 @keyframes fidget {
   0%,8%,14%,24%,32%,41%,47%,56%,63%,71%,78%,86%,94%,100% { transform: translate(0,0); }
-  7%  { transform: translate(-0.5px, 0); }
-  13% { transform: translate(0.5px, 0); }
-  23% { transform: translate(0, -0.5px); }
-  31% { transform: translate(0, 0.5px); }
-  46% { transform: translate(-1px, 0); }
-  55% { transform: translate(1px, 0); }
-  62% { transform: translate(0, -1px); }
-  70% { transform: translate(0, 1px); }
-  77% { transform: translate(-0.5px, 0.5px); }
-  85% { transform: translate(0.5px, -0.5px); }
-  93% { transform: translate(0, 0.5px); }
+  7%  { transform: translate(-1.5px, 0.5px); }
+  13% { transform: translate(1px, -1px); }
+  23% { transform: translate(0.5px, -1.5px); }
+  31% { transform: translate(-0.5px, 1px); }
+  46% { transform: translate(-2px, 0.5px); }
+  55% { transform: translate(2px, -1px); }
+  62% { transform: translate(-1px, -2px); }
+  70% { transform: translate(1px, 2px); }
+  77% { transform: translate(-1.5px, 1.5px); }
+  85% { transform: translate(1.5px, -1.5px); }
+  93% { transform: translate(0.5px, 1px); }
 }
 
 
@@ -639,14 +731,143 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
 
 })();
 
+(function () {
+  /* ── BREAKDOWN DISTRESS EFFECT RANDOMISER ───────────────────────────────
+     Picks one of three effects each time a [breakdownfont] passage loads.
+     ────────────────────────────────────────────────────────────────────── */
+  var BD_CLASSES = ['bd-tremor', 'bd-blur', 'bd-glitch'];
+
+  function clearBdClass(story) {
+    BD_CLASSES.forEach(function (c) { story.classList.remove(c); });
+  }
+
+  var _bdLast = null;
+  new MutationObserver(function () {
+    var p = document.querySelector('tw-passage');
+    if (!p || p === _bdLast) return;
+    _bdLast = p;
+    var story = document.querySelector('tw-story');
+    if (!story) return;
+    clearBdClass(story);
+    var tags = (story.getAttribute('tags') || '').split(/\s+/);
+    if (tags.indexOf('breakdownfont') !== -1) {
+      var chosen = BD_CLASSES[Math.floor(Math.random() * BD_CLASSES.length)];
+      story.classList.add(chosen);
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();
+
 (function() {
   var btn = document.createElement('div');
   btn.className = 'home-btn';
-  btn.textContent = 'Return Home';
+  btn.textContent = 'Home';
   btn.addEventListener('click', function() {
     Engine.goToPassage('Title Screen');
   });
   document.body.appendChild(btn);
+})();
+
+(function() {
+
+  /* ── PSYCHOSIS ESCAPE BUTTON ────────────────────────────────────────────────
+     Appears ~5s after entering a [psychosis]-tagged passage.
+     Clicking it changes the label and shows a dismissive response.
+     Edit the arrays below to update the text options.
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Text shown when the button first appears */
+  var ESCAPE_LABELS = [
+    'leave',
+    'run',
+    'ditch',
+    'wake up'
+  ];
+
+  /* Text the button cycles through on each click */
+  var ESCAPE_CYCLES = [
+    'leave',
+    'get out',
+    'wake up',
+    'withdraw',
+    'assume control',
+    'ditch'
+  ];
+
+  /* Response text shown beneath the button after each click */
+  var ESCAPE_RESPONSE = [
+    'nice try',
+    "that's a shame",
+    'you might have to ride this out',
+    "you're tripping",
+    "you've lost the plot"
+  ];
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  var escapeBtn   = null;
+  var escapeTimer = null;
+
+  function clearEscape() {
+    clearTimeout(escapeTimer);
+    if (escapeBtn) { escapeBtn.remove(); escapeBtn = null; }
+  }
+
+  function showEscape() {
+    if (escapeBtn) return;
+
+    /* Random position within a central zone */
+    var randLeft = (30 + Math.random() * 35).toFixed(1) + '%'; /* 30–65% */
+    var randTop  = (30 + Math.random() * 30).toFixed(1) + '%'; /* 30–60% */
+
+    escapeBtn = document.createElement('div');
+    escapeBtn.className = 'psychosis-escape-btn game-link';
+    escapeBtn.textContent = pick(ESCAPE_LABELS);
+    escapeBtn.style.left = randLeft;
+    escapeBtn.style.top  = randTop;
+    document.body.appendChild(escapeBtn);
+
+    /* Fade in after a tick so the CSS transition fires */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { escapeBtn.classList.add('visible'); });
+    });
+
+    escapeBtn.addEventListener('click', function () {
+      if (escapeBtn.dataset.clicked) return;
+      escapeBtn.dataset.clicked = '1';
+
+      /* Fade out escape label */
+      escapeBtn.style.transition = 'opacity 0.3s ease';
+      escapeBtn.style.opacity = '0';
+
+      setTimeout(function () {
+        /* Swap to response text and fade in */
+        escapeBtn.textContent = pick(ESCAPE_RESPONSE);
+        escapeBtn.style.transition = 'opacity 0.3s ease';
+        escapeBtn.style.opacity = '1';
+
+        /* Linger then fade out for good */
+        setTimeout(function () {
+          escapeBtn.style.transition = 'opacity 1s ease';
+          escapeBtn.style.opacity = '0';
+        }, 2200);
+      }, 320);
+    });
+  }
+
+  /* Watch for passage changes */
+  var _lastPassage = null;
+  new MutationObserver(function () {
+    var p = document.querySelector('tw-passage');
+    if (!p || p === _lastPassage) return;
+    _lastPassage = p;
+    clearEscape();
+    var story = document.querySelector('tw-story');
+    var tags  = story ? (story.getAttribute('tags') || '').split(/\s+/) : [];
+    if (tags.indexOf('psychosis') !== -1) {
+      escapeTimer = setTimeout(showEscape, 5000);
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+
 })();
 
 (function() {
@@ -667,14 +888,22 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
      GIF backgrounds (e.g. insanity, static) are never animated — too busy.
      ────────────────────────────────────────────────────────────────────── */
   var TAG_BACKGROUNDS = {
-    'waitingroom': './images/backgroundwaiting.jpg',
-    'parkinglot':  './images/parkinglot.jpg',
-    'GP':          './images/gp.jpg',
-    'GP2':         './images/gpoffice.jpg',
-    'parkbench':   './images/parkbench.jpg',
-    'insanity':      './images/insanity.gif',
-    'static':        './images/static.gif',
-    'parkpsychosis': './images/parkpsychosis.gif'
+    'waitingroom':    './images/backgroundwaiting.jpg',
+    'parkinglot':     './images/parkinglot.jpg',
+    'GP':             './images/gp.jpg',
+    'GP2':            './images/gpoffice.jpg',
+    'parkbench':      './images/parkbench.jpg',
+    'static':         './images/static.gif',
+    'parkpsychosis':  './images/parkpsychosis.gif',
+    'brokentoilet':   './images/brokentoilet.jpg',
+    'cigarettes':     './images/cigarettes.jpg',
+    'doctorsoffice3': './images/gp3.jpg',
+    'elevator':       './images/elevator.jpg',
+    'psychward':      './images/psychward.jpg',
+    'toilet':         './images/toilet.jpg',
+    'ezymart':        './images/ezymart.jpg',
+    'nightambience':  './images/nightambience.jpg',
+    'medbg':          './images/dreamlike.gif'
   };
 
   var _bgLayer = null;
@@ -719,8 +948,10 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
   var TAG_TRACKS = {
     'clockroom': 'clock',
     'parkbench': 'crickets'
-    // 'insanity':  'psychobirds',   // uncomment when ready
-    // 'printroom': 'printer',
+    // 'psychosis':  'psychobirds',  // uncomment when ready
+    // 'printroom':  'printer',
+    // 'sirens':     'siren',
+    // 'humroom':    'electrichum',
   };
 
   /* Flat list of all room-specific track IDs (de-duplicated). */
@@ -756,6 +987,63 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
      to it, then picks another — independently and continuously.
      Every passage visit is completely different.
      ────────────────────────────────────────────────────────────────── */
+  /* ── FLOATING IMAGE WANDER ───────────────────────────────────────────
+     Any <img class="floating-img"> in the passage drifts slowly around
+     the screen. Slower and calmer than psychosis wander by default.
+     ────────────────────────────────────────────────────────────────── */
+  var _floatCleanup = [];
+
+  function stopFloatingImages() {
+    _floatCleanup.forEach(function (fn) { fn(); });
+    _floatCleanup = [];
+  }
+
+  function startFloatingImages(passage) {
+    stopFloatingImages();
+    var imgs = Array.from(passage.querySelectorAll('img.floating-img'));
+    imgs.forEach(function (el) {
+      var timer = null;
+      var cancelled = false;
+      /* Randomise size — each image gets a different small-to-medium width */
+      var randWidth = Math.floor(80 + Math.random() * 160); /* 80–240px */
+      el.style.width = randWidth + 'px';
+
+      /* Randomise breathe cycle so images pulse independently */
+      var breatheDur = (3 + Math.random() * 6).toFixed(1); /* 3–9s */
+      el.style.animationDuration = breatheDur + 's';
+      el.style.animationDelay    = '-' + (Math.random() * parseFloat(breatheDur)).toFixed(1) + 's';
+
+      /* Each image gets a random speed — all slow, just some slower than others */
+      var minDur = Math.floor(4000 + Math.random() * 4000); /* 4–8s minimum per move */
+      var maxDur = minDur + Math.floor(3000 + Math.random() * 5000); /* adds 3–8s on top */
+      var ease   = 'ease-in-out';
+
+      /* Start at a random position instantly */
+      el.style.transition = 'none';
+      el.style.top  = (Math.random() * 70).toFixed(1) + '%';
+      el.style.left = (Math.random() * 70).toFixed(1) + '%';
+
+      var firstMove = true;
+      function wander() {
+        if (cancelled) return;
+        var top  = (Math.random() * 70).toFixed(1);
+        var left = (Math.random() * 70).toFixed(1);
+        var dur  = firstMove ? 1200 : Math.floor(minDur + Math.random() * (maxDur - minDur));
+        firstMove = false;
+        el.style.transition = 'top ' + dur + 'ms ' + ease + ', left ' + dur + 'ms ' + ease;
+        el.style.top  = top + '%';
+        el.style.left = left + '%';
+        timer = setTimeout(wander, dur + Math.floor(Math.random() * 500));
+      }
+      wander();
+      _floatCleanup.push(function () {
+        cancelled = true;
+        clearTimeout(timer);
+        el.style.transition = 'none';
+      });
+    });
+  }
+
   var _wanderCleanup = [];
 
   function stopPsychosisWander() {
@@ -775,18 +1063,18 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
       el.style.transition = 'none';
       el.style.top  = (Math.random() * 85).toFixed(1) + '%';
       el.style.left = (Math.random() * 85).toFixed(1) + '%';
+      el.style.transform = 'none';
 
       function wander() {
         if (cancelled) return;
-        var top     = (Math.random() * 85).toFixed(1);
-        var left    = (Math.random() * 85).toFixed(1);
-        var rotate  = ((Math.random() - 0.5) * 28).toFixed(1);
-        var dur     = Math.floor(250 + Math.random() * 1200); /* 250–1450ms per move */
+        var top  = (Math.random() * 85).toFixed(1);
+        var left = (Math.random() * 85).toFixed(1);
+        var dur  = Math.floor(250 + Math.random() * 1200); /* 250–1450ms per move */
 
-        el.style.transition = 'top ' + dur + 'ms linear, left ' + dur + 'ms linear, transform ' + dur + 'ms linear';
-        el.style.top       = top + '%';
-        el.style.left      = left + '%';
-        el.style.transform = 'rotate(' + rotate + 'deg)';
+        el.style.transition = 'top ' + dur + 'ms linear, left ' + dur + 'ms linear';
+        el.style.top        = top + '%';
+        el.style.left       = left + '%';
+        el.style.transform  = 'none';
 
         /* Wait for move + random pause before next target */
         timer = setTimeout(wander, dur + Math.floor(Math.random() * 350));
@@ -869,6 +1157,26 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
       el.innerHTML = rawHTML;
     };
   }
+
+  /* ── ASCII TITLE SCALER ─────────────────────────────────────────────── */
+  function fitAsciiTitle() {
+    var el = document.querySelector('.wk-title');
+    if (!el) return;
+    // Reset previous transform so we measure the true scrollWidth
+    el.style.transform = '';
+    el.style.marginBottom = '';
+    requestAnimationFrame(function () {
+      var scale = Math.min(1, (window.innerWidth * 0.96) / el.scrollWidth);
+      if (scale < 1) {
+        el.style.transform = 'scale(' + scale + ')';
+        // The element still occupies its pre-scale layout height; pull next
+        // content up by the space that visually vanished.
+        var excess = el.offsetHeight * (1 - scale);
+        el.style.marginBottom = '-' + excess.toFixed(1) + 'px';
+      }
+    });
+  }
+  window.addEventListener('resize', fitAsciiTitle);
 
   /* ── SCRAMBLE + PASSAGE CHANGE ───────────────────────────────────────── */
   var lastPassage = null;
@@ -965,36 +1273,38 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
           }
           updateBackground(tags);
           updateRoomAudio(tags);
+          startFloatingImages(p);
+          if (tags.indexOf('titlescreen') !== -1) {
+            fitAsciiTitle();
+          }
         } catch(e) {}
       }, 200);
     }
   }).observe(document.documentElement, { childList: true, subtree: true });
 
-})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP decor" tags="decor" position="225,125" size="100,100"># Write your poem/paragraph below — all lines become one floating block.
-# Add a final line with just | and a size to set the text size: xxl xl lg md sm xs
-# Lines starting with # are ignored.
+})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP decor" tags="decor" position="225,125" size="100,100"># Write poem/paragraph below — all lines become one floating block.
+# Final line with just | and a size to set the text size: xxl xl lg md sm xs
 
 Splatters of white
 burn into my eyes.
 The room hums and beeps.
 Symbols float
 across the pages.
-| md</tw-passagedata><tw-passagedata pid="2" name="GP" tags="GP clockroom" position="775,200" size="100,100">The |charged&gt;[resonant] ticks.
+| md</tw-passagedata><tw-passagedata pid="2" name="GP Office 1" tags="GP clockroom" position="775,200" size="100,100">The |charged&gt;[resonant] ticks.
 The |charged&gt;[piercing] clicks of a pen.
 
 The doctor looks up from his notepad to address you. He stares through you for a moment before finally settling on your dry and irritated eyes. The doctor seems a little put off by your appearance today. You should feel a hint of shame.
 
-&lt;div class="dialogue"&gt;So. Have you actually been taking your [[medication]]? //he finally asks.//&lt;/div&gt;
+&lt;div class="dialogue"&gt;So. Have you actually been taking your [[GP Reflection&lt;-medication]]? //he finally asks.//&lt;/div&gt;
 
-Do you want to tell him the [[truth]] or would rather [[lie]] and pretend that you have been?</tw-passagedata><tw-passagedata pid="3" name="medication" tags="blue" position="950,175" size="100,100">You were prescribed Escitalopram 20mg. You were supposed to take them daily but have failed to do so. You're not quite sure why you didn't take it. It's not like you were scared or anything. You're not very sure of anything to be fair. 
+Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and pretend that you have been?</tw-passagedata><tw-passagedata pid="3" name="GP Reflection" tags="medbg" position="950,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn't cut it. You were supposed to take them daily but have failed to do so. You've been taking pills without question for years now. Washing down the various colours and sizes like a well-domesticated animal.
 
-&lt;img class="story-image-smaller" src="./images/meds.jpg" alt="medication".&gt;
+&lt;div style="height:0;overflow:visible;"&gt;&lt;img class="floating-img" src="./images/escitalopram.png" alt="escitalopram"&gt;&lt;img class="floating-img" src="./images/ambien.png" alt="ambien"&gt;&lt;img class="floating-img" src="./images/seroquel.png" alt="seroquel"&gt;&lt;img class="floating-img" src="./images/valium.png" alt="valium"&gt;&lt;img class="floating-img" src="./images/zopiclone.png" alt="zopiclone"&gt;&lt;img class="floating-img" src="./images/ativan.png" alt="ativan"&gt;&lt;img class="floating-img" src="./images/paxam.png" alt="paxam"&gt;&lt;img class="floating-img" src="./images/zyprexa.png" alt="zyprexa"&gt;&lt;/div&gt;
 
-Or maybe you do know but you're not willing to face the truth.
+You're not quite sure why you didn't take them. It's not like you were scared or anything. You're not very sure of anything to be fair. Or maybe you do know but you're not willing to face the truth.
 
-[[GP&lt;-Go back and answer the question.]]
-or
-[[Alternate internalisation&lt;-Reflect on your reasons for not taking it.]]</tw-passagedata><tw-passagedata pid="4" name="truth" tags="GP2 clockroom" position="850,350" size="100,100">&lt;div class="dialogue"&gt;I don't like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
+You should return to the present—the [[GP Office 1&lt;-doctor]] might be ready for you.
+Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata><tw-passagedata pid="4" name="GP Confess" tags="GP2 clockroom" position="850,350" size="100,100">&lt;div class="dialogue"&gt;I don't like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
 It's humiliating but noble that you would admit that.
@@ -1004,9 +1314,9 @@ It's humiliating but noble that you would admit that.
 You nod but do you actually agree?
 
 
-Do you [[accept]] the offer of new pills or [[try again]] with the old ones. 
+Do you [[New Medication&lt;-accept]] the offer of new pills or [[Same Medication&lt;-try again]] with the old ones.
 
-Or if you're feeling brash, you could [[leave]] the appointment altogether.</tw-passagedata><tw-passagedata pid="5" name="lie" tags="GP2 clockroom" position="700,350" size="100,100">&lt;div class="dialogue"&gt;I... I... I've been taking it... everyday, like you said&lt;/div&gt;
+Or if you're feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata><tw-passagedata pid="5" name="GP Lie" tags="GP2 clockroom" position="700,350" size="100,100">&lt;div class="dialogue"&gt;I... I... I've been taking it... everyday, like you said&lt;/div&gt;
 
 you manage to dribble out.
 
@@ -1018,32 +1328,31 @@ He sighs.
 
 &lt;div class="dialogue"&gt;Lets try this again...&lt;/div&gt;
 
-You look at the door. You could [[leave]] the appointment now or [[double down]] and endure the nightmare.</tw-passagedata><tw-passagedata pid="6" name="Alternate internalisation" tags="blue breathe" position="1175,325" size="100,100">The doctors coughs somewhere in the background.
+You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-double down]] and endure the nightmare.</tw-passagedata><tw-passagedata pid="6" name="GP Daydream" tags="blue breathe" position="1175,325" size="100,100">Floating.
+
+The doctor coughs somewhere in the background.
 
 &lt;div class="dialogue"&gt;Hello? Are you there? //he asks from another galaxy.//&lt;/div&gt;
-You can't find the words to answer. The language. 
-Do you want to  [[Ignore]] the situation and continue floating away or attempt to [[leave]] the building altogether.</tw-passagedata><tw-passagedata pid="7" name="hal.tracks" tags="" position="225,25" size="100,100">background: ./audio/background.mp3
-clock: ./audio/clock.mp3
-crickets: ./audio/crickets.mp3
-psychobirds: ./audio/psychosisbirds.mp3
-printer: ./audio/printer.mp3
-siren: ./audio/siren.mp3</tw-passagedata><tw-passagedata pid="8" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata><tw-passagedata pid="9" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;div class="wk-title"&gt;The Pathologisation&lt;/div&gt;
+You can't find the words to answer. The language.
+
+Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata pid="7" name="hal.tracks" tags="" position="225,25" size="100,100">background:   ./audio/background.mp3
+clock:        ./audio/clock.mp3
+crickets:     ./audio/crickets.mp3
+psychobirds:  ./audio/psychosisbirds.mp3
+printer:      ./audio/printer.mp3
+siren:        ./audio/siren.mp3
+electrichum:  ./audio/electrichum.mp3</tw-passagedata><tw-passagedata pid="8" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata><tw-passagedata pid="9" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;img class="wk-title-svg" src="./images/ascii_title.svg" alt="Pathologisation"&gt;
 
 &lt;div class="wk-author"&gt;&lt;span class="wk-author-name"&gt;by &lt;a class="game-link" href="https://ryu-ichii.github.io/" target="_blank"&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;br&gt;(&lt;a class="game-link" href="https://github.com/ryu-ichii" target="_blank"&gt;GitHub&lt;/a&gt;, &lt;a class="game-link" href="./proof.html" target="_blank"&gt;Proof&lt;/a&gt;)&lt;/div&gt;
 
 &lt;div class="wk-desc"&gt;An interactive work about a GP appointment. About the gap between what you say and what you mean. About what gets lost in between.&lt;/div&gt;
 
-[[Start Menu&lt;-Enter]]
-
-&lt;div class="fullscreen-btn"&gt;(link: "Go Fullscreen")[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Start Menu" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area.
-
-The room is dusty, bright and smells of ammonia.
-Your palms are a bit wet but you should proceed into your appointment shortly.
+&lt;div class="title-actions"&gt;[[GP Reception&lt;-Start]]&lt;div class="fullscreen-btn"&gt;(link: "Fullscreen")[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="GP Reception" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
 You might want to turn your volume up so you can hear your appointment adequately.
 
-[[GP&lt;-Begin Your Appointment.]]</tw-passagedata><tw-passagedata pid="11" name="accept" tags="" position="800,525" size="100,100"></tw-passagedata><tw-passagedata pid="12" name="leave" tags="parkinglot breathe" position="375,400" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It's hot and bright. You can barely think.
+It's so boring here—everyone looks like shit. Like the sickness of the world has soaked into the walls and caste a shadow over everyone.
 
-You should get a drink and sit in the [[park]] for a while.</tw-passagedata><tw-passagedata pid="13" name="double down" tags="GP clockroom" position="625,525" size="100,100">&lt;div class="dialogue"&gt;Yep. Just look. Let's just try you on something else then. //he says.//&lt;/div&gt;
+You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-await]] your turn. You'll get there soon enough.</tw-passagedata><tw-passagedata pid="11" name="New Medication" tags="" position="800,525" size="100,100">&lt;div class="dialogue"&gt;Yep. Just look. Let's just try you on something else then. //he says.//&lt;/div&gt;
 
 He types into his computer and clicks something a few times.
 The printer groans into action.
@@ -1051,9 +1360,11 @@ He retrieves a prescription sheet and passes it you.
 
 &lt;div class="dialogue"&gt;Ok. Twice a day, morning and before bed.&lt;/div&gt;
 
-You're backed into a corner here, it feels as if you must [[accept]].
+You're backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
-(track: 'printer', 'seek', 5)</tw-passagedata><tw-passagedata pid="14" name="Ignore" tags="" position="1300,475" size="100,100"></tw-passagedata><tw-passagedata pid="15" name="park" tags="parkbench" position="300,700" size="100,100">You find a spot on a bench.
+(track: 'printer', 'seek', 5)</tw-passagedata><tw-passagedata pid="12" name="Car Park" tags="parkinglot breathe" position="375,400" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It's hot and bright. You can barely think.
+
+You should get a drink and sit in the [[Park Encounter]] for a while.</tw-passagedata><tw-passagedata pid="13" name="GP Reassess" tags="GP clockroom" position="625,525" size="100,100"></tw-passagedata><tw-passagedata pid="14" name="GP Ignore" tags="" position="1375,500" size="100,100"></tw-passagedata><tw-passagedata pid="15" name="Park Encounter" tags="parkbench breathe" position="300,700" size="100,100">You find a spot on a bench.
 
 Theres a strung out bloke stumbling through the playground making an incoherent string of guttural noises as he comes closer to you. 
 
@@ -1061,17 +1372,17 @@ His eyes meet yours as you sit there minding your business. These fucking brassi
 
 The man approaches you in search of conversation.
 
-Do you [[talk]] with the junkie or [[dream&lt;-ignore him]] and begin your journey home.</tw-passagedata><tw-passagedata pid="16" name="talk" tags="breakdownfont parkpsychosis psychosis" position="225,875" size="100,100">|smooth1&gt;[(either: "What are you doing?", "The fuck are you here for?", "Are you ok?")]
+Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore him]] and begin your journey home.</tw-passagedata><tw-passagedata pid="16" name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis" position="225,875" size="100,100">|smooth1&gt;[(either: "What are you doing?", "The fuck are you here for?", "Are you ok?")]
 
 |smooth2&gt;[(either: "You look retarded.", "Shit fuck.", "Wanna punch on?")]
 
 |smooth3&gt;[(either: "Just like me.", "Alone and afraid.", "Needles. Government Psy-Op.")]
 
-(live: 15s)[(goto: "psych ward")]
-(track: 'psychobirds', 'play')</tw-passagedata><tw-passagedata pid="17" name="phone" tags="" position="525,1100" size="100,100"></tw-passagedata><tw-passagedata pid="18" name="try again" tags="" position="975,525" size="100,100">[[office]] or [[home]]</tw-passagedata><tw-passagedata pid="19" name="GP2" tags="" position="850,775" size="100,100">[[truth2]] or [[lie2]]</tw-passagedata><tw-passagedata pid="20" name="GP3" tags="" position="600,1675" size="100,100"></tw-passagedata><tw-passagedata pid="21" name="psych ward" tags="" position="850,1025" size="100,100">[[escape]] or [[stay]]</tw-passagedata><tw-passagedata pid="22" name="public toilet" tags="" position="1200,725" size="100,100">[[GP2]] or [[public toilet randomised]]</tw-passagedata><tw-passagedata pid="23" name="friend" tags="" position="550,975" size="100,100"></tw-passagedata><tw-passagedata pid="24" name="jail" tags="" position="850,1325" size="100,100">[[escape2]] or [[stay2]]</tw-passagedata><tw-passagedata pid="25" name="dream" tags="" position="600,825" size="100,100"></tw-passagedata><tw-passagedata pid="26" name="home" tags="" position="1325,625" size="100,100"></tw-passagedata><tw-passagedata pid="27" name="pharmacy" tags="" position="850,650" size="100,100"></tw-passagedata><tw-passagedata pid="28" name="office" tags="" position="1100,625" size="100,100"></tw-passagedata><tw-passagedata pid="29" name="ezymart" tags="" position="1100,1000" size="100,100"></tw-passagedata><tw-passagedata pid="30" name="cigarette" tags="" position="1275,1000" size="100,100"></tw-passagedata><tw-passagedata pid="31" name="city" tags="" position="1100,1350" size="100,100"></tw-passagedata><tw-passagedata pid="32" name="conversation" tags="" position="975,1575" size="100,100"></tw-passagedata><tw-passagedata pid="33" name="train" tags="" position="550,1250" size="100,100"></tw-passagedata><tw-passagedata pid="34" name="truth2" tags="" position="750,900" size="100,100"></tw-passagedata><tw-passagedata pid="35" name="Untitled Passage" tags="" position="1275,1300" size="100,100"></tw-passagedata><tw-passagedata pid="36" name="lie2" tags="" position="950,900" size="100,100"></tw-passagedata><tw-passagedata pid="37" name="Untitled Passage 1" tags="" position="1275,1400" size="100,100"></tw-passagedata><tw-passagedata pid="38" name="Untitled Passage 2" tags="" position="375,1225" size="100,100">escape or stay</tw-passagedata><tw-passagedata pid="39" name="escape" tags="" position="725,1150" size="100,100"></tw-passagedata><tw-passagedata pid="40" name="stay" tags="" position="975,1175" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="FINAL GP" tags="" position="850,1775" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="escape2" tags="" position="750,1450" size="100,100"></tw-passagedata><tw-passagedata pid="43" name="stay2" tags="" position="975,1450" size="100,100"></tw-passagedata><tw-passagedata pid="44" name="public toilet randomised" tags="psychosis" position="1450,875" size="100,100">RANDOMISE
+(live: 15s)[(goto: (either: "GP Office 2", "Psych Ward"))]
+(track: 'psychobirds', 'play')</tw-passagedata><tw-passagedata pid="17" name="Phone Psychosis" tags="" position="525,1100" size="100,100"></tw-passagedata><tw-passagedata pid="18" name="Same Medication" tags="" position="975,525" size="100,100">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata pid="19" name="GP Office 2" tags="doctorsoffice3" position="850,775" size="100,100">[[GP Office 2 Accept]] or [[GP Office 2 Reject]]</tw-passagedata><tw-passagedata pid="20" name="GP Office 3" tags="" position="600,1675" size="100,100"></tw-passagedata><tw-passagedata pid="21" name="Psych Ward" tags="psychward" position="850,1025" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="22" name="Public Toilet" tags="toilet breathe" position="1175,850" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata pid="23" name="Friend" tags="" position="550,975" size="100,100"></tw-passagedata><tw-passagedata pid="24" name="Jail" tags="" position="850,1325" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="25" name="Dream" tags="" position="500,800" size="100,100"></tw-passagedata><tw-passagedata pid="26" name="Home" tags="" position="1225,700" size="100,100"></tw-passagedata><tw-passagedata pid="27" name="Pharmacy" tags="" position="850,650" size="100,100"></tw-passagedata><tw-passagedata pid="28" name="Office" tags="" position="1200,525" size="100,100"></tw-passagedata><tw-passagedata pid="29" name="Ezymart" tags="ezymart" position="1100,1000" size="100,100"></tw-passagedata><tw-passagedata pid="30" name="Cigarette Break" tags="cigarettes" position="1275,1000" size="100,100"></tw-passagedata><tw-passagedata pid="31" name="City" tags="" position="1100,1350" size="100,100"></tw-passagedata><tw-passagedata pid="32" name="Conversation" tags="" position="975,1575" size="100,100"></tw-passagedata><tw-passagedata pid="33" name="Train" tags="" position="550,1250" size="100,100"></tw-passagedata><tw-passagedata pid="34" name="GP Office 2 Accept" tags="" position="750,900" size="100,100"></tw-passagedata><tw-passagedata pid="35" name="Placeholder A" tags="" position="1275,1300" size="100,100"></tw-passagedata><tw-passagedata pid="36" name="GP Office 2 Reject" tags="" position="950,900" size="100,100"></tw-passagedata><tw-passagedata pid="37" name="Placeholder B" tags="" position="1275,1400" size="100,100"></tw-passagedata><tw-passagedata pid="38" name="Placeholder C" tags="" position="375,1225" size="100,100">escape or stay</tw-passagedata><tw-passagedata pid="39" name="Psych Ward Escape" tags="" position="725,1150" size="100,100"></tw-passagedata><tw-passagedata pid="40" name="Psych Ward Stay" tags="" position="975,1175" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="GP Office Final" tags="" position="850,1775" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Jail Escape" tags="" position="750,1450" size="100,100"></tw-passagedata><tw-passagedata pid="43" name="Jail Stay" tags="" position="975,1450" size="100,100"></tw-passagedata><tw-passagedata pid="44" name="Public Toilet Psychosis" tags="psychosis brokentoilet" position="1450,875" size="100,100">RANDOMISE
 
 
-(live: 15s)[(goto: "psych ward")]</tw-passagedata><tw-passagedata pid="45" name="Untitled Passage 3" tags="" position="1275,1500" size="100,100"></tw-passagedata></tw-storydata>
+(live: 15s)[(goto: (either: "GP Office 2", "Psych Ward"))]</tw-passagedata><tw-passagedata pid="45" name="Placeholder D" tags="" position="1275,1500" size="100,100"></tw-passagedata><tw-passagedata pid="46" name="Elevator" tags="elevator" position="1600,1500" size="100,100"></tw-passagedata><tw-passagedata pid="47" name="Night Walk" tags="nightambience" position="1750,1500" size="100,100"></tw-passagedata></tw-storydata>
 
 
 
