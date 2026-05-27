@@ -339,9 +339,15 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
    the screen. JS drives the movement — speed and range are configurable
    in Story JavaScript under startFloatingImages().
    ────────────────────────────────────────────────────────────────────── */
-.floating-img {
+/* #floating-layer sits between #bg-layer (z:-1) and tw-passage (z:100) */
+#floating-layer {
   position: fixed;
-  z-index: -1;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.floating-img {
+  position: absolute;
   pointer-events: none;
   width: clamp(80px, 10vw, 160px);
   border: none;
@@ -1080,10 +1086,36 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
     _floatCleanup = [];
   }
 
+  function getFloatLayer() {
+    var layer = document.getElementById('floating-layer');
+    if (!layer) {
+      layer = document.createElement('div');
+      layer.id = 'floating-layer';
+      document.body.appendChild(layer);
+    }
+    return layer;
+  }
+
   function startFloatingImages(passage) {
     stopFloatingImages();
-    var imgs = Array.from(passage.querySelectorAll('img.floating-img'));
-    imgs.forEach(function (el) {
+    var layer = getFloatLayer();
+    /* Clear any leftover images from a previous passage */
+    layer.innerHTML = '';
+
+    var srcs = Array.from(passage.querySelectorAll('img.floating-img'))
+                    .map(function(el) {
+                      el.style.display = 'none'; /* hide original; animated clone lives in #floating-layer */
+                      return el.getAttribute('src');
+                    });
+
+    if (srcs.length === 0) return;
+
+    srcs.forEach(function (src) {
+      var el = document.createElement('img');
+      el.className = 'floating-img';
+      el.src = src;
+      layer.appendChild(el);
+
       var wanderTimer = null;
       var startTimer  = null;
       var cancelled   = false;
@@ -1094,8 +1126,7 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
       var maxDur     = minDur + Math.floor(3000 + Math.random() * 5000);
       var ease       = 'ease-in-out';
 
-      /* Hide until this image's turn */
-      el.style.visibility    = 'hidden';
+      el.style.visibility = 'hidden';
       el.style.animationDuration = breatheDur + 's';
       el.style.animationDelay    = '-' + (Math.random() * parseFloat(breatheDur)).toFixed(1) + 's';
 
@@ -1110,7 +1141,6 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
         wanderTimer = setTimeout(wander, dur + Math.floor(Math.random() * 500));
       }
 
-      /* Each image pops in at a random point within 0–8s */
       var delay = Math.floor(Math.random() * 8000);
       startTimer = setTimeout(function () {
         if (cancelled) return;
@@ -1126,8 +1156,6 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
         cancelled = true;
         clearTimeout(startTimer);
         clearTimeout(wanderTimer);
-        el.style.transition  = 'none';
-        el.style.visibility  = 'hidden';
       });
     });
   }
@@ -1562,12 +1590,7 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
     walk(passage);
     passage.style.opacity = '1';
 
-    // Shuffle reveal order so words don't arrive left-to-right
-    for (var i = words.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
-    }
-
+    // Words reveal in DOM order (top-to-bottom) so the reader can follow along
     var STEP = 38; // ms between each word starting its journey
     var timers = [];
     var maxSettle = 0;
@@ -1748,16 +1771,31 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
       scatterDivs.push(div);
     });
 
-    // After 10s reveal body text unit-by-unit (typewriter over the scattered layout)
+    // After 10s: body text starts typing AND hooks fade simultaneously
     var REVEAL_DELAY = 10000;
     var UNIT_STEP    = 90;  // ms between each word/letter appearing
     var mainTimer = setTimeout(function() {
-      scatterDivs.forEach(function(div, i) {
-        var t = setTimeout(function() {
-          div.style.transition = 'opacity 0.25s ease';
-          div.style.opacity = '1';
-        }, i * UNIT_STEP);
-        _psychosisRevealTimers.push(t);
+      // Stop wander (sets transition:none on each hook via _wanderCleanup)
+      _wanderCleanup.forEach(function(fn) { fn(); });
+      _wanderCleanup = [];
+      // Use rAF so the browser commits the transition:none paint before we
+      // set the opacity transition — otherwise the two style changes collapse
+      // into one frame and the animation never fires.
+      requestAnimationFrame(function() {
+        ['smooth1','smooth2','smooth3','smooth4'].forEach(function(name) {
+          var hook = document.querySelector('tw-story[tags~="psychosis"] tw-hook[name="' + name + '"]');
+          if (!hook) return;
+          hook.style.transition = 'opacity 0.8s ease';
+          hook.style.opacity = '0';
+        });
+        // Body text reveals at the same time as hooks fade
+        scatterDivs.forEach(function(div, i) {
+          var t = setTimeout(function() {
+            div.style.transition = 'opacity 0.25s ease';
+            div.style.opacity = '1';
+          }, i * UNIT_STEP);
+          _psychosisRevealTimers.push(t);
+        });
       });
     }, REVEAL_DELAY);
     _psychosisRevealTimers.push(mainTimer);
@@ -1831,7 +1869,10 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
     });
 
     return subGroups.filter(function(sg) {
-      return sg.some(function(n) { return (n.textContent || '').trim(); });
+      return sg.some(function(n) {
+        /* Keep subgroups with text content OR element nodes (e.g. image containers) */
+        return (n.textContent || '').trim() || n.nodeType === 1;
+      });
     });
   }
 
@@ -1968,7 +2009,7 @@ tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
         if (tags.indexOf('titlescreen') !== -1) {
           fitAsciiTitle();
         }
-      } catch(e) {}
+      } catch(e) { console.error('[onPassageChange]', e); }
     }, 200);
   }
 
@@ -2045,9 +2086,7 @@ electricwhine: ./audio/electricwhine.mp3</tw-passagedata>
 
 &lt;div class=&quot;wk-desc&quot;&gt;Insert Description here&lt;/div&gt;
 
-&lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;
-
-&lt;div style=&quot;margin-top:2em;opacity:0.35;font-size:0.75em;&quot;&gt;[[Public Toilet Psychosis&lt;-[dev] toilet psychosis]]&lt;/div&gt;</tw-passagedata>
+&lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
 You might want to turn your volume up so you can hear your appointment adequately.
 
@@ -2104,7 +2143,7 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him a
 <tw-passagedata pid="22" name="Friend" tags="" position="550,975" size="100,100"></tw-passagedata>
 <tw-passagedata pid="23" name="Jail" tags="" position="850,1550" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata>
 <tw-passagedata pid="24" name="Dream" tags="" position="600,825" size="100,100"></tw-passagedata>
-<tw-passagedata pid="25" name="Home" tags="" position="1000,650" size="100,100"></tw-passagedata>
+<tw-passagedata pid="25" name="Home" tags="" position="1000,650" size="100,100">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata>
 <tw-passagedata pid="26" name="Pharmacy" tags="" position="725,675" size="100,100">You take or don&#x27;t take the new pills.
 
 Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata>

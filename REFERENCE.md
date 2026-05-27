@@ -14,8 +14,8 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 |-----|--------|------------------|
 | `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling | Title Screen |
 | `breakdownfont` | Body text at 2.5× size, links pinned to 48px | Park Psychosis |
-| `psychosis` | Termina body text at 1em (overrides breakdownfont), chromatic aberration, wandering smooth1–4 hooks, smooth5 fake escape link, cummings body text layout (10s delay), no font combos, no home button | Park Psychosis, Public Toilet Psychosis |
-| `blue` | Blue background (`#0029a3`) | GP Daydream |
+| `psychosis` | Nimbus Roman body at 1rem (overrides breakdownfont via `!important`), chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
+| `blue` | Solid blue background (`#0029a3`) via `#bg-layer` — `tw-story` stays transparent so floating images remain visible | GP Reflection |
 
 ### Background Image Tags
 
@@ -38,17 +38,29 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `toilet` | `toilet.jpg` | Public Toilet |
 | `ezymart` | `ezymart.jpg` | Ezymart |
 | `nightambience` | `nightambience.jpg` | Night Walk |
-| `medbg` | `dreamlike.gif` | GP Reflection |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
+
+### Solid Colour Background Tags
+
+Solid colours are routed through `#bg-layer` (not `tw-story`) so floating images (`z-index: -1`) remain visible. `tw-story` gets `has-bg-image` (transparent) automatically.
+
+| Tag | Colour | Notes |
+|-----|--------|-------|
+| `blue` | `#0029a3` | Defined in `SOLID_COLORS` in `updateBackground()` |
+
+**To add a new solid colour room:** add the tag + hex to `SOLID_COLORS` in `updateBackground()`. The CSS `tw-story[tags~="yourtag"] { background-color: ... }` rule is NOT needed — colour is set by JS on `#bg-layer`.
 
 ### Breathing Background Tag
 
 | Tag | Effect |
 |-----|--------|
-| `breathe` | Makes background image slowly scale/darken/saturate (inhale/exhale). On solid-colour rooms, uses filter animation instead. **GIFs never breathe** (too busy). |
+| `breathe` | Image rooms: `#bg-layer` scales/darkens on inhale/exhale (8s cycle). Solid colour rooms: `#bg-layer.colour-breathe` pulses the background-color between shades (e.g. blue → indigo → deep purple) — no filter, so floating images are unaffected. **GIFs never breathe** (too busy). |
 
-Currently used on: Car Park, Park Encounter, GP Daydream, Public Toilet.
+Currently used on: Car Park `[parkinglot breathe]`, Park Encounter `[parkbench breathe]`, GP Reflection `[blue breathe]`, Public Toilet `[toilet breathe]`.
+
+**Colour breathe keyframes** (blue room, 8s ease-in-out):
+- 0% `#0029a3` → 18% `#2200e0` (electric indigo inhale peak) → 28% `#1a00b8` → 72% `#08003a` → 82% `#04001a` (near-black exhale) → 100% `#0029a3`
 
 ### Audio Tags
 
@@ -121,6 +133,8 @@ Currently used in: GP Office 1.
 ```
 Font: **Termina**. Currently used in: Park Psychosis, Public Toilet Psychosis.
 
+Wander behaviour: starts moving immediately on arrival (`void el.offsetTop` forces initial position commit before transition). Position range: `top` 5–77%, `left` 3–68% — stays within viewport. Speed: 250–1450ms per move.
+
 ### `|smooth5>`
 **Psychosis rooms only.** The fake escape link. Hidden for 5s, then appears at a random screen position. After clicking, lingers 2.5s then fades out. Use with `(link-replace:)`.
 
@@ -147,7 +161,15 @@ Image that drifts slowly around the screen. Starts hidden, pops in within 0–8s
 ```html
 <img class="floating-img" src="./images/escitalopram.png" alt="escitalopram">
 ```
+
+**Architecture:** Images in the passage are only used as a source list. `startFloatingImages()` reads their `src` attributes, **hides the originals** (`el.style.display = 'none'`), then creates fresh `<img>` clones inside a dedicated `#floating-layer` div (position: fixed, inset: 0, z-index: 5 — above `#bg-layer` at z:-1, below `tw-passage` at z:100), and wanders them from there. The `#floating-layer` is cleared on each navigation.
+
+**Why hide originals:** Original `<img class="floating-img">` elements remain in the passage DOM after `startFloatingImages` clones them. They have `position: absolute` from the CSS, so they end up stacked at the top-left of their nearest `position: relative` ancestor (a sentence div in the layout system). The `float-breathe` animation then makes the stack visibly pulse in one spot. Setting `display: none` on each original as its src is collected eliminates this.
+
+**Important:** Wrap the `<img>` tags in a container div — do NOT put them as bare children of the passage root. The layout system (`splitAtSentences`) filters out subgroups with no text content; a bare `<img>` with no surrounding text would be silently dropped from the rebuilt DOM. Wrapping in a `<div>` preserves them as element nodes.
 Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection.
+
+**Note:** floating images use `position: fixed; z-index: -1`. They only show if `tw-story` is transparent (`has-bg-image` class). Solid-colour and image-backed rooms both add `has-bg-image` via JS, so images always show. Do not give `tw-story` a CSS `background-color` for any room that has floating images.
 
 ### `erratic-img`
 Image that moves fast and jittery, glitch-flickers opacity and colour. Starts hidden, appears within 0–3s.
@@ -155,7 +177,7 @@ Image that moves fast and jittery, glitch-flickers opacity and colour. Starts hi
 ```html
 <img class="erratic-img" src="./images/static.gif">
 ```
-Currently used in: CRRF passages.
+Currently used in: CRRF passages. CRRF Image 2 uses `nightambience.jpg` as placeholder.
 
 ### `.crrf-bg-overlay`
 Full-screen background image overlay (z-index below text). Used inside display sub-passages.
@@ -180,7 +202,7 @@ Currently used in: Title Screen (Ryu Konrad name, GitHub, Proof).
 ### Layout randomiser
 Every non-psychosis, non-titlescreen passage gets a random indentation mode and a central screen position on each load. Fires on **every navigation** — the same passage looks different every visit.
 
-**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 10–30vh, `left` 8–18%. Passage overflows visible so far-right fragments don't clip.
+**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 5–60vh, `left` 5–23%. Wide vertical range ensures passages don't cluster near the top.
 
 **How fragments are made:**
 1. Content is split at `<br>` boundaries (paragraph-level)
@@ -204,19 +226,28 @@ Max indent range: **10–32vw** (re-randomised each load). `tw-link` handlers su
 Skipped on: `[psychosis]`, `[titlescreen]`.
 
 ### Psychosis layout (`[psychosis]` passages only)
+
+Passage anchored: `position: fixed; width: 42vw; top: 8vh; left: 5%`.
+
 Body text reveals in two phases:
 
-**Phase 1 (0–10s):** Body text is hidden. Only smooth1–4 wandering hooks are visible.
+**Phase 1 (0–10s):** Body text is hidden (`opacity: 0`). Only smooth1–4 wandering hooks are visible.
 
-**Phase 2 (10s+):** Body text fragments reveal one unit at a time at 90ms intervals (typewriter over the scattered layout). The text is pre-processed into cummings-style units:
-- **Short words (≤3 letters):** each letter becomes its own line (`a` / `n` / `d`)
-- **Long words (≥7 letters, 45% chance):** broken at a random position 2–5 chars in (`settl` / `ing`)
-- **All units** get a wide two-pole scatter (`left: 0–6vw` or `11–26vw`) via `position: relative`
+**Phase 2 (10s+):** Smooth hooks fade out simultaneously (`opacity 0.8s ease`) while body text fragments reveal one unit at a time at 90ms intervals (typewriter over the scattered layout). The text is pre-processed into cummings-style units:
+- **Short words (≤3 letters):** 40% chance of being letter-stacked (each letter its own line). The rest join the word buffer.
+- **Long words (≥7 letters):** 28% chance of a mid-word break 2–5 chars in.
+- **Normal words:** grouped into chunks of up to 4 per scatter div to control total height.
+- **All units** get a bimodal scatter (`left: 0–2.6vw` or `5–12vw`) via `position: relative`.
+- Line height: `1.15` (tight, to prevent overflow).
 
-Auto-redirect at 20s fires regardless. Navigating away (e.g. home button) cancels the reveal. smooth1–5 hooks are untouched and re-appended intact.
+Auto-redirect at 20s fires regardless. Navigating away cancels the reveal cleanly. smooth1–5 hooks are untouched and re-appended intact.
+
+**CSS transition gotcha — why the hook fade uses `requestAnimationFrame`:** The wander cleanup sets `el.style.transition = 'none'`. If you then set `el.style.transition = 'opacity 0.8s ease'` and `el.style.opacity = '0'` in the same synchronous JS block, the browser collapses both transition assignments into one style recalculation frame — the `none` step is never committed — and the animation may not fire. Wrapping the opacity change in a `requestAnimationFrame` ensures the `none` state is painted first; the following frame then correctly transitions from opacity 1 → 0.
+
+**BD distress effects** (`bd-tremor`, `bd-blur`, `bd-glitch`) are suppressed when `[psychosis]` is present even if `[breakdownfont]` is also tagged.
 
 ### Scramble animation
-Every passage (except psychosis) animates words in on load. Each word starts displaced from its final position with random rotation (±27.5°), scale (0.25×–2.45×), and offset (±450px x / ±250px y). Words fly to their final position using elastic overshoot easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`) — each word overshoots its landing and snaps back. Settle duration is randomised per word (320–1100ms). Clicking anywhere skips instantly.
+Every passage (except psychosis) animates words in on load. Each word starts displaced from its final position with random rotation (±27.5°), scale (0.25×–2.45×), and offset (±450px x / ±250px y). Words fly to their final position using elastic overshoot easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`) — each word overshoots its landing and snaps back. Settle duration is randomised per word (320–1100ms). Words reveal in **DOM order** (top-to-bottom, left-to-right) at 38ms intervals so the reader can follow from the top as the animation completes. Clicking anywhere skips instantly.
 
 ### Link fidget
 All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough.
@@ -224,17 +255,19 @@ All links tremble slightly in a continuous micro-animation (`fidget` keyframes, 
 ### Link flicker on hover
 Rapid colour flash: red → cyan → yellow → magenta → white over 0.35s.
 
-### Breakdown distress (on `[breakdownfont]` passages)
+### Breakdown distress (on `[breakdownfont]` passages, NOT `[psychosis]`)
 One of three effects is randomly chosen each time:
 - `bd-tremor` — shakes horizontally at high speed
 - `bd-blur` — pulses in and out of focus
 - `bd-glitch` — red/cyan chromatic split, fast
 
+Suppressed entirely when passage also has `[psychosis]` tag.
+
 ### Chromatic aberration (on `[psychosis]` passages)
 Text-shadow snaps erratically between different red/cyan fringe intensities. Uses `steps(1)` for a sharp, digital glitch feel.
 
 ### Background `#bg-layer`
-Handles all background images. Always present, invisible when no image is active. Separate from `tw-story` so breathing animation doesn't affect text.
+Handles all backgrounds — both image and solid colour. Always present, invisible when no background is active. `tw-story` is always kept transparent (`has-bg-image`) whenever a background is active, so `floating-img` elements (z-index: -1) remain visible. Breathing animations live on `#bg-layer` so they never affect text or floating images via filter stacking context.
 
 ---
 
@@ -327,7 +360,7 @@ Dialogue always stays italic — only the family changes per combo.
 | Global base (`tw-story`) | `1em` (browser default ≈ 16px) |
 | Breakdownfont body | `2.5em` |
 | Breakdownfont links | `48px !important` |
-| Psychosis body (`tw-passage`) | `1em` — overrides breakdownfont |
+| Psychosis body (`tw-passage`) | `1rem !important` — escapes breakdownfont's 2.5em via rem |
 | smooth1–4 hooks | `0.9rem !important` — overrides breakdownfont |
 | smooth5 + its link | `1.25rem` |
 | UI buttons (home, fullscreen) | `0.9rem` |
@@ -340,7 +373,7 @@ Dialogue always stays italic — only the family changes per combo.
 
 | Element | Font |
 |---------|------|
-| Psychosis body text | Termina |
+| Psychosis body text | Nimbus Roman |
 | smooth1–4 wandering hooks | Termina |
 | smooth5 escape link | DejaVu Sans |
 | Title screen Start link | Termina |
@@ -368,7 +401,7 @@ A modular randomised passage system. Each CRRF passage assembles itself from 4 r
 
 **Current pools:**
 - **Background 1–4:** full-screen overlay images (static.gif, parkpsychosis.gif, psychward.jpg, nightambience.jpg)
-- **Image 1–4:** erratic-img (static.gif, dreamlike.gif, parkpsychosis.gif, brokentoilet.jpg)
+- **Image 1–4:** erratic-img (static.gif, nightambience.jpg [placeholder], parkpsychosis.gif, brokentoilet.jpg)
 - **Text 1–4:** short placeholder text fragments
 - **Links 1–3:** navigation options (currently all lead to Home / Psych Ward)
 
@@ -387,6 +420,8 @@ A modular randomised passage system. Each CRRF passage assembles itself from 4 r
 
 Title screen links: no fidget animation (they're UI, not choices). Border box style.
 
+A `[dev] toilet psychosis` placeholder link on the Title Screen links directly to Public Toilet Psychosis for testing. Remove when no longer needed.
+
 ---
 
 ## 10. QUICK RECIPE GUIDE
@@ -397,6 +432,13 @@ Title screen links: no fidget animation (they're UI, not choices). Border box st
 ```
 Add to `TAG_BACKGROUNDS`: `'mytag': './images/myimage.jpg'`  
 Add to `TAG_TRACKS`: `'mytag': 'mytrack'`
+
+**New solid-colour room:**
+```
+:: Room Name [blue breathe] {"position": "x,y", "size": "100,100"}
+```
+Add to `SOLID_COLORS` in `updateBackground()`: `'blue': '#0029a3'`  
+Do NOT add a CSS `background-color` rule on `tw-story` for this tag — JS handles it.
 
 **Random text in passage:**
 ```
