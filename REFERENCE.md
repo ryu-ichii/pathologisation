@@ -33,17 +33,18 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `parkinglot` | `parkinglot.jpg` | Car Park |
 | `GP` | `gp.jpg` | GP Office 1, GP Reassess |
 | `GP2` | `gpoffice.jpg` | GP Confess, GP Lie |
-| `parkbench` | `parkbench.jpg` | Park Encounter (also `[collage]` for testing) |
+| `parkbench` | `parkbench.jpg` | Park Encounter |
 | `static` | `static.gif` | Title Screen |
 | `parkpsychosis` | `parkpsychosis.gif` | Park Psychosis |
 | `brokentoilet` | `brokentoilet.jpg` | Public Toilet Psychosis |
-| `cigarettes` | `cigarettes.jpg` | Cigarette Break |
 | `doctorsoffice3` | `gp3.jpg` | GP Office 2 |
 | `elevator` | `elevator.jpg` | Elevator |
 | `psychward` | `psychward.jpg` | Psych Ward |
 | `toilet` | `toilet.jpg` | Public Toilet |
 | `ezymart` | `ezymart.jpg` | Ezymart |
 | `nightambience` | `nightambience.jpg` | Night Walk |
+| `citywalk` | `citywalk.png` | City Walk |
+| `citycommute` | `citycommute.png` | City Transit |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
@@ -82,25 +83,49 @@ Auto-plays a looping track when entering, stops when leaving:
 
 **To add a new room track:** add the audio file to `audio/`, register it in `hal.tracks` passage, add one line to `TAG_TRACKS` in Story JavaScript.
 
-### Collage Tag
+### Collage Tags
 
-| Tag | Effect |
-|-----|--------|
-| `collage` | 2–3 images randomly selected from `COLLAGE_IMAGES` and layered over the background. Each image: 30–70vw wide, max 65vh tall, opacity 0.30–0.85. Images are assigned to different screen zones (top-left, top-right, bottom-left, bottom-right, centre) so they never cluster. Up to 50% of each image can hang off any edge. Sits at z-index 0 — above `#bg-layer` (z:-1), below floating images (z:5) and passage text (z:100). Automatically makes `tw-story` transparent so images are always visible regardless of other tags. |
-| `crrf-decor-pool` | Pool of text options for CRRF 1–4 background decor. One option per line (`#` = comment). Font is randomly `redaction-70` or `redaction-100` each load. Passage: `CRRF Decor Pool`. |
+`[collage]` alone draws from the default pool (`COLLAGE_IMAGES`). Add a named category tag alongside to draw from a specific folder instead. Tags are **independent from decor tags** — mix and match freely.
 
-**Setup:**
-1. Add images to `pathologisation/images/collage/`
-2. Add paths to `COLLAGE_IMAGES` in Story JavaScript:
-   ```javascript
-   var COLLAGE_IMAGES = [
-     './images/collage/img1.jpg',
-     './images/collage/img2.jpg',
-   ];
-   ```
-3. Tag any passage with `[collage]`
+| Tag | Folder | Currently used on |
+|-----|--------|------------------|
+| `collage` | required on all collage passages | — |
+| `collage-medical` | `images/collage/medical/` | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
+| `collage-natural` | `images/collage/natural/` | Park Encounter, Park Psychosis |
+| `collage-city` | `images/collage/city/` | Car Park |
+| `collage-gloss` | `images/collage/gloss/` | Pharmacy |
+| `collage-subsist` | `images/collage/subsist/` | GP Daydream |
 
-Combines cleanly with all other tags including `[breathe]`, `[blue]`, `[floating-img]`, `[echo]`, `[dissolve]`, `[contradict]`. Can be used with `[psychosis]` but may be visually busy alongside the room background gif and wandering hooks.
+**To add a new category:** create `images/collage/newname/`, add a `'collage-newname': []` entry to `COLLAGE_POOLS` in Story JavaScript with image paths, then tag passages `[collage collage-newname]`.
+
+**To add images to an existing pool:** drop files into the folder and add their paths to `COLLAGE_POOLS['collage-category']`.
+
+Combines cleanly with all other tags. Can be used with `[psychosis]` but may be visually busy.
+
+### Decor Tags
+
+Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to that category's pool. On each load, one entry is picked at random. Multiple passages with the same category tag build up the pool. **Completely independent from collage tags.**
+
+| Tag | Font | Currently used on |
+|-----|------|------------------|
+| `decor-medical` | combo redaction (10–50) | GP Confess, GP Lie |
+| `decor-city` | combo redaction (10–50) | Car Park |
+| `decor-gloss` | combo redaction (10–50) | Pharmacy |
+| `decor-subsist` | combo redaction (10–50) | Home |
+| `decor-natural` | combo redaction (10–50) | Park Encounter |
+| `decor-crrf` | random `redaction-70` or `redaction-100` | CRRF 1–4 (via `CRRF Decor Pool` passage) |
+
+**Format of a decor passage** — same as always, write in Twine:
+```
+Your intrusion text here
+across multiple lines
+| md
+```
+Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments.
+
+**To add a decor entry:** create a passage in Twine, tag it `[decor decor-medical]` (or any category), write your text. The passage appears in the **Decor** section of the proof.
+
+**To add a new category:** add `'decor-newname': []` to `DECOR_POOLS` in Story JavaScript, then tag passages `[decor-newname]`.
 
 ### Effect Tags (ready to use, not yet applied)
 
@@ -113,31 +138,6 @@ Combines cleanly with all other tags including `[breathe]`, `[blue]`, `[floating
 **Usage:**
 - Add tag to passage header
 - For `contradict`, also wrap words in passage: `<span data-contradict="replacement">original</span>`
-
-### Decor Tag
-
-| Tag | Effect |
-|-----|--------|
-| `decor` | Marks a passage as a decor definition for another passage. Must be named `"{Passage Name} decor"`. |
-
-**Format of a decor passage:**
-```
-# comment lines start with #
-# Optional first line:
-slab: br
-
-Your intrusion text here
-all lines become one floating block
-| lg
-
-```
-Size options: `xxl xl lg md sm xs`
-
-Intrusion text floats in the background in a **redaction variant** (changes per font combo), large, low opacity, slowly drifting.
-
-**All story passages from GP Reception onwards have a decor passage** (currently empty — fill in Twine). GP Office 2 has content. In the proof, decor passages are sorted to match the order of their parent passage.
-
-**To add decor to any passage:** create a new passage named `"Passage Name decor"` with tag `[decor]`.
 
 ---
 
@@ -540,7 +540,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
    - *text* — `[fragment-pool]` passages + `CRRF Text 1–4` + `CRRF Links 1–3`
    - *images* — `CRRF Image 1–4` + `CRRF Background 1–4`
    - Detection: CRRF sub-passages matched by name prefix; fragment-pool passages matched by tag
-4. **Decor** — passages tagged `[decor]`, sorted to match the order of their parent passage in the linked/unlinked list
+4. **Decor** — passages tagged `[decor]` with a category tag (e.g. `[decor decor-medical]`). Sorted by category. Add content here to grow the decor pools.
 5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
 
 ---
