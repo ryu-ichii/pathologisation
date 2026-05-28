@@ -90,11 +90,11 @@ Auto-plays a looping track when entering, stops when leaving:
 | Tag | Folder | Currently used on |
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
-| `collage-medical` | `images/collage/medical/` | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
-| `collage-natural` | `images/collage/natural/` | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` | Car Park |
-| `collage-gloss` | `images/collage/gloss/` | Pharmacy |
-| `collage-subsist` | `images/collage/subsist/` | GP Daydream |
+| `collage-medical` | `images/collage/medical/` (5 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
+| `collage-natural` | `images/collage/natural/` (6 images) | Park Encounter, Park Psychosis |
+| `collage-city` | `images/collage/city/` (4 images) | Car Park |
+| `collage-gloss` | `images/collage/gloss/` (5 images) | Pharmacy |
+| `collage-subsist` | `images/collage/subsist/` (4 images) | GP Daydream |
 
 **To add a new category:** create `images/collage/newname/`, add a `'collage-newname': []` entry to `COLLAGE_POOLS` in Story JavaScript with image paths, then tag passages `[collage collage-newname]`.
 
@@ -106,24 +106,31 @@ Combines cleanly with all other tags. Can be used with `[psychosis]` but may be 
 
 Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to that category's pool. On each load, one entry is picked at random. Multiple passages with the same category tag build up the pool. **Completely independent from collage tags.**
 
-| Tag | Font | Currently used on |
-|-----|------|------------------|
-| `decor-medical` | combo redaction (10–50) | GP Confess, GP Lie |
-| `decor-city` | combo redaction (10–50) | Car Park |
-| `decor-gloss` | combo redaction (10–50) | Pharmacy |
-| `decor-subsist` | combo redaction (10–50) | Home |
-| `decor-natural` | combo redaction (10–50) | Park Encounter |
-| `decor-crrf` | random `redaction-70` or `redaction-100` | CRRF 1–4 (via `CRRF Decor Pool` passage) |
+| Tag | Pool passage | Font | Currently used on |
+|-----|-------------|------|------------------|
+| `decor-medical` | `Medical Decor` | combo redaction (10–50) | GP Confess, GP Lie |
+| `decor-city` | `City Decor` | combo redaction (10–50) | Car Park |
+| `decor-gloss` | `Gloss Decor` | combo redaction (10–50) | Pharmacy |
+| `decor-subsist` | `Subsist Decor` | combo redaction (10–50) | Home |
+| `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter |
+| `decor-crrf` | `CRRF Decor Pool` | random `redaction-70` or `redaction-100` | CRRF 1–4 |
 
-**Format of a decor passage** — same as always, write in Twine:
+**Format of a decor passage** — write in Twine, separate multiple options with `---`:
 ```
-Your intrusion text here
+Your first intrusion text
 across multiple lines
 | md
+---
+A second option here
+different text
+| lg
+---
+A third option.
+| sm
 ```
-Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments.
+Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments. One block is picked at random on each load. Each passage can hold as many `---` separated options as you like.
 
-**To add a decor entry:** create a passage in Twine, tag it `[decor decor-medical]` (or any category), write your text. The passage appears in the **Decor** section of the proof.
+**To add options:** write them directly in the category passage (e.g. `Medical Decor`) separated by `---`. The passage appears in the **Decor** section of the proof.
 
 **To add a new category:** add `'decor-newname': []` to `DECOR_POOLS` in Story JavaScript, then tag passages `[decor-newname]`.
 

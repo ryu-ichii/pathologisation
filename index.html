@@ -814,20 +814,22 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       var category = null;
       tags.forEach(function(t) { if (DECOR_POOLS.hasOwnProperty(t)) category = t; });
       if (!category) return;
-      // Parse text using the same format as before
-      var lines = (pd.textContent || '')
-        .split('\n')
-        .map(function(l) { return l.trim(); })
-        .filter(function(l) { return l && l[0] !== '#'; });
-      var sizeKey = 'lg';
-      if (lines.length) {
-        var last = lines[lines.length - 1];
-        if (/^\|\s*\w+$/.test(last)) {
-          sizeKey = lines.pop().replace('|', '').trim().toLowerCase();
+      // Split on --- to allow multiple options in one passage
+      var raw = (pd.textContent || '');
+      raw.split(/^---\s*$/m).forEach(function(block) {
+        var lines = block.split('\n')
+          .map(function(l) { return l.trim(); })
+          .filter(function(l) { return l && l[0] !== '#'; });
+        var sizeKey = 'lg';
+        if (lines.length) {
+          var last = lines[lines.length - 1];
+          if (/^\|\s*\w+$/.test(last)) {
+            sizeKey = lines.pop().replace('|', '').trim().toLowerCase();
+          }
         }
-      }
-      var text = lines.join('\n').trim();
-      if (text) DECOR_POOLS[category].push({ text: text, size: sizeKey });
+        var text = lines.join('\n').trim();
+        if (text) DECOR_POOLS[category].push({ text: text, size: sizeKey });
+      });
     });
   }
 
@@ -1189,31 +1191,45 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     './images/collage/medical/medicalcollage.jpg',
     './images/collage/city/abstractpattern.png',
     './images/collage/gloss/convenience.gif',
-    './images/collage/gloss/convenience2.gif',
     './images/collage/subsist/cigarettes.jpg',
-    './images/collage/subsist/ciggies.gif',
+    './images/collage/natural/IMG_3325.jpg',
   ];
 
   // Named pools — tag a passage [collage collage-medical], [collage collage-city], etc.
-  // Add more pools here as new folders are created.
   var COLLAGE_POOLS = {
     'collage-medical': [
       './images/collage/medical/gpoffice.png',
       './images/collage/medical/medicalcollage.jpg',
+      './images/collage/medical/IMG_20141130_194328_Original.jpg',
+      './images/collage/medical/IMG_20180505_232307239_LL_Original.jpg',
+      './images/collage/medical/IMG_20191127_011708_Original.jpg',
     ],
     'collage-city': [
       './images/collage/city/abstractpattern.png',
+      './images/collage/city/20160327_162659_Original.jpg',
+      './images/collage/city/20160407_185206_Original.jpg',
+      './images/collage/city/IMG_0352_Original.jpg',
     ],
     'collage-gloss': [
       './images/collage/gloss/convenience.gif',
       './images/collage/gloss/convenience2.gif',
+      './images/collage/gloss/81130023_Original.jpg',
+      './images/collage/gloss/81130024_Original.jpg',
+      './images/collage/gloss/IMG_0333_Original.jpg',
     ],
     'collage-subsist': [
       './images/collage/subsist/cigarettes.jpg',
       './images/collage/subsist/ciggies.gif',
+      './images/collage/subsist/IMG_20170816_140152_Original.jpg',
+      './images/collage/subsist/IMG_20180720_232145674_Original.jpg',
     ],
     'collage-natural': [
-      // Add paths: './images/collage/natural/img.jpg',
+      './images/collage/natural/IMG_0191_Original.jpg',
+      './images/collage/natural/IMG_0429_Original.jpg',
+      './images/collage/natural/IMG_20180909_190811866_Original.jpg',
+      './images/collage/natural/IMG_20190613_072704536_Original.jpg',
+      './images/collage/natural/IMG_3325.jpg',
+      './images/collage/natural/IMG_3332.jpg',
     ],
   };
 
@@ -2618,14 +2634,18 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
 <tw-passagedata pid="64" name="GP Office 3 Escape" tags="collage collage-medical" position="975,1425" size="100,100"></tw-passagedata>
 <tw-passagedata pid="65" name="GP Office 3 Stay" tags="collage collage-medical" position="725,1425" size="100,100"></tw-passagedata>
 <tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="700,1075" size="100,100"></tw-passagedata>
-<tw-passagedata pid="67" name="GP Office 2 decor" tags="decor decor-medical" position="225,125" size="100,100">Splatters of white
+<tw-passagedata pid="67" name="Medical Decor" tags="decor decor-medical" position="225,125" size="100,100">Splatters of white
 burn into my eyes.
 The room hums and beeps.
 Symbols float
 across the room.
 | md</tw-passagedata>
-<tw-passagedata pid="68" name="City Walk" tags="citywalk" position="800,700" size="100,100"></tw-passagedata>
-<tw-passagedata pid="69" name="City Transit" tags="citycommute" position="975,700" size="100,100"></tw-passagedata>
+<tw-passagedata pid="68" name="City Decor" tags="decor decor-city" position="375,125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="69" name="Gloss Decor" tags="decor decor-gloss" position="525,125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="70" name="Subsist Decor" tags="decor decor-subsist" position="675,125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="71" name="Natural Decor" tags="decor decor-natural" position="825,125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="72" name="City Walk" tags="citywalk" position="800,700" size="100,100"></tw-passagedata>
+<tw-passagedata pid="73" name="City Transit" tags="citycommute" position="975,700" size="100,100"></tw-passagedata>
 </tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
