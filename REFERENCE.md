@@ -359,7 +359,7 @@ On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo
 | 3 | Logic Monospace | DejaVu Sans | Nimbus Roman |
 | 4 | DejaVu Sans | Termina | Nimbus Roman |
 
-Dialogue always stays italic — only the family changes per combo.
+Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the **body text font** for that combo, not the dialogue font — set via per-combo `.dialogue em` overrides.
 
 ### Font sizes
 
