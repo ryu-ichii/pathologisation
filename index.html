@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Working E-lit.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Pathologisation" startnode="9" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://use.typekit.net/vnl6sno.css');
+<tw-storydata name="Pathologisation" startnode="8" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://use.typekit.net/vnl6sno.css');
 
 tw-sidebar { display: none; }
 #audio-controls { display: none !important; }
@@ -132,15 +132,20 @@ tw-story[tags~="titlescreen"] tw-passage {
   text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
 .wk-author-name {
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
 }
-/* "Ryu Konrad" name link — Termina */
 .wk-author-name .game-link {
-  font-family: 'termina', Arial, Helvetica, sans-serif;
-}
-/* GitHub + Proof links — Nimbus Roman */
-.wk-author > a.game-link {
   font-family: 'nimbus-roman', Georgia, serif;
+}
+.wk-github {
+  position: fixed;
+  bottom: 1.2rem;
+  left: 1.4rem;
+  font-family: 'nimbus-roman', Georgia, serif;
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  letter-spacing: 0.08em;
+  opacity: 0.5;
+  text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
 .wk-desc {
   font-family: 'logic-monospace', monospace;
@@ -2082,7 +2087,8 @@ electricwhine: ./audio/electricwhine.mp3</tw-passagedata>
 <tw-passagedata pid="7" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata>
 <tw-passagedata pid="8" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
-&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;br&gt;(&lt;a class=&quot;game-link&quot; href=&quot;https://github.com/ryu-ichii&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;, &lt;a class=&quot;game-link&quot; href=&quot;./proof.html&quot; target=&quot;_blank&quot;&gt;Proof&lt;/a&gt;)&lt;/div&gt;
+&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;wk-github&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://github.com/ryu-ichii&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/div&gt;
 
 &lt;div class=&quot;wk-desc&quot;&gt;Insert Description here&lt;/div&gt;
 
