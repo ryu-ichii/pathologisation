@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0089)file:///Users/ryu/Documents/Twine/Scratch/proof-475a26f5-a14e-41bb-b217-a7cbef833c6b.html -->
+<!-- saved from url=(0089)file:///Users/ryu/Documents/Twine/Scratch/proof-4cd9805a-d8d7-4b7b-aa63-d7e76df5d0b3.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Pathologisation
 </title>
@@ -50,12 +50,29 @@ tw-passagedata:before
 
 <h1>Pathologisation
 </h1>
-<tw-storydata name="Pathologisation" startnode="9" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap');
+<tw-storydata name="Pathologisation" startnode="9" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://use.typekit.net/vnl6sno.css');
 
 tw-sidebar { display: none; }
 #audio-controls { display: none !important; }
+
+/* ── GLOBAL LAYOUT — no scrollbars ever ────────────────────────────────
+   Content is sized to fit the screen. If a passage genuinely overflows
+   it is a sign the padding or font size needs adjusting, not that the
+   player should scroll.
+   ────────────────────────────────────────────────────────────────────── */
+html {
+  overflow: hidden;
+  height: 100%;
+  background-color: #000;
+}
+body {
+  overflow: hidden;
+  height: 100%;
+  background-color: transparent;
+}
+tw-story {
+  font-size: 1em;
+}
 
 .title-actions {
   display: flex;
@@ -68,7 +85,7 @@ tw-sidebar { display: none; }
   border: none;
   background: transparent;
   cursor: pointer;
-  font-family: "VT323", monospace;
+  font-family: 'termina', Arial, Helvetica, sans-serif;
   font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -86,7 +103,7 @@ tw-sidebar { display: none; }
   background: transparent;
   cursor: pointer;
   z-index: 1000;
-  font-family: "VT323", monospace;
+  font-family: 'termina', Arial, Helvetica, sans-serif;
   font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -158,8 +175,16 @@ tw-story[tags~="titlescreen"] tw-passage {
 .wk-author-name {
   font-size: clamp(1rem, 2vw, 1.4rem);
 }
+/* "Ryu Konrad" name link — Termina */
+.wk-author-name .game-link {
+  font-family: 'termina', Arial, Helvetica, sans-serif;
+}
+/* GitHub + Proof links — Nimbus Roman */
+.wk-author > a.game-link {
+  font-family: 'nimbus-roman', Georgia, serif;
+}
 .wk-desc {
-  font-family: 'Space Mono', monospace;
+  font-family: 'logic-monospace', monospace;
   font-size: clamp(0.7rem, 1.4vw, 0.9rem);
   letter-spacing: 0.02em;
   opacity: 0.65;
@@ -170,6 +195,7 @@ tw-story[tags~="titlescreen"] tw-passage {
 tw-story[tags~="titlescreen"] tw-link,
 tw-story[tags~="titlescreen"] tw-link:link {
   display: inline-block;
+  font-family: 'termina', Arial, Helvetica, sans-serif;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 0.9rem;
@@ -194,14 +220,8 @@ tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
   border: none;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
 tw-story {
-  font-family: "VT323", monospace;
+  font-family: 'logic-monospace', monospace;
   font-weight: 400;
   font-style: normal;
   color: #FFF;
@@ -209,11 +229,8 @@ tw-story {
   text-shadow: 2px 2px 6px #000, 0px 0px 10px #000;
 }
 
-.story-image {
-  width: 100%;
-}
 tw-story[tags~="breakdownfont"] {
-  font-family: "VT323", monospace;
+  font-family: 'logic-monospace', monospace;
   font-weight: 400;
   font-style: normal;
   font-size: 2.5em;
@@ -226,7 +243,7 @@ tw-story[tags~="breakdownfont"] tw-link,
 tw-story[tags~="breakdownfont"] tw-link:link,
 tw-story[tags~="breakdownfont"] tw-link:hover {
   font-size: 48px !important;
-  font-family: "VT323", monospace !important;
+  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif !important;
 }
 
 /* ── BREAKDOWN DISTRESS EFFECTS ─────────────────────────────────────────
@@ -263,7 +280,7 @@ tw-story.bd-glitch { animation: bd-glitch 0.25s steps(3) infinite; }
    ────────────────────────────────────────────────────────────────────── */
 tw-link, tw-link:link,
 .game-link {
-  font-family: "VT323", monospace;
+  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif;
   color: rgba(255,255,255,0.9);
   text-decoration: none;
   display: inline-block;
@@ -303,7 +320,9 @@ tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
 }
 tw-passage {
-  padding-bottom: 200px;
+  padding-bottom: 60px;
+  position: relative;
+  z-index: 100;
 }
 
 /* ── DIALOGUE ─────────────────────────────────────────────────────────── */
@@ -318,33 +337,8 @@ tw-passage {
   opacity: 1;
 }
 
-img {  /* this selects all image (img) elements */
+img {
   width: 100%;
-}
-.story-image-smaller {  /* this selects all elements with the story-image-smaller class not just images */
-  width: 50%;
-}
-img.story-image-smallest {  /* this selects all images with the story-image-smallest class */
-  width: 25%;
-}
-.story-room {
-  display: grid;  /* sets the display to grid on the surrounding div */
-  grid-template-columns: 50% 50%;  /* sets each column to 50% */
-}
-.story-text {
-  grid-column: 1;  /* sets which column the text appears in */
-  grid-row: 1;
-  box-sizing: border-box;
-  padding: 10px;
-}
-.story-image {
-  grid-column: 2;  /* sets which column the image appears in */
-  grid-row: 1;
-}
-.story-image img {
-max-width: 100%;
-height: auto;
-display: block;
 }
 tw-story[tags~="blue"] {
   background-color: #0029a3;
@@ -352,24 +346,33 @@ tw-story[tags~="blue"] {
 }
 tw-story[tags~="psychosis"] tw-hook[name="smooth1"],
 tw-story[tags~="psychosis"] tw-hook[name="smooth2"],
-tw-story[tags~="psychosis"] tw-hook[name="smooth3"] {
+tw-story[tags~="psychosis"] tw-hook[name="smooth3"],
+tw-story[tags~="psychosis"] tw-hook[name="smooth4"],
+tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
   display: inline-block;
   position: fixed; /* JS drives the random movement */
 }
-
-/* ── PSYCHOSIS ESCAPE BUTTON ────────────────────────────────────────────
-   Appears after ~5s on any [psychosis]-tagged passage.
-   Looks like an escape route but never actually escapes.
-   ────────────────────────────────────────────────────────────────────── */
-.psychosis-escape-btn {
-  position: fixed;
-  cursor: pointer;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 1s ease;
+/* smooth5 is the fake-escape link — hidden until JS reveals it after ~5s */
+tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
+  visibility: hidden;
+  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 2px rgba(255,255,255,0.4), 0 0 6px #000, 0 0 12px #000;
 }
-.psychosis-escape-btn.visible {
-  opacity: 1;
+/* Pin smooth5's link to VT323 at normal passage size — overrides breakdownfont 48px */
+tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link,
+tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:link,
+tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:hover {
+  font-size: 1.25rem !important;
+  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif !important;
+}
+/* termina for wandering hooks (smooth1–4) in psychosis rooms */
+tw-story[tags~="psychosis"] tw-hook[name="smooth1"],
+tw-story[tags~="psychosis"] tw-hook[name="smooth2"],
+tw-story[tags~="psychosis"] tw-hook[name="smooth3"],
+tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
+  font-family: 'termina', Arial, Helvetica, sans-serif;
+  font-size: 0.9rem !important; /* pin — overrides breakdownfont's 2.5em */
 }
 
 /* ── FLOATING IMAGES ────────────────────────────────────────────────────
@@ -377,9 +380,15 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth3"] {
    the screen. JS drives the movement — speed and range are configurable
    in Story JavaScript under startFloatingImages().
    ────────────────────────────────────────────────────────────────────── */
-.floating-img {
+/* #floating-layer sits between #bg-layer (z:-1) and tw-passage (z:100) */
+#floating-layer {
   position: fixed;
-  z-index: -1;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.floating-img {
+  position: absolute;
   pointer-events: none;
   width: clamp(80px, 10vw, 160px);
   border: none;
@@ -390,26 +399,150 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth3"] {
   50%       { opacity: 0.55; transform: scale(2.4); }
 }
 
+/* ── ERRATIC / PSYCHOSIS IMAGES ─────────────────────────────────────────
+   Use class="erratic-img" — starts hidden, pops in within 0–3s,
+   moves fast and jittery, glitch-flickers opacity and colour.
+   JS drives movement under startErraticImages().
+   ────────────────────────────────────────────────────────────────────── */
+.erratic-img {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  border: none;
+  width: clamp(60px, 8vw, 130px);
+  animation: erratic-flicker 1.8s steps(1) infinite;
+}
+@keyframes erratic-flicker {
+  0%   { opacity: 0.7;  filter: none; }
+  10%  { opacity: 0.1;  filter: invert(1) hue-rotate(90deg); }
+  11%  { opacity: 0.8;  filter: none; }
+  42%  { opacity: 0.45; filter: brightness(2.5); }
+  43%  { opacity: 0.65; filter: none; }
+  72%  { opacity: 0.9; }
+  86%  { opacity: 0.05; filter: invert(0.8); }
+  87%  { opacity: 0.7;  filter: none; }
+  100% { opacity: 0.7;  filter: none; }
+}
+
+/* ── CHROMATIC ABERRATION ────────────────────────────────────────────────
+   Applied to [psychosis]-tagged passages.
+   Text fringe spikes erratically using steps(1) for snap behavior.
+   ────────────────────────────────────────────────────────────────────── */
+tw-story[tags~="psychosis"] tw-passage {
+  font-family: 'nimbus-roman', Georgia, serif;
+  font-size: 1rem !important; /* rem escapes breakdownfont's 2.5em on tw-story */
+  animation: chromatic-ab 2.5s steps(1) infinite;
+  position: fixed !important;
+  width: 42vw !important;
+  max-width: 680px !important;
+  top: 8vh !important;
+  left: 5% !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+@keyframes chromatic-ab {
+  0%   { text-shadow: -2px 0 rgba(255,0,50,0.55),  2px 0 rgba(0,230,255,0.55); }
+  18%  { text-shadow: -5px 1px rgba(255,0,50,0.8),  5px -1px rgba(0,230,255,0.8); }
+  19%  { text-shadow: -1px 0 rgba(255,0,50,0.3),   1px 0 rgba(0,230,255,0.3); }
+  45%  { text-shadow: -3px 0 rgba(255,0,50,0.6),   3px 0 rgba(0,230,255,0.6); }
+  60%  { text-shadow: -8px 2px rgba(255,0,50,0.9), 8px -2px rgba(0,230,255,0.9); }
+  61%  { text-shadow: -2px 0 rgba(255,0,50,0.45),  2px 0 rgba(0,230,255,0.45); }
+  80%  { text-shadow: -4px 1px rgba(255,0,50,0.7), 4px -1px rgba(0,230,255,0.7); }
+  81%  { text-shadow: -1px 0 rgba(255,0,50,0.25),  1px 0 rgba(0,230,255,0.25); }
+  100% { text-shadow: -2px 0 rgba(255,0,50,0.55),  2px 0 rgba(0,230,255,0.55); }
+}
+
+/* ── ECHO / SHADOW TEXT ──────────────────────────────────────────────────
+   Tag: [echo] on a passage.
+   A ghosted ::before pseudo of the passage content sits offset, reading
+   differently — JS rewrites it with wrong-tense/wrong-subject text from
+   a data attribute. CSS handles the visual ghost; JS drives the content.
+   ────────────────────────────────────────────────────────────────────── */
+tw-story[tags~="echo"] tw-passage {
+  position: relative;
+}
+tw-story[tags~="echo"] tw-passage::before {
+  content: attr(data-echo);
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  color: rgba(255,255,255,0.18);
+  transform: translate(4px, 6px);
+  pointer-events: none;
+  white-space: pre-wrap;
+  font-size: inherit;
+  line-height: inherit;
+  animation: echo-drift 6s ease-in-out infinite;
+  z-index: 0;
+}
+tw-story[tags~="echo"] tw-passage > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes echo-drift {
+  0%, 100% { transform: translate(4px, 6px);   opacity: 0.18; }
+  40%       { transform: translate(7px, 10px);  opacity: 0.28; }
+  70%       { transform: translate(2px, 4px);   opacity: 0.12; }
+}
+
+/* ── DISSOLVING WORDS ────────────────────────────────────────────────────
+   Tag: [dissolve] on a passage.
+   JS wraps every word in a <span class="dw"> and randomly fades them
+   out after a delay, forcing the reader to fill gaps.
+   ────────────────────────────────────────────────────────────────────── */
+.dw {
+  display: inline;
+  transition: opacity 1.4s ease;
+}
+.dw.gone {
+  opacity: 0;
+}
+
+/* ── CONTRADICTING TEXT ──────────────────────────────────────────────────
+   Tag: [contradict] on a passage.
+   JS finds spans with data-contradict="alt text" and animates a
+   typewriter overwrite of selected words, then reverts, loops.
+   ────────────────────────────────────────────────────────────────────── */
+.ct-word {
+  display: inline;
+  position: relative;
+}
+.ct-alt {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(255, 80, 80, 0.85);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  transition: none;
+}
+
+/* ── CRRF BACKGROUND OVERLAY ─────────────────────────────────────────────
+   Full-screen background injected by (display:) sub-passage.
+   Usage: <div class="crrf-bg-overlay" style="background-image: url('...')"></div>
+   ────────────────────────────────────────────────────────────────────── */
+.crrf-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 /* ── BREATHING BACKGROUNDS ──────────────────────────────────────────────
    Background images are now handled by #bg-layer (injected via JS).
    tw-story is made transparent so the layer shows through.
    GIF backgrounds (insanity, static) are shown but don't breathe.
    ────────────────────────────────────────────────────────────────────── */
-html { background-color: #000; }
-body { background-color: transparent; }
 
 /* JS adds .has-bg-image to tw-story when a background image is active */
 tw-story.has-bg-image { background-color: transparent; background-image: none; }
 
-/* Darken the dreamlike gif background */
-tw-story[tags~="medbg"]::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  z-index: 0;
-  pointer-events: none;
-}
+
 
 
 #bg-layer {
@@ -435,16 +568,23 @@ tw-story[tags~="medbg"]::before {
   /* Brief recovery before next breath */
   100% { transform: scale(1.00); filter: brightness(1.00) saturate(1.00); }
 }
-/* Any solid-colour room with breathe tag gets this via JS adding .colour-breathe */
-tw-story.colour-breathe {
-  animation: colour-breathe 5s linear infinite;
+/* Solid-colour breathing — applied to #bg-layer so tw-story stays transparent */
+#bg-layer.colour-breathe {
+  animation: colour-breathe 8s ease-in-out infinite;
 }
 @keyframes colour-breathe {
-  0%   { filter: brightness(1.00) saturate(1.00); }
-  20%  { filter: brightness(1.12) saturate(1.18); }
-  28%  { filter: brightness(0.85) saturate(0.80) hue-rotate(-14deg); }
-  78%  { filter: brightness(0.50) saturate(0.45) hue-rotate(-40deg); }
-  100% { filter: brightness(1.00) saturate(1.00); }
+  /* resting blue */
+  0%   { background-color: #0029a3; }
+  /* sharp inhale — surges toward electric indigo */
+  18%  { background-color: #2200e0; }
+  /* brief hold at top */
+  28%  { background-color: #1a00b8; }
+  /* long slow exhale — drains toward deep navy-purple */
+  72%  { background-color: #08003a; }
+  /* near-black purple at deepest point */
+  82%  { background-color: #04001a; }
+  /* recovery */
+  100% { background-color: #0029a3; }
 }
 
 @keyframes fidget {
@@ -465,20 +605,13 @@ tw-story.colour-breathe {
 
 /* ============================================================
    PASSAGE DECOR — styles for layered atmospheric text
-   (intrusions + periphery + slab layout)
    You do not need to edit this CSS — configure in Story JavaScript
    ============================================================ */
-
-/* Prose sits above the floating decor text */
-tw-passage {
-  position: relative;
-  z-index: 100;
-}
 
 /* Intrusion voice — large ghostly words floating in negative space */
 .lp-intrusion {
   position: fixed;
-  font-family: "Roboto", sans-serif;
+  font-family: 'nimbus-roman', Georgia, serif;
   font-style: normal;
   font-size: clamp(44px, 6vw, 92px);
   line-height: 1.0;
@@ -492,21 +625,34 @@ tw-passage {
   white-space: pre-line;
 }
 
-/* Periphery voice — tiny uppercase label fragments at the edges */
-.lp-periphery {
-  position: fixed;
-  font-family: "VT323", monospace;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.88);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  pointer-events: none;
-  z-index: 9988;
-  text-shadow: 0 0 14px #000, 0 0 6px #000;
-  opacity: 1;
-}
+/* ── FONT COMBINATION RANDOMISER ─────────────────────────────────────────
+   JS picks one of 4 combos on each passage load.
+   Excluded: [titlescreen], [psychosis], UI buttons, intrusions.
+   All link effects (fidget, glow, flicker) are inherited — only font-family changes.
+   ────────────────────────────────────────────────────────────────────── */
+tw-story.font-combo-1 { font-family: 'nimbus-roman', Georgia, serif; }
+tw-story.font-combo-1 tw-link,
+tw-story.font-combo-1 tw-link:link,
+tw-story.font-combo-1 .game-link { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-1 .dialogue { font-family: 'logic-monospace', monospace; }
 
-body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto; }
+tw-story.font-combo-2 { font-family: 'termina', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-2 tw-link,
+tw-story.font-combo-2 tw-link:link,
+tw-story.font-combo-2 .game-link { font-family: 'nimbus-roman', Georgia, serif; font-size: 1.5em; }
+tw-story.font-combo-2 .dialogue { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+
+tw-story.font-combo-3 { font-family: 'logic-monospace', monospace; }
+tw-story.font-combo-3 tw-link,
+tw-story.font-combo-3 tw-link:link,
+tw-story.font-combo-3 .game-link { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-3 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
+
+tw-story.font-combo-4 { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-4 tw-link,
+tw-story.font-combo-4 tw-link:link,
+tw-story.font-combo-4 .game-link { font-family: 'termina', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
 
 /**
  * Harlowe Audio Library (HAL), by Chapel, v2.3.0
@@ -522,9 +668,33 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
 ;!function(e){(jQuery.browser=jQuery.browser||{}).mobile=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(e)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(e.substr(0,4))}(navigator.userAgent||navigator.vendor||window.opera),function(){"use strict";window.Fast={filter:function(e,t){for(var o=e.length,n=[],a=0;a<o;a++)t(e[a],a,e)&&n.push(e[a]);return n},forEach:function(e,t){for(var o=e.length,n=0;n<o;n++)t(e[n],n,e)},map:function(e,t){for(var o=e.length,n=new Array(o),a=0;a<o;a++)n[a]=t(e[a],a,e);return n},find:function(e,t){for(var o=e.length,n=0;n<o;n++)if(t(e[n],n,e))return e[n]},findIndex:function(e,t){for(var o=e.length,n=0;n<o;n++)if(t(e[n],n,e))return n;return-1},some:function(e,t){for(var o=e.length,n=0;n<o;n++)if(t(e[n],n,e))return!0;return!1}}}(),window.Chapel=window.Chapel||{},window.Chapel.options={preload:!0,loadDelay:0,muteOnBlur:!0,startingVol:.5,persistPrefs:!0,globalA:!0,showControls:!0,sidebarStartClosed:!0,volumeDisplay:!1,trackLoadLimit:500,totalLoadLimit:8e3,debug:!1},window.Chapel.debug=function(){Chapel.options.debug&&console.log.apply(null,arguments)},function(){"use strict";var n=$("tw-storydata"),o=/(.+?):(.+)/,t=/[\r\n]+/,a=/^["']/,r=/["']$/;function e(e){return Fast.map(Fast.filter(e.split(t),function(e){return e&&e.trim()&&e.includes(":")}),function(e){return e.trim()})}function i(e){return e.trim().replace(a,"").replace(r,"").trim()}function s(e){var t=e.match(o);return t instanceof Array?{key:i(t[1]),value:i(t[2])}:e}var u,l,c,p=n.find('tw-passagedata[name="hal.tracks"]'),d=null,p=(p.length&&(p=e(p.text()),u=[],l=[],Fast.forEach(p,function(e){var e=s(e);"string"==typeof e&&l.push(e),u.push([e.key,(e=e.value,Fast.map(e.split(","),i))])}),l.length&&console.error("Some track definitions could not be parsed:\n"+l.join("\n")+"\nPlease check these definitions and try again."),d=new Map(u)),n.find('tw-passagedata[name="hal.config"]')),m=null;function f(e){var t=n.attr("format-version");if(e)return t;var e=t.split("."),t=e[0],o=e[1],e=e[2],t=Number(t),o=Number(o);return[t=(t=Number.isNaN(t)?3:t)<1?3:t,o=Number.isNaN(o)?3:o,e=Number.isNaN(e)?0:e]}function h(){var e=f();return!(3<=e[0]&&3<=e[1])}function g(t){return function(){var e=[].slice.call(arguments).slice(1),e=t.apply(null,e);return"string"==typeof e||"boolean"==typeof e||"number"==typeof e?e:""}}p.length&&(p=e(p.text()),c={},Fast.forEach(Fast.map(p,function(e){return s(e)}),function(e){c[e.key]=e.value}),m=c),m&&Fast.forEach(Object.keys(m),function(e){var t=e,o=c[e],e=typeof Chapel.options[e];"boolean"==e?"true"===o?Chapel.options[t]=!0:"false"===o&&(Chapel.options[t]=!1):"number"==e?(o=Number(o),Number.isNaN(o)||(Chapel.options[t]=o)):"string"==e&&o&&(Chapel.options[t]=o)});var y=require("macros");if(window.Chapel=window.Chapel||{},window.Chapel.Macros={add:function(o){o&&"object"==typeof o&&Fast.forEach(Object.keys(o),function(e){var t;t=o[e=e],h()?y.add(e,g(t),y.TypeSignature.zeroOrMore(y.TypeSignature.Any)):y.add(e,"Any",g(t),y.TypeSignature.zeroOrMore(y.TypeSignature.Any))})}},window.Chapel.Get=Object.freeze({version:f(),isHarlowe3OrLater:3<=f()[0],storyTitle:n.attr("name"),IFID:n.attr("ifid"),useOldMacroAPI:h(),fromPassage:d}),Chapel.debug("Harlowe Version -> ",Chapel.Get.version.join(".")),Chapel.debug("Harlowe Major Version -> ",Chapel.Get.version[0]),Chapel.debug("Story Title -> ",Chapel.Get.storyTitle),Chapel.debug("Story IFID -> ",Chapel.Get.IFID),Chapel.Get.version[0]<2)throw new Error("The Harlowe Audio Library is only designed to work with Harlowe 2 and 3; you appear to be using Harlowe 1 or an otherwise invalid story format.","get.js -> initialization",176);Chapel.options.storagekey="%%hal-"+Chapel.Get.IFID+"-{"+Chapel.Get.storyTitle+"}",Chapel.debug("Storage Key -> ",Chapel.options.storagekey)}(),function(){"use strict";var t=Chapel.options,e=function(e,t){if(window.localStorage)try{e=""+e,"string"!=typeof t&&(t=JSON.stringify(t)),window.localStorage.setItem(e,t)}catch(e){console.error(e)}},o=function(e){if(window.localStorage)try{return e=""+e,window.localStorage.getItem(e)}catch(e){console.error(e)}},n=function(e){if(window.localStorage)try{e=""+e,window.localStorage.removeItem(e)}catch(e){console.error(e)}},a={loaded:[],classes:{},master:{volume:t.startingVol,mute:!1},groups:{playing:[],looping:[],custom:{}},mute:function(e){a.master.mute=!!e,$(document).trigger({type:":master-mute",mute:!!e})},isMuted:function(){return!!a.master.mute},volume:function(e){e=Number(e),Number.isNaN(e)||(1<e?e=1:e<0&&(e=0),a.master.volume=e),$(document).trigger({type:":master-volume",volume:e})},getVolume:function(){return a.master.volume},stopAll:function(){a.classes.Track&&Fast.forEach(a.classes.Track.list,function(e){e.stop()})},audioPlaying:function(){return!!a.groups.playing.length},savePrefs:function(){e(t.storagekey,a.master)},loadPrefs:function(){var e=o(t.storagekey);e&&"object"==typeof e&&e.hasOwnProperty("volume")&&"number"==typeof e.volume&&e.hasOwnProperty("mute")&&"boolean"==typeof e.volume&&(delete a.master,a.master=e)},clearPrefs:function(){n(t.storagekey)}},r={track:[":available",":loaded",":play",":stop",":mute",":volume"],master:[":master-mute",":master-volume"]};var i=r.track.concat(r.master);function s(e,t){if(!e||"string"!=typeof e||!e.trim())return null;e=Fast.filter(Fast.map(e.split(" "),function(e){return(e=":"!==(e=e.split(".")[0])[0]?":"+e:e)+".userland"}),function(e){return(t?i:r.track).includes(e)}).join(" ");return e&&e.trim()?e:null}a.data={parseEvent:s,bail:function(e){throw new Error(e,"audio.js -> bail()",140)}},a.on=function(e,t){t&&"function"==typeof t?(e=s(e,!0))&&$(document).on(e,t):console.error("Chapel.Audio.on() -> invalid callback")},a.one=function(e,t){t&&"function"==typeof t?(e=s(e,!0))&&$(document).one(e,t):console.error("Chapel.Audio.one() -> invalid callback")},a.off=function(e){(e=s(e,!0))&&$(document).off(e)},t.persistPrefs&&($(document).on(":master-mute",a.savePrefs),$(document).on(":master-volume",a.savePrefs)),$(document).on(":play",function(e){e.track.addToGroup("playing")}),$(document).on(":stop",function(e){e.track.removeFromGroup("playing")}),t.muteOnBlur&&$(window).on("blur",function(){a.isMuted()||(a.mute(!0),$(window).one("focus",function(){a.mute(!1)}))}),a.parseEvent=s,window.Chapel=window.Chapel||{},window.Chapel.Audio=a}(),function(){"use strict";var a=Chapel.Audio,o=a.data.pareEvent,r=a.data.bail,i=Chapel.options,t=$(document.createElement("div")).attr("id","audio-container").css("display","none").appendTo(document.body),s={aac:"audio/aac",caf:"audio/x-caf","x-caf":"audio/x-caf",mp3:'audio/mpeg; codecs="mp3"',mpeg:'audio/mpeg; codecs="mp3"',m4a:"audio/mp4",mp4:"audio/mp4","x-m4a":"audio/mp4","x-mp4":"audio/mp4",oga:"audio/ogg",ogg:"audio/ogg",opus:'audio/ogg; codecs="opus"',wav:"audio/wav",wave:"audio/wav",weba:"audio/webm",webm:"audio/webm"};function u(e,t,o){this instanceof u||r("Track: called without `new` operator"),e||r("Track: no id specified"),"string"!=typeof e&&r("Track: track id is not a string"),t&&(!Array.isArray(t)||t.length)||r("Track: no sources specified"),o?t=[].slice.call(arguments).slice(1):"string"==typeof t&&(t=[t]);var n=$(document.createElement("audio"));Fast.forEach(t,function(e){$(document.createElement("source")).attr({src:e,type:(e=(e=(e=(e=(e=e).split("."))[e.length-1]).includes("?")?e.split("?")[0]:e).toLowerCase().trim(),Object.keys(s).includes(e)||r('Track: unsupported file type "'+e+'"'),s[e])}).appendTo(n)}),n.attr({"data-track":"id","data-volume":1,"data-mute":!1}).one("canplaythrough.hal",function(){a.loaded.push(e)}),i.preload&&n.attr("preload","auto"),n[0].volume=+a.master.volume,this.id=e,this.$el=n,this.unwrap=n[0],this.sources=t}Object.assign(u,{list:[],is:function(e){return e instanceof u},has:function(t){return Fast.some(u.list,function(e){return e.id===t})},emit:function(e,t){$(document).trigger({type:e,track:t}),t.emit(e)},add:function(e,t,o){var n=new u(e,t=o?[].slice.call(arguments).slice(1):t);return u.list.push(n),n.$el.on("canplay",function(){u.emit(":available",n)}),n.$el.on("canplaythrough",function(){u.emit(":loaded",n)}),n.attach(),n},renew:function(){Fast.forEach(u.list,function(e){e.mute(e.isMuted()),e.volume(e.getVolume())})},getIdx:function(t){return Fast.findIndex(u.list,function(e){return e.id===t})},get:function(t){var e=Fast.find(u.list,function(e){return e.id===t});if(e)return e;throw new ReferenceError('There is no track with the id "'+t+'". Please check your spelling and capitalization.',"track.js -> Track.get()",155)},removeFromDOM:function(e){(e="string"==typeof e?u.get(e):e)&&u.is(e)?e.unattach():t.remove()},_runOnMultiple:function(e,t,o){e instanceof Array&&u.prototype.hasOwnProperty(t)&&Fast.forEach(e,function(e){(e=u.is(e)?e:u.get(e)||null)&&e[t].apply(e,o&&o instanceof Array?o:[])})}}),Object.assign(u.prototype,{constructor:u,emit:function(e){this.$el.trigger({type:e,track:this})},clone:function(){return new u(this.id,this.sources)},isAttached:function(){return $.contains(t[0],this.unwrap)},attach:function(){return this.isAttached()||this.$el.appendTo(t),this},unattach:function(){return this.isAttached()&&this.$el.remove(),this},isPlaying:function(){return!this.unwrap.paused},play:function(){var e=this;return this.unwrap.play(),u.emit(":play",this),this.$el.on("ended",function(){e.unwrap.loop||(e.unwrap.currentTime=0,u.emit(":stop",e))}),this},playWhenPossible:function(){var t=this;return this.unwrap.play().then(function(){u.emit(":play",t),t.$el.on("ended",function(){t.unwrap.loop||(t.unwrap.currentTime=0,u.emit(":stop",t))})},function(e){$(document).one("click mousedown keydown touchstart",function(){t.play()})}).catch(function(e){console.error(e)}),this},forcePlay:function(){var e=this,t=$(document.createElement("a")).css("display","none").appendTo(document.body).on("click",function(){e.play()});setTimeout(function(){t.trigger("click")},safeAudioStart)},pause:function(){return this.unwrap.pause(),u.emit(":pause",this),this},stop:function(){return this.unwrap.pause(),this.unwrap.currentTime=0,u.emit(":stop",this),this},mute:function(e){return this.$el.attr("data-mute",e=!!e),a.master.mute?this.unwrap.muted=!0:this.unwrap.muted=e,u.emit(":mute",this),this},isMuted:function(){var e=this.$el.attr("data-mute");return"boolean"==typeof e?e:"false"!==e},toggleMute:function(){return this.mute(!this.isMuted()),this},volume:function(e){return e=Number(e),Number.isNaN(e)||(1<e?e=1:e<0&&(e=0),this.$el.attr("data-volume",e),this.unwrap.volume=e*a.master.volume),u.emit(":volume",this),this},getVolume:function(){return Number(this.$el.attr("data-volume"))},addToGroup:function(e,t){var o=this,t=(t?a.groups.custom:a.groups)[e];return Fast.some(t,function(e){return o.id===e.id})||t.push(this),this},removeFromGroup:function(e,t){var o=this,t=(t?a.groups.custom:a.groups)[e],e=Fast.findIndex(t,function(e){return e.id&&e.id===o.id});return t.splice(e,1),this},loop:function(e){return this.unwrap.loop=!!e,this.unwrap.loop?this.addToGroup("looping"):this.removeFromGroup("looping"),this},isLooping:function(){return!!this.unwrap.loop},toggleLoop:function(){return this.loop(!this.isLooping()),this},seek:function(e){return e<0?e=this.unwrap.duration-e:e>this.unwrap.duration&&(e=this.unwrap.duration),this.unwrap.currentTime=e,this},fadeIn:function(e){var t=this,o=(e=e||1,this.getVolume());return this.volume(0),this.play(),this.$el.animate({volume:o*a.master.volume},1e3*e,function(){t.volume(o),u.emit(":volume",t),u.emit(":fade",t)}),this},fadeOut:function(e){e=e||1;var t=this,o=this.getVolume();return this.$el.animate({volume:0},1e3*e,function(){t.stop(),t.volume(o),u.emit(":volume",t),u.emit(":fade",t)}),this},fadeTo:function(e,t){var o=this;if(e=e||1,t=Number(t),!Number.isNaN(t))return 1<t?t=1:t<0&&(t=0),this.$el.animate({volume:t*a.master.volume},1e3*e,function(){o.volume(t),u.emit(":volume",o),u.emit(":fade",o)}),this;alert("ivalid volume level")},delay:function(e,t){var o=this;"function"==typeof t&&(e=Number(e),(Number.isNaN(e)||e<0)&&(e=0),setTimeout(function(){t.call(o,o,e)},e))},on:function(e,t){if(!t||"function"!=typeof t)return console.error("<track>.on() -> invalid callback"),this;(e=o(e))&&this.$el.on(e,t)},one:function(e,t){if(!t||"function"!=typeof t)return console.error("<track>.one() -> invalid callback"),this;(e=o(e))&&this.$el.one(e,t)},off:function(e){(e=o(e))&&this.$el.off(e)}}),a.classes.Track=u,a.newTrack=function(){try{return u.add.apply(null,arguments)}catch(e){console.error(e.message),alert("Error in A.newTrack() -> see the console for more information.")}},a.track=function(e){try{return u.get(e)}catch(e){console.error(e.message),alert("Error in A.track() -> see the console for more information.")}},$(document).on(":master-mute",u.renew),$(document).on(":master-volume",u.renew)}(),function(){"use strict";var n=Chapel.Audio,a=n.classes.Track,o=(n.data._extend,/(play)?list:(.+)/i);n.createGroup=function(e,t,o){o=o?[].slice.call(arguments).slice(1):t;t=e,(e=o)&&Array.isArray(e)||(e=[]),n.groups.custom[t]=Fast.map(e,function(e){return a.get(e)})},n.group=function(e){if(!(this instanceof n.group))return new n.group(e);if(Object.keys(n.groups.custom).includes(e))this.members=n.groups.custom[e];else{if(!(n.groups[e]&&n.groups[e]instanceof Array))throw new ReferenceError('There is no group with the id "'+id+'". Please check your spelling and capitalization.',"group.js -> A.group()",29);this.members=n.groups[e]}var t;o.test(e)&&(t=e.match(o)[2])&&t.trim()&&(this.members=n.playlist(t).tracks),Array.isArray(this.members)||(this.members=[],console.error('Could not find members for track group "'+e+'"!'))},Object.assign(n.group,{is:function(e){return this instanceof n.group},_runOnAll:function(e,t,o,n){null!=n?o=[].slice.call(arguments).slice(2):o instanceof Array||(o=[o]);n=[e.members,t,o];a._runOnMultiple.apply(null,n)}}),Object.assign(n.group.prototype,{constructor:n.group,_run:function(){n.group._runOnAll.apply(null,[this].concat([].slice.call(arguments)))},play:function(){return this._run("play"),this},pause:function(){return this._run("pause"),this},stop:function(){return this._run("stop"),this},mute:function(e){return this._run("mute",e),this},volume:function(e){return this._run("volume",e),this},loop:function(e){return this._run("loop",e),this}})}(),function(){"use strict";var e=Chapel.Audio,a=e.classes.Track;e.data._extend;function n(e,t){if(!(this instanceof n))return new n(e,t);this.id=e,this.tracks=t.map(function(e){return a.get(e)}),this.looping=!1,this.current="",this.playing=!1}Object.assign(n,{list:{},is:function(e){return e instanceof n},add:function(e,t,o){return o&&(t=[].slice.call(arguments).slice(1)),n.list[e]=new n(e,t),n.list[e]},_runOnAll:function(e,t,o,n){null!=n?o=[].slice.call(arguments).slice(2):o instanceof Array||(o=[o]);n=[e.tracks,t,o];a._runOnMultiple.apply(null,n)}}),Object.assign(n.prototype,{constructor:n,clone:function(){return new n(this.id,this.tracks.map(function(e){return e.id}))},_run:function(){n._runOnAll.apply(null,[this].concat([].slice.call(arguments)))},volume:function(e){return this._run("volume",e),this},mute:function(e){return this._run("mute",e),this},shuffle:function(){for(var e,t,o=this.tracks,n=o.length-1;0<n;n--)e=Math.floor(Math.random()*(n+1)),t=o[n],o[n]=o[e],o[e]=t;return this.tracks=o,this},random:function(){return this.tracks[Math.floor(Math.random()*this.tracks.length)]},isPlaying:function(){return this.playing},nowPlaying:function(){return a.get(this.current)},play:function(e){var t=this;if((e=e||(t.current?Fast.findIndex(t.tracks,function(e){return e.id===t.current}):0))>=t.tracks.length&&t.looping)e=0;else if(e>=t.tracks.length)return t.current="",void(t.playing=!1);var o=t.tracks[e],n=o.isLooping();return o.loop(!1),o.play(),t.playing=!0,setTimeout(function(){o.isPlaying()||(t.playing=!1)},20),t.current=o.id,o.$el.one("ended.playlist",function(){e++,o.loop(n),t.play(e)}),t},loop:function(e){return this.looping=!!e,this},isLooping:function(){return this.looping},stop:function(){var e;return this.current&&this.isPlaying()?(e=this.nowPlaying())&&(e.stop(),e.$el.off(".playlist")):this._run("stop"),this.current="",this.playing=!1,this},pause:function(){var e;return this.current&&this.isPlaying()&&((e=this.nowPlaying())&&e.pause()),this.playing=!1,this}}),e.classes.Playlist=n,e.createPlaylist=function(){try{n.add.apply(null,arguments)}catch(e){console.error(e.message),alert("Error in A.createPlaylist() -> see the console for more information.")}},e.playlist=function(e){try{var t=n.list[e]||null;if(t)return t;throw new ReferenceError('There is no playlist with the id "'+e+'". Please check your spelling and capitalization.',"list.js -> A.playlist()",171)}catch(e){console.error(e.message),alert("Error in A.createPlaylist() -> see the console for more information.")}}}(),function(){"use strict";var t=Chapel.Audio,o=t.classes.Track,n=t.classes.Playlist;function a(t,o){if("object"!=typeof o)throw new TypeError("Invalid extension.","extensions.js -> _extend()",8);Fast.forEach(Object.keys(o),function(e){if(void 0!==t[e])throw new Error('Invalid extension: cannot clobber existing property "'+e+'".',"extensions.js -> _extend()",8);t[e]=o[e]})}t.extend=function(e){a(Audio,e)},o.extend=function(e){a(o,e)},o.extendPrototype=function(e){a(o.prototype,e)},t.extendTrack=o.extend,t.extendTrackProto=o.extendPrototype,t.group.extend=function(e){a(t.group,e)},t.group.extendPrototype=function(e){a(t.group.prototype,e)},t.extendGroup=t.group.extend,t.extendGroupProto=t.group.extendPrototype,n.extend=function(e){a(n,e)},n.extendPrototype=function(e){a(n.prototype,e)},t.extendPlaylist=n.extend,t.extendPlaylistProto=n.extendPrototype}(),function(){"use strict";var e,t,o,n,a,r,i,s=Chapel.options;s.showControls&&(e=$(document.createElement("div")).attr("id","story-menu").css("display","none"),t=$(document.createElement("span")).attr("id","vol-title").append("Volume"),s.volumeDisplay||t.css("display","none"),o=$(document.createElement("input")).attr({id:"audio-volume",type:"range",min:1,max:99,step:1,title:"Volume"}).addClass("hal"),(a=Math.trunc(100*window.Chapel.Audio.master.volume))<0?a=0:100<a&&(a=100),o.attr("value",a),n=function(e){void 0===e&&(e=o.val()),t.empty().append("Volume "+e)},o.on("input",function(){window.Chapel.Audio.volume($(this).val()/100),n($(this).val())}),a=$(document.createElement("tw-link")).attr({id:"audio-mute",title:"Mute"}).append("Mute <span></span>").on("click",function(e){e.preventDefault(),$(this).toggleClass("muted"),Chapel.Audio.mute(!Chapel.Audio.isMuted())}),Chapel.Audio.isMuted()&&a.addClass("muted"),r=$(document.createElement("tw-link")).attr("id","audio-panel-toggle").on("click",function(e){e.preventDefault(),i.toggleClass("closed")}),i=$(document.createElement("div")).attr("id","audio-controls").append(e,t,o,a,r).appendTo(document.body),s.sidebarStartClosed&&i.addClass("closed"),window.Chapel=window.Chapel||{},window.Chapel.Audio=window.Chapel.Audio||{},window.Chapel.Audio.controls={$panel:i,$volume:o,$mute:a,$user:e,close:function(){i.addClass("closed")},open:function(){i.removeClass("closed")},toggle:function(){i.toggleClass("closed")},hide:function(){i.css("display","none")},show:function(){i.css("display","block")},updateVolume:n})}(),function(){"use strict";var s=Chapel.options,t=State,e=$(document.createElement("div")).attr("id","audio-overlay").css("display","none").appendTo(document.body);function o(){e.css("display","block").append('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>')}function u(){e.fadeOut(function(){e.empty()})}window.Chapel=window.Chapel||{},window.Chapel.Audio=window.Chapel.Audio||{},window.Chapel.Audio.loadScreen={show:o,dismiss:u,kill:function(){$("#audio-overlay").remove()}},window.Chapel.Audio.$overlay=e,window.Chapel.Audio.preload=function(){var a,e,r,i;Chapel.debug("This is a mobile browser -> ",$.browser.mobile),t.pastLength||t.futureLength||$.browser.mobile||($(document).ready(function(){o()}),a=100+s.loadDelay,e=Chapel.Audio.classes.Track.list,r=Chapel.Audio.loaded,e.length?(i=Fast.map(e,function(e){return e.id}),0<s.totalLoadLimit&&setTimeout(function(){u()},s.totalLoadLimit),function e(){var t,o,n;i.length?(t=i.shift(),r.includes(t)?e():(o=Chapel.Audio.classes.Track.get(t)).unwrap.readyState<2?(n=!1,o.$el.one("canplaythrough.hal",function(){e(),n=!0}),setTimeout(function(){n||(o.$el.off("canplaythrough.hal"),e())},s.trackLoadLimit)):(r.includes(t)||r.push(t),e())):setTimeout(u,a)}()):setTimeout(u,a))}}(),function(){"use strict";var e,t,o=Chapel.options.storagekey+"_hal_restart_",n=(Chapel.debug("HAL Session Key -> ",o),window.sessionStorage?(Chapel.debug("Session Storage Available"),e=function(e,t){window.sessionStorage.setItem(o+e,t)},t=function(e){return window.sessionStorage.getItem(o+e)}):(Chapel.debug("Session Storage Unavailable"),e=function(){},t=function(){},console.warn("Session storage is unavailable...")),{save:e,load:t});window.Chapel.Audio.state={_store:n,saveTracks:function(){var e;try{e=Fast.map(Chapel.Audio.classes.Track.list,function(e){return{id:e.id,sources:e.sources}}),Chapel.debug("Session Saved (Tracks) -> ",e),e=JSON.stringify(e),n.save("tracks",e)}catch(e){console.error(e.message)}},loadTracks:function(){var e;try{e=(e=n.load("tracks"))&&JSON.parse(e),Array.isArray(e)&&e.length&&(Chapel.debug("Session Loaded (Tracks) -> ",e),Fast.forEach(e,function(e){e.id&&e.sources&&!Chapel.Audio.classes.Track.has(e.id)?Chapel.Audio.newTrack.apply(null,[e.id].concat(e.sources)):Chapel.debug("Track reloading skipped.")}))}catch(e){console.error(e.message)}},savePlaylists:function(){try{var o=Chapel.Audio.classes.Playlist.list,e=Fast.map(Object.keys(o),function(e){var t={};return t.tracks=Fast.map(o[e].tracks,function(e){return e.id}),t.id=o[e].id,t});Chapel.debug("Session Saved (Playlists) -> ",e),e=JSON.stringify(e),n.save("playlists",e)}catch(e){console.error(e.message)}},loadPlaylists:function(){var e;try{(e=(e=n.load("playlists"))&&JSON.parse(e))&&Array.isArray(e)&&e.length&&(Chapel.debug("Session Loaded (Playlists) -> ",e),Fast.forEach(e,function(e){e.id&&e.tracks&&Chapel.Audio.createPlaylist(e.id,e.tracks)}))}catch(e){console.error(e.message)}},saveGroups:function(){var t;try{t={},Fast.forEach(Object.keys(Chapel.Audio.groups.custom),function(e){t[e]=Fast.map(Chapel.Audio.groups.custom[e],function(e){return"string"==typeof e?e:e.id})}),Chapel.debug("Session Saved (Groups) -> ",t),t=JSON.stringify(t),n.save("groups",t)}catch(e){console.error(e.message)}},loadGroups:function(){var t;try{(t=(t=n.load("groups"))&&JSON.parse(t))&&"object"==typeof t&&(Chapel.debug("Session Loaded (Groups) -> ",t),Fast.forEach(Object.keys(t),function(e){Fast.map(t[e],function(e){return Chapel.Audio.classes.Track.get(e)})}),Chapel.Audio.groups.custom=t)}catch(e){console.error(e.message)}}}}(),function(){"use strict";var e=Chapel.options;e.globalA&&void 0===window.A&&(Chapel.debug("Created global A interface."),window.A=window.Chapel.Audio),Chapel.Get.fromPassage&&(Chapel.debug("Loading tracks from track def special passage -> ",Chapel.Get.fromPassage),Chapel.Get.fromPassage.forEach(function(e,t){Chapel.Audio.newTrack.apply(null,[t].concat(e))})),$(document).on("unload",function(){Chapel.debug("User Prefs Saved"),window.Chapel.Audio.savePrefs()}),Chapel.Audio.classes.Track.renew(),Chapel.Audio.controls&&Chapel.Audio.controls.updateVolume(),Chapel.Get.isHarlowe3OrLater&&($(window).on("unload",function(){Chapel.debug("HAL State Saved"),Chapel.Audio.state.saveTracks(),Chapel.Audio.state.savePlaylists(),Chapel.Audio.state.saveGroups()}),Chapel.debug("HAL State Loaded"),Chapel.Audio.state.loadTracks(),Chapel.Audio.state.loadPlaylists(),Chapel.Audio.state.loadGroups()),e.persistPrefs&&(Chapel.debug("User Prefs Loaded"),Chapel.Audio.loadPrefs())}(),function(){"use strict";var i,s,e,u,t;Chapel.options.showControls&&(i=Engine,s=Chapel.Audio.controls.$user,e=function(){return"none"!==s.css("display")},u=function(){return e()||s.css("display","block"),s},t=function(){return e()&&s.css("display","none"),s},Chapel.Audio.menu={hide:t,show:u,isShown:e,links:{add:function(e,t,o){var n,a;if(!e||"string"!=typeof e)return r="undefined",alert(r),void console.error(r);o||"function"!=typeof t?(t&&"string"==typeof t&&(n=t),o&&"function"==typeof o&&(a=o)):(a=t,n=null);var r=$(document.createElement("tw-link")).append(e).attr({tabindex:"0",name:e.toLowerCase().trim()}).on("click",function(){n&&i.goToPassage(n),a&&a()}).addClass("story-menu").appendTo(s);return u(),r},clear:function(){return s.empty(),t()},hide:function(e){e=e.toLowerCase().trim(),$('tw-link.story-menu[name="'+e+'"]').addClass("hide")},show:function(e){e=e.toLowerCase().trim(),$('tw-link.story-menu[name="'+e+'"]').removeClass("hide")},toggle:function(e){e=e.toLowerCase().trim(),$('tw-link.story-menu[name="'+e+'"]').toggleClass("hide")},remove:function(e){e=e.toLowerCase().trim(),$('tw-link.story-menu[name="'+e+'"]').remove()}}})}(),function(){"use strict";var n=Chapel.Audio;function o(e){return e&&"function"==typeof e}function a(e,t){if(!e||"string"!=typeof e)return null;switch(e=e.toLowerCase().trim()){case"isplaying":e="isPlaying";break;case"playwhenpossible":e="playWhenPossible";break;case"ismuted":e="isAMuted";break;case"togglemute":e="toggleMute";break;case"getvolume":e="getVolume";break;case"islooping":e="isLooping";break;case"toggleloop":e="toggleLoop";break;case"fadein":e="fadeIn";break;case"fadeout":e="fadeOut";break;case"fadeto":e="fadeTo";break;case"stopall":e="stopAll"}if("isPlaying"===e&&"master"===t&&(e="audioPlaying"),"group"===t){if(o(n.group.prototype[e]))return e}else if("master"===t){if(o(n[e]))return e}else if(o(n.classes[t].prototype[e]))return e;throw new ReferenceError('Cannot run the command: "'+e+'" on the API "'+t+'". The command may be invalid, or this may be a bug in HAL.',"macros.js -> getCommand()",10)}window.Chapel.Macros.add({newtrack:function(){var e=[].slice.call(arguments);try{return n.newTrack.apply(null,e)}catch(e){alert("Error in the (newtrack:) macro: "+e.message)}},newplaylist:function(e,t){t=[].slice.call(arguments).slice(1);try{return n.createPlaylist(e,t)}catch(e){alert("Error in the (newplaylist:) macro: "+e.message)}},newgroup:function(e,t){t=[].slice.call(arguments).slice(1);try{return n.createGroup(e,t)}catch(e){alert("Error in the (newgroup:) macro: "+e.message)}},masteraudio:function(e){try{return e=a(e,"master"),n[e].apply(null,[].slice.call(arguments).slice(1))}catch(e){alert("Error in the (masteraudio:) macro: "+e.message)}},track:function(e,t){try{var o=n.track(e);return o[t=a(t,"Track")].apply(o,[].slice.call(arguments).slice(2))}catch(e){alert("Error in the (track:) macro: "+e.message)}},playlist:function(e,t){try{var o=n.playlist(e);return o[t=a(t,"Playlist")].apply(o,[].slice.call(arguments).slice(2))}catch(e){alert("Error in the (playlist:) macro: "+e.message)}},group:function(e,t){try{var o=n.group(e);return o[t=a(t,"group")].apply(o,[].slice.call(arguments).slice(2))}catch(e){alert("Error in the (group:) macro: "+e.message)}}})}();
 /** End of HAL code */
 
+/* ── RELIABLE PASSAGE NAME TRACKING ─────────────────────────────────────
+   Harlowe 3 does not expose State.passage or Engine.passage as stable
+   globals. We track the current passage by monkey-patching Engine.goToPassage
+   so every link click / (goto:) macro updates window._currentPassageName.
+   The start passage is captured inside the decor MutationObserver below.
+   ────────────────────────────────────────────────────────────────────── */
+(function () {
+  window._currentPassageName = null;
+  function patchEngine() {
+    if (!window.Engine || typeof Engine.goToPassage !== 'function') return;
+    if (Engine.goToPassage._lp_patched) return; /* don't double-patch */
+    var _orig = Engine.goToPassage;
+    Engine.goToPassage = function (name) {
+      window._currentPassageName = name;
+      return _orig.apply(this, arguments);
+    };
+    Engine.goToPassage._lp_patched = true;
+  }
+  patchEngine();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', patchEngine);
+  }
+})();
+
 /* ════════════════════════════════════════════════════════════════════
    PASSAGE DECOR ENGINE — do not edit this file
-   Edit your decor text in the [decor] passages instead (e.g. "GP decor")
+   Edit your decor text in the [decor] passages instead (e.g. "GP Office 2 decor")
    ════════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -553,15 +723,6 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     { top: '52%',    right: '28%' },
     { bottom: '28%', left: '30%'  }
   ];
-  var PERIPHERY_SLOTS = [
-    { top: '34%',    left: '8%'   },
-    { top: '58%',    left: '5%'   },
-    { top: '4%',     right: '32%' },
-    { bottom: '32%', left: '6%'   },
-    { top: '78%',    right: '36%' },
-    { top: '48%',    right: '6%'  }
-  ];
-
   /* Build the decor config by reading all [decor]-tagged passages.
      Each passage should be named "{Passage Name} decor" with tag [decor].
      This runs once the first time a passage loads. */
@@ -588,10 +749,7 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
         slab = lines.shift().replace(/^slab:\s*/i, '').trim();
       }
 
-      /* Split on --- to separate intrusions (big) from periphery (small) */
-      var sepIdx = lines.indexOf('---');
-      var intrusionLines = sepIdx === -1 ? lines       : lines.slice(0, sepIdx);
-      var peripheryLines = sepIdx === -1 ? []          : lines.slice(sepIdx + 1);
+      var intrusionLines = lines;
 
       /* All intrusion lines become ONE floating paragraph.
          If the last line is just "| size", it sets the size for the whole block. */
@@ -608,18 +766,19 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
         ? [Object.assign({ text: paragraphText, fontSize: fontSize }, INTRUSION_SLOTS[0])]
         : [];
 
-      var periphery = peripheryLines.map(function (line, i) {
-        var pos = PERIPHERY_SLOTS[i % PERIPHERY_SLOTS.length];
-        return Object.assign({ text: line }, pos);
-      });
-
-      PASSAGE_DECOR[targetName] = { slab: slab, intrusions: intrusions, periphery: periphery };
+      PASSAGE_DECOR[targetName] = { slab: slab, intrusions: intrusions };
     });
   }
 
   function getCurrentPassageName() {
-    try { if (window.State && State.passage) return State.passage; } catch (e) {}
-    try { if (window.Engine && Engine.passage) return Engine.passage; } catch (e) {}
+    /* 1. State.passage — Harlowe keeps this updated on every navigation */
+    try {
+      var sp = window.State && State.passage;
+      if (typeof sp === 'string' && sp) return sp;
+    } catch (e) {}
+    /* 2. Monkey-patch cache — reliable for programmatic goToPassage calls */
+    if (window._currentPassageName) return window._currentPassageName;
+    /* 3. Content matching — last resort */
     return matchCurrentPassageByContent();
   }
 
@@ -630,9 +789,9 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     document.querySelectorAll('tw-storydata tw-passagedata').forEach(function (pd) {
       var src = pd.textContent || '';
       var clean = src
+        .replace(/\|[\w]+>\[([^\]]*)\]/g, '$1') /* unwrap hooks: |name>[content] → content */
         .replace(/\(track:[^)]+\)/g, ' ')
         .replace(/\{[\s\S]*?\}/g, ' ')
-        .replace(/\|\w+>\[/g, ' ')
         .replace(/\[\[[^\]]+\]\]/g, ' ')
         .replace(/<[^>]+>/g, ' ')
         .replace(/\s+/g, ' ').trim();
@@ -642,25 +801,39 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
   }
   function matchCurrentPassageByContent() {
     buildPassageIndex();
-    var p = document.querySelector('tw-passage');
+    var allP = document.querySelectorAll('tw-passage');
+    var p = allP[allP.length - 1] || null;
     if (!p) return null;
-    var live = (p.textContent || '').replace(/[↶↷]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60).toLowerCase();
-    if (!live) return null;
+    /* Strip ALL whitespace before comparing — Harlowe <br> produces no space in textContent
+       but twee \n is cleaned to a space in the sig, causing false mismatches */
+    var liveNS = (p.textContent || '')
+      .replace(/[↶↷]/g, '')
+      .replace(/\s/g, '')
+      .toLowerCase()
+      .slice(0, 100);
+    if (!liveNS) return null;
     var story = document.querySelector('tw-story');
     var liveTags = story ? (story.getAttribute('tags') || '') : '';
     var best = null;
+    var bestScore = -1;
     PASSAGE_INDEX.forEach(function (e) {
       if (!e.sig) return;
-      if (live.indexOf(e.sig.slice(0, 30)) === 0 || e.sig.indexOf(live.slice(0, 30)) === 0) {
-        if (e.tags === liveTags || liveTags.indexOf(e.tags) >= 0) best = e;
-        else if (!best) best = e;
-      }
+      var sigNS = e.sig.replace(/\s/g, '');
+      if (!sigNS || sigNS.length < 5) return; /* skip near-empty sigs */
+      /* Require match at START using 25 no-space chars */
+      var needle25 = sigNS.slice(0, 25);
+      if (liveNS.indexOf(needle25) !== 0 && sigNS.indexOf(liveNS.slice(0, 25)) !== 0) return;
+      /* Score: exact tag match = 2, partial = 1, no/empty tags = 0 */
+      var score = 0;
+      if (e.tags && e.tags === liveTags) score = 2;
+      else if (e.tags && e.tags.trim() && liveTags.indexOf(e.tags) >= 0) score = 1;
+      if (!best || score > bestScore) { best = e; bestScore = score; }
     });
     return best ? best.name : null;
   }
 
   function clearDecor() {
-    document.querySelectorAll('.lp-intrusion, .lp-periphery').forEach(function (el) { el.remove(); });
+    document.querySelectorAll('.lp-intrusion').forEach(function (el) { el.remove(); });
   }
 
   function applyDecor(passageName) {
@@ -688,28 +861,25 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
       } catch (e) {}
     });
 
-    (decor.periphery || []).forEach(function (spec, i) {
-      var el = document.createElement('div');
-      el.className = 'lp-periphery';
-      el.textContent = spec.text;
-      ['top','bottom','left','right'].forEach(function (k) { if (spec[k] !== undefined) el.style[k] = spec[k]; });
-      el.style.setProperty('--lp-delay', (0.8 + i * 0.18) + 's');
-      document.body.appendChild(el);
-      try {
-        var anchorRight = (spec.right !== undefined), anchorBottom = (spec.bottom !== undefined);
-        var dx = (40 + Math.random() * 50) * (anchorRight ? -1 : 1);
-        var dy = (20 + Math.random() * 40) * (anchorBottom ? -1 : 1);
-        var dur = (38 + Math.random() * 26) * 1000;
-        el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px)' }],
-          { duration: dur, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
-      } catch (e) {}
-    });
-
     return decor;
   }
 
   /* Watch for a new tw-passage element (fires once per navigation),
      then retry getting the passage name until the content is rendered. */
+  /* Capture the start passage name from tw-storydata startnode attribute.
+     This handles the very first passage which is not navigated via Engine.goToPassage. */
+  function captureStartPassage() {
+    if (window._currentPassageName) return;
+    try {
+      var sd = document.querySelector('tw-storydata');
+      if (!sd) return;
+      var sn = sd.getAttribute('startnode');
+      if (!sn) return;
+      var pd = sd.querySelector('tw-passagedata[pid="' + sn + '"]');
+      if (pd) window._currentPassageName = pd.getAttribute('name');
+    } catch (e) {}
+  }
+
   var _decorLastEl = null;
   function tryApplyDecor(attempts) {
     var name = getCurrentPassageName();
@@ -720,14 +890,58 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
       setTimeout(function () { tryApplyDecor(attempts - 1); }, 150);
     }
   }
-  new MutationObserver(function () {
-    var p = document.querySelector('tw-passage');
-    if (p && p !== _decorLastEl) {
-      _decorLastEl = p;
-      clearDecor(); /* wipe immediately so decor never bleeds into the next passage */
-      setTimeout(function () { tryApplyDecor(5); }, 100);
+  /* ── Primary trigger: watch tw-story's tags attribute directly.
+     Harlowe updates this on every navigation (it's what tag-based CSS uses). */
+  function setupStoryObserver() {
+    var story = document.querySelector('tw-story');
+    if (!story) { setTimeout(setupStoryObserver, 100); return; }
+
+    var _lastTags = null;
+    function onTagsChange() {
+      var tags = story.getAttribute('tags') || '';
+      if (tags === _lastTags) return;
+      _lastTags = tags;
+      window._currentPassageName = null; /* clear stale cache on every navigation */
+      clearDecor();
+      setTimeout(function () { tryApplyDecor(5); }, 120);
     }
-  }).observe(document.documentElement, { childList: true, subtree: true });
+
+    new MutationObserver(onTagsChange)
+      .observe(story, { attributes: true, attributeFilter: ['tags'] });
+
+    /* Also handle tw-passage element changes (belt-and-suspenders) */
+    new MutationObserver(function () {
+      var allP = document.querySelectorAll('tw-passage');
+      var p = allP[allP.length - 1] || null;
+      if (p && p !== _decorLastEl) {
+        _decorLastEl = p;
+        window._currentPassageName = null;
+        clearDecor();
+        setTimeout(function () { tryApplyDecor(5); }, 120);
+      }
+    }).observe(story, { childList: true, subtree: false });
+
+    /* Fire once for the initial passage — use captureStartPassage only here */
+    captureStartPassage();
+    onTagsChange();
+  }
+
+  /* ── Fallback trigger: catch tw-link clicks in case observer misses something */
+  document.addEventListener('click', function (e) {
+    var link = e.target && e.target.closest ? e.target.closest('tw-link') : null;
+    if (!link) return;
+    setTimeout(function () {
+      window._currentPassageName = null;
+      clearDecor();
+      tryApplyDecor(6);
+    }, 250);
+  }, true);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupStoryObserver);
+  } else {
+    setupStoryObserver();
+  }
 
 })();
 
@@ -750,7 +964,7 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     if (!story) return;
     clearBdClass(story);
     var tags = (story.getAttribute('tags') || '').split(/\s+/);
-    if (tags.indexOf('breakdownfont') !== -1) {
+    if (tags.indexOf('breakdownfont') !== -1 && tags.indexOf('psychosis') === -1) {
       var chosen = BD_CLASSES[Math.floor(Math.random() * BD_CLASSES.length)];
       story.classList.add(chosen);
     }
@@ -767,108 +981,6 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
   document.body.appendChild(btn);
 })();
 
-(function() {
-
-  /* ── PSYCHOSIS ESCAPE BUTTON ────────────────────────────────────────────────
-     Appears ~5s after entering a [psychosis]-tagged passage.
-     Clicking it changes the label and shows a dismissive response.
-     Edit the arrays below to update the text options.
-     ────────────────────────────────────────────────────────────────────────── */
-
-  /* Text shown when the button first appears */
-  var ESCAPE_LABELS = [
-    'leave',
-    'run',
-    'ditch',
-    'wake up'
-  ];
-
-  /* Text the button cycles through on each click */
-  var ESCAPE_CYCLES = [
-    'leave',
-    'get out',
-    'wake up',
-    'withdraw',
-    'assume control',
-    'ditch'
-  ];
-
-  /* Response text shown beneath the button after each click */
-  var ESCAPE_RESPONSE = [
-    'nice try',
-    "that's a shame",
-    'you might have to ride this out',
-    "you're tripping",
-    "you've lost the plot"
-  ];
-
-  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-  var escapeBtn   = null;
-  var escapeTimer = null;
-
-  function clearEscape() {
-    clearTimeout(escapeTimer);
-    if (escapeBtn) { escapeBtn.remove(); escapeBtn = null; }
-  }
-
-  function showEscape() {
-    if (escapeBtn) return;
-
-    /* Random position within a central zone */
-    var randLeft = (30 + Math.random() * 35).toFixed(1) + '%'; /* 30–65% */
-    var randTop  = (30 + Math.random() * 30).toFixed(1) + '%'; /* 30–60% */
-
-    escapeBtn = document.createElement('div');
-    escapeBtn.className = 'psychosis-escape-btn game-link';
-    escapeBtn.textContent = pick(ESCAPE_LABELS);
-    escapeBtn.style.left = randLeft;
-    escapeBtn.style.top  = randTop;
-    document.body.appendChild(escapeBtn);
-
-    /* Fade in after a tick so the CSS transition fires */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { escapeBtn.classList.add('visible'); });
-    });
-
-    escapeBtn.addEventListener('click', function () {
-      if (escapeBtn.dataset.clicked) return;
-      escapeBtn.dataset.clicked = '1';
-
-      /* Fade out escape label */
-      escapeBtn.style.transition = 'opacity 0.3s ease';
-      escapeBtn.style.opacity = '0';
-
-      setTimeout(function () {
-        /* Swap to response text and fade in */
-        escapeBtn.textContent = pick(ESCAPE_RESPONSE);
-        escapeBtn.style.transition = 'opacity 0.3s ease';
-        escapeBtn.style.opacity = '1';
-
-        /* Linger then fade out for good */
-        setTimeout(function () {
-          escapeBtn.style.transition = 'opacity 1s ease';
-          escapeBtn.style.opacity = '0';
-        }, 2200);
-      }, 320);
-    });
-  }
-
-  /* Watch for passage changes */
-  var _lastPassage = null;
-  new MutationObserver(function () {
-    var p = document.querySelector('tw-passage');
-    if (!p || p === _lastPassage) return;
-    _lastPassage = p;
-    clearEscape();
-    var story = document.querySelector('tw-story');
-    var tags  = story ? (story.getAttribute('tags') || '').split(/\s+/) : [];
-    if (tags.indexOf('psychosis') !== -1) {
-      escapeTimer = setTimeout(showEscape, 5000);
-    }
-  }).observe(document.documentElement, { childList: true, subtree: true });
-
-})();
 
 (function() {
 
@@ -902,8 +1014,7 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     'psychward':      './images/psychward.jpg',
     'toilet':         './images/toilet.jpg',
     'ezymart':        './images/ezymart.jpg',
-    'nightambience':  './images/nightambience.jpg',
-    'medbg':          './images/dreamlike.gif'
+    'nightambience':  './images/nightambience.jpg'
   };
 
   var _bgLayer = null;
@@ -922,36 +1033,54 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     Object.keys(TAG_BACKGROUNDS).forEach(function (tag) {
       if (tags.indexOf(tag) !== -1) img = TAG_BACKGROUNDS[tag];
     });
+    /* Solid-colour tags routed through #bg-layer so tw-story stays transparent
+       and floating images (z-index:-1) remain visible. */
+    var SOLID_COLORS = { 'blue': '#0029a3' };
+    var solidColor = null;
+    Object.keys(SOLID_COLORS).forEach(function (tag) {
+      if (tags.indexOf(tag) !== -1) solidColor = SOLID_COLORS[tag];
+    });
     var hasBreathe = tags.indexOf('breathe') !== -1;
     var isGif = img && img.slice(-4) === '.gif';
     if (img) {
       /* Image background — bg-layer shows through transparent tw-story */
       layer.style.backgroundImage = 'url(' + img + ')';
+      layer.style.backgroundColor = '';
       layer.className = (hasBreathe && !isGif) ? 'breathing' : '';
       if (story) {
         story.classList.add('has-bg-image');
         story.classList.remove('colour-breathe');
       }
-    } else {
-      /* Solid colour background — breathe via filter animation on tw-story */
+    } else if (solidColor) {
+      /* Solid colour via bg-layer — tw-story transparent, floating images visible */
       layer.style.backgroundImage = 'none';
+      layer.style.backgroundColor = solidColor;
+      layer.className = hasBreathe ? 'colour-breathe' : '';
+      if (story) {
+        story.classList.add('has-bg-image');
+        story.classList.remove('colour-breathe');
+      }
+    } else {
+      /* No background */
+      layer.style.backgroundImage = 'none';
+      layer.style.backgroundColor = '';
       layer.className = '';
       if (story) {
         story.classList.remove('has-bg-image');
-        if (hasBreathe) story.classList.add('colour-breathe');
-        else story.classList.remove('colour-breathe');
+        story.classList.remove('colour-breathe');
       }
     }
   }
 
   /* ── AUDIO ──────────────────────────────────────────────────────────── */
   var TAG_TRACKS = {
-    'clockroom': 'clock',
-    'parkbench': 'crickets'
+    'clockroom':      'clock',
+    'parkbench':      'crickets',
+    'nightambience':  'electrichum',
+    'phonepsychosis': 'electricwhine',
+    'theftpsychosis': 'siren'
     // 'psychosis':  'psychobirds',  // uncomment when ready
     // 'printroom':  'printer',
-    // 'sirens':     'siren',
-    // 'humroom':    'electrichum',
   };
 
   /* Flat list of all room-specific track IDs (de-duplicated). */
@@ -998,49 +1127,287 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     _floatCleanup = [];
   }
 
+  function getFloatLayer() {
+    var layer = document.getElementById('floating-layer');
+    if (!layer) {
+      layer = document.createElement('div');
+      layer.id = 'floating-layer';
+      document.body.appendChild(layer);
+    }
+    return layer;
+  }
+
   function startFloatingImages(passage) {
     stopFloatingImages();
-    var imgs = Array.from(passage.querySelectorAll('img.floating-img'));
-    imgs.forEach(function (el) {
-      var timer = null;
-      var cancelled = false;
-      /* Randomise size — each image gets a different small-to-medium width */
-      var randWidth = Math.floor(80 + Math.random() * 160); /* 80–240px */
-      el.style.width = randWidth + 'px';
+    var layer = getFloatLayer();
+    /* Clear any leftover images from a previous passage */
+    layer.innerHTML = '';
 
-      /* Randomise breathe cycle so images pulse independently */
-      var breatheDur = (3 + Math.random() * 6).toFixed(1); /* 3–9s */
+    var srcs = Array.from(passage.querySelectorAll('img.floating-img'))
+                    .map(function(el) {
+                      el.style.display = 'none'; /* hide original; animated clone lives in #floating-layer */
+                      return el.getAttribute('src');
+                    });
+
+    if (srcs.length === 0) return;
+
+    srcs.forEach(function (src) {
+      var el = document.createElement('img');
+      el.className = 'floating-img';
+      el.src = src;
+      layer.appendChild(el);
+
+      var wanderTimer = null;
+      var startTimer  = null;
+      var cancelled   = false;
+
+      var randWidth  = Math.floor(80 + Math.random() * 160);
+      var breatheDur = (3 + Math.random() * 6).toFixed(1);
+      var minDur     = Math.floor(4000 + Math.random() * 4000);
+      var maxDur     = minDur + Math.floor(3000 + Math.random() * 5000);
+      var ease       = 'ease-in-out';
+
+      el.style.visibility = 'hidden';
       el.style.animationDuration = breatheDur + 's';
       el.style.animationDelay    = '-' + (Math.random() * parseFloat(breatheDur)).toFixed(1) + 's';
 
-      /* Each image gets a random speed — all slow, just some slower than others */
-      var minDur = Math.floor(4000 + Math.random() * 4000); /* 4–8s minimum per move */
-      var maxDur = minDur + Math.floor(3000 + Math.random() * 5000); /* adds 3–8s on top */
-      var ease   = 'ease-in-out';
-
-      /* Start at a random position instantly */
-      el.style.transition = 'none';
-      el.style.top  = (Math.random() * 70).toFixed(1) + '%';
-      el.style.left = (Math.random() * 70).toFixed(1) + '%';
-
-      var firstMove = true;
       function wander() {
         if (cancelled) return;
         var top  = (Math.random() * 70).toFixed(1);
         var left = (Math.random() * 70).toFixed(1);
-        var dur  = firstMove ? 1200 : Math.floor(minDur + Math.random() * (maxDur - minDur));
-        firstMove = false;
+        var dur  = Math.floor(minDur + Math.random() * (maxDur - minDur));
         el.style.transition = 'top ' + dur + 'ms ' + ease + ', left ' + dur + 'ms ' + ease;
         el.style.top  = top + '%';
         el.style.left = left + '%';
-        timer = setTimeout(wander, dur + Math.floor(Math.random() * 500));
+        wanderTimer = setTimeout(wander, dur + Math.floor(Math.random() * 500));
       }
-      wander();
+
+      var delay = Math.floor(Math.random() * 8000);
+      startTimer = setTimeout(function () {
+        if (cancelled) return;
+        el.style.width      = randWidth + 'px';
+        el.style.transition = 'none';
+        el.style.top        = (Math.random() * 70).toFixed(1) + '%';
+        el.style.left       = (Math.random() * 70).toFixed(1) + '%';
+        el.style.visibility = 'visible';
+        wanderTimer = setTimeout(wander, 80);
+      }, delay);
+
       _floatCleanup.push(function () {
         cancelled = true;
-        clearTimeout(timer);
-        el.style.transition = 'none';
+        clearTimeout(startTimer);
+        clearTimeout(wanderTimer);
       });
+    });
+  }
+
+  /* ── ERRATIC IMAGE WANDER ──────────────────────────────────────────────
+     Handles img.erratic-img — same hidden-start approach as floating-img
+     but fast linear moves and short pop-in window so no double-load flash.
+     ────────────────────────────────────────────────────────────────────── */
+  var _erraticCleanup = [];
+
+  function stopErraticImages() {
+    _erraticCleanup.forEach(function (fn) { fn(); });
+    _erraticCleanup = [];
+  }
+
+  function startErraticImages(passage) {
+    stopErraticImages();
+    var imgs = Array.from(passage.querySelectorAll('img.erratic-img'));
+    imgs.forEach(function (el) {
+      var wanderTimer = null;
+      var startTimer  = null;
+      var cancelled   = false;
+
+      var randWidth  = Math.floor(60 + Math.random() * 100);
+      var flickerDur = (0.8 + Math.random() * 2).toFixed(1);
+      var minDur     = Math.floor(150 + Math.random() * 400);
+      var maxDur     = minDur + Math.floor(200 + Math.random() * 600);
+
+      /* Start hidden — no flash at old position */
+      el.style.visibility        = 'hidden';
+      el.style.animationDuration = flickerDur + 's';
+      el.style.animationDelay    = '-' + (Math.random() * parseFloat(flickerDur)).toFixed(1) + 's';
+
+      function wander() {
+        if (cancelled) return;
+        var top  = (Math.random() * 80).toFixed(1);
+        var left = (Math.random() * 80).toFixed(1);
+        var dur  = Math.floor(minDur + Math.random() * (maxDur - minDur));
+        el.style.transition = 'top ' + dur + 'ms linear, left ' + dur + 'ms linear';
+        el.style.top  = top + '%';
+        el.style.left = left + '%';
+        wanderTimer = setTimeout(wander, dur + Math.floor(Math.random() * 100));
+      }
+
+      /* Pop in within 0–3s (shorter window than floating-img) */
+      var delay = Math.floor(Math.random() * 3000);
+      startTimer = setTimeout(function () {
+        if (cancelled) return;
+        el.style.width      = randWidth + 'px';
+        el.style.transition = 'none';
+        el.style.top        = (Math.random() * 80).toFixed(1) + '%';
+        el.style.left       = (Math.random() * 80).toFixed(1) + '%';
+        el.style.visibility = 'visible';
+        wanderTimer = setTimeout(wander, 50);
+      }, delay);
+
+      _erraticCleanup.push(function () {
+        cancelled = true;
+        clearTimeout(startTimer);
+        clearTimeout(wanderTimer);
+        el.style.transition  = 'none';
+        el.style.visibility  = 'hidden';
+      });
+    });
+  }
+
+  /* ── ECHO / SHADOW TEXT ──────────────────────────────────────────────────
+     Tag: [echo] on a passage. Reads passage plain-text, rewrites it with
+     pronoun/tense shifts, then sets it on data-echo so CSS ::before shows it.
+     ────────────────────────────────────────────────────────────────────── */
+  function startEchoText(passage) {
+    var raw = passage.innerText || passage.textContent || '';
+    // Subtle distortions: flip I→you, was→is, am→was, felt→feel
+    var shifted = raw
+      .replace(/\bI was\b/g, 'you are')
+      .replace(/\bI am\b/g,  'you were')
+      .replace(/\bI\b/g,     'you')
+      .replace(/\bwas\b/g,   'is')
+      .replace(/\bfelt\b/g,  'feel')
+      .replace(/\bsaid\b/g,  'say')
+      .replace(/\bmy\b/g,    'your')
+      .replace(/\bme\b/g,    'you');
+    passage.setAttribute('data-echo', shifted);
+  }
+  function stopEchoText(passage) {
+    if (passage) passage.removeAttribute('data-echo');
+  }
+
+  /* ── DISSOLVING WORDS ────────────────────────────────────────────────────
+     Tag: [dissolve] on a passage. Wraps every word in .dw spans, then
+     schedules random words to fade to opacity 0.
+     ────────────────────────────────────────────────────────────────────── */
+  var _dissolveTimers = [];
+  function stopDissolveWords() {
+    _dissolveTimers.forEach(clearTimeout);
+    _dissolveTimers = [];
+    document.querySelectorAll('.dw').forEach(function (s) {
+      var parent = s.parentNode;
+      if (parent) parent.replaceChild(document.createTextNode(s.textContent), s);
+    });
+  }
+  function startDissolveWords(passage) {
+    stopDissolveWords();
+    // Only wrap text nodes that are direct or shallow children of tw-passage
+    // Avoid wrapping link text (tw-link) to keep navigation intact
+    var walker = document.createTreeWalker(
+      passage,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function (node) {
+          var p = node.parentNode;
+          // Skip text inside interactive elements
+          if (p && (p.tagName === 'TW-LINK' || p.tagName === 'A' || p.tagName === 'BUTTON')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+        }
+      }
+    );
+    var textNodes = [];
+    var n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    var allSpans = [];
+    textNodes.forEach(function (tn) {
+      var words = tn.textContent.split(/(\s+)/);
+      var frag = document.createDocumentFragment();
+      words.forEach(function (w) {
+        if (/^\s+$/.test(w) || w === '') {
+          frag.appendChild(document.createTextNode(w));
+        } else {
+          var sp = document.createElement('span');
+          sp.className = 'dw';
+          sp.textContent = w;
+          frag.appendChild(sp);
+          allSpans.push(sp);
+        }
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+
+    // Pick ~30% of words to dissolve, with random delays
+    var targets = allSpans.filter(function () { return Math.random() < 0.3; });
+    targets.forEach(function (sp) {
+      var delay = 3000 + Math.random() * 12000; // 3–15s after arrival
+      var t = setTimeout(function () { sp.classList.add('gone'); }, delay);
+      _dissolveTimers.push(t);
+    });
+  }
+
+  /* ── CONTRADICTING TEXT ──────────────────────────────────────────────────
+     Tag: [contradict] on a passage. Author marks words with:
+       <span data-contradict="alt text">original</span>
+     JS then animates a typewriter overwrite that loops.
+     ────────────────────────────────────────────────────────────────────── */
+  var _contradictTimers = [];
+  function stopContradictText() {
+    _contradictTimers.forEach(clearTimeout);
+    _contradictTimers = [];
+    document.querySelectorAll('.ct-alt').forEach(function (el) { el.remove(); });
+    document.querySelectorAll('.ct-word').forEach(function (el) {
+      var parent = el.parentNode;
+      if (parent) parent.replaceChild(document.createTextNode(el.firstChild ? el.firstChild.textContent : ''), el);
+    });
+  }
+  function startContradictText(passage) {
+    stopContradictText();
+    var targets = Array.from(passage.querySelectorAll('[data-contradict]'));
+    targets.forEach(function (el) {
+      var alt = el.getAttribute('data-contradict');
+      // Wrap in .ct-word container
+      var wrapper = document.createElement('span');
+      wrapper.className = 'ct-word';
+      el.parentNode.insertBefore(wrapper, el);
+      wrapper.appendChild(el);
+      // Create the overwrite layer
+      var overlay = document.createElement('span');
+      overlay.className = 'ct-alt';
+      overlay.setAttribute('aria-hidden', 'true');
+      wrapper.appendChild(overlay);
+
+      function typeOut(str, idx, cb) {
+        overlay.style.width = 'auto';
+        overlay.textContent = str.slice(0, idx);
+        if (idx <= str.length) {
+          var t = setTimeout(function () { typeOut(str, idx + 1, cb); }, 60 + Math.random() * 60);
+          _contradictTimers.push(t);
+        } else {
+          var t2 = setTimeout(cb, 1800);
+          _contradictTimers.push(t2);
+        }
+      }
+      function eraseOut(str, idx, cb) {
+        overlay.textContent = str.slice(0, idx);
+        if (idx >= 0) {
+          var t = setTimeout(function () { eraseOut(str, idx - 1, cb); }, 40 + Math.random() * 40);
+          _contradictTimers.push(t);
+        } else {
+          overlay.style.width = '0';
+          var t2 = setTimeout(cb, 2000 + Math.random() * 4000);
+          _contradictTimers.push(t2);
+        }
+      }
+      function loop() {
+        typeOut(alt, 0, function () {
+          eraseOut(alt, alt.length, loop);
+        });
+      }
+      // Stagger start
+      var t0 = setTimeout(loop, 1500 + Math.random() * 5000);
+      _contradictTimers.push(t0);
     });
   }
 
@@ -1053,7 +1420,7 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
 
   function startPsychosisWander(passage) {
     stopPsychosisWander();
-    ['smooth1', 'smooth2', 'smooth3'].forEach(function (name) {
+    ['smooth1', 'smooth2', 'smooth3', 'smooth4'].forEach(function (name) {
       var el = passage.querySelector('tw-hook[name="' + name + '"]');
       if (!el) return;
       var timer = null;
@@ -1061,14 +1428,15 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
 
       /* Drop element at a random starting position instantly */
       el.style.transition = 'none';
-      el.style.top  = (Math.random() * 85).toFixed(1) + '%';
-      el.style.left = (Math.random() * 85).toFixed(1) + '%';
+      el.style.top  = (5 + Math.random() * 72).toFixed(1) + '%';
+      el.style.left = (3 + Math.random() * 65).toFixed(1) + '%';
       el.style.transform = 'none';
+      void el.offsetTop; /* force reflow so initial position commits before transition starts */
 
       function wander() {
         if (cancelled) return;
-        var top  = (Math.random() * 85).toFixed(1);
-        var left = (Math.random() * 85).toFixed(1);
+        var top  = (5 + Math.random() * 72).toFixed(1);
+        var left = (3 + Math.random() * 65).toFixed(1);
         var dur  = Math.floor(250 + Math.random() * 1200); /* 250–1450ms per move */
 
         el.style.transition = 'top ' + dur + 'ms linear, left ' + dur + 'ms linear';
@@ -1088,6 +1456,44 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
         el.style.transition = 'none';
       });
     });
+
+    /* smooth5 — fake escape link: placed once at a random spot, revealed after ~5s */
+    var esc = passage.querySelector('tw-hook[name="smooth5"]');
+    if (esc) {
+      esc.style.transition = 'none';
+      esc.style.top  = (20 + Math.random() * 60).toFixed(1) + '%';
+      esc.style.left = (15 + Math.random() * 65).toFixed(1) + '%';
+      var escTimer = setTimeout(function () {
+        esc.style.visibility = 'visible';
+      }, 5000);
+
+      /* After click, (link-replace:) removes the tw-link — detect that and fade out */
+      var fadeTimer = null;
+      var clickObs = new MutationObserver(function () {
+        if (!esc.querySelector('tw-link')) {
+          clickObs.disconnect();
+          fadeTimer = setTimeout(function () {
+            esc.style.transition = 'opacity 1.2s ease';
+            esc.style.opacity = '0';
+            fadeTimer = setTimeout(function () {
+              esc.style.visibility = 'hidden';
+              esc.style.opacity = '';
+              esc.style.transition = 'none';
+            }, 1200);
+          }, 2500); /* linger 2.5s then fade */
+        }
+      });
+      clickObs.observe(esc, { childList: true, subtree: true });
+
+      _wanderCleanup.push(function () {
+        clearTimeout(escTimer);
+        clearTimeout(fadeTimer);
+        clickObs.disconnect();
+        esc.style.transition = 'none';
+        esc.style.opacity = '';
+        esc.style.visibility = 'hidden';
+      });
+    }
   }
 
   /* ── TYPEWRITER for .dialogue elements ──────────────────────────────── */
@@ -1179,7 +1585,6 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
   window.addEventListener('resize', fitAsciiTitle);
 
   /* ── SCRAMBLE + PASSAGE CHANGE ───────────────────────────────────────── */
-  var lastPassage = null;
   var timer = null;
 
   function scramble(passage) {
@@ -1198,15 +1603,26 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
           } else if (part) {
             var s = document.createElement('span');
             s.textContent = part;
+            s.style.display = 'inline-block';
             s.style.opacity = '0';
+            // Each word starts far from home with random rotation and scale
+            var rx  = (Math.random() - 0.5) * 900;
+            var ry  = (Math.random() - 0.5) * 500;
+            var rot = (Math.random() - 0.5) * 55;       // ±27.5 deg
+            var scl = 0.25 + Math.random() * 2.2;       // 0.25× – 2.45×
+            s.dataset.tx  = rx.toFixed(0);
+            s.dataset.ty  = ry.toFixed(0);
+            s.dataset.rot = rot.toFixed(1);
+            s.dataset.scl = scl.toFixed(2);
+            s.style.transform = 'translate(' + rx.toFixed(0) + 'px,' + ry.toFixed(0) + 'px) rotate(' + rot.toFixed(1) + 'deg) scale(' + scl.toFixed(2) + ')';
             words.push(s);
             frag.appendChild(s);
           }
         });
         node.parentNode.replaceChild(frag, node);
       } else if (node.nodeType === 1) {
-        var skip = ['script', 'style'];
-        if (skip.indexOf(node.tagName.toLowerCase()) !== -1) return;
+        var skipTags = ['script', 'style'];
+        if (skipTags.indexOf(node.tagName.toLowerCase()) !== -1) return;
         if (node.classList && node.classList.contains('dialogue')) return;
         Array.from(node.childNodes).forEach(walk);
       }
@@ -1215,23 +1631,25 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     walk(passage);
     passage.style.opacity = '1';
 
-    for (var i = words.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
-    }
-
+    // Words reveal in DOM order (top-to-bottom) so the reader can follow along
+    var STEP = 38; // ms between each word starting its journey
     var timers = [];
+    var maxSettle = 0;
     words.forEach(function(span, i) {
+      // Each word has its own random settle duration — some snap, some crawl
+      var settle = 320 + Math.random() * 780; // 320–1100 ms
+      if (i * STEP + settle > maxSettle) maxSettle = i * STEP + settle;
       timers.push(setTimeout(function() {
-        span.style.transition = 'opacity 0.2s';
+        // Elastic overshoot: word blows past its target then snaps back
+        span.style.transition =
+          'opacity ' + (settle * 0.6 / 1000).toFixed(2) + 's ease-in, ' +
+          'transform ' + (settle / 1000).toFixed(2) + 's cubic-bezier(0.34, 1.56, 0.64, 1)';
         span.style.opacity = '1';
-      }, i * 18));
+        span.style.transform = 'translate(0,0) rotate(0deg) scale(1)';
+      }, i * STEP));
     });
 
-    /* Start typewriters after scramble finishes, staggered per dialogue block.
-       If a dialogue block contains a link, fade it in as a block instead
-       (so the link stays clickable). */
-    var scrambleDuration = words.length * 18;
+    var scrambleDuration = maxSettle;
     var cancelFns = dialogueEls.map(function (el, i) {
       var delay = scrambleDuration + 200 + i * 500;
       if (el.querySelector('tw-link, a')) {
@@ -1247,6 +1665,7 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
       words.forEach(function(span) {
         span.style.transition = 'none';
         span.style.opacity = '1';
+        span.style.transform = 'translate(0,0) rotate(0deg) scale(1)';
       });
       cancelFns.forEach(function (fn) { fn(); });
       document.removeEventListener('click', skip);
@@ -1254,57 +1673,410 @@ body.luers-layout .wake-mark { top: 20px; bottom: auto; left: 26px; right: auto;
     document.addEventListener('click', skip);
   }
 
-  new MutationObserver(function() {
-    var p = document.querySelector('tw-passage');
-    if (p && p !== lastPassage) {
-      lastPassage = p;
-      p.style.opacity = '0';
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        try {
-          var story = document.querySelector('tw-story');
-          var tags = story ? (story.getAttribute('tags') || '') : '';
-          if (tags.indexOf('psychosis') === -1) {
-            stopPsychosisWander();
-            scramble(p);
+  /* ── FONT COMBO RANDOMISER ──────────────────────────────────────────────
+     Picks a random body/link font pair each passage load.
+     Skipped for titlescreen and psychosis — those have fixed font rules.
+     ────────────────────────────────────────────────────────────────────── */
+  var FONT_COMBOS = ['font-combo-1', 'font-combo-2', 'font-combo-3', 'font-combo-4'];
+  function applyFontCombo(story, tags) {
+    FONT_COMBOS.forEach(function(c) { story.classList.remove(c); });
+    if (tags.indexOf('titlescreen') !== -1 || tags.indexOf('psychosis') !== -1) return;
+    var combo = FONT_COMBOS[Math.floor(Math.random() * FONT_COMBOS.length)];
+    story.classList.add(combo);
+  }
+
+  /* ── LAYOUT RANDOMISER ─────────────────────────────────────────────────
+     Per-passage: picks a random indentation mode and positions the passage
+     centrally. Each line group (split at <br>) gets a paddingLeft indent.
+     Skipped for psychosis and titlescreen passages.
+     Modes: stagger · scatter · cascade · wave · reverse
+     ────────────────────────────────────────────────────────────────────── */
+  /* ── PSYCHOSIS LAYOUT ──────────────────────────────────────────────────
+     Runs on [psychosis] passages only. Works at word level:
+     • Short words (≤3 letters): each letter becomes its own line
+     • Long words (≥7 letters): 45% chance of a mid-word break
+     • All units scattered with a wider, more erratic shift than normal layout
+     • smooth1–5 tw-hook elements are skipped and re-appended intact
+     ────────────────────────────────────────────────────────────────────── */
+  var SMOOTH_HOOK_NAMES = ['smooth1','smooth2','smooth3','smooth4','smooth5'];
+
+  function applyPsychosisLayout(passage) {
+    // Find the container that has the body text (same logic as applyLayout)
+    function hasBodyContent(el) {
+      return Array.from(el.childNodes).some(function(n) {
+        return n.nodeName === 'BR' || n.nodeType === 3;
+      });
+    }
+    var container = passage;
+    if (!hasBodyContent(passage)) {
+      Array.from(passage.childNodes).some(function(child) {
+        if (child.nodeType === 1 && hasBodyContent(child)) {
+          container = child;
+          return true;
+        }
+        return false;
+      });
+    }
+
+    var allNodes = Array.from(container.childNodes);
+    var fragments = [];
+    var SHORT = /^[a-zA-Z]{1,3}$/; // 1–3 letter words eligible for stacking
+    var STACK_CHANCE  = 0.4;  // only 40% of short words get letter-stacked
+    var BREAK_CHANCE  = 0.28; // 28% of long words get mid-word broken (was 45%)
+
+    // Buffer for consecutive "normal" words — flushed as a single grouped div
+    var wordBuf = [];
+    var CHUNK = 4; // max words per grouped div
+    function flushWords() {
+      if (wordBuf.length === 0) return;
+      fragments.push({ type: 'text', text: wordBuf.join(' ') });
+      wordBuf = [];
+    }
+
+    allNodes.forEach(function(node) {
+      // Drop bare <br> — block divs handle line breaks
+      if (node.nodeName === 'BR') return;
+
+      // smooth hooks: flush buffer then collect to re-append untouched
+      if (node.nodeType === 1 && node.tagName === 'TW-HOOK' &&
+          SMOOTH_HOOK_NAMES.indexOf(node.getAttribute('name')) !== -1) {
+        flushWords();
+        fragments.push({ type: 'hook', node: node });
+        return;
+      }
+
+      // Text node: tokenize into words
+      if (node.nodeType === 3) {
+        var words = node.textContent.trim().split(/\s+/);
+        words.forEach(function(word) {
+          if (!word) return;
+          var alpha = word.replace(/[^a-zA-Z]/g, '');
+          if (SHORT.test(alpha) && alpha.length > 0 && Math.random() < STACK_CHANCE) {
+            // Short word, randomly chosen: flush buffer, stack each character
+            flushWords();
+            Array.from(word).forEach(function(ch) {
+              fragments.push({ type: 'text', text: ch });
+            });
+          } else if (alpha.length >= 7 && Math.random() < BREAK_CHANCE) {
+            // Long word, randomly chosen: flush buffer, break mid-word
+            flushWords();
+            var at = 2 + Math.floor(Math.random() * Math.min(4, alpha.length - 3));
+            fragments.push({ type: 'text', text: word.substring(0, at) });
+            fragments.push({ type: 'text', text: word.substring(at) });
           } else {
-            p.style.opacity = '1';
-            startPsychosisWander(p);
+            // Normal word: group with neighbours
+            wordBuf.push(word);
+            if (wordBuf.length >= CHUNK) flushWords();
           }
+        });
+        return;
+      }
+
+      // Other elements (tw-link, dialogue div, etc.): flush buffer then keep as a unit
+      if (node.nodeType === 1) {
+        flushWords();
+        fragments.push({ type: 'element', node: node });
+      }
+    });
+    flushWords(); // flush any remaining buffered words
+
+    // Rebuild container
+    while (container.firstChild) container.removeChild(container.firstChild);
+
+    var maxShift = 12; // vw — pulled back a touch
+    var scatterDivs = [];
+
+    fragments.forEach(function(frag) {
+      if (frag.type === 'hook') {
+        container.appendChild(frag.node);
+        return;
+      }
+      var div = document.createElement('div');
+      div.className = 'psychosis-scatter';
+      div.style.display = 'block';
+      div.style.lineHeight = '1.15';
+      div.style.margin = '0';
+      div.style.padding = '0';
+      div.style.position = 'relative';
+      div.style.opacity = '0'; // hidden until 10s reveal
+      var shift = Math.random() < 0.5
+        ? Math.random() * maxShift * 0.22
+        : maxShift * 0.42 + Math.random() * maxShift * 0.58;
+      div.style.left = shift.toFixed(1) + 'vw';
+      if (frag.type === 'text') {
+        div.appendChild(document.createTextNode(frag.text));
+      } else {
+        div.appendChild(frag.node);
+      }
+      container.appendChild(div);
+      scatterDivs.push(div);
+    });
+
+    // After 10s: body text starts typing AND hooks fade simultaneously
+    var REVEAL_DELAY = 10000;
+    var UNIT_STEP    = 90;  // ms between each word/letter appearing
+    var mainTimer = setTimeout(function() {
+      // Stop wander (sets transition:none on each hook via _wanderCleanup)
+      _wanderCleanup.forEach(function(fn) { fn(); });
+      _wanderCleanup = [];
+      // Use rAF so the browser commits the transition:none paint before we
+      // set the opacity transition — otherwise the two style changes collapse
+      // into one frame and the animation never fires.
+      requestAnimationFrame(function() {
+        ['smooth1','smooth2','smooth3','smooth4'].forEach(function(name) {
+          var hook = document.querySelector('tw-story[tags~="psychosis"] tw-hook[name="' + name + '"]');
+          if (!hook) return;
+          hook.style.transition = 'opacity 0.8s ease';
+          hook.style.opacity = '0';
+        });
+        // Body text reveals at the same time as hooks fade
+        scatterDivs.forEach(function(div, i) {
+          var t = setTimeout(function() {
+            div.style.transition = 'opacity 0.25s ease';
+            div.style.opacity = '1';
+          }, i * UNIT_STEP);
+          _psychosisRevealTimers.push(t);
+        });
+      });
+    }, REVEAL_DELAY);
+    _psychosisRevealTimers.push(mainTimer);
+  }
+
+  var _psychosisRevealTimers = [];
+  function clearPsychosisReveal() {
+    _psychosisRevealTimers.forEach(clearTimeout);
+    _psychosisRevealTimers = [];
+  }
+
+  // scatter, jump weighted more heavily — these create the most visual variance
+  var LAYOUT_MODES = ['scatter', 'scatter', 'jump', 'jump', 'stagger', 'cascade', 'wave', 'reverse'];
+
+  function layoutIndent(mode, lineIdx, total, maxIndent, staggerPool) {
+    switch (mode) {
+      case 'scatter':
+        return Math.random() < 0.5
+          ? Math.random() * maxIndent * 0.25
+          : maxIndent * 0.4 + Math.random() * maxIndent * 0.6;
+      case 'jump':
+        return lineIdx % 2 === 0
+          ? Math.random() * maxIndent * 0.15
+          : maxIndent * 0.55 + Math.random() * maxIndent * 0.45;
+      case 'stagger':
+        return staggerPool[lineIdx % staggerPool.length];
+      case 'cascade':
+        return (lineIdx / Math.max(total - 1, 1)) * maxIndent;
+      case 'wave':
+        return (Math.sin(lineIdx * 1.4) * 0.5 + 0.5) * maxIndent;
+      case 'reverse':
+        return (1 - lineIdx / Math.max(total - 1, 1)) * maxIndent;
+      default:
+        return Math.random() * maxIndent;
+    }
+  }
+
+  // Split a group of nodes at sentence boundaries (. ! ?) within text nodes.
+  // Element nodes (tw-link etc.) stay attached to whichever sentence surrounds them.
+  function splitAtSentences(group) {
+    var subGroups = [[]];
+
+    group.forEach(function(node) {
+      if (node.nodeType !== 3) {
+        // Element node — append to current sentence fragment
+        subGroups[subGroups.length - 1].push(node);
+        return;
+      }
+      var text = node.textContent;
+      // Scan for sentence-end: punctuation followed by whitespace + next word
+      var re = /([.!?])\s+(?=\S)/g;
+      var parts = [];
+      var last = 0;
+      var m;
+      while ((m = re.exec(text)) !== null) {
+        parts.push(text.substring(last, m.index + 1)); // up to and including punctuation
+        last = m.index + m[0].length;                   // skip the gap
+      }
+      parts.push(text.substring(last));
+      parts = parts.filter(function(p) { return p.trim(); });
+
+      if (parts.length <= 1) {
+        subGroups[subGroups.length - 1].push(node);
+        return;
+      }
+      parts.forEach(function(part, i) {
+        var tn = document.createTextNode(i < parts.length - 1 ? part + ' ' : part);
+        subGroups[subGroups.length - 1].push(tn);
+        if (i < parts.length - 1) subGroups.push([]);
+      });
+    });
+
+    return subGroups.filter(function(sg) {
+      return sg.some(function(n) {
+        /* Keep subgroups with text content OR element nodes (e.g. image containers) */
+        return (n.textContent || '').trim() || n.nodeType === 1;
+      });
+    });
+  }
+
+  function applyLayout(passage, tags) {
+    if (!passage) return;
+    if (tags.indexOf('psychosis') !== -1 || tags.indexOf('titlescreen') !== -1) return;
+
+    var mode = LAYOUT_MODES[Math.floor(Math.random() * LAYOUT_MODES.length)];
+    var maxIndent = 10 + Math.random() * 22; // 10–32vw
+    var staggerPool = [0, 0.2, 0.4, 0.6, 0.8, 1.0].map(function(v) { return v * maxIndent; });
+    staggerPool.sort(function() { return Math.random() - 0.5; });
+
+    // Position passage centrally on screen
+    passage.style.position = 'fixed';
+    passage.style.width = '52vw';
+    passage.style.maxWidth = '800px';
+    passage.style.top = (5 + Math.random() * 55) + 'vh';
+    passage.style.left = (5 + Math.random() * 18) + '%';
+    passage.style.boxSizing = 'border-box';
+    passage.style.overflow = 'visible';
+
+    // Find the element whose direct children include <br> nodes.
+    // Harlowe may render text into tw-passage directly, or wrap it
+    // in a tw-expression child. We check one level deep.
+    function hasBrChild(el) {
+      return Array.from(el.childNodes).some(function(n) { return n.nodeName === 'BR'; });
+    }
+    var container = passage;
+    if (!hasBrChild(passage)) {
+      Array.from(passage.childNodes).some(function(child) {
+        if (child.nodeType === 1 && hasBrChild(child)) {
+          container = child;
+          return true;
+        }
+        return false;
+      });
+    }
+
+    // Split container's direct children at <br> boundaries
+    var allNodes = Array.from(container.childNodes);
+    var groups = [[]];
+    allNodes.forEach(function(node) {
+      if (node.nodeName === 'BR') { groups.push([]); }
+      else { groups[groups.length - 1].push(node); }
+    });
+
+    // Further split each group at sentence boundaries → sentence-level fragments
+    var fragments = [];
+    groups.forEach(function(group) {
+      if (group.length === 0) {
+        fragments.push(null); // null = blank-line separator
+        return;
+      }
+      splitAtSentences(group).forEach(function(sg) { fragments.push(sg); });
+    });
+
+    var nonEmpty = fragments.filter(function(f) { return f !== null; }).length;
+    if (nonEmpty <= 1) return;
+
+    // Rebuild container: each sentence fragment → block div with its own paddingLeft
+    while (container.firstChild) container.removeChild(container.firstChild);
+
+    var lineIdx = 0;
+    fragments.forEach(function(fragment) {
+      if (fragment === null) {
+        container.appendChild(document.createElement('br'));
+        return;
+      }
+      var div = document.createElement('div');
+      div.className = 'layout-line';
+      div.style.display = 'block';
+      div.style.lineHeight = 'inherit';
+      div.style.margin = '0';
+      div.style.padding = '0';
+      div.style.wordWrap = 'break-word';
+      var indent = layoutIndent(mode, lineIdx, nonEmpty, maxIndent, staggerPool);
+      div.style.position = 'relative';
+      div.style.left = indent.toFixed(2) + 'vw';
+      fragment.forEach(function(n) { div.appendChild(n); });
+      container.appendChild(div);
+      lineIdx++;
+    });
+  }
+
+  var _lastRunTags = null;
+  function onPassageChange() {
+    var story = document.querySelector('tw-story');
+    // Capture p now for the opacity=0 hide (works even if element is later replaced)
+    var pNow = document.querySelector('tw-passage');
+    if (pNow) pNow.style.opacity = '0';
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      try {
+        // Re-query inside timeout in case Harlowe replaced the tw-passage element
+        var p = document.querySelector('tw-passage');
+        if (!p) return;
+        var tags = story ? (story.getAttribute('tags') || '') : '';
+        var tagsChanged = tags !== _lastRunTags;
+        if (tagsChanged) {
+          clearPsychosisReveal();
+          _lastRunTags = tags;
           updateBackground(tags);
           updateRoomAudio(tags);
-          startFloatingImages(p);
-          if (tags.indexOf('titlescreen') !== -1) {
-            fitAsciiTitle();
+          // ── tag-based FX — only re-init when room type changes ─────────
+          if (tags.indexOf('echo') !== -1) {
+            startEchoText(p);
+          } else {
+            stopEchoText(p);
           }
-        } catch(e) {}
-      }, 200);
-    }
-  }).observe(document.documentElement, { childList: true, subtree: true });
+          if (tags.indexOf('dissolve') !== -1) {
+            startDissolveWords(p);
+          } else {
+            stopDissolveWords();
+          }
+          if (tags.indexOf('contradict') !== -1) {
+            startContradictText(p);
+          } else {
+            stopContradictText();
+          }
+        }
+        // ── always run per-navigation ───────────────────────────────────
+        applyFontCombo(story, tags);
+        applyLayout(p, tags);
+        startFloatingImages(p);
+        startErraticImages(p);
+        if (tags.indexOf('psychosis') === -1) {
+          stopPsychosisWander();
+          scramble(p);
+        } else {
+          applyPsychosisLayout(p);
+          p.style.opacity = '1';
+          startPsychosisWander(p);
+        }
+        if (tags.indexOf('titlescreen') !== -1) {
+          fitAsciiTitle();
+        }
+      } catch(e) { console.error('[onPassageChange]', e); }
+    }, 200);
+  }
 
-})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP decor" tags="decor" position="225,125" size="100,100"># Write poem/paragraph below — all lines become one floating block.
-# Final line with just | and a size to set the text size: xxl xl lg md sm xs
+  (function setupPassageObserver() {
+    var story = document.querySelector('tw-story');
+    if (!story) { setTimeout(setupPassageObserver, 100); return; }
+    new MutationObserver(onPassageChange)
+      .observe(story, { attributes: true, attributeFilter: ['tags'] });
+    onPassageChange();
+  })();
 
-Splatters of white
-burn into my eyes.
-The room hums and beeps.
-Symbols float
-across the pages.
-| md</tw-passagedata><tw-passagedata pid="2" name="GP Office 1" tags="GP clockroom" position="775,200" size="100,100">The |charged&gt;[resonant] ticks.
+})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP Office 1" tags="GP clockroom" position="775,200" size="100,100">The |charged&gt;[resonant] ticks.
 The |charged&gt;[piercing] clicks of a pen.
 
 The doctor looks up from his notepad to address you. He stares through you for a moment before finally settling on your dry and irritated eyes. The doctor seems a little put off by your appearance today. You should feel a hint of shame.
 
-&lt;div class="dialogue"&gt;So. Have you actually been taking your [[GP Reflection&lt;-medication]]? //he finally asks.//&lt;/div&gt;
+&lt;div class="dialogue"&gt;So. Have you actually been taking your medication? //he finally asks.//&lt;/div&gt;
 
-Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and pretend that you have been?</tw-passagedata><tw-passagedata pid="3" name="GP Reflection" tags="medbg" position="950,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn't cut it. You were supposed to take them daily but have failed to do so. You've been taking pills without question for years now. Washing down the various colours and sizes like a well-domesticated animal.
+Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and pretend that you have been?</tw-passagedata><tw-passagedata pid="2" name="GP Reflection" tags="blue breathe" position="950,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn't cut it. You were supposed to take them daily but have failed to do so. You've been taking pills without question for years now. Washing down the various colours and sizes like a well-domesticated animal.
 
 &lt;div style="height:0;overflow:visible;"&gt;&lt;img class="floating-img" src="./images/escitalopram.png" alt="escitalopram"&gt;&lt;img class="floating-img" src="./images/ambien.png" alt="ambien"&gt;&lt;img class="floating-img" src="./images/seroquel.png" alt="seroquel"&gt;&lt;img class="floating-img" src="./images/valium.png" alt="valium"&gt;&lt;img class="floating-img" src="./images/zopiclone.png" alt="zopiclone"&gt;&lt;img class="floating-img" src="./images/ativan.png" alt="ativan"&gt;&lt;img class="floating-img" src="./images/paxam.png" alt="paxam"&gt;&lt;img class="floating-img" src="./images/zyprexa.png" alt="zyprexa"&gt;&lt;/div&gt;
 
 You're not quite sure why you didn't take them. It's not like you were scared or anything. You're not very sure of anything to be fair. Or maybe you do know but you're not willing to face the truth.
 
 You should return to the present—the [[GP Office 1&lt;-doctor]] might be ready for you.
-Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata><tw-passagedata pid="4" name="GP Confess" tags="GP2 clockroom" position="850,350" size="100,100">&lt;div class="dialogue"&gt;I don't like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
+Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata><tw-passagedata pid="3" name="GP Confess" tags="GP2 clockroom" position="850,350" size="100,100">&lt;div class="dialogue"&gt;I don't like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
 It's humiliating but noble that you would admit that.
@@ -1316,7 +2088,7 @@ You nod but do you actually agree?
 
 Do you [[New Medication&lt;-accept]] the offer of new pills or [[Same Medication&lt;-try again]] with the old ones.
 
-Or if you're feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata><tw-passagedata pid="5" name="GP Lie" tags="GP2 clockroom" position="700,350" size="100,100">&lt;div class="dialogue"&gt;I... I... I've been taking it... everyday, like you said&lt;/div&gt;
+Or if you're feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata><tw-passagedata pid="4" name="GP Lie" tags="GP2 clockroom" position="700,350" size="100,100">&lt;div class="dialogue"&gt;I... I... I've been taking it... everyday, like you said&lt;/div&gt;
 
 you manage to dribble out.
 
@@ -1328,31 +2100,32 @@ He sighs.
 
 &lt;div class="dialogue"&gt;Lets try this again...&lt;/div&gt;
 
-You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-double down]] and endure the nightmare.</tw-passagedata><tw-passagedata pid="6" name="GP Daydream" tags="blue breathe" position="1175,325" size="100,100">Floating.
+You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-double down]] and endure the nightmare.</tw-passagedata><tw-passagedata pid="5" name="GP Daydream" tags="" position="1175,325" size="100,100">Floating.
 
 The doctor coughs somewhere in the background.
 
 &lt;div class="dialogue"&gt;Hello? Are you there? //he asks from another galaxy.//&lt;/div&gt;
 You can't find the words to answer. The language.
 
-Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata pid="7" name="hal.tracks" tags="" position="225,25" size="100,100">background:   ./audio/background.mp3
+Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata pid="6" name="hal.tracks" tags="" position="225,25" size="100,100">background:   ./audio/background.mp3
 clock:        ./audio/clock.mp3
 crickets:     ./audio/crickets.mp3
 psychobirds:  ./audio/psychosisbirds.mp3
 printer:      ./audio/printer.mp3
 siren:        ./audio/siren.mp3
-electrichum:  ./audio/electrichum.mp3</tw-passagedata><tw-passagedata pid="8" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata><tw-passagedata pid="9" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;img class="wk-title-svg" src="./images/ascii_title.svg" alt="Pathologisation"&gt;
+electrichum:  ./audio/electrichum.mp3
+electricwhine: ./audio/electricwhine.mp3</tw-passagedata><tw-passagedata pid="7" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata><tw-passagedata pid="8" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;img class="wk-title-svg" src="./images/ascii_title.svg" alt="Pathologisation"&gt;
 
-&lt;div class="wk-author"&gt;&lt;span class="wk-author-name"&gt;by &lt;a class="game-link" href="https://ryu-ichii.github.io/" target="_blank"&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;br&gt;(&lt;a class="game-link" href="https://github.com/ryu-ichii" target="_blank"&gt;GitHub&lt;/a&gt;, &lt;a class="game-link" href="./proof.html" target="_blank"&gt;Proof&lt;/a&gt;)&lt;/div&gt;
+&lt;div class="wk-author"&gt;&lt;span class="wk-author-name"&gt;&lt;a class="game-link" href="https://ryu-ichii.github.io/" target="_blank"&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;br&gt;(&lt;a class="game-link" href="https://github.com/ryu-ichii" target="_blank"&gt;GitHub&lt;/a&gt;, &lt;a class="game-link" href="./proof.html" target="_blank"&gt;Proof&lt;/a&gt;)&lt;/div&gt;
 
-&lt;div class="wk-desc"&gt;An interactive work about a GP appointment. About the gap between what you say and what you mean. About what gets lost in between.&lt;/div&gt;
+&lt;div class="wk-desc"&gt;Insert Description here&lt;/div&gt;
 
-&lt;div class="title-actions"&gt;[[GP Reception&lt;-Start]]&lt;div class="fullscreen-btn"&gt;(link: "Fullscreen")[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="GP Reception" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
+&lt;div class="title-actions"&gt;[[GP Reception&lt;-Start]]&lt;div class="fullscreen-btn"&gt;(link: "Fullscreen")[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="GP Reception" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
 You might want to turn your volume up so you can hear your appointment adequately.
 
 It's so boring here—everyone looks like shit. Like the sickness of the world has soaked into the walls and caste a shadow over everyone.
 
-You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-await]] your turn. You'll get there soon enough.</tw-passagedata><tw-passagedata pid="11" name="New Medication" tags="" position="800,525" size="100,100">&lt;div class="dialogue"&gt;Yep. Just look. Let's just try you on something else then. //he says.//&lt;/div&gt;
+You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-await]] your turn. You'll get there soon enough.</tw-passagedata><tw-passagedata pid="10" name="New Medication" tags="" position="800,525" size="100,100">&lt;div class="dialogue"&gt;Yep. Just look. Let's just try you on something else then. //he says.//&lt;/div&gt;
 
 He types into his computer and clicks something a few times.
 The printer groans into action.
@@ -1362,9 +2135,9 @@ He retrieves a prescription sheet and passes it you.
 
 You're backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
-(track: 'printer', 'seek', 5)</tw-passagedata><tw-passagedata pid="12" name="Car Park" tags="parkinglot breathe" position="375,400" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It's hot and bright. You can barely think.
+(track: 'printer', 'seek', 5)</tw-passagedata><tw-passagedata pid="11" name="Car Park" tags="parkinglot breathe" position="375,400" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It's hot and bright. You can barely think.
 
-You should get a drink and sit in the [[Park Encounter]] for a while.</tw-passagedata><tw-passagedata pid="13" name="GP Reassess" tags="GP clockroom" position="625,525" size="100,100"></tw-passagedata><tw-passagedata pid="14" name="GP Ignore" tags="" position="1375,500" size="100,100"></tw-passagedata><tw-passagedata pid="15" name="Park Encounter" tags="parkbench breathe" position="300,700" size="100,100">You find a spot on a bench.
+You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata><tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom" position="625,525" size="100,100"></tw-passagedata><tw-passagedata pid="13" name="GP Ignore" tags="" position="1375,575" size="100,100"></tw-passagedata><tw-passagedata pid="14" name="Park Encounter" tags="parkbench breathe" position="300,700" size="100,100">You find a spot on a bench.
 
 Theres a strung out bloke stumbling through the playground making an incoherent string of guttural noises as he comes closer to you. 
 
@@ -1372,17 +2145,78 @@ His eyes meet yours as you sit there minding your business. These fucking brassi
 
 The man approaches you in search of conversation.
 
-Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore him]] and begin your journey home.</tw-passagedata><tw-passagedata pid="16" name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis" position="225,875" size="100,100">|smooth1&gt;[(either: "What are you doing?", "The fuck are you here for?", "Are you ok?")]
+Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata><tw-passagedata pid="15" name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis" position="225,875" size="100,100">my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
+
+|smooth1&gt;[(either: "What are you doing?", "The fuck are you here for?", "Are you ok?")]
 
 |smooth2&gt;[(either: "You look retarded.", "Shit fuck.", "Wanna punch on?")]
 
 |smooth3&gt;[(either: "Just like me.", "Alone and afraid.", "Needles. Government Psy-Op.")]
 
-(live: 15s)[(goto: (either: "GP Office 2", "Psych Ward"))]
-(track: 'psychobirds', 'play')</tw-passagedata><tw-passagedata pid="17" name="Phone Psychosis" tags="" position="525,1100" size="100,100"></tw-passagedata><tw-passagedata pid="18" name="Same Medication" tags="" position="975,525" size="100,100">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata pid="19" name="GP Office 2" tags="doctorsoffice3" position="850,775" size="100,100">[[GP Office 2 Accept]] or [[GP Office 2 Reject]]</tw-passagedata><tw-passagedata pid="20" name="GP Office 3" tags="" position="600,1675" size="100,100"></tw-passagedata><tw-passagedata pid="21" name="Psych Ward" tags="psychward" position="850,1025" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="22" name="Public Toilet" tags="toilet breathe" position="1175,850" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata pid="23" name="Friend" tags="" position="550,975" size="100,100"></tw-passagedata><tw-passagedata pid="24" name="Jail" tags="" position="850,1325" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="25" name="Dream" tags="" position="500,800" size="100,100"></tw-passagedata><tw-passagedata pid="26" name="Home" tags="" position="1225,700" size="100,100"></tw-passagedata><tw-passagedata pid="27" name="Pharmacy" tags="" position="850,650" size="100,100"></tw-passagedata><tw-passagedata pid="28" name="Office" tags="" position="1200,525" size="100,100"></tw-passagedata><tw-passagedata pid="29" name="Ezymart" tags="ezymart" position="1100,1000" size="100,100"></tw-passagedata><tw-passagedata pid="30" name="Cigarette Break" tags="cigarettes" position="1275,1000" size="100,100"></tw-passagedata><tw-passagedata pid="31" name="City" tags="" position="1100,1350" size="100,100"></tw-passagedata><tw-passagedata pid="32" name="Conversation" tags="" position="975,1575" size="100,100"></tw-passagedata><tw-passagedata pid="33" name="Train" tags="" position="550,1250" size="100,100"></tw-passagedata><tw-passagedata pid="34" name="GP Office 2 Accept" tags="" position="750,900" size="100,100"></tw-passagedata><tw-passagedata pid="35" name="Placeholder A" tags="" position="1275,1300" size="100,100"></tw-passagedata><tw-passagedata pid="36" name="GP Office 2 Reject" tags="" position="950,900" size="100,100"></tw-passagedata><tw-passagedata pid="37" name="Placeholder B" tags="" position="1275,1400" size="100,100"></tw-passagedata><tw-passagedata pid="38" name="Placeholder C" tags="" position="375,1225" size="100,100">escape or stay</tw-passagedata><tw-passagedata pid="39" name="Psych Ward Escape" tags="" position="725,1150" size="100,100"></tw-passagedata><tw-passagedata pid="40" name="Psych Ward Stay" tags="" position="975,1175" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="GP Office Final" tags="" position="850,1775" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Jail Escape" tags="" position="750,1450" size="100,100"></tw-passagedata><tw-passagedata pid="43" name="Jail Stay" tags="" position="975,1450" size="100,100"></tw-passagedata><tw-passagedata pid="44" name="Public Toilet Psychosis" tags="psychosis brokentoilet" position="1450,875" size="100,100">RANDOMISE
+|smooth4&gt;[(either: "Just like me.", "Alone and afraid.", "Needles. Government Psy-Op.")]
+
+|smooth5&gt;[(link-replace: (either: "leave", "run", "get out", "ditch", "wake up"))[(either: "nice try", "that's a shame", "you might have to ride this out", "you're tripping", "you've lost the plot")]]
+
+(live: 20s)[(goto: (either: "GP Office 2", "Psych Ward"))]
+(track: 'psychobirds', 'play')</tw-passagedata><tw-passagedata pid="16" name="Phone Psychosis" tags="phonepsychosis" position="525,1100" size="100,100"></tw-passagedata><tw-passagedata pid="17" name="Same Medication" tags="" position="975,525" size="100,100">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata pid="18" name="GP Office 2" tags="doctorsoffice3" position="850,825" size="100,100">You're back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You've pissed him off good now. You've really gone and done it now.
+
+[[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata><tw-passagedata pid="19" name="GP Office 3" tags="" position="850,1300" size="100,100">[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata><tw-passagedata pid="20" name="Psych Ward" tags="psychward" position="850,1025" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="21" name="Public Toilet" tags="toilet breathe" position="1200,725" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata pid="22" name="Friend" tags="" position="550,975" size="100,100"></tw-passagedata><tw-passagedata pid="23" name="Jail" tags="" position="850,1550" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata pid="24" name="Dream" tags="" position="600,825" size="100,100"></tw-passagedata><tw-passagedata pid="25" name="Home" tags="" position="1000,650" size="100,100">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata pid="26" name="Pharmacy" tags="" position="725,675" size="100,100">You take or don't take the new pills.
+
+Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata><tw-passagedata pid="27" name="Office" tags="" position="1200,550" size="100,100"></tw-passagedata><tw-passagedata pid="28" name="Ezymart" tags="ezymart" position="1100,1000" size="100,100"></tw-passagedata><tw-passagedata pid="29" name="Cigarette Break" tags="cigarettes" position="1275,1000" size="100,100"></tw-passagedata><tw-passagedata pid="30" name="Conversation" tags="" position="375,1450" size="100,100"></tw-passagedata><tw-passagedata pid="31" name="Train" tags="" position="550,1250" size="100,100"></tw-passagedata><tw-passagedata pid="32" name="GP Office 2 Accept" tags="" position="750,925" size="100,100"></tw-passagedata><tw-passagedata pid="33" name="Complete Random Reality Fragmentation 1" tags="" position="1275,1300" size="100,100">(display: (either: "CRRF Background 1", "CRRF Background 2", "CRRF Background 3", "CRRF Background 4"))
+(display: (either: "CRRF Image 1", "CRRF Image 2", "CRRF Image 3", "CRRF Image 4"))
+
+(display: (either: "CRRF Text 1", "CRRF Text 2", "CRRF Text 3", "CRRF Text 4"))
+
+(display: (either: "CRRF Links 1", "CRRF Links 2", "CRRF Links 3"))</tw-passagedata><tw-passagedata pid="34" name="GP Office 2 Reject" tags="" position="950,925" size="100,100"></tw-passagedata><tw-passagedata pid="35" name="Complete Random Reality Fragmentation 2" tags="" position="1275,1400" size="100,100">(display: (either: "CRRF Background 1", "CRRF Background 2", "CRRF Background 3", "CRRF Background 4"))
+(display: (either: "CRRF Image 1", "CRRF Image 2", "CRRF Image 3", "CRRF Image 4"))
+
+(display: (either: "CRRF Text 1", "CRRF Text 2", "CRRF Text 3", "CRRF Text 4"))
+
+(display: (either: "CRRF Links 1", "CRRF Links 2", "CRRF Links 3"))</tw-passagedata><tw-passagedata pid="36" name="Complete Random Reality Fragmentation 3" tags="" position="375,1225" size="100,100">(display: (either: "CRRF Background 1", "CRRF Background 2", "CRRF Background 3", "CRRF Background 4"))
+(display: (either: "CRRF Image 1", "CRRF Image 2", "CRRF Image 3", "CRRF Image 4"))
+
+(display: (either: "CRRF Text 1", "CRRF Text 2", "CRRF Text 3", "CRRF Text 4"))
+
+(display: (either: "CRRF Links 1", "CRRF Links 2", "CRRF Links 3"))</tw-passagedata><tw-passagedata pid="37" name="Psych Ward Escape" tags="" position="725,1175" size="100,100"></tw-passagedata><tw-passagedata pid="38" name="Psych Ward Stay" tags="" position="975,1175" size="100,100"></tw-passagedata><tw-passagedata pid="39" name="GP Office Final" tags="" position="850,1775" size="100,100"></tw-passagedata><tw-passagedata pid="40" name="Jail Escape" tags="" position="700,1675" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="Jail Stay" tags="" position="1025,1675" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Public Toilet Psychosis" tags="psychosis brokentoilet" position="1450,875" size="100,100">my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
+
+|smooth1&gt;[(either: "What are you doing?", "The fuck are you here for?", "Are you ok?")]
+
+|smooth2&gt;[(either: "You look retarded.", "Shit fuck.", "Wanna punch on?")]
+
+|smooth3&gt;[(either: "Just like me.", "Alone and afraid.", "Needles. Government Psy-Op.")]
+
+|smooth4&gt;[(either: "Just like me.", "Alone and afraid.", "Needles. Government Psy-Op.")]
 
 
-(live: 15s)[(goto: (either: "GP Office 2", "Psych Ward"))]</tw-passagedata><tw-passagedata pid="45" name="Placeholder D" tags="" position="1275,1500" size="100,100"></tw-passagedata><tw-passagedata pid="46" name="Elevator" tags="elevator" position="1600,1500" size="100,100"></tw-passagedata><tw-passagedata pid="47" name="Night Walk" tags="nightambience" position="1750,1500" size="100,100"></tw-passagedata></tw-storydata>
+(live: 20s)[(goto: (either: "GP Office 2", "Psych Ward"))]</tw-passagedata><tw-passagedata pid="43" name="Complete Random Reality Fragmentation 4" tags="" position="1275,1500" size="100,100">(display: (either: "CRRF Background 1", "CRRF Background 2", "CRRF Background 3", "CRRF Background 4"))
+(display: (either: "CRRF Image 1", "CRRF Image 2", "CRRF Image 3", "CRRF Image 4"))
+
+(display: (either: "CRRF Text 1", "CRRF Text 2", "CRRF Text 3", "CRRF Text 4"))
+
+(display: (either: "CRRF Links 1", "CRRF Links 2", "CRRF Links 3"))
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CRRF POOLS — edit these sub-passages to change the random content.
+   To add more options: create a new passage (e.g. "CRRF Image 5") and
+   add its name to the (either: ...) list in each CRRF passage above.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* — IMAGES — uses erratic-img class (fast, jittery, glitchy) ————————— */</tw-passagedata><tw-passagedata pid="44" name="CRRF Image 1" tags="" position="1500,1300" size="100,100">&lt;img class="erratic-img" src="./images/static.gif"&gt;</tw-passagedata><tw-passagedata pid="45" name="CRRF Image 2" tags="" position="1500,1400" size="100,100">&lt;img class="erratic-img" src="./images/nightambience.jpg"&gt;</tw-passagedata><tw-passagedata pid="46" name="CRRF Image 3" tags="" position="1500,1500" size="100,100">&lt;img class="erratic-img" src="./images/parkpsychosis.gif"&gt;</tw-passagedata><tw-passagedata pid="47" name="CRRF Image 4" tags="" position="1500,1600" size="100,100">&lt;img class="erratic-img" src="./images/brokentoilet.jpg"&gt;
+
+/* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata><tw-passagedata pid="48" name="CRRF Background 1" tags="" position="1900,1300" size="100,100">&lt;div class="crrf-bg-overlay" style="background-image: url('./images/static.gif')"&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="49" name="CRRF Background 2" tags="" position="1900,1400" size="100,100">&lt;div class="crrf-bg-overlay" style="background-image: url('./images/parkpsychosis.gif')"&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="50" name="CRRF Background 3" tags="" position="1900,1500" size="100,100">&lt;div class="crrf-bg-overlay" style="background-image: url('./images/psychward.jpg')"&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="51" name="CRRF Background 4" tags="" position="1900,1600" size="100,100">&lt;div class="crrf-bg-overlay" style="background-image: url('./images/nightambience.jpg')"&gt;&lt;/div&gt;
+
+/* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata><tw-passagedata pid="52" name="CRRF Text 1" tags="" position="1700,1300" size="100,100">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata pid="53" name="CRRF Text 2" tags="" position="1700,1400" size="100,100">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata pid="54" name="CRRF Text 3" tags="" position="1700,1500" size="100,100">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata pid="55" name="CRRF Text 4" tags="" position="1700,1600" size="100,100">Time passes differently here. Or maybe it does not pass at all.
+
+/* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata pid="56" name="CRRF Links 1" tags="" position="2100,1300" size="100,100">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata pid="57" name="CRRF Links 2" tags="" position="2100,1400" size="100,100">[[Continue-&gt;Home]]
+[[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata pid="58" name="CRRF Links 3" tags="" position="2100,1500" size="100,100">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata pid="59" name="Elevator" tags="elevator" position="1600,1500" size="100,100"></tw-passagedata><tw-passagedata pid="60" name="Night Walk" tags="nightambience" position="1750,1500" size="100,100"></tw-passagedata><tw-passagedata pid="61" name="GP Office 2 decor" tags="decor" position="225,125" size="100,100"># Poem/paragraph below — all lines become one floating block.
+# Final line with just | and a size to set the text size: xxl xl lg md sm xs
+
+Splatters of white
+burn into my eyes.
+The room hums and beeps.
+Symbols float
+across the room.
+| md</tw-passagedata><tw-passagedata pid="62" name="City Dissociation" tags="" position="550,1425" size="100,100"></tw-passagedata><tw-passagedata pid="63" name="GP Office 3 Escape" tags="" position="975,1425" size="100,100"></tw-passagedata><tw-passagedata pid="64" name="GP Office 3 Stay" tags="" position="725,1425" size="100,100"></tw-passagedata><tw-passagedata pid="65" name="Theft Psychosis" tags="theftpsychosis psychosis" position="700,1100" size="100,100"></tw-passagedata></tw-storydata>
 
 
 
