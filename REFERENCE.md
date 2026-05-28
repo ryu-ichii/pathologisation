@@ -193,7 +193,11 @@ Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plai
 ```html
 <a class="game-link" href="https://..." target="_blank">Link text</a>
 ```
-Currently used in: Title Screen (Ryu Konrad name, GitHub, Proof).
+Currently used in: Title Screen (Ryu Konrad name, GitHub).
+
+**Title Screen author block structure:**
+- `.wk-author-name` — "Ryu Konrad" link, Nimbus Roman, `clamp(1.3rem, 2.5vw, 1.9rem)`
+- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, Nimbus Roman — separate from `.wk-author` so it doesn't affect document flow or cause a scrollbar
 
 ---
 
