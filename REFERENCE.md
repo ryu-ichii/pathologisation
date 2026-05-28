@@ -1,6 +1,10 @@
 # Pathologisation — Design & FX Reference
 
 > All changes are made in `twine-twee-edit/story.twee`, then compiled with `python3 twee_to_html.py`.
+>
+> **Start passage:** always `Title Screen` — enforced by `"start": "Title Screen"` in `StoryData`. Every compile sets `startnode` correctly regardless of what Twine last saved. To confirm in Twine: Title Screen passage should show the rocket/start marker; if not, right-click → Start Story Here.
+>
+> **Twine → code workflow:** edit in Twine → save → `cd twine-twee-edit && python3 html_to_twee.py` (reads from `pathologisation/index.html`) → make code edits to `story.twee` → `python3 twee_to_html.py`.
 
 ---
 
