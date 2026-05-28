@@ -5,6 +5,8 @@
 > **Start passage:** always `Title Screen` — enforced by `"start": "Title Screen"` in `StoryData`. Every compile sets `startnode` correctly regardless of what Twine last saved. To confirm in Twine: Title Screen passage should show the rocket/start marker; if not, right-click → Start Story Here.
 >
 > **Twine → code workflow:** edit in Twine → save → `cd twine-twee-edit && python3 html_to_twee.py` (reads from `pathologisation/index.html`) → make code edits to `story.twee` → `python3 twee_to_html.py`.
+>
+> **Proof:** `proof.html` is auto-regenerated on every `twee_to_html.py` compile via `twee_to_proof.py`. Run `python3 twee_to_proof.py` standalone to regenerate without a full compile.
 
 ---
 
@@ -129,11 +131,11 @@ The |charged>[resonant] ticks.
 Currently used in: GP Office 1.
 
 ### `|smooth1>` `|smooth2>` `|smooth3>` `|smooth4>`
-**Psychosis rooms only.** Text fragments that wander randomly across the screen continuously. Use `(either:)` for random text.
+**Psychosis rooms only.** Text fragments that wander randomly across the screen continuously. Text is injected from a `[fragment-pool]` passage — leave the hook empty in the passage:
 
 ```
-|smooth1>[(either: "What are you doing?", "Are you ok?")]
-|smooth2>[(either: "You look retarded.", "Wanna punch on?")]
+|smooth1>[ ]
+|smooth2>[ ]
 ```
 Font: **Termina**. Currently used in: Park Psychosis, Public Toilet Psychosis.
 
@@ -387,7 +389,7 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Title screen Start link | Termina |
 | Title screen description | Logic Monospace |
 | Title screen "Ryu Konrad" link | Termina |
-| Title screen GitHub + Proof links | Nimbus Roman |
+| Title screen GitHub link | Nimbus Roman |
 | Home button | Termina |
 | Fullscreen button | Termina |
 | Intrusion words | Nimbus Roman |
@@ -481,3 +483,77 @@ Create `:: My Passage decor [decor]` with the intrusion poem text.
 
 **Layout randomiser — suppress for a passage (opt-out):**
 Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it always runs on normal passages.
+
+---
+
+## 11. BUILD SCRIPTS (`twine-twee-edit/`)
+
+| Script | What it does |
+|--------|-------------|
+| `twee_to_html.py` | Compiles `story.twee` → `index.html` (also copies to `pathologisation/`). Auto-runs `twee_to_proof.py` at the end. |
+| `html_to_twee.py` | Extracts `pathologisation/index.html` (Twine's save target) → `story.twee`. Run after editing in Twine. |
+| `twee_to_proof.py` | Generates `pathologisation/proof.html` from `story.twee`. Run standalone or auto-called by compile. |
+
+**Proof sections:**
+1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
+2. **Unlinked** — story passages not yet connected to the graph (works in progress, incomplete branches)
+3. **Randomisation** — two sub-sections:
+   - *text* — `[fragment-pool]` passages + `CRRF Text 1–4` + `CRRF Links 1–3`
+   - *images* — `CRRF Image 1–4` + `CRRF Background 1–4`
+   - Detection: CRRF sub-passages matched by name prefix; fragment-pool passages matched by tag
+4. **Decor** — passages tagged `[decor]`
+5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
+
+---
+
+## 12. FRAGMENT POOL SYSTEM
+
+Centralises all randomised text for psychosis rooms into dedicated passages, keeping the room passages clean and all content editable in one place.
+
+### Pool passage format
+
+Tag: `[fragment-pool]`. One line per key, options separated by `|`:
+
+```
+:: Psychosis Fragment Pool [fragment-pool]
+body:    First body text option. | Second option. | Third option.
+smooth1: What are you doing? | The fuck are you here for? | Are you ok?
+smooth2: You look retarded. | Shit fuck. | Wanna punch on?
+smooth3: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
+smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
+```
+
+- **`body:`** — replaces the passage's body text before `applyPsychosisLayout` runs, so the injected text gets the full cummings scatter + typewriter treatment. If omitted, the passage's own text is used as fallback.
+- **`smooth1:`–`smooth4:`** — each hook gets one randomly selected option injected after layout, before wandering begins. Each is independently editable.
+- **`#`** at the start of a line = comment, ignored by the parser.
+- `smooth5` is never touched by the pool — it has interactive Harlowe link markup and stays as written in the passage.
+
+### Call order on room load
+
+```
+injectFragmentPoolBody(p, tags)   ← body: option replaces passage text
+applyPsychosisLayout(p)           ← scatters whatever body text is there
+injectFragmentPool(p, tags)       ← smooth1–4 get their random option
+startPsychosisWander(p)           ← hooks begin moving
+```
+
+### Room-specific pools
+
+Add a second pool passage with a tag matching the room's own tag:
+
+```
+:: Park Psychosis Fragment Pool [fragment-pool parkpsychosis]
+body:    Park-specific body text. | Another park option.
+smooth1: Park-specific fragment. | Another one.
+...
+```
+
+JS picks the most specific match (shared tag with room), falls back to the generic pool if none found.
+
+### Adding new smooth hooks
+
+1. Add CSS for the new hook name (font, size, animation)
+2. Add it to `startPsychosisWander` with desired movement behaviour
+3. Add its name to the inject list in `injectFragmentPool`
+4. Add a line in the pool passage: `smooth6: option | option`
+5. Add `|smooth6>[ ]` to the psychosis passage
