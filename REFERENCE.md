@@ -19,8 +19,8 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
 | `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling | Title Screen |
-| `breakdownfont` | Body text at 2.5× size, links pinned to 48px | Park Psychosis |
-| `psychosis` | Nimbus Roman body at 1rem (overrides breakdownfont via `!important`), chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
+| `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | *(not yet used)* |
+| `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
 | `blue` | Solid blue background (`#0029a3`) via `#bg-layer` — `tw-story` stays transparent so floating images remain visible | GP Reflection |
 
 ### Background Image Tags
@@ -33,7 +33,7 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `parkinglot` | `parkinglot.jpg` | Car Park |
 | `GP` | `gp.jpg` | GP Office 1, GP Reassess |
 | `GP2` | `gpoffice.jpg` | GP Confess, GP Lie |
-| `parkbench` | `parkbench.jpg` | Park Encounter |
+| `parkbench` | `parkbench.jpg` | Park Encounter (also `[collage]` for testing) |
 | `static` | `static.gif` | Title Screen |
 | `parkpsychosis` | `parkpsychosis.gif` | Park Psychosis |
 | `brokentoilet` | `brokentoilet.jpg` | Public Toilet Psychosis |
@@ -81,6 +81,25 @@ Auto-plays a looping track when entering, stops when leaving:
 | `theftpsychosis` | `siren.mp3` | Theft Psychosis |
 
 **To add a new room track:** add the audio file to `audio/`, register it in `hal.tracks` passage, add one line to `TAG_TRACKS` in Story JavaScript.
+
+### Collage Tag
+
+| Tag | Effect |
+|-----|--------|
+| `collage` | 2–3 images randomly selected from `COLLAGE_IMAGES` and layered over the background. Each image: 30–70vw wide, max 65vh tall, opacity 0.30–0.85. Images are assigned to different screen zones (top-left, top-right, bottom-left, bottom-right, centre) so they never cluster. Up to 50% of each image can hang off any edge. Sits at z-index 0 — above `#bg-layer` (z:-1), below floating images (z:5) and passage text (z:100). Automatically makes `tw-story` transparent so images are always visible regardless of other tags. |
+
+**Setup:**
+1. Add images to `pathologisation/images/collage/`
+2. Add paths to `COLLAGE_IMAGES` in Story JavaScript:
+   ```javascript
+   var COLLAGE_IMAGES = [
+     './images/collage/img1.jpg',
+     './images/collage/img2.jpg',
+   ];
+   ```
+3. Tag any passage with `[collage]`
+
+Combines cleanly with all other tags including `[breathe]`, `[blue]`, `[floating-img]`, `[echo]`, `[dissolve]`, `[contradict]`. Can be used with `[psychosis]` but may be visually busy alongside the room background gif and wandering hooks.
 
 ### Effect Tags (ready to use, not yet applied)
 
@@ -137,7 +156,7 @@ Currently used in: GP Office 1.
 |smooth1>[ ]
 |smooth2>[ ]
 ```
-Font: **Termina**. Currently used in: Park Psychosis, Public Toilet Psychosis.
+Font: **`velvelyne`**. Currently used in: Park Psychosis, Public Toilet Psychosis.
 
 Wander behaviour: starts moving immediately on arrival (`void el.offsetTop` forces initial position commit before transition). Position range: `top` 5–77%, `left` 3–68% — stays within viewport. Speed: 250–1450ms per move.
 
@@ -147,7 +166,7 @@ Wander behaviour: starts moving immediately on arrival (`void el.offsetTop` forc
 ```
 |smooth5>[(link-replace: (either: "leave", "run", "get out"))[(either: "nice try", "you're tripping")]]
 ```
-Font: **DejaVu Sans**. Currently used in: Park Psychosis.
+Font: **`tt-hoves-pro`**. Currently used in: Park Psychosis.
 
 ---
 
@@ -237,7 +256,7 @@ Skipped on: `[psychosis]`, `[titlescreen]`.
 
 ### Psychosis layout (`[psychosis]` passages only)
 
-Passage anchored: `position: fixed; width: 42vw; top: 8vh; left: 5%`.
+Passage anchored: `position: fixed; width: 42vw; top: 8vh; left: 5–50%` (randomised each load).
 
 Body text reveals in two phases:
 
@@ -257,7 +276,7 @@ Auto-redirect at 20s fires regardless. Navigating away cancels the reveal cleanl
 **BD distress effects** (`bd-tremor`, `bd-blur`, `bd-glitch`) are suppressed when `[psychosis]` is present even if `[breakdownfont]` is also tagged.
 
 ### Scramble animation
-Every passage (except psychosis) animates words in on load. Each word starts displaced from its final position with random rotation (±27.5°), scale (0.25×–2.45×), and offset (±450px x / ±250px y). Words fly to their final position using elastic overshoot easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`) — each word overshoots its landing and snaps back. Settle duration is randomised per word (320–1100ms). Words reveal in **DOM order** (top-to-bottom, left-to-right) at 38ms intervals so the reader can follow from the top as the animation completes. Clicking anywhere skips instantly.
+Every passage (except psychosis and titlescreen) animates in on load **letter by letter**. Each character starts displaced from its final position with random rotation (±27.5°), scale (0.25×–2.45×), and offset (±450px x / ±250px y). Letters fly to their final position using elastic overshoot easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`). Settle duration is randomised per letter (320–1100ms). Letters reveal in **DOM order** (top-to-bottom) at 18ms intervals. Spaces are preserved as plain text nodes. Clicking anywhere skips instantly.
 
 ### Link fidget
 All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough.
@@ -348,51 +367,58 @@ Handles all backgrounds — both image and solid colour. Always present, invisib
 
 ## 7. FONT SYSTEM
 
-### Typekit kit
-`@import url('https://use.typekit.net/vnl6sno.css')` — loads all custom fonts.
+### Font sources
+
+**Typekit** (`@import url('https://use.typekit.net/vnl6sno.css')`) — serves: `source-code-pro`, `heimat-mono`.
+
+**Local WOFF2** (in `pathologisation/fonts/`) — serves: all `redaction` variants (`redaction`, `redaction-10` through `redaction-100`, each with Regular/Bold/Italic), `velvelyne`, `terminal-grotesque`, `tt-hoves-pro`, `karrik` (Regular + Italic). Registered via `@font-face` in Story Stylesheet.
 
 ### Font combo randomiser
 On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo is applied:
 
-| Combo | Body | Links | Dialogue |
-|-------|------|-------|---------|
-| 1 | Nimbus Roman | DejaVu Sans | Logic Monospace |
-| 2 | Termina | Nimbus Roman (1.5em) | DejaVu Sans |
-| 3 | Logic Monospace | DejaVu Sans | Nimbus Roman |
-| 4 | DejaVu Sans | Termina | Nimbus Roman |
+| Combo | Body | Links | Dialogue | Attribution | Decor |
+|-------|------|-------|----------|-------------|-------|
+| 1 | `redaction` | `tt-hoves-pro` | `heimat-mono` | `redaction` | `redaction-10` |
+| 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` | `redaction-35` |
+| 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` | `redaction-50` |
+| 4 | `heimat-mono` | `redaction-20` | `tt-hoves-pro` | `heimat-mono` | `redaction-70` |
+| 5 | `terminal-grotesque` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-100` |
 
-Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the **body text font** for that combo, not the dialogue font — set via per-combo `.dialogue em` overrides.
+Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the body text font for that combo. Decor intrusion text (`.lp-intrusion`) uses a varying redaction variant per combo.
 
 ### Font sizes
 
 | Element | Size |
 |---------|------|
 | Global base (`tw-story`) | `1em` (browser default ≈ 16px) |
+| Default story base (`redaction-20`) | inherits from `tw-story` |
 | Breakdownfont body | `2.5em` |
 | Breakdownfont links | `48px !important` |
-| Psychosis body (`tw-passage`) | `1rem !important` — escapes breakdownfont's 2.5em via rem |
-| smooth1–4 hooks | `0.9rem !important` — overrides breakdownfont |
+| Psychosis body (`tw-passage`) | `1rem !important` — pinned via rem, independent of any em scaling |
+| smooth1–4 hooks | `0.9rem !important` — pinned |
 | smooth5 + its link | `1.25rem` |
 | UI buttons (home, fullscreen) | `0.9rem` |
 | Title screen links | `0.9rem` |
 | Title screen author name | `clamp(1rem, 2vw, 1.4rem)` |
 | Title screen description | `clamp(0.7rem, 1.4vw, 0.9rem)` |
-| Combo 2 Nimbus Roman links | `1.5em` |
 
 ### Fixed fonts (always, regardless of combo)
 
 | Element | Font |
 |---------|------|
-| Psychosis body text | Nimbus Roman |
-| smooth1–4 wandering hooks | Termina |
-| smooth5 escape link | DejaVu Sans |
-| Title screen Start link | Termina |
-| Title screen description | Logic Monospace |
-| Title screen "Ryu Konrad" link | Termina |
-| Title screen GitHub link | Nimbus Roman |
-| Home button | Termina |
-| Fullscreen button | Termina |
-| Intrusion words | Nimbus Roman |
+| Default story base | `redaction-20` |
+| Psychosis body text | `redaction-50` |
+| smooth1–4 wandering hooks | `velvelyne` |
+| smooth5 escape link | `tt-hoves-pro` |
+| Title screen links / Start | `terminal-grotesque` |
+| Title screen "Ryu Konrad" link | `redaction-70` bold |
+| Title screen GitHub link | `source-code-pro` |
+| Home button | `terminal-grotesque` |
+| Fullscreen button | `terminal-grotesque` |
+| Intrusion words (`.lp-intrusion`) | varies per combo: `redaction-10` / `35` / `50` / `70` / `100` |
+| Title screen "Ryu Konrad" (`.wk-author-name`) | `redaction-70` bold |
+| Breakdownfont body | `redaction-20` at 2.5em |
+| Breakdownfont links | `tt-hoves-pro` at 48px |
 
 ---
 

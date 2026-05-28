@@ -11,6 +11,40 @@
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Working E-lit.</tw-noscript></noscript></tw-story>
 <tw-storydata name="Pathologisation" startnode="8" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="C4953C17-4774-4E8D-845C-3829DADEF467" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://use.typekit.net/vnl6sno.css');
 
+@font-face { font-family: 'tt-hoves-pro'; src: url('./fonts/TT_Hoves_Pro_Medium.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'velvelyne'; src: url('./fonts/Velvelyne-Regular.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'terminal-grotesque'; src: url('./fonts/terminal-grotesque-webfont.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'karrik'; src: url('./fonts/Karrik-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'karrik'; src: url('./fonts/Karrik-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction'; src: url('./fonts/Redaction-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction'; src: url('./fonts/Redaction-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction'; src: url('./fonts/Redaction-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-10'; src: url('./fonts/Redaction_10-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-10'; src: url('./fonts/Redaction_10-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-10'; src: url('./fonts/Redaction_10-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-20'; src: url('./fonts/Redaction_20-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-20'; src: url('./fonts/Redaction_20-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-20'; src: url('./fonts/Redaction_20-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-35'; src: url('./fonts/Redaction_35-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-35'; src: url('./fonts/Redaction_35-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-35'; src: url('./fonts/Redaction_35-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-50'; src: url('./fonts/Redaction_50-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-50'; src: url('./fonts/Redaction_50-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-50'; src: url('./fonts/Redaction_50-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-70'; src: url('./fonts/Redaction_70-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-70'; src: url('./fonts/Redaction_70-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-70'; src: url('./fonts/Redaction_70-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: 'redaction-100'; src: url('./fonts/Redaction_100-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'redaction-100'; src: url('./fonts/Redaction_100-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'redaction-100'; src: url('./fonts/Redaction_100-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+
 tw-sidebar { display: none; }
 #audio-controls { display: none !important; }
 
@@ -30,7 +64,7 @@ body {
   background-color: transparent;
 }
 tw-story {
-  font-size: 1em;
+  font-size: 1.15em;
 }
 
 .title-actions {
@@ -44,10 +78,11 @@ tw-story {
   border: none;
   background: transparent;
   cursor: pointer;
-  font-family: 'termina', Arial, Helvetica, sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'terminal-grotesque', Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: 0.4em;
+  text-transform: lowercase;
   color: rgba(255,255,255,0.55);
 }
 .fullscreen-btn:hover {
@@ -62,7 +97,7 @@ tw-story {
   background: transparent;
   cursor: pointer;
   z-index: 1000;
-  font-family: 'termina', Arial, Helvetica, sans-serif;
+  font-family: 'terminal-grotesque', Arial, Helvetica, sans-serif;
   font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -125,31 +160,43 @@ tw-story[tags~="titlescreen"] tw-passage {
   }
 }
 .wk-author {
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-size: clamp(0.95rem, 1.75vw, 1.15rem);
   letter-spacing: 0.1em;
   opacity: 0.55;
   margin-bottom: 0.5rem;
   text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
 .wk-author-name {
-  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  font-size: clamp(1.5rem, 2.9vw, 2.2rem);
 }
 .wk-author-name .game-link {
-  font-family: 'nimbus-roman', Georgia, serif;
+  font-family: 'redaction-70', Georgia, serif;
+  font-weight: 400;
+}
+.wk-github .game-link {
+  font-family: 'source-code-pro', monospace;
 }
 .wk-github {
   position: fixed;
   bottom: 1.2rem;
   left: 1.4rem;
-  font-family: 'nimbus-roman', Georgia, serif;
-  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  font-size: clamp(1rem, 1.85vw, 1.25rem);
   letter-spacing: 0.08em;
   opacity: 0.5;
   text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
 }
+.wk-info {
+  font-family: 'redaction-50', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+  letter-spacing: 0.02em;
+  opacity: 0.55;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 6px #000, 0 0 14px #000, 1px 1px 3px #000;
+}
 .wk-desc {
-  font-family: 'logic-monospace', monospace;
-  font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+  font-family: 'redaction-20', Georgia, serif;
+  font-size: clamp(0.8rem, 1.6vw, 1rem);
   letter-spacing: 0.02em;
   opacity: 0.65;
   line-height: 1.5;
@@ -159,19 +206,19 @@ tw-story[tags~="titlescreen"] tw-passage {
 tw-story[tags~="titlescreen"] tw-link,
 tw-story[tags~="titlescreen"] tw-link:link {
   display: inline-block;
-  font-family: 'termina', Arial, Helvetica, sans-serif;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-size: 0.9rem;
+  font-family: 'terminal-grotesque', Arial, Helvetica, sans-serif;
+  letter-spacing: 0.55em;
+  text-transform: none;
+  font-size: 1.7rem;
   text-decoration: none;
   color: rgba(255,255,255,0.85);
-  border: 1px solid rgba(255,255,255,0.4);
-  padding: 0.45em 1.4em;
+  border: none;
+  padding: 0;
+  animation: fidget 3.2s steps(40) infinite;
 }
 tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
-  border-color: white;
-  background: rgba(255,255,255,0.08);
+  animation: link-flicker 0.35s steps(5) forwards, fidget 3.2s steps(40) infinite;
 }
 tw-story[tags~="titlescreen"] .fullscreen-btn tw-link,
 tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link {
@@ -185,7 +232,7 @@ tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
 }
 
 tw-story {
-  font-family: 'logic-monospace', monospace;
+  font-family: 'redaction-20', Georgia, serif;
   font-weight: 400;
   font-style: normal;
   color: #FFF;
@@ -194,7 +241,7 @@ tw-story {
 }
 
 tw-story[tags~="breakdownfont"] {
-  font-family: 'logic-monospace', monospace;
+  font-family: 'redaction-20', Georgia, serif;
   font-weight: 400;
   font-style: normal;
   font-size: 2.5em;
@@ -207,7 +254,7 @@ tw-story[tags~="breakdownfont"] tw-link,
 tw-story[tags~="breakdownfont"] tw-link:link,
 tw-story[tags~="breakdownfont"] tw-link:hover {
   font-size: 48px !important;
-  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif !important;
+  font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif !important;
 }
 
 /* ── BREAKDOWN DISTRESS EFFECTS ─────────────────────────────────────────
@@ -244,7 +291,7 @@ tw-story.bd-glitch { animation: bd-glitch 0.25s steps(3) infinite; }
    ────────────────────────────────────────────────────────────────────── */
 tw-link, tw-link:link,
 .game-link {
-  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif;
+  font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif;
   color: rgba(255,255,255,0.9);
   text-decoration: none;
   display: inline-block;
@@ -253,7 +300,7 @@ tw-link, tw-link:link,
 }
 tw-link:visited, tw-link.visited {
   color: rgba(255,255,255,0.55);
-  text-decoration: line-through;
+  text-decoration: line-through !important;
   animation: none;
 }
 tw-link:hover, tw-link:focus, tw-link:active,
@@ -273,12 +320,17 @@ tw-link.visited:hover {
   60%  { color: magenta; }
   100% { color: white; }
 }
-/* Title screen buttons don't tremor — they're UI, not choices */
-tw-story[tags~="titlescreen"] tw-link,
-tw-story[tags~="titlescreen"] tw-link:link,
-tw-story[tags~="titlescreen"] tw-link:hover {
+/* Fullscreen button has no fidget — it's a UI control */
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link,
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link,
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
   animation: none;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.55);
+}
+/* Ryu Konrad and GitHub are static labels, no fidget */
+.wk-author-name .game-link,
+.wk-github .game-link {
+  animation: none;
 }
 tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
@@ -319,23 +371,23 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
 /* smooth5 is the fake-escape link — hidden until JS reveals it after ~5s */
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
   visibility: hidden;
-  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif;
+  font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif;
   font-size: 1.25rem;
   text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 2px rgba(255,255,255,0.4), 0 0 6px #000, 0 0 12px #000;
 }
-/* Pin smooth5's link to VT323 at normal passage size — overrides breakdownfont 48px */
+/* Pin smooth5's link at normal passage size — overrides breakdownfont 48px */
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link,
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:link,
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:hover {
   font-size: 1.25rem !important;
-  font-family: 'dejavu-sans', Arial, Helvetica, sans-serif !important;
+  font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif !important;
 }
-/* termina for wandering hooks (smooth1–4) in psychosis rooms */
+/* velvelyne for wandering hooks (smooth1–4) in psychosis rooms */
 tw-story[tags~="psychosis"] tw-hook[name="smooth1"],
 tw-story[tags~="psychosis"] tw-hook[name="smooth2"],
 tw-story[tags~="psychosis"] tw-hook[name="smooth3"],
 tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
-  font-family: 'termina', Arial, Helvetica, sans-serif;
+  font-family: 'velvelyne', Georgia, serif;
   font-size: 0.9rem !important; /* pin — overrides breakdownfont's 2.5em */
 }
 
@@ -344,6 +396,20 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
    the screen. JS drives the movement — speed and range are configurable
    in Story JavaScript under startFloatingImages().
    ────────────────────────────────────────────────────────────────────── */
+/* #bg-collage-layer sits just above #bg-layer (z:-1), below floating and passage */
+#bg-collage-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+#bg-collage-layer img {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+}
+
 /* #floating-layer sits between #bg-layer (z:-1) and tw-passage (z:100) */
 #floating-layer {
   position: fixed;
@@ -393,7 +459,7 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
    Text fringe spikes erratically using steps(1) for snap behavior.
    ────────────────────────────────────────────────────────────────────── */
 tw-story[tags~="psychosis"] tw-passage {
-  font-family: 'nimbus-roman', Georgia, serif;
+  font-family: 'redaction-50', Georgia, serif;
   font-size: 1rem !important; /* rem escapes breakdownfont's 2.5em on tw-story */
   animation: chromatic-ab 2.5s steps(1) infinite;
   position: fixed !important;
@@ -575,7 +641,8 @@ tw-story.has-bg-image { background-color: transparent; background-image: none; }
 /* Intrusion voice — large ghostly words floating in negative space */
 .lp-intrusion {
   position: fixed;
-  font-family: 'nimbus-roman', Georgia, serif;
+  font-family: 'redaction-70', Georgia, serif;
+  font-weight: bold;
   font-style: normal;
   font-size: clamp(44px, 6vw, 92px);
   line-height: 1.0;
@@ -594,35 +661,47 @@ tw-story.has-bg-image { background-color: transparent; background-image: none; }
    Excluded: [titlescreen], [psychosis], UI buttons, intrusions.
    All link effects (fidget, glow, flicker) are inherited — only font-family changes.
    ────────────────────────────────────────────────────────────────────── */
-tw-story.font-combo-1 { font-family: 'nimbus-roman', Georgia, serif; }
+tw-story.font-combo-1 { font-family: 'redaction', Georgia, serif; }
 tw-story.font-combo-1 tw-link,
 tw-story.font-combo-1 tw-link:link,
-tw-story.font-combo-1 .game-link { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-1 .dialogue { font-family: 'logic-monospace', monospace; }
+tw-story.font-combo-1 .game-link { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-1 .dialogue { font-family: 'heimat-mono', sans-serif; }
+tw-story.font-combo-1 .lp-intrusion { font-family: 'redaction-10', Georgia, serif; }
 
-tw-story.font-combo-2 { font-family: 'termina', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-2 { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-2 tw-link,
 tw-story.font-combo-2 tw-link:link,
-tw-story.font-combo-2 .game-link { font-family: 'nimbus-roman', Georgia, serif; font-size: 1.5em; }
-tw-story.font-combo-2 .dialogue { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-2 .game-link { font-family: 'velvelyne', Georgia, serif; }
+tw-story.font-combo-2 .dialogue { font-family: 'source-code-pro', monospace; }
+tw-story.font-combo-2 .lp-intrusion { font-family: 'redaction-35', Georgia, serif; }
 
-tw-story.font-combo-3 { font-family: 'logic-monospace', monospace; }
+tw-story.font-combo-3 { font-family: 'source-code-pro', monospace; }
 tw-story.font-combo-3 tw-link,
 tw-story.font-combo-3 tw-link:link,
-tw-story.font-combo-3 .game-link { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-3 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
+tw-story.font-combo-3 .game-link { font-family: 'karrik', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-3 .dialogue { font-family: 'redaction-35', Georgia, serif; }
+tw-story.font-combo-3 .lp-intrusion { font-family: 'redaction-50', Georgia, serif; }
 
-tw-story.font-combo-4 { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-4 { font-family: 'heimat-mono', sans-serif; }
 tw-story.font-combo-4 tw-link,
 tw-story.font-combo-4 tw-link:link,
-tw-story.font-combo-4 .game-link { font-family: 'termina', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-4 .dialogue { font-family: 'nimbus-roman', Georgia, serif; }
+tw-story.font-combo-4 .game-link { font-family: 'redaction-20', Georgia, serif; }
+tw-story.font-combo-4 .dialogue { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-4 .lp-intrusion { font-family: 'redaction-70', Georgia, serif; }
+
+tw-story.font-combo-5 { font-family: 'karrik', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-5 tw-link,
+tw-story.font-combo-5 tw-link:link,
+tw-story.font-combo-5 .game-link { font-family: 'source-code-pro', monospace; }
+tw-story.font-combo-5 .dialogue { font-family: 'karrik', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-5 .lp-intrusion { font-family: 'redaction-100', Georgia, serif; }
 
 /* Attribution lines //like this// use the body font, not the dialogue font */
-tw-story.font-combo-1 .dialogue em, tw-story.font-combo-1 .dialogue i { font-family: 'nimbus-roman', Georgia, serif; }
-tw-story.font-combo-2 .dialogue em, tw-story.font-combo-2 .dialogue i { font-family: 'termina', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-3 .dialogue em, tw-story.font-combo-3 .dialogue i { font-family: 'logic-monospace', monospace; }
-tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-family: 'dejavu-sans', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-1 .dialogue em, tw-story.font-combo-1 .dialogue i { font-family: 'redaction', Georgia, serif; }
+tw-story.font-combo-2 .dialogue em, tw-story.font-combo-2 .dialogue i { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-3 .dialogue em, tw-story.font-combo-3 .dialogue i { font-family: 'source-code-pro', monospace; }
+tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-family: 'heimat-mono', sans-serif; }
+tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-family: 'heimat-mono', sans-serif; }
 
 /**
  * Harlowe Audio Library (HAL), by Chapel, v2.3.0
@@ -1040,6 +1119,72 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
         story.classList.remove('colour-breathe');
       }
     }
+  }
+
+  /* ── BACKGROUND COLLAGE ─────────────────────────────────────────────────
+     Tag: [collage] — 2–3 images stacked as background layers.
+     Images are positioned with up to 50% hanging off any edge,
+     sized so no single image exceeds ~60% of the viewport.
+     Add paths to COLLAGE_IMAGES to populate the pool.
+     ────────────────────────────────────────────────────────────────────── */
+  var COLLAGE_IMAGES = [
+    './images/collage/test1.png',
+    './images/collage/test2.png',
+  ];
+
+  var _collageLayer = null;
+
+  function stopBgCollage() {
+    if (_collageLayer) { _collageLayer.remove(); _collageLayer = null; }
+  }
+
+  function startBgCollage(tags) {
+    stopBgCollage();
+    if (tags.indexOf('collage') === -1 || COLLAGE_IMAGES.length === 0) return;
+    var story = document.querySelector('tw-story');
+    if (story) story.classList.add('has-bg-image');
+    _collageLayer = document.createElement('div');
+    _collageLayer.id = 'bg-collage-layer';
+    document.body.appendChild(_collageLayer);
+
+    // Screen zones — each image is assigned a different zone so they spread apart.
+    // Ranges allow up to 50% of the image to hang off any edge.
+    var ZONES = [
+      { minL: -20, maxL: 15,  minT: -30, maxT: 25  },  // top-left
+      { minL: 55,  maxL: 90,  minT: -30, maxT: 25  },  // top-right
+      { minL: -20, maxL: 15,  minT: 55,  maxT: 90  },  // bottom-left
+      { minL: 55,  maxL: 90,  minT: 55,  maxT: 90  },  // bottom-right
+      { minL: 20,  maxL: 55,  minT: 15,  maxT: 60  },  // centre
+    ];
+    // Shuffle zones
+    for (var zi = ZONES.length - 1; zi > 0; zi--) {
+      var zj = Math.floor(Math.random() * (zi + 1));
+      var zt = ZONES[zi]; ZONES[zi] = ZONES[zj]; ZONES[zj] = zt;
+    }
+
+    // Shuffle image pool and pick 2–3
+    var pool = COLLAGE_IMAGES.slice();
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    var count = Math.min(2 + Math.floor(Math.random() * 2), pool.length);
+    pool.slice(0, count).forEach(function(src, idx) {
+      var zone = ZONES[idx % ZONES.length];
+      var img = document.createElement('img');
+      img.src = src;
+      // Width 30–70vw; max-height 65vh keeps portrait images from dominating
+      var w = 30 + Math.random() * 40;
+      img.style.width     = w.toFixed(1) + 'vw';
+      img.style.maxHeight = '65vh';
+      // Position within assigned zone
+      var left = zone.minL + Math.random() * (zone.maxL - zone.minL);
+      var top  = zone.minT + Math.random() * (zone.maxT - zone.minT);
+      img.style.left    = left.toFixed(1) + 'vw';
+      img.style.top     = top.toFixed(1) + 'vh';
+      img.style.opacity = (0.3 + Math.random() * 0.55).toFixed(2);
+      _collageLayer.appendChild(img);
+    });
   }
 
   /* ── AUDIO ──────────────────────────────────────────────────────────── */
@@ -1671,15 +1816,10 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
             s.textContent = part;
             s.style.display = 'inline-block';
             s.style.opacity = '0';
-            // Each word starts far from home with random rotation and scale
             var rx  = (Math.random() - 0.5) * 900;
             var ry  = (Math.random() - 0.5) * 500;
-            var rot = (Math.random() - 0.5) * 55;       // ±27.5 deg
-            var scl = 0.25 + Math.random() * 2.2;       // 0.25× – 2.45×
-            s.dataset.tx  = rx.toFixed(0);
-            s.dataset.ty  = ry.toFixed(0);
-            s.dataset.rot = rot.toFixed(1);
-            s.dataset.scl = scl.toFixed(2);
+            var rot = (Math.random() - 0.5) * 55;
+            var scl = 0.25 + Math.random() * 2.2;
             s.style.transform = 'translate(' + rx.toFixed(0) + 'px,' + ry.toFixed(0) + 'px) rotate(' + rot.toFixed(1) + 'deg) scale(' + scl.toFixed(2) + ')';
             words.push(s);
             frag.appendChild(s);
@@ -1697,16 +1837,13 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
     walk(passage);
     passage.style.opacity = '1';
 
-    // Words reveal in DOM order (top-to-bottom) so the reader can follow along
-    var STEP = 38; // ms between each word starting its journey
+    var STEP = 38;
     var timers = [];
     var maxSettle = 0;
     words.forEach(function(span, i) {
-      // Each word has its own random settle duration — some snap, some crawl
-      var settle = 320 + Math.random() * 780; // 320–1100 ms
+      var settle = 320 + Math.random() * 780;
       if (i * STEP + settle > maxSettle) maxSettle = i * STEP + settle;
       timers.push(setTimeout(function() {
-        // Elastic overshoot: word blows past its target then snaps back
         span.style.transition =
           'opacity ' + (settle * 0.6 / 1000).toFixed(2) + 's ease-in, ' +
           'transform ' + (settle / 1000).toFixed(2) + 's cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -1743,7 +1880,7 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
      Picks a random body/link font pair each passage load.
      Skipped for titlescreen and psychosis — those have fixed font rules.
      ────────────────────────────────────────────────────────────────────── */
-  var FONT_COMBOS = ['font-combo-1', 'font-combo-2', 'font-combo-3', 'font-combo-4'];
+  var FONT_COMBOS = ['font-combo-1', 'font-combo-2', 'font-combo-3', 'font-combo-4', 'font-combo-5'];
   function applyFontCombo(story, tags) {
     FONT_COMBOS.forEach(function(c) { story.classList.remove(c); });
     if (tags.indexOf('titlescreen') !== -1 || tags.indexOf('psychosis') !== -1) return;
@@ -1767,6 +1904,10 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
   var SMOOTH_HOOK_NAMES = ['smooth1','smooth2','smooth3','smooth4','smooth5'];
 
   function applyPsychosisLayout(passage) {
+    // Randomise horizontal position each load — passage is 42vw wide so max ~50% left
+    var leftPct = 5 + Math.floor(Math.random() * 46);
+    passage.style.setProperty('left', leftPct + '%', 'important');
+
     // Find the container that has the body text (same logic as applyLayout)
     function hasBodyContent(el) {
       return Array.from(el.childNodes).some(function(n) {
@@ -1921,12 +2062,12 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
     switch (mode) {
       case 'scatter':
         return Math.random() < 0.5
-          ? Math.random() * maxIndent * 0.25
-          : maxIndent * 0.4 + Math.random() * maxIndent * 0.6;
+          ? Math.random() * maxIndent * 0.3
+          : maxIndent * 0.45 + Math.random() * maxIndent * 0.55;
       case 'jump':
         return lineIdx % 2 === 0
-          ? Math.random() * maxIndent * 0.15
-          : maxIndent * 0.55 + Math.random() * maxIndent * 0.45;
+          ? Math.random() * maxIndent * 0.2
+          : maxIndent * 0.6 + Math.random() * maxIndent * 0.4;
       case 'stagger':
         return staggerPool[lineIdx % staggerPool.length];
       case 'cascade':
@@ -1988,16 +2129,16 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
     if (tags.indexOf('psychosis') !== -1 || tags.indexOf('titlescreen') !== -1) return;
 
     var mode = LAYOUT_MODES[Math.floor(Math.random() * LAYOUT_MODES.length)];
-    var maxIndent = 10 + Math.random() * 22; // 10–32vw
-    var staggerPool = [0, 0.2, 0.4, 0.6, 0.8, 1.0].map(function(v) { return v * maxIndent; });
+    var maxIndent = 10 + Math.random() * 28; // 10–38vw
+    var staggerPool = [0, 0.15, 0.35, 0.6, 0.8, 1.0].map(function(v) { return v * maxIndent; });
     staggerPool.sort(function() { return Math.random() - 0.5; });
 
-    // Position passage centrally on screen
+    // Position passage on screen
     passage.style.position = 'fixed';
     passage.style.width = '52vw';
     passage.style.maxWidth = '800px';
-    passage.style.top = (5 + Math.random() * 55) + 'vh';
-    passage.style.left = (5 + Math.random() * 18) + '%';
+    passage.style.top = (3 + Math.random() * 42) + 'vh';
+    passage.style.left = (5 + Math.random() * 25) + '%';
     passage.style.boxSizing = 'border-box';
     passage.style.overflow = 'visible';
 
@@ -2065,6 +2206,21 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
   }
 
   var _lastRunTags = null;
+  // Track which link texts have been clicked so .visited can be re-applied after DOM replacement
+  var _visitedLinks = new Set();
+  document.addEventListener('click', function(e) {
+    var link = e.target && e.target.closest ? e.target.closest('tw-link') : null;
+    if (link) _visitedLinks.add(link.textContent.trim());
+  }, true);
+
+  function markVisitedLinks() {
+    document.querySelectorAll('tw-link').forEach(function(link) {
+      if (_visitedLinks.has(link.textContent.trim())) {
+        link.classList.add('visited');
+      }
+    });
+  }
+
   function onPassageChange() {
     var story = document.querySelector('tw-story');
     // Capture p now for the opacity=0 hide (works even if element is later replaced)
@@ -2099,21 +2255,27 @@ tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-fam
           } else {
             stopContradictText();
           }
+          startBgCollage(tags);
         }
         // ── always run per-navigation ───────────────────────────────────
+        markVisitedLinks();
         applyFontCombo(story, tags);
         applyLayout(p, tags);
         startFloatingImages(p);
         startErraticImages(p);
-        if (tags.indexOf('psychosis') === -1) {
-          stopPsychosisWander();
-          scramble(p);
-        } else {
+        if (tags.indexOf('psychosis') !== -1) {
           injectFragmentPoolBody(p, tags);
           applyPsychosisLayout(p);
           injectFragmentPool(p, tags);
           p.style.opacity = '1';
           startPsychosisWander(p);
+        } else {
+          stopPsychosisWander();
+          if (tags.indexOf('titlescreen') === -1) {
+            scramble(p);
+          } else {
+            p.style.opacity = '1';
+          }
         }
         if (tags.indexOf('titlescreen') !== -1) {
           fitAsciiTitle();
@@ -2192,9 +2354,10 @@ electricwhine: ./audio/electricwhine.mp3</tw-passagedata>
 <tw-passagedata pid="8" name="Title Screen" tags="titlescreen static" position="650,50" size="100,100">&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
 &lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;wk-info&quot;&gt;eLiterature work created for Digital Writing, RMIT (2026).&lt;/div&gt;
 &lt;div class=&quot;wk-github&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://github.com/ryu-ichii&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/div&gt;
 
-&lt;div class=&quot;wk-desc&quot;&gt;Psychosis, uncertainty and doubt found in the structures and institutions of modernity. A relentless search for understanding through the insatiability of digitisation. eLiterature work created for Digital Writing, RMIT (2026). &lt;/div&gt;
+&lt;div class=&quot;wk-desc&quot;&gt;psychosis and uncertainty found in the structures and institutions of modernity. A relentless search for understanding through the insatiability of digitisation.&lt;/div&gt;
 
 &lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom" position="775,50" size="100,100">Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
@@ -2219,7 +2382,7 @@ You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-ac
 You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata>
 <tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom" position="525,525" size="100,100"></tw-passagedata>
 <tw-passagedata pid="13" name="GP Ignore" tags="" position="1375,575" size="100,100"></tw-passagedata>
-<tw-passagedata pid="14" name="Park Encounter" tags="parkbench breathe" position="300,700" size="100,100">You find a spot on a bench.
+<tw-passagedata pid="14" name="Park Encounter" tags="parkbench breathe collage" position="300,700" size="100,100">You find a spot on a bench.
 
 Theres a strung out bloke stumbling through the playground making an incoherent string of guttural noises as he comes closer to you. 
 
@@ -2228,7 +2391,7 @@ His eyes meet yours as you sit there minding your business. These fucking brassi
 The man approaches you in search of conversation.
 
 Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata>
-<tw-passagedata pid="15" name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis" position="225,875" size="100,100">my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
+<tw-passagedata pid="15" name="Park Psychosis" tags="parkpsychosis psychosis" position="225,875" size="100,100">my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
 
 |smooth1&gt;[ ]
 
