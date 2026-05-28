@@ -2,58 +2,61 @@
 <html><head><meta charset="UTF-8">
 <title>Pathologisation — proof</title>
 <style>
-body {
-  font: 10pt Cousine, monospace;
-  margin: 2em;
-  max-width: 860px;
+body
+{
+	font: 10pt Cousine, monospace;
+	margin: 2em;
 }
-h1 {
-  font-size: 14pt;
-  text-align: center;
-  margin-bottom: 2em;
+h1
+{
+	font-size: 14pt;
+	text-align: center;
+	margin-bottom: 2em;
 }
-h2.section-divider {
-  font: italic 10pt Cousine, monospace;
-  text-align: center;
-  opacity: 0.4;
-  margin: 2.5em 0 1.5em;
-  border-top: 1pt dashed #999;
-  padding-top: 2em;
-  font-weight: normal;
+tw-passagedata
+{
+	display: block;
+	line-height: 200%;
+	margin-bottom: 2em;
+	white-space: pre-wrap;
 }
-h3.sub-divider {
-  font: italic 9pt Cousine, monospace;
-  opacity: 0.35;
-  margin: 1.5em 0 1em 2em;
-  font-weight: normal;
-  border-bottom: 1pt dotted #ccc;
-  padding-bottom: 0.3em;
+tw-passagedata + tw-passagedata
+{
+	border-top: 1pt dashed black;
+	padding-top: 2em;
 }
-tw-passagedata {
-  display: block;
-  line-height: 200%;
-  margin-bottom: 2em;
-  white-space: pre-wrap;
+tw-passagedata:before
+{
+	content: attr(name);
+	display: block;
+	font-weight: bold;
 }
-tw-passagedata + tw-passagedata {
-  border-top: 1pt dashed black;
-  padding-top: 2em;
+h2.section-divider
+{
+	font: bold 13pt Cousine, monospace;
+	text-align: center;
+	margin: 2.5em 0 1.5em;
+	border-top: 1pt dashed #000;
+	padding-top: 2em;
 }
-.pname {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 0.3em;
+h3.sub-divider
+{
+	font: bold 11pt Cousine, monospace;
+	margin: 1.5em 0 1em 0;
+	border-bottom: 1pt dashed #000;
+	padding-bottom: 0.3em;
 }
-.tags {
-  font-weight: normal;
-  opacity: 0.45;
-  font-size: 0.9em;
+.tags
+{
+	font-weight: normal;
+	opacity: 0.45;
+	font-size: 0.9em;
 }
 </style>
 </head>
 <body>
 <h1>Pathologisation</h1>
-<tw-passagedata name="Title Screen" tags="titlescreen static"><span class="pname">Title Screen<span class="tags"> [titlescreen static]</span></span>
+<tw-passagedata name="Title Screen" tags="titlescreen static"><span class="tags">[titlescreen static]</span>
 &lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
 &lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
@@ -61,13 +64,13 @@ tw-passagedata + tw-passagedata {
 
 &lt;div class=&quot;wk-desc&quot;&gt;Psychosis, uncertainty and doubt found in the structures and institutions of modernity. A relentless search for understanding through the insatiability of digitisation. eLiterature work created for Digital Writing, RMIT (2026). &lt;/div&gt;
 
-&lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="GP Reception" tags="waitingroom"><span class="pname">GP Reception<span class="tags"> [waitingroom]</span></span>
+&lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="GP Reception" tags="waitingroom"><span class="tags">[waitingroom]</span>
 Welcome to the waiting area. The room is dusty, bright and smells of ammonia. Your palms are a bit wet, but you should proceed into your appointment shortly.
 You might want to turn your volume up so you can hear your appointment adequately.
 
 It&#x27;s so boring here—everyone looks like shit. Like the sickness of the world has soaked into the walls and caste a shadow over everyone.
 
-You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-await]] your turn. You&#x27;ll get there soon enough.</tw-passagedata><tw-passagedata name="GP Reflection" tags="blue breathe"><span class="pname">GP Reflection<span class="tags"> [blue breathe]</span></span>
+You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-await]] your turn. You&#x27;ll get there soon enough.</tw-passagedata><tw-passagedata name="GP Reflection" tags="blue breathe"><span class="tags">[blue breathe]</span>
 You were prescribed Olanzapine 10mg after the Seroquel 50mg didn&#x27;t cut it. You were supposed to take them daily but have failed to do so. You&#x27;ve been taking pills without question for years now. Washing down the various colours and sizes like a well-domesticated animal.
 
 &lt;div style=&quot;height:0;overflow:visible;&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/escitalopram.png&quot; alt=&quot;escitalopram&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/ambien.png&quot; alt=&quot;ambien&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/seroquel.png&quot; alt=&quot;seroquel&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/valium.png&quot; alt=&quot;valium&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/zopiclone.png&quot; alt=&quot;zopiclone&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/ativan.png&quot; alt=&quot;ativan&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/paxam.png&quot; alt=&quot;paxam&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/zyprexa.png&quot; alt=&quot;zyprexa&quot;&gt;&lt;/div&gt;
@@ -75,7 +78,7 @@ You were prescribed Olanzapine 10mg after the Seroquel 50mg didn&#x27;t cut it. 
 You&#x27;re not quite sure why you didn&#x27;t take them. It&#x27;s not like you were scared or anything. You&#x27;re not very sure of anything to be fair. Or maybe you do know but you&#x27;re not willing to face the truth.
 
 You should return to the present—the [[GP Office 1&lt;-doctor]] might be ready for you.
-Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata><tw-passagedata name="GP Office 1" tags="GP clockroom"><span class="pname">GP Office 1<span class="tags"> [GP clockroom]</span></span>
+Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata><tw-passagedata name="GP Office 1" tags="GP clockroom"><span class="tags">[GP clockroom]</span>
 The |charged&gt;[resonant] ticks.
 The |charged&gt;[piercing] clicks of a pen.
 
@@ -83,15 +86,14 @@ The doctor looks up from his notepad to address you. He stares through you for a
 
 &lt;div class=&quot;dialogue&quot;&gt;So. Have you actually been taking your medication? //he finally asks.//&lt;/div&gt;
 
-Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and pretend that you have been?</tw-passagedata><tw-passagedata name="GP Daydream"><span class="pname">GP Daydream</span>
-Floating.
+Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and pretend that you have been?</tw-passagedata><tw-passagedata name="GP Daydream">Floating.
 
 The doctor coughs somewhere in the background.
 
 &lt;div class=&quot;dialogue&quot;&gt;Hello? Are you there? //he asks from another galaxy.//&lt;/div&gt;
 You can&#x27;t find the words to answer. The language.
 
-Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom"><span class="pname">GP Confess<span class="tags"> [GP2 clockroom]</span></span>
+Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom"><span class="tags">[GP2 clockroom]</span>
 &lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
@@ -104,7 +106,7 @@ You nod but do you actually agree?
 
 Do you [[New Medication&lt;-accept]] the offer of new pills or [[Same Medication&lt;-try again]] with the old ones.
 
-Or if you&#x27;re feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata><tw-passagedata name="GP Lie" tags="GP2 clockroom"><span class="pname">GP Lie<span class="tags"> [GP2 clockroom]</span></span>
+Or if you&#x27;re feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata><tw-passagedata name="GP Lie" tags="GP2 clockroom"><span class="tags">[GP2 clockroom]</span>
 &lt;div class=&quot;dialogue&quot;&gt;I... I... I&#x27;ve been taking it... everyday, like you said&lt;/div&gt;
 
 you manage to dribble out.
@@ -117,10 +119,7 @@ He sighs.
 
 &lt;div class=&quot;dialogue&quot;&gt;Lets try this again...&lt;/div&gt;
 
-You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-double down]] and endure the nightmare.</tw-passagedata><tw-passagedata name="Office"><span class="pname">Office</span>
-</tw-passagedata><tw-passagedata name="Same Medication"><span class="pname">Same Medication</span>
-[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication"><span class="pname">New Medication</span>
-&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
+You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-double down]] and endure the nightmare.</tw-passagedata><tw-passagedata name="Office"></tw-passagedata><tw-passagedata name="Same Medication">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
 
 He types into his computer and clicks something a few times.
 The printer groans into action.
@@ -130,15 +129,13 @@ He retrieves a prescription sheet and passes it you.
 
 You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
-(track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata><tw-passagedata name="Car Park" tags="parkinglot breathe"><span class="pname">Car Park<span class="tags"> [parkinglot breathe]</span></span>
+(track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata><tw-passagedata name="Car Park" tags="parkinglot breathe"><span class="tags">[parkinglot breathe]</span>
 You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can barely think.
 
-You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata><tw-passagedata name="GP Reassess" tags="GP clockroom"><span class="pname">GP Reassess<span class="tags"> [GP clockroom]</span></span>
-</tw-passagedata><tw-passagedata name="Home"><span class="pname">Home</span>
-[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata name="Pharmacy"><span class="pname">Pharmacy</span>
-You take or don&#x27;t take the new pills.
+You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata><tw-passagedata name="GP Reassess" tags="GP clockroom"><span class="tags">[GP clockroom]</span>
+</tw-passagedata><tw-passagedata name="Home">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata name="Pharmacy">You take or don&#x27;t take the new pills.
 
-Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata><tw-passagedata name="Park Encounter" tags="parkbench breathe"><span class="pname">Park Encounter<span class="tags"> [parkbench breathe]</span></span>
+Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata><tw-passagedata name="Park Encounter" tags="parkbench breathe"><span class="tags">[parkbench breathe]</span>
 You find a spot on a bench.
 
 Theres a strung out bloke stumbling through the playground making an incoherent string of guttural noises as he comes closer to you. 
@@ -147,7 +144,7 @@ His eyes meet yours as you sit there minding your business. These fucking brassi
 
 The man approaches you in search of conversation.
 
-Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata><tw-passagedata name="Public Toilet Psychosis" tags="psychosis brokentoilet"><span class="pname">Public Toilet Psychosis<span class="tags"> [psychosis brokentoilet]</span></span>
+Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata><tw-passagedata name="Public Toilet Psychosis" tags="psychosis brokentoilet"><span class="tags">[psychosis brokentoilet]</span>
 my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
 
 |smooth1&gt;[ ]
@@ -159,11 +156,10 @@ my current selection of tools but am strangled both literally and imaginatively 
 |smooth4&gt;[ ]
 
 
-(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="Dream"><span class="pname">Dream</span>
-</tw-passagedata><tw-passagedata name="GP Office 2" tags="doctorsoffice3"><span class="pname">GP Office 2<span class="tags"> [doctorsoffice3]</span></span>
+(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="Dream"></tw-passagedata><tw-passagedata name="GP Office 2" tags="doctorsoffice3"><span class="tags">[doctorsoffice3]</span>
 You&#x27;re back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You&#x27;ve pissed him off good now. You&#x27;ve really gone and done it now.
 
-[[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata><tw-passagedata name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis"><span class="pname">Park Psychosis<span class="tags"> [breakdownfont parkpsychosis psychosis]</span></span>
+[[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata><tw-passagedata name="Park Psychosis" tags="breakdownfont parkpsychosis psychosis"><span class="tags">[breakdownfont parkpsychosis psychosis]</span>
 my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
 
 |smooth1&gt;[ ]
@@ -177,44 +173,27 @@ my current selection of tools but am strangled both literally and imaginatively 
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;, &quot;ditch&quot;, &quot;wake up&quot;))[(either: &quot;nice try&quot;, &quot;that&#x27;s a shame&quot;, &quot;you might have to ride this out&quot;, &quot;you&#x27;re tripping&quot;, &quot;you&#x27;ve lost the plot&quot;)]]
 
 (live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]
-(track: &#x27;psychobirds&#x27;, &#x27;play&#x27;)</tw-passagedata><tw-passagedata name="Psych Ward" tags="psychward"><span class="pname">Psych Ward<span class="tags"> [psychward]</span></span>
-[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="GP Office 2 Accept"><span class="pname">GP Office 2 Accept</span>
-</tw-passagedata><tw-passagedata name="GP Office 2 Reject"><span class="pname">GP Office 2 Reject</span>
-</tw-passagedata><tw-passagedata name="Psych Ward Escape"><span class="pname">Psych Ward Escape</span>
-</tw-passagedata><tw-passagedata name="Psych Ward Stay"><span class="pname">Psych Ward Stay</span>
-</tw-passagedata><h2 class="section-divider">— passages not yet reached via links —</h2><tw-passagedata name="GP Ignore"><span class="pname">GP Ignore</span>
-</tw-passagedata><tw-passagedata name="Phone Psychosis" tags="phonepsychosis"><span class="pname">Phone Psychosis<span class="tags"> [phonepsychosis]</span></span>
-</tw-passagedata><tw-passagedata name="GP Office 3"><span class="pname">GP Office 3</span>
-[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata><tw-passagedata name="Public Toilet" tags="toilet breathe"><span class="pname">Public Toilet<span class="tags"> [toilet breathe]</span></span>
-[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata name="Friend"><span class="pname">Friend</span>
-</tw-passagedata><tw-passagedata name="Jail"><span class="pname">Jail</span>
-[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="Ezymart" tags="ezymart"><span class="pname">Ezymart<span class="tags"> [ezymart]</span></span>
-</tw-passagedata><tw-passagedata name="Cigarette Break" tags="cigarettes"><span class="pname">Cigarette Break<span class="tags"> [cigarettes]</span></span>
-</tw-passagedata><tw-passagedata name="Conversation"><span class="pname">Conversation</span>
-</tw-passagedata><tw-passagedata name="Train"><span class="pname">Train</span>
-</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 1"><span class="pname">Complete Random Reality Fragmentation 1</span>
-(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
+(track: &#x27;psychobirds&#x27;, &#x27;play&#x27;)</tw-passagedata><tw-passagedata name="Psych Ward" tags="psychward"><span class="tags">[psychward]</span>
+[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="GP Office 2 Accept"></tw-passagedata><tw-passagedata name="GP Office 2 Reject"></tw-passagedata><tw-passagedata name="Psych Ward Escape"></tw-passagedata><tw-passagedata name="Psych Ward Stay"></tw-passagedata><h2 class="section-divider">— Passages Not Yet Reached Via Links —</h2><tw-passagedata name="GP Ignore"></tw-passagedata><tw-passagedata name="Phone Psychosis" tags="phonepsychosis"><span class="tags">[phonepsychosis]</span>
+</tw-passagedata><tw-passagedata name="GP Office 3">[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata><tw-passagedata name="Public Toilet" tags="toilet breathe"><span class="tags">[toilet breathe]</span>
+[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata name="Friend"></tw-passagedata><tw-passagedata name="Jail">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="Ezymart" tags="ezymart"><span class="tags">[ezymart]</span>
+</tw-passagedata><tw-passagedata name="Cigarette Break" tags="cigarettes"><span class="tags">[cigarettes]</span>
+</tw-passagedata><tw-passagedata name="Conversation"></tw-passagedata><tw-passagedata name="Train"></tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 1">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
 (display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
 
 (display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 2"><span class="pname">Complete Random Reality Fragmentation 2</span>
-(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
+(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 2">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
 (display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
 
 (display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 3"><span class="pname">Complete Random Reality Fragmentation 3</span>
-(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
+(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 3">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
 (display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
 
 (display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final"><span class="pname">GP Office Final</span>
-</tw-passagedata><tw-passagedata name="Jail Escape"><span class="pname">Jail Escape</span>
-</tw-passagedata><tw-passagedata name="Jail Stay"><span class="pname">Jail Stay</span>
-</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 4"><span class="pname">Complete Random Reality Fragmentation 4</span>
-(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
+(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final"></tw-passagedata><tw-passagedata name="Jail Escape"></tw-passagedata><tw-passagedata name="Jail Stay"></tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 4">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
 (display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
 
 (display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
@@ -227,40 +206,22 @@ my current selection of tools but am strangled both literally and imaginatively 
    add its name to the (either: ...) list in each CRRF passage above.
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* — IMAGES — uses erratic-img class (fast, jittery, glitchy) ————————— */</tw-passagedata><tw-passagedata name="Elevator" tags="elevator"><span class="pname">Elevator<span class="tags"> [elevator]</span></span>
-</tw-passagedata><tw-passagedata name="Night Walk" tags="nightambience"><span class="pname">Night Walk<span class="tags"> [nightambience]</span></span>
-</tw-passagedata><tw-passagedata name="City Dissociation"><span class="pname">City Dissociation</span>
-</tw-passagedata><tw-passagedata name="GP Office 3 Escape"><span class="pname">GP Office 3 Escape</span>
-</tw-passagedata><tw-passagedata name="GP Office 3 Stay"><span class="pname">GP Office 3 Stay</span>
-</tw-passagedata><tw-passagedata name="Theft Psychosis" tags="theftpsychosis psychosis"><span class="pname">Theft Psychosis<span class="tags"> [theftpsychosis psychosis]</span></span>
-</tw-passagedata><h2 class="section-divider">— randomisation —</h2><h3 class="sub-divider">text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="pname">Psychosis Fragment Pool<span class="tags"> [fragment-pool]</span></span>
+/* — IMAGES — uses erratic-img class (fast, jittery, glitchy) ————————— */</tw-passagedata><tw-passagedata name="Elevator" tags="elevator"><span class="tags">[elevator]</span>
+</tw-passagedata><tw-passagedata name="Night Walk" tags="nightambience"><span class="tags">[nightambience]</span>
+</tw-passagedata><tw-passagedata name="City Dissociation"></tw-passagedata><tw-passagedata name="GP Office 3 Escape"></tw-passagedata><tw-passagedata name="GP Office 3 Stay"></tw-passagedata><tw-passagedata name="Theft Psychosis" tags="theftpsychosis psychosis"><span class="tags">[theftpsychosis psychosis]</span>
+</tw-passagedata><h2 class="section-divider">— Randomisation —</h2><h3 class="sub-divider">Text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="tags">[fragment-pool]</span>
 body: my current selection of tools but am strangled both literally and imaginatively by their limitations. I write for the intention of print and do not consider the words as something that could engage with computerisation.
 smooth1: What are you doing? | The fuck are you here for? | Are you ok?
 smooth2: You look retarded. | Shit fuck. | Wanna punch on?
 smooth3: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
-smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-passagedata><tw-passagedata name="CRRF Text 1"><span class="pname">CRRF Text 1</span>
-The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRRF Text 2"><span class="pname">CRRF Text 2</span>
-Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRRF Text 3"><span class="pname">CRRF Text 3</span>
-This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRRF Text 4"><span class="pname">CRRF Text 4</span>
-Time passes differently here. Or maybe it does not pass at all.
+smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-passagedata><tw-passagedata name="CRRF Text 1">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRRF Text 2">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRRF Text 3">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRRF Text 4">Time passes differently here. Or maybe it does not pass at all.
 
-/* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata name="CRRF Links 1"><span class="pname">CRRF Links 1</span>
-[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata name="CRRF Links 2"><span class="pname">CRRF Links 2</span>
-[[Continue-&gt;Home]]
-[[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata name="CRRF Links 3"><span class="pname">CRRF Links 3</span>
-[[Continue-&gt;Home]]</tw-passagedata><h3 class="sub-divider">images</h3><tw-passagedata name="CRRF Image 1"><span class="pname">CRRF Image 1</span>
-&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 2"><span class="pname">CRRF Image 2</span>
-&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 3"><span class="pname">CRRF Image 3</span>
-&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 4"><span class="pname">CRRF Image 4</span>
-&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
+/* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata name="CRRF Links 1">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata name="CRRF Links 2">[[Continue-&gt;Home]]
+[[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata name="CRRF Links 3">[[Continue-&gt;Home]]</tw-passagedata><h3 class="sub-divider">Images</h3><tw-passagedata name="CRRF Image 1">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 2">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 3">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 4">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
 
-/* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata><tw-passagedata name="CRRF Background 1"><span class="pname">CRRF Background 1</span>
-&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 2"><span class="pname">CRRF Background 2</span>
-&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 3"><span class="pname">CRRF Background 3</span>
-&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 4"><span class="pname">CRRF Background 4</span>
-&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
+/* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata><tw-passagedata name="CRRF Background 1">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 2">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 3">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 4">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
 
-/* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata><h2 class="section-divider">— decor passages —</h2><tw-passagedata name="GP Office 2 decor" tags="decor"><span class="pname">GP Office 2 decor<span class="tags"> [decor]</span></span>
+/* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata><h2 class="section-divider">— Decor Passages —</h2><tw-passagedata name="GP Office 2 decor" tags="decor"><span class="tags">[decor]</span>
 # Poem/paragraph below — all lines become one floating block.
 # Final line with just | and a size to set the text size: xxl xl lg md sm xs
 
@@ -269,14 +230,12 @@ burn into my eyes.
 The room hums and beeps.
 Symbols float
 across the room.
-| md</tw-passagedata><h2 class="section-divider">— system / functional passages —</h2><tw-passagedata name="hal.tracks"><span class="pname">hal.tracks</span>
-background:   ./audio/background.mp3
+| md</tw-passagedata><h2 class="section-divider">— System/Function Passages —</h2><tw-passagedata name="hal.tracks">background:   ./audio/background.mp3
 clock:        ./audio/clock.mp3
 crickets:     ./audio/crickets.mp3
 psychobirds:  ./audio/psychosisbirds.mp3
 printer:      ./audio/printer.mp3
 siren:        ./audio/siren.mp3
 electrichum:  ./audio/electrichum.mp3
-electricwhine: ./audio/electricwhine.mp3</tw-passagedata><tw-passagedata name="hal.config"><span class="pname">hal.config</span>
-showControls: false</tw-passagedata>
+electricwhine: ./audio/electricwhine.mp3</tw-passagedata><tw-passagedata name="hal.config">showControls: false</tw-passagedata>
 </body></html>
