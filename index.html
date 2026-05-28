@@ -208,7 +208,7 @@ tw-story[tags~="titlescreen"] tw-link:link {
   display: inline-block;
   font-family: 'terminal-grotesque', Arial, Helvetica, sans-serif;
   letter-spacing: 0.55em;
-  text-transform: none;
+  text-transform: lowercase;
   font-size: 1.7rem;
   text-decoration: none;
   color: rgba(255,255,255,0.85);
@@ -325,12 +325,15 @@ tw-link.visited:hover {
   60%  { color: magenta; }
   100% { color: white; }
 }
-/* Fullscreen button has no fidget — it's a UI control */
+/* Fullscreen button — no fidget, but gets colour flicker on hover */
 tw-story[tags~="titlescreen"] .fullscreen-btn tw-link,
-tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link,
-tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link {
   animation: none;
   color: rgba(255,255,255,0.55);
+}
+tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
+  animation: link-flicker 0.35s steps(5) forwards;
+  color: white;
 }
 /* Ryu Konrad and GitHub are static labels, no fidget */
 .wk-author-name .game-link,
@@ -671,35 +674,35 @@ tw-story.font-combo-1 tw-link,
 tw-story.font-combo-1 tw-link:link,
 tw-story.font-combo-1 .game-link { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-1 .dialogue { font-family: 'heimat-mono', sans-serif; }
-tw-story.font-combo-1 .lp-intrusion { font-family: 'redaction-10', Georgia, serif; }
+tw-story.font-combo-1 .lp-intrusion { font-family: 'redaction', Georgia, serif; }
 
 tw-story.font-combo-2 { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-2 tw-link,
 tw-story.font-combo-2 tw-link:link,
 tw-story.font-combo-2 .game-link { font-family: 'velvelyne', Georgia, serif; }
 tw-story.font-combo-2 .dialogue { font-family: 'source-code-pro', monospace; }
-tw-story.font-combo-2 .lp-intrusion { font-family: 'redaction-35', Georgia, serif; }
+tw-story.font-combo-2 .lp-intrusion { font-family: 'redaction-10', Georgia, serif; }
 
 tw-story.font-combo-3 { font-family: 'source-code-pro', monospace; }
 tw-story.font-combo-3 tw-link,
 tw-story.font-combo-3 tw-link:link,
 tw-story.font-combo-3 .game-link { font-family: 'karrik', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-3 .dialogue { font-family: 'redaction-35', Georgia, serif; }
-tw-story.font-combo-3 .lp-intrusion { font-family: 'redaction-50', Georgia, serif; }
+tw-story.font-combo-3 .lp-intrusion { font-family: 'redaction-20', Georgia, serif; }
 
 tw-story.font-combo-4 { font-family: 'heimat-mono', sans-serif; }
 tw-story.font-combo-4 tw-link,
 tw-story.font-combo-4 tw-link:link,
 tw-story.font-combo-4 .game-link { font-family: 'redaction-20', Georgia, serif; }
 tw-story.font-combo-4 .dialogue { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-4 .lp-intrusion { font-family: 'redaction-70', Georgia, serif; }
+tw-story.font-combo-4 .lp-intrusion { font-family: 'redaction-35', Georgia, serif; }
 
 tw-story.font-combo-5 { font-family: 'karrik', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-5 tw-link,
 tw-story.font-combo-5 tw-link:link,
 tw-story.font-combo-5 .game-link { font-family: 'source-code-pro', monospace; }
 tw-story.font-combo-5 .dialogue { font-family: 'karrik', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-5 .lp-intrusion { font-family: 'redaction-100', Georgia, serif; }
+tw-story.font-combo-5 .lp-intrusion { font-family: 'redaction-50', Georgia, serif; }
 
 /* Attribution lines //like this// use the body font, not the dialogue font */
 tw-story.font-combo-1 .dialogue em, tw-story.font-combo-1 .dialogue i { font-family: 'redaction', Georgia, serif; }
@@ -890,9 +893,59 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     document.querySelectorAll('.lp-intrusion').forEach(function (el) { el.remove(); });
   }
 
+  /* ── CRRF DECOR POOL ────────────────────────────────────────────────────
+     Tag: [crrf-decor-pool] — one text option per line (# = comment).
+     Applied to any passage whose name starts with "CRRF ".
+     Font is randomly picked from redaction-70 or redaction-100 each load.
+     ────────────────────────────────────────────────────────────────────── */
+  var CRRF_DECOR_POOL = null;
+
+  function buildCRRFDecorPool() {
+    if (CRRF_DECOR_POOL) return;
+    CRRF_DECOR_POOL = [];
+    document.querySelectorAll('tw-storydata tw-passagedata').forEach(function(pd) {
+      var tags = (pd.getAttribute('tags') || '').split(/\s+/);
+      if (tags.indexOf('crrf-decor-pool') === -1) return;
+      (pd.textContent || '').split('\n').forEach(function(l) {
+        l = l.trim();
+        if (l && l[0] !== '#') CRRF_DECOR_POOL.push(l);
+      });
+    });
+  }
+
+  function applyCRRFDecorPool() {
+    buildCRRFDecorPool();
+    if (!CRRF_DECOR_POOL || !CRRF_DECOR_POOL.length) return;
+    var text  = CRRF_DECOR_POOL[Math.floor(Math.random() * CRRF_DECOR_POOL.length)];
+    var fonts = ['redaction-70', 'redaction-100'];
+    var font  = fonts[Math.floor(Math.random() * fonts.length)];
+    var slot  = INTRUSION_SLOTS[Math.floor(Math.random() * INTRUSION_SLOTS.length)];
+    var el = document.createElement('div');
+    el.className = 'lp-intrusion';
+    el.style.fontFamily = "'" + font + "', Georgia, serif";
+    el.style.fontSize   = SIZE_MAP['lg'];
+    el.textContent      = text;
+    ['top','bottom','left','right'].forEach(function(k) { if (slot[k] !== undefined) el.style[k] = slot[k]; });
+    el.style.rotate = ((Math.random() - 0.5) * 6).toFixed(1) + 'deg';
+    el.style.setProperty('--lp-delay', '0.4s');
+    document.body.appendChild(el);
+    try {
+      var anchorRight = (slot.right !== undefined), anchorBottom = (slot.bottom !== undefined);
+      var dx = (220 + Math.random() * 180) * (anchorRight ? -1 : 1);
+      var dy = (120 + Math.random() * 140) * (anchorBottom ? -1 : 1);
+      var dur = (8 + Math.random() * 6) * 1000;
+      el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px)' }],
+        { duration: dur, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+    } catch(e) {}
+  }
+
   function applyDecor(passageName) {
     buildDecorConfig();
     clearDecor();
+    if (passageName && /^CRRF\s/i.test(passageName)) {
+      applyCRRFDecorPool();
+      return null;
+    }
     var decor = passageName ? PASSAGE_DECOR[passageName] : null;
     if (!decor) return null;
 
@@ -2186,6 +2239,29 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
         container.appendChild(document.createElement('br'));
         return;
       }
+      var indent = layoutIndent(mode, lineIdx, nonEmpty, maxIndent, staggerPool);
+      lineIdx++;
+
+      // ~20% chance: split a pure-text fragment into word-group sub-lines
+      var hasElements = fragment.some(function(n) { return n.nodeType === 1; });
+      var fullText = fragment.map(function(n) { return n.textContent; }).join('').trim();
+      var words = fullText.split(/\s+/).filter(Boolean);
+      if (!hasElements && words.length >= 4 && Math.random() < 0.35) {
+        var numGroups = 2 + Math.floor(Math.random() * 2); // 2 or 3 groups
+        var groupSize = Math.ceil(words.length / numGroups);
+        for (var wi = 0; wi < words.length; wi += groupSize) {
+          var chunk = words.slice(wi, wi + groupSize).join(' ');
+          var subDiv = document.createElement('div');
+          subDiv.className = 'layout-line';
+          subDiv.style.cssText = 'display:block;line-height:inherit;margin:0;padding:0;word-wrap:break-word;position:relative;';
+          var subIndent = Math.max(0, Math.min(indent + (Math.random() - 0.35) * maxIndent * 0.5, maxIndent));
+          subDiv.style.left = subIndent.toFixed(2) + 'vw';
+          subDiv.appendChild(document.createTextNode(chunk));
+          container.appendChild(subDiv);
+        }
+        return;
+      }
+
       var div = document.createElement('div');
       div.className = 'layout-line';
       div.style.display = 'block';
@@ -2193,12 +2269,10 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       div.style.margin = '0';
       div.style.padding = '0';
       div.style.wordWrap = 'break-word';
-      var indent = layoutIndent(mode, lineIdx, nonEmpty, maxIndent, staggerPool);
       div.style.position = 'relative';
       div.style.left = indent.toFixed(2) + 'vw';
       fragment.forEach(function(n) { div.appendChild(n); });
       container.appendChild(div);
-      lineIdx++;
     });
   }
 
@@ -2477,32 +2551,35 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
    add its name to the (either: ...) list in each CRRF passage above.
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* — CRRF DECOR POOL — one text option per line, shown randomly on CRRF 1-4 — */</tw-passagedata>
+<tw-passagedata pid="45" name="CRRF Decor Pool" tags="crrf-decor-pool" position="1300,1200" size="100,100"># Add one text option per line. # = comment. Font is randomly redaction-70 or redaction-100.
+
 /* — IMAGES — uses erratic-img class (fast, jittery, glitchy) ————————— */</tw-passagedata>
-<tw-passagedata pid="45" name="CRRF Image 1" tags="" position="1500,1300" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata>
-<tw-passagedata pid="46" name="CRRF Image 2" tags="" position="1500,1400" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata>
-<tw-passagedata pid="47" name="CRRF Image 3" tags="" position="1500,1500" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata>
-<tw-passagedata pid="48" name="CRRF Image 4" tags="" position="1500,1600" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
+<tw-passagedata pid="46" name="CRRF Image 1" tags="" position="1500,1300" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata>
+<tw-passagedata pid="47" name="CRRF Image 2" tags="" position="1500,1400" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata>
+<tw-passagedata pid="48" name="CRRF Image 3" tags="" position="1500,1500" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata>
+<tw-passagedata pid="49" name="CRRF Image 4" tags="" position="1500,1600" size="100,100">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
 
 /* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata>
-<tw-passagedata pid="49" name="CRRF Background 1" tags="" position="1900,1300" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
-<tw-passagedata pid="50" name="CRRF Background 2" tags="" position="1900,1400" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
-<tw-passagedata pid="51" name="CRRF Background 3" tags="" position="1900,1500" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
-<tw-passagedata pid="52" name="CRRF Background 4" tags="" position="1900,1600" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
+<tw-passagedata pid="50" name="CRRF Background 1" tags="" position="1900,1300" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
+<tw-passagedata pid="51" name="CRRF Background 2" tags="" position="1900,1400" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
+<tw-passagedata pid="52" name="CRRF Background 3" tags="" position="1900,1500" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata>
+<tw-passagedata pid="53" name="CRRF Background 4" tags="" position="1900,1600" size="100,100">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
 
 /* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata>
-<tw-passagedata pid="53" name="CRRF Text 1" tags="" position="1700,1300" size="100,100">The walls are breathing. You are not sure where here is.</tw-passagedata>
-<tw-passagedata pid="54" name="CRRF Text 2" tags="" position="1700,1400" size="100,100">Something is repeating. The loop is unbroken.</tw-passagedata>
-<tw-passagedata pid="55" name="CRRF Text 3" tags="" position="1700,1500" size="100,100">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata>
-<tw-passagedata pid="56" name="CRRF Text 4" tags="" position="1700,1600" size="100,100">Time passes differently here. Or maybe it does not pass at all.
+<tw-passagedata pid="54" name="CRRF Text 1" tags="" position="1700,1300" size="100,100">The walls are breathing. You are not sure where here is.</tw-passagedata>
+<tw-passagedata pid="55" name="CRRF Text 2" tags="" position="1700,1400" size="100,100">Something is repeating. The loop is unbroken.</tw-passagedata>
+<tw-passagedata pid="56" name="CRRF Text 3" tags="" position="1700,1500" size="100,100">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata>
+<tw-passagedata pid="57" name="CRRF Text 4" tags="" position="1700,1600" size="100,100">Time passes differently here. Or maybe it does not pass at all.
 
 /* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata>
-<tw-passagedata pid="57" name="CRRF Links 1" tags="" position="2100,1300" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
-<tw-passagedata pid="58" name="CRRF Links 2" tags="" position="2100,1400" size="100,100">[[Continue-&gt;Home]]
+<tw-passagedata pid="58" name="CRRF Links 1" tags="" position="2100,1300" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
+<tw-passagedata pid="59" name="CRRF Links 2" tags="" position="2100,1400" size="100,100">[[Continue-&gt;Home]]
 [[Or-&gt;Psych Ward]]</tw-passagedata>
-<tw-passagedata pid="59" name="CRRF Links 3" tags="" position="2100,1500" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
-<tw-passagedata pid="60" name="Elevator" tags="elevator" position="1600,1500" size="100,100"></tw-passagedata>
-<tw-passagedata pid="61" name="Night Walk" tags="nightambience" position="1750,1500" size="100,100"></tw-passagedata>
-<tw-passagedata pid="62" name="GP Office 2 decor" tags="decor" position="225,125" size="100,100"># Poem/paragraph below — all lines become one floating block.
+<tw-passagedata pid="60" name="CRRF Links 3" tags="" position="2100,1500" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
+<tw-passagedata pid="61" name="Elevator" tags="elevator" position="1600,1500" size="100,100"></tw-passagedata>
+<tw-passagedata pid="62" name="Night Walk" tags="nightambience" position="1750,1500" size="100,100"></tw-passagedata>
+<tw-passagedata pid="63" name="GP Office 2 decor" tags="decor" position="225,125" size="100,100"># Poem/paragraph below — all lines become one floating block.
 # Final line with just | and a size to set the text size: xxl xl lg md sm xs
 
 Splatters of white
@@ -2511,10 +2588,45 @@ The room hums and beeps.
 Symbols float
 across the room.
 | md</tw-passagedata>
-<tw-passagedata pid="63" name="City Dissociation" tags="" position="550,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="64" name="GP Office 3 Escape" tags="" position="975,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="65" name="GP Office 3 Stay" tags="" position="725,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="700,1075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="64" name="City Dissociation" tags="" position="550,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="65" name="GP Office 3 Escape" tags="" position="975,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="66" name="GP Office 3 Stay" tags="" position="725,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="67" name="Theft Psychosis" tags="theftpsychosis psychosis" position="700,1075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="68" name="GP Office 1 decor" tags="decor" position="225,225" size="100,100"></tw-passagedata>
+<tw-passagedata pid="69" name="GP Reflection decor" tags="decor" position="225,325" size="100,100"></tw-passagedata>
+<tw-passagedata pid="70" name="GP Confess decor" tags="decor" position="225,425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="71" name="GP Lie decor" tags="decor" position="225,525" size="100,100"></tw-passagedata>
+<tw-passagedata pid="72" name="GP Daydream decor" tags="decor" position="225,625" size="100,100"></tw-passagedata>
+<tw-passagedata pid="73" name="GP Reception decor" tags="decor" position="225,725" size="100,100"></tw-passagedata>
+<tw-passagedata pid="74" name="New Medication decor" tags="decor" position="225,825" size="100,100"></tw-passagedata>
+<tw-passagedata pid="75" name="Car Park decor" tags="decor" position="225,925" size="100,100"></tw-passagedata>
+<tw-passagedata pid="76" name="GP Reassess decor" tags="decor" position="225,1025" size="100,100"></tw-passagedata>
+<tw-passagedata pid="77" name="GP Ignore decor" tags="decor" position="225,1125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="78" name="Park Encounter decor" tags="decor" position="225,1225" size="100,100"></tw-passagedata>
+<tw-passagedata pid="79" name="Park Psychosis decor" tags="decor" position="225,1325" size="100,100"></tw-passagedata>
+<tw-passagedata pid="80" name="Phone Psychosis decor" tags="decor" position="225,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="81" name="Same Medication decor" tags="decor" position="225,1525" size="100,100"></tw-passagedata>
+<tw-passagedata pid="82" name="GP Office 3 decor" tags="decor" position="225,1625" size="100,100"></tw-passagedata>
+<tw-passagedata pid="83" name="Psych Ward decor" tags="decor" position="225,1725" size="100,100"></tw-passagedata>
+<tw-passagedata pid="84" name="Public Toilet decor" tags="decor" position="225,1825" size="100,100"></tw-passagedata>
+<tw-passagedata pid="85" name="Friend decor" tags="decor" position="225,1925" size="100,100"></tw-passagedata>
+<tw-passagedata pid="86" name="Jail decor" tags="decor" position="225,2025" size="100,100"></tw-passagedata>
+<tw-passagedata pid="87" name="Dream decor" tags="decor" position="225,2125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="88" name="Home decor" tags="decor" position="225,2225" size="100,100"></tw-passagedata>
+<tw-passagedata pid="89" name="Pharmacy decor" tags="decor" position="225,2325" size="100,100"></tw-passagedata>
+<tw-passagedata pid="90" name="Office decor" tags="decor" position="225,2425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="91" name="Ezymart decor" tags="decor" position="225,2525" size="100,100"></tw-passagedata>
+<tw-passagedata pid="92" name="Cigarette Break decor" tags="decor" position="225,2625" size="100,100"></tw-passagedata>
+<tw-passagedata pid="93" name="Conversation decor" tags="decor" position="225,2725" size="100,100"></tw-passagedata>
+<tw-passagedata pid="94" name="Train decor" tags="decor" position="225,2825" size="100,100"></tw-passagedata>
+<tw-passagedata pid="95" name="GP Office 2 Accept decor" tags="decor" position="225,2925" size="100,100"></tw-passagedata>
+<tw-passagedata pid="96" name="GP Office 2 Reject decor" tags="decor" position="225,3025" size="100,100"></tw-passagedata>
+<tw-passagedata pid="97" name="Psych Ward Escape decor" tags="decor" position="225,3125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="98" name="Psych Ward Stay decor" tags="decor" position="225,3225" size="100,100"></tw-passagedata>
+<tw-passagedata pid="99" name="GP Office Final decor" tags="decor" position="225,3325" size="100,100"></tw-passagedata>
+<tw-passagedata pid="100" name="Jail Escape decor" tags="decor" position="225,3425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="101" name="Jail Stay decor" tags="decor" position="225,3525" size="100,100"></tw-passagedata>
+<tw-passagedata pid="102" name="Public Toilet Psychosis decor" tags="decor" position="225,3625" size="100,100"></tw-passagedata>
 </tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!

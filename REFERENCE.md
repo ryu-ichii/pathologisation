@@ -87,6 +87,7 @@ Auto-plays a looping track when entering, stops when leaving:
 | Tag | Effect |
 |-----|--------|
 | `collage` | 2–3 images randomly selected from `COLLAGE_IMAGES` and layered over the background. Each image: 30–70vw wide, max 65vh tall, opacity 0.30–0.85. Images are assigned to different screen zones (top-left, top-right, bottom-left, bottom-right, centre) so they never cluster. Up to 50% of each image can hang off any edge. Sits at z-index 0 — above `#bg-layer` (z:-1), below floating images (z:5) and passage text (z:100). Automatically makes `tw-story` transparent so images are always visible regardless of other tags. |
+| `crrf-decor-pool` | Pool of text options for CRRF 1–4 background decor. One option per line (`#` = comment). Font is randomly `redaction-70` or `redaction-100` each load. Passage: `CRRF Decor Pool`. |
 
 **Setup:**
 1. Add images to `pathologisation/images/collage/`
@@ -134,7 +135,8 @@ Size options: `xxl xl lg md sm xs`
 
 Intrusion text floats in the background in a **redaction variant** (changes per font combo), large, low opacity, slowly drifting.
 
-**Currently has decor:** GP Office 2 (poem block).  
+**All story passages from GP Reception onwards have a decor passage** (currently empty — fill in Twine). GP Office 2 has content. In the proof, decor passages are sorted to match the order of their parent passage.
+
 **To add decor to any passage:** create a new passage named `"Passage Name decor"` with tag `[decor]`.
 
 ---
@@ -239,7 +241,8 @@ Every non-psychosis, non-titlescreen passage gets a random indentation mode and 
 1. Content is split at `<br>` boundaries (paragraph-level)
 2. Each paragraph is further split at sentence boundaries (`. ` `! ` `? `) into sentence-level fragments
 3. Each fragment becomes a block `<div>` with `position: relative; left: Xvw`
-4. Shifting with `left` (not `padding-left`) keeps every fragment at full width — no narrow columns
+4. **35% chance:** a pure-text fragment (4+ words, no links) is further broken into 2–3 word-group sub-lines, each with its own slightly varied indent — a lighter version of the psychosis scatter
+5. Shifting with `left` (not `padding-left`) keeps every fragment at full width — no narrow columns
 
 **Indentation modes** (one picked at random, `scatter` and `jump` weighted 2×):
 
@@ -286,9 +289,9 @@ All links tremble slightly in a continuous micro-animation (`fidget` keyframes, 
 **Visited tracking:** The CSS `:visited` pseudo-class doesn't work on custom `tw-link` elements. Instead, a JS `_visitedLinks` Set stores the text of every clicked link. On each passage load, `markVisitedLinks()` re-applies the `.visited` class to any matching links. Title screen links (Start, Fullscreen) are exempt from the strikethrough.
 
 **Title Screen link behaviour:**
-- **Start** — has fidget + colour flicker on hover, same as regular passage links. No strikethrough.
+- **Start** — lowercase, has fidget + colour flicker on hover, same as regular passage links. No strikethrough.
 - **Ryu Konrad / GitHub** — static, no fidget, no flicker, no strikethrough.
-- **Fullscreen** — no fidget, lowercase italic, no strikethrough.
+- **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough.
 
 ### Link flicker on hover
 Rapid colour flash: red → cyan → yellow → magenta → white over 0.35s.
@@ -387,11 +390,11 @@ On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo
 
 | Combo | Body | Links | Dialogue | Attribution | Decor |
 |-------|------|-------|----------|-------------|-------|
-| 1 | `redaction` | `tt-hoves-pro` | `heimat-mono` | `redaction` | `redaction-10` |
-| 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` | `redaction-35` |
-| 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` | `redaction-50` |
-| 4 | `heimat-mono` | `redaction-20` | `tt-hoves-pro` | `heimat-mono` | `redaction-70` |
-| 5 | `karrik` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-100` |
+| 1 | `redaction` | `tt-hoves-pro` | `heimat-mono` | `redaction` | `redaction` |
+| 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` | `redaction-10` |
+| 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` | `redaction-20` |
+| 4 | `heimat-mono` | `redaction-20` | `tt-hoves-pro` | `heimat-mono` | `redaction-35` |
+| 5 | `karrik` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-50` |
 
 Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the body text font for that combo. Decor intrusion text (`.lp-intrusion`) uses a varying redaction variant per combo.
 
@@ -426,7 +429,7 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Title screen GitHub | `source-code-pro`, no fidget |
 | Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
 | Home button | `terminal-grotesque` |
-| Intrusion words (`.lp-intrusion`) | varies per combo: `redaction-10` / `35` / `50` / `70` / `100` |
+| Intrusion words (`.lp-intrusion`) | varies per combo: `redaction` / `10` / `20` / `35` / `50` |
 | Breakdownfont body | `redaction-20` at 2.5em |
 | Breakdownfont links | `tt-hoves-pro` at 48px |
 
@@ -537,7 +540,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
    - *text* — `[fragment-pool]` passages + `CRRF Text 1–4` + `CRRF Links 1–3`
    - *images* — `CRRF Image 1–4` + `CRRF Background 1–4`
    - Detection: CRRF sub-passages matched by name prefix; fragment-pool passages matched by tag
-4. **Decor** — passages tagged `[decor]`
+4. **Decor** — passages tagged `[decor]`, sorted to match the order of their parent passage in the linked/unlinked list
 5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
 
 ---
