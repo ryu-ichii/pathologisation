@@ -132,7 +132,7 @@ all lines become one floating block
 ```
 Size options: `xxl xl lg md sm xs`
 
-Intrusion text floats in the background in **Nimbus Roman**, large, low opacity, slowly drifting.
+Intrusion text floats in the background in a **redaction variant** (changes per font combo), large, low opacity, slowly drifting.
 
 **Currently has decor:** GP Office 2 (poem block).  
 **To add decor to any passage:** create a new passage named `"Passage Name decor"` with tag `[decor]`.
@@ -221,8 +221,10 @@ Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plai
 Currently used in: Title Screen (Ryu Konrad name, GitHub).
 
 **Title Screen author block structure:**
-- `.wk-author-name` — "Ryu Konrad" link, Nimbus Roman, `clamp(1.3rem, 2.5vw, 1.9rem)`
-- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, Nimbus Roman — separate from `.wk-author` so it doesn't affect document flow or cause a scrollbar
+- `.wk-author-name` — "Ryu Konrad" link, `redaction-70` regular weight, no fidget/flicker, no strikethrough
+- `.wk-info` — credit line ("eLiterature work created for Digital Writing, RMIT (2026)."), `redaction-50` italic
+- `.wk-desc` — description text, `redaction-20`
+- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, `source-code-pro`, no fidget/flicker
 
 ---
 
@@ -231,7 +233,7 @@ Currently used in: Title Screen (Ryu Konrad name, GitHub).
 ### Layout randomiser
 Every non-psychosis, non-titlescreen passage gets a random indentation mode and a central screen position on each load. Fires on **every navigation** — the same passage looks different every visit.
 
-**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 5–60vh, `left` 5–23%. Wide vertical range ensures passages don't cluster near the top.
+**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 3–45vh, `left` 5–30%.
 
 **How fragments are made:**
 1. Content is split at `<br>` boundaries (paragraph-level)
@@ -250,7 +252,7 @@ Every non-psychosis, non-titlescreen passage gets a random indentation mode and 
 | `wave` | Sine-wave curve |
 | `reverse` | Right-to-left sweep |
 
-Max indent range: **10–32vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
+Max indent range: **10–38vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
 
 Skipped on: `[psychosis]`, `[titlescreen]`.
 
@@ -276,10 +278,17 @@ Auto-redirect at 20s fires regardless. Navigating away cancels the reveal cleanl
 **BD distress effects** (`bd-tremor`, `bd-blur`, `bd-glitch`) are suppressed when `[psychosis]` is present even if `[breakdownfont]` is also tagged.
 
 ### Scramble animation
-Every passage (except psychosis and titlescreen) animates in on load **letter by letter**. Each character starts displaced from its final position with random rotation (±27.5°), scale (0.25×–2.45×), and offset (±450px x / ±250px y). Letters fly to their final position using elastic overshoot easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`). Settle duration is randomised per letter (320–1100ms). Letters reveal in **DOM order** (top-to-bottom) at 18ms intervals. Spaces are preserved as plain text nodes. Clicking anywhere skips instantly.
+Every passage (except psychosis and titlescreen) animates words in on load. Words are wrapped in `<span>` elements, shuffled into a **random reveal order**, then faded in one by one (`opacity 0.4s`) at 40ms intervals. No transforms or positional displacement — pure opacity fade. Spaces are plain text nodes. Clicking anywhere skips instantly. Dialogue blocks appear after the scramble completes via the typewriter effect.
 
 ### Link fidget
-All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough.
+All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough and dimmed opacity.
+
+**Visited tracking:** The CSS `:visited` pseudo-class doesn't work on custom `tw-link` elements. Instead, a JS `_visitedLinks` Set stores the text of every clicked link. On each passage load, `markVisitedLinks()` re-applies the `.visited` class to any matching links. Title screen links (Start, Fullscreen) are exempt from the strikethrough.
+
+**Title Screen link behaviour:**
+- **Start** — has fidget + colour flicker on hover, same as regular passage links. No strikethrough.
+- **Ryu Konrad / GitHub** — static, no fidget, no flicker, no strikethrough.
+- **Fullscreen** — no fidget, lowercase italic, no strikethrough.
 
 ### Link flicker on hover
 Rapid colour flash: red → cyan → yellow → magenta → white over 0.35s.
@@ -382,7 +391,7 @@ On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo
 | 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` | `redaction-35` |
 | 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` | `redaction-50` |
 | 4 | `heimat-mono` | `redaction-20` | `tt-hoves-pro` | `heimat-mono` | `redaction-70` |
-| 5 | `terminal-grotesque` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-100` |
+| 5 | `karrik` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-100` |
 
 Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the body text font for that combo. Decor intrusion text (`.lp-intrusion`) uses a varying redaction variant per combo.
 
@@ -398,9 +407,11 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | smooth1–4 hooks | `0.9rem !important` — pinned |
 | smooth5 + its link | `1.25rem` |
 | UI buttons (home, fullscreen) | `0.9rem` |
-| Title screen links | `0.9rem` |
-| Title screen author name | `clamp(1rem, 2vw, 1.4rem)` |
-| Title screen description | `clamp(0.7rem, 1.4vw, 0.9rem)` |
+| Title screen Start | `1.7rem` |
+| Title screen Fullscreen | `1rem` italic |
+| Title screen author name | `clamp(1.5rem, 2.9vw, 2.2rem)` |
+| Title screen info line | `clamp(0.75rem, 1.4vw, 0.95rem)` italic |
+| Title screen description | `clamp(0.8rem, 1.6vw, 1rem)` |
 
 ### Fixed fonts (always, regardless of combo)
 
@@ -410,13 +421,12 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Psychosis body text | `redaction-50` |
 | smooth1–4 wandering hooks | `velvelyne` |
 | smooth5 escape link | `tt-hoves-pro` |
-| Title screen links / Start | `terminal-grotesque` |
-| Title screen "Ryu Konrad" link | `redaction-70` bold |
-| Title screen GitHub link | `source-code-pro` |
+| Title screen Start link | `terminal-grotesque`, 1.7rem, letter-spacing 0.55em, fidget + flicker |
+| Title screen "Ryu Konrad" | `redaction-70` regular weight, no fidget |
+| Title screen GitHub | `source-code-pro`, no fidget |
+| Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
 | Home button | `terminal-grotesque` |
-| Fullscreen button | `terminal-grotesque` |
 | Intrusion words (`.lp-intrusion`) | varies per combo: `redaction-10` / `35` / `50` / `70` / `100` |
-| Title screen "Ryu Konrad" (`.wk-author-name`) | `redaction-70` bold |
 | Breakdownfont body | `redaction-20` at 2.5em |
 | Breakdownfont links | `tt-hoves-pro` at 48px |
 
@@ -454,7 +464,7 @@ A modular randomised passage system. Each CRRF passage assembles itself from 4 r
 | Hover | Colour flicker (red→cyan→yellow→magenta→white), stays fidgeting |
 | Visited hover | No change (locked) |
 
-Title screen links: no fidget animation (they're UI, not choices). Border box style.
+**Exceptions:** Ryu Konrad and GitHub (`.game-link` on title screen) have no fidget and no strikethrough. Start link has fidget + flicker. Fullscreen has no fidget. All title screen links exempt from strikethrough.
 
 A `[dev] toilet psychosis` placeholder link on the Title Screen links directly to Public Toilet Psychosis for testing. Remove when no longer needed.
 

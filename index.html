@@ -303,6 +303,11 @@ tw-link:visited, tw-link.visited {
   text-decoration: line-through !important;
   animation: none;
 }
+tw-story[tags~="titlescreen"] tw-link.visited,
+tw-story[tags~="titlescreen"] tw-link:visited {
+  text-decoration: none !important;
+  color: rgba(255,255,255,0.85);
+}
 tw-link:hover, tw-link:focus, tw-link:active,
 .game-link:hover, .game-link:focus {
   color: white;
@@ -1814,13 +1819,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
           } else if (part) {
             var s = document.createElement('span');
             s.textContent = part;
-            s.style.display = 'inline-block';
             s.style.opacity = '0';
-            var rx  = (Math.random() - 0.5) * 900;
-            var ry  = (Math.random() - 0.5) * 500;
-            var rot = (Math.random() - 0.5) * 55;
-            var scl = 0.25 + Math.random() * 2.2;
-            s.style.transform = 'translate(' + rx.toFixed(0) + 'px,' + ry.toFixed(0) + 'px) rotate(' + rot.toFixed(1) + 'deg) scale(' + scl.toFixed(2) + ')';
             words.push(s);
             frag.appendChild(s);
           }
@@ -1837,22 +1836,21 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     walk(passage);
     passage.style.opacity = '1';
 
-    var STEP = 38;
+    // Shuffle words into random reveal order
+    for (var i = words.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
+    }
+
     var timers = [];
-    var maxSettle = 0;
     words.forEach(function(span, i) {
-      var settle = 320 + Math.random() * 780;
-      if (i * STEP + settle > maxSettle) maxSettle = i * STEP + settle;
       timers.push(setTimeout(function() {
-        span.style.transition =
-          'opacity ' + (settle * 0.6 / 1000).toFixed(2) + 's ease-in, ' +
-          'transform ' + (settle / 1000).toFixed(2) + 's cubic-bezier(0.34, 1.56, 0.64, 1)';
+        span.style.transition = 'opacity 0.4s';
         span.style.opacity = '1';
-        span.style.transform = 'translate(0,0) rotate(0deg) scale(1)';
-      }, i * STEP));
+      }, i * 40));
     });
 
-    var scrambleDuration = maxSettle;
+    var scrambleDuration = words.length * 40 + 400;
     var cancelFns = dialogueEls.map(function (el, i) {
       var delay = scrambleDuration + 200 + i * 500;
       if (el.querySelector('tw-link, a')) {
@@ -1868,7 +1866,6 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       words.forEach(function(span) {
         span.style.transition = 'none';
         span.style.opacity = '1';
-        span.style.transform = 'translate(0,0) rotate(0deg) scale(1)';
       });
       cancelFns.forEach(function (fn) { fn(); });
       document.removeEventListener('click', skip);
