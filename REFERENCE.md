@@ -21,7 +21,7 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 | `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling | Title Screen |
 | `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | *(not yet used)* |
 | `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
-| `blue` | Solid blue background (`#0029a3`) via `#bg-layer` — `tw-story` stays transparent so floating images remain visible | GP Reflection |
+| `pinktexture` | `pinktexture.gif` background | GP Reflection |
 
 ### Background Image Tags
 
@@ -45,18 +45,13 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `nightambience` | `nightambience.jpg` | Night Walk |
 | `citywalk` | `citywalk.png` | City Walk |
 | `citycommute` | `citycommute.png` | City Transit |
+| `pinktexture` | `pinktexture.gif` | GP Reflection |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
 ### Solid Colour Background Tags
 
-Solid colours are routed through `#bg-layer` (not `tw-story`) so floating images (`z-index: -1`) remain visible. `tw-story` gets `has-bg-image` (transparent) automatically.
-
-| Tag | Colour | Notes |
-|-----|--------|-------|
-| `blue` | `#0029a3` | Defined in `SOLID_COLORS` in `updateBackground()` |
-
-**To add a new solid colour room:** add the tag + hex to `SOLID_COLORS` in `updateBackground()`. The CSS `tw-story[tags~="yourtag"] { background-color: ... }` rule is NOT needed — colour is set by JS on `#bg-layer`.
+The `SOLID_COLORS` map in `updateBackground()` is currently empty — no solid colour rooms active. To add one: `'mytag': '#hexcolor'` in `SOLID_COLORS`, then tag the passage.
 
 ### Breathing Background Tag
 
@@ -64,7 +59,7 @@ Solid colours are routed through `#bg-layer` (not `tw-story`) so floating images
 |-----|--------|
 | `breathe` | Image rooms: `#bg-layer` scales/darkens on inhale/exhale (8s cycle). Solid colour rooms: `#bg-layer.colour-breathe` pulses the background-color between shades (e.g. blue → indigo → deep purple) — no filter, so floating images are unaffected. **GIFs never breathe** (too busy). |
 
-Currently used on: Car Park `[parkinglot breathe]`, Park Encounter `[parkbench breathe]`, GP Reflection `[blue breathe]`, Public Toilet `[toilet breathe]`.
+Currently used on: Car Park `[parkinglot breathe]`, Park Encounter `[parkbench breathe]`, GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
 
 **Colour breathe keyframes** (blue room, 8s ease-in-out):
 - 0% `#0029a3` → 18% `#2200e0` (electric indigo inhale peak) → 28% `#1a00b8` → 72% `#08003a` → 82% `#04001a` (near-black exhale) → 100% `#0029a3`
@@ -92,9 +87,10 @@ Auto-plays a looping track when entering, stops when leaving:
 | `collage` | required on all collage passages | — |
 | `collage-medical` | `images/collage/medical/` (5 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
 | `collage-natural` | `images/collage/natural/` (6 images) | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` (4 images) | Car Park |
+| `collage-city` | `images/collage/city/` (6 images) | Car Park, Public Toilet Psychosis |
 | `collage-gloss` | `images/collage/gloss/` (5 images) | Pharmacy |
-| `collage-subsist` | `images/collage/subsist/` (4 images) | GP Daydream |
+| `collage-subsist` | `images/collage/subsist/` (6 images) | GP Daydream, GP Reflection |
+| `collage-title` | `images/collage/title/` (5 images) | Title Screen |
 
 **To add a new category:** create `images/collage/newname/`, add a `'collage-newname': []` entry to `COLLAGE_POOLS` in Story JavaScript with image paths, then tag passages `[collage collage-newname]`.
 
@@ -115,20 +111,18 @@ Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to th
 | `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter |
 | `decor-crrf` | `CRRF Decor Pool` | random `redaction-70` or `redaction-100` | CRRF 1–4 |
 
-**Format of a decor passage** — write in Twine, separate multiple options with `---`:
+**Format of a decor passage** — write in Twine, each option ends with `| size`:
 ```
 Your first intrusion text
 across multiple lines
 | md
----
 A second option here
 different text
 | lg
----
 A third option.
 | sm
 ```
-Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments. One block is picked at random on each load. Each passage can hold as many `---` separated options as you like.
+Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments. One block is picked at random on each load. The `| size` line ends each block — no separator needed. `---` on its own line also works as an explicit separator.
 
 **To add options:** write them directly in the category passage (e.g. `Medical Decor`) separated by `---`. The passage appears in the **Decor** section of the proof.
 
@@ -262,7 +256,11 @@ Every non-psychosis, non-titlescreen passage gets a random indentation mode and 
 | `wave` | Sine-wave curve |
 | `reverse` | Right-to-left sweep |
 
-Max indent range: **10–38vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
+Max indent range: **12–34vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
+
+**55% chance:** eligible sentence fragments split into word groups (up from 35%).
+
+Passage position: `left` 5–23%, `top` 3–42vh.
 
 Skipped on: `[psychosis]`, `[titlescreen]`.
 
@@ -409,12 +407,12 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 
 | Element | Size |
 |---------|------|
-| Global base (`tw-story`) | `1em` (browser default ≈ 16px) |
+| Global base (`tw-story`) | `1.35em` |
 | Default story base (`redaction-20`) | inherits from `tw-story` |
 | Breakdownfont body | `2.5em` |
 | Breakdownfont links | `48px !important` |
-| Psychosis body (`tw-passage`) | `1rem !important` — pinned via rem, independent of any em scaling |
-| smooth1–4 hooks | `0.9rem !important` — pinned |
+| Psychosis body (`tw-passage`) | `1.25rem !important` — pinned via rem, independent of any em scaling |
+| smooth1–4 hooks | `1.6rem !important` — pinned |
 | smooth5 + its link | `1.25rem` |
 | UI buttons (home, fullscreen) | `0.9rem` |
 | Title screen Start | `1.7rem` |
@@ -569,7 +567,7 @@ smooth3: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
 smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
 ```
 
-- **`body:`** — replaces the passage's body text before `applyPsychosisLayout` runs, so the injected text gets the full cummings scatter + typewriter treatment. If omitted, the passage's own text is used as fallback.
+- **`body:`** — replaces the passage's body text before `applyPsychosisLayout` runs. Currently removed from the generic pool — each psychosis passage uses its own written text. Can be added back to a room-specific pool if needed.
 - **`smooth1:`–`smooth4:`** — each hook gets one randomly selected option injected after layout, before wandering begins. Each is independently editable.
 - **`#`** at the start of a line = comment, ignored by the parser.
 - `smooth5` is never touched by the pool — it has interactive Harlowe link markup and stays as written in the passage.
