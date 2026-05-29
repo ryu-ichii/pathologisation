@@ -46,6 +46,7 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `citywalk` | `citywalk.png` | City Walk |
 | `citycommute` | `citycommute.png` | City Transit |
 | `pinktexture` | `pinktexture.gif` | GP Reflection |
+| `glitter` | `lightjitter.gif` | *(unassigned)* |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
@@ -85,12 +86,14 @@ Auto-plays a looping track when entering, stops when leaving:
 | Tag | Folder | Currently used on |
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
-| `collage-medical` | `images/collage/medical/` (5 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
-| `collage-natural` | `images/collage/natural/` (6 images) | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` (6 images) | Car Park, Public Toilet Psychosis |
-| `collage-gloss` | `images/collage/gloss/` (5 images) | Pharmacy |
-| `collage-subsist` | `images/collage/subsist/` (6 images) | GP Daydream, GP Reflection |
-| `collage-title` | `images/collage/title/` (5 images) | Title Screen |
+| `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
+| `collage-natural` | `images/collage/natural/` (9 images) | Park Encounter, Park Psychosis |
+| `collage-city` | `images/collage/city/` (16 images) | Car Park, Public Toilet Psychosis |
+| `collage-gloss` | `images/collage/gloss/` (10 images) | Pharmacy |
+| `collage-subsist` | `images/collage/subsist/` (11 images) | GP Daydream, GP Reflection |
+| `collage-title` | `images/collage/title/` (7 images) | Title Screen |
+
+**Image sizing:** width randomised 45–85vw per image, max-height 85vh. All pools use the same sizing function — title screen is not differentiated.
 
 **To add a new category:** create `images/collage/newname/`, add a `'collage-newname': []` entry to `COLLAGE_POOLS` in Story JavaScript with image paths, then tag passages `[collage collage-newname]`.
 

@@ -1145,7 +1145,8 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     'nightambience':  './images/nightambience.jpg',
     'citywalk':       './images/citywalk.png',
     'citycommute':    './images/citycommute.png',
-    'pinktexture':    './images/pinktexture.gif'
+    'pinktexture':    './images/pinktexture.gif',
+    'glitter':        './images/lightjitter.gif'
   };
 
   var _bgLayer = null;
@@ -1217,7 +1218,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     './images/collage/city/abstractpattern.png',
     './images/collage/gloss/convenience.gif',
     './images/collage/subsist/cigarettes.jpg',
-    './images/collage/natural/IMG_3325.jpg',
+    './images/collage/natural/IMG_3332.jpg',
   ];
 
   // Named pools — tag a passage [collage collage-medical], [collage collage-city], etc.
@@ -1228,14 +1229,27 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/medical/IMG_20191127_011708_Original.jpg',
       './images/collage/medical/imageedit_192_6311853751.png',
       './images/collage/medical/imageedit_207_6906538460.gif',
+      './images/collage/medical/imageedit_302_7890718183.jpg',
+      './images/collage/medical/imageedit_340_6541155725.jpg',
+      './images/collage/medical/imageedit_383_5339919955.gif',
     ],
     'collage-city': [
       './images/collage/city/abstractpattern.png',
       './images/collage/city/20160327_162659_Original.jpg',
       './images/collage/city/20160407_185206_Original.jpg',
+      './images/collage/city/20160611_001206_Original.jpg',
+      './images/collage/city/81130023_Original.jpg',
+      './images/collage/city/81130024_Original.jpg',
+      './images/collage/city/IMAG0475_Original.jpg',
+      './images/collage/city/IMG_0238_Original.jpg',
       './images/collage/city/IMG_0352_Original.jpg',
       './images/collage/city/IMG_20141130_194328_Original.jpg',
       './images/collage/city/IMG_20180505_232307239_LL_Original.jpg',
+      './images/collage/city/IMG_20180720_232145674_Original.jpg',
+      './images/collage/city/imageedit_315_6116755645.gif',
+      './images/collage/city/imageedit_328_2930619866.jpg',
+      './images/collage/city/imageedit_369_7366549057.jpg',
+      './images/collage/city/images (3).jpeg',
     ],
     'collage-gloss': [
       './images/collage/gloss/convenience.gif',
@@ -1243,18 +1257,30 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/gloss/81130023_Original.jpg',
       './images/collage/gloss/81130024_Original.jpg',
       './images/collage/gloss/IMG_0333_Original.jpg',
+      './images/collage/gloss/IMG_20141130_194328_Original 2.jpg',
+      './images/collage/gloss/IMG_20180720_232145674_Original.jpg',
+      './images/collage/gloss/imageedit_267_3341031761.jpg',
+      './images/collage/gloss/imageedit_285_8113537643.jpg',
+      './images/collage/gloss/imageedit_412_4256672589.jpg',
     ],
     'collage-subsist': [
       './images/collage/subsist/cigarettes.jpg',
       './images/collage/subsist/ciggies.gif',
+      './images/collage/subsist/IMG_0216_Original.jpg',
       './images/collage/subsist/IMG_20141130_194328_Original.jpg',
       './images/collage/subsist/IMG_20170816_140152_Original.jpg',
+      './images/collage/subsist/IMG_20180317_232214874_Original.jpg',
       './images/collage/subsist/IMG_20180505_232307239_LL_Original.jpg',
       './images/collage/subsist/IMG_20180720_232145674_Original.jpg',
+      './images/collage/subsist/imageedit_252_7584900771.gif',
+      './images/collage/subsist/imageedit_305_2234257438.png',
+      './images/collage/subsist/imageedit_353_3938127314.gif',
     ],
     'collage-title': [
       './images/collage/title/81130023_Original.jpg',
       './images/collage/title/81130024_Original.jpg',
+      './images/collage/title/IMG_20180317_232210543_Original.jpg',
+      './images/collage/title/IMG_20180505_232257981_Original.jpg',
       './images/collage/title/IMG_20180505_232307239_LL_Original.jpg',
       './images/collage/title/IMG_20180720_232145674_Original.jpg',
       './images/collage/title/gpoffice.png',
@@ -1264,8 +1290,11 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/natural/IMG_0429_Original.jpg',
       './images/collage/natural/IMG_20180909_190811866_Original.jpg',
       './images/collage/natural/IMG_20190613_072704536_Original.jpg',
-      './images/collage/natural/IMG_3325.jpg',
       './images/collage/natural/IMG_3332.jpg',
+      './images/collage/natural/White_pigeon_walking_on_cracked_pavement,_King_Street,_Gillingham,_Kent_-_5_October_2025_02.jpg',
+      './images/collage/natural/imageedit_242_8164594044.png',
+      './images/collage/natural/imageedit_387_7898773703.png',
+      './images/collage/natural/imageedit_402_7294112584.gif',
     ],
   };
 
@@ -1316,10 +1345,10 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       var zone = ZONES[idx % ZONES.length];
       var img = document.createElement('img');
       img.src = src;
-      // Width 30–70vw; max-height 65vh keeps portrait images from dominating
-      var w = 30 + Math.random() * 40;
+      // Width 45–85vw
+      var w = 45 + Math.random() * 40;
       img.style.width     = w.toFixed(1) + 'vw';
-      img.style.maxHeight = '65vh';
+      img.style.maxHeight = '85vh';
       // Position within assigned zone
       var left = zone.minL + Math.random() * (zone.maxL - zone.minL);
       var top  = zone.minT + Math.random() * (zone.maxT - zone.minT);
