@@ -18,7 +18,7 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
-| `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling | Title Screen |
+| `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
 | `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | *(not yet used)* |
 | `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
 | `pinktexture` | `pinktexture.gif` background | GP Reflection |
@@ -87,13 +87,15 @@ Auto-plays a looping track when entering, stops when leaving:
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
 | `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
-| `collage-natural` | `images/collage/natural/` (9 images) | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` (16 images) | Car Park, Public Toilet Psychosis |
+| `collage-natural` | `images/collage/natural/` (10 images) | Park Encounter, Park Psychosis |
+| `collage-city` | `images/collage/city/` (18 images) | Car Park, Public Toilet Psychosis |
 | `collage-gloss` | `images/collage/gloss/` (10 images) | Pharmacy |
 | `collage-subsist` | `images/collage/subsist/` (11 images) | GP Daydream, GP Reflection |
-| `collage-title` | `images/collage/title/` (7 images) | Title Screen |
+| `collage-title` | `images/collage/title/` (8 images) | Title Screen |
 
 **Image sizing:** width randomised 45–85vw per image, max-height 85vh. All pools use the same sizing function — title screen is not differentiated.
+
+**Right-edge clamping:** `left` position is clamped to `100 - w * 0.5` so at most half an image can overflow the right edge of the viewport.
 
 **To add a new category:** create `images/collage/newname/`, add a `'collage-newname': []` entry to `COLLAGE_POOLS` in Story JavaScript with image paths, then tag passages `[collage collage-newname]`.
 
@@ -190,7 +192,7 @@ Dialogue blocks get a **typewriter effect** on load (character by character), st
 Image that drifts slowly around the screen. Starts hidden, pops in within 0–8s at a random position, then wanders slowly. Calm and dreamlike.
 
 ```html
-<img class="floating-img" src="./images/escitalopram.png" alt="escitalopram">
+<img class="floating-img" src="./images/floating/escitalopram.png" alt="escitalopram">
 ```
 
 **Architecture:** Images in the passage are only used as a source list. `startFloatingImages()` reads their `src` attributes, **hides the originals** (`el.style.display = 'none'`), then creates fresh `<img>` clones inside a dedicated `#floating-layer` div (position: fixed, inset: 0, z-index: 5 — above `#bg-layer` at z:-1, below `tw-passage` at z:100), and wanders them from there. The `#floating-layer` is cleared on each navigation.
@@ -198,7 +200,7 @@ Image that drifts slowly around the screen. Starts hidden, pops in within 0–8s
 **Why hide originals:** Original `<img class="floating-img">` elements remain in the passage DOM after `startFloatingImages` clones them. They have `position: absolute` from the CSS, so they end up stacked at the top-left of their nearest `position: relative` ancestor (a sentence div in the layout system). The `float-breathe` animation then makes the stack visibly pulse in one spot. Setting `display: none` on each original as its src is collected eliminates this.
 
 **Important:** Wrap the `<img>` tags in a container div — do NOT put them as bare children of the passage root. The layout system (`splitAtSentences`) filters out subgroups with no text content; a bare `<img>` with no surrounding text would be silently dropped from the rebuilt DOM. Wrapping in a `<div>` preserves them as element nodes.
-Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection.
+Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection. Floating images live in `images/floating/` (medication PNGs: escitalopram, ambien, seroquel, valium, zopiclone, ativan, paxam, zyprexa).
 
 **Note:** floating images use `position: fixed; z-index: -1`. They only show if `tw-story` is transparent (`has-bg-image` class). Solid-colour and image-backed rooms both add `has-bg-image` via JS, so images always show. Do not give `tw-story` a CSS `background-color` for any room that has floating images.
 
@@ -229,8 +231,8 @@ Currently used in: Title Screen (Ryu Konrad name, GitHub).
 **Title Screen author block structure:**
 - `.wk-author-name` — "Ryu Konrad" link, `redaction-70` regular weight, no fidget/flicker, no strikethrough
 - `.wk-info` — credit line ("eLiterature work created for Digital Writing, RMIT (2026)."), `redaction-50` italic
-- `.wk-desc` — description text, `redaction-20`
-- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, `source-code-pro`, no fidget/flicker
+- `.wk-desc` — description text, `redaction-20`. Current text: "Psychosis — insatiability and uncertainty within the structures and institutions of modernity. An attempt at finding and articulating truth through the practice of digitisation."
+- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, `redaction-70` regular weight (matches Ryu Konrad style), no fidget/flicker
 
 ---
 
@@ -297,7 +299,7 @@ All links tremble slightly in a continuous micro-animation (`fidget` keyframes, 
 **Visited tracking:** The CSS `:visited` pseudo-class doesn't work on custom `tw-link` elements. Instead, a JS `_visitedLinks` Set stores the text of every clicked link. On each passage load, `markVisitedLinks()` re-applies the `.visited` class to any matching links. Title screen links (Start, Fullscreen) are exempt from the strikethrough.
 
 **Title Screen link behaviour:**
-- **Start** — lowercase, has fidget + colour flicker on hover, same as regular passage links. No strikethrough.
+- **Start** — capital S, italic (`terminal-grotesque`), has fidget + colour flicker on hover. No strikethrough. Styled via `.start-link` wrapper span + CSS.
 - **Ryu Konrad / GitHub** — static, no fidget, no flicker, no strikethrough.
 - **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough.
 

@@ -135,7 +135,7 @@ tw-story[tags~="titlescreen"]::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.4);
   z-index: 1;
   pointer-events: none;
 }
@@ -190,7 +190,8 @@ tw-story[tags~="titlescreen"] tw-passage br {
   font-weight: 400;
 }
 .wk-github .game-link {
-  font-family: 'source-code-pro', monospace;
+  font-family: 'redaction-70', Georgia, serif;
+  font-weight: 400;
 }
 .wk-github {
   position: fixed;
@@ -232,6 +233,11 @@ tw-story[tags~="titlescreen"] tw-link:link {
   border: none;
   padding: 0;
   animation: fidget 3.2s steps(40) infinite;
+}
+tw-story[tags~="titlescreen"] .start-link tw-link,
+tw-story[tags~="titlescreen"] .start-link tw-link:link {
+  text-transform: none;
+  font-style: italic;
 }
 tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
@@ -1249,6 +1255,8 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/city/imageedit_315_6116755645.gif',
       './images/collage/city/imageedit_328_2930619866.jpg',
       './images/collage/city/imageedit_369_7366549057.jpg',
+      './images/collage/city/imageedit_431_5815206825.gif',
+      './images/collage/city/imageedit_440_8267561693.gif',
       './images/collage/city/images (3).jpeg',
     ],
     'collage-gloss': [
@@ -1284,6 +1292,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/title/IMG_20180505_232307239_LL_Original.jpg',
       './images/collage/title/IMG_20180720_232145674_Original.jpg',
       './images/collage/title/gpoffice.png',
+      './images/collage/title/imageedit_431_5815206825.gif',
     ],
     'collage-natural': [
       './images/collage/natural/IMG_0191_Original.jpg',
@@ -1295,6 +1304,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       './images/collage/natural/imageedit_242_8164594044.png',
       './images/collage/natural/imageedit_387_7898773703.png',
       './images/collage/natural/imageedit_402_7294112584.gif',
+      './images/collage/natural/imageedit_449_8256361766.gif',
     ],
   };
 
@@ -1351,6 +1361,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       img.style.maxHeight = '85vh';
       // Position within assigned zone
       var left = zone.minL + Math.random() * (zone.maxL - zone.minL);
+      left = Math.min(left, 100 - w * 0.5);
       var top  = zone.minT + Math.random() * (zone.maxT - zone.minT);
       img.style.left    = left.toFixed(1) + 'vw';
       img.style.top     = top.toFixed(1) + 'vh';
@@ -2488,7 +2499,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
 Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and  feign conformity?</tw-passagedata>
 <tw-passagedata pid="2" name="GP Reflection" tags="pinktexture collage collage-subsist decor-subsist" position="950,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn&#x27;t cut it. You were supposed to take them daily but didn&#x27;t. You&#x27;ve been taking pills without question for years now. 
 
-&lt;div style=&quot;height:0;overflow:visible;&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/escitalopram.png&quot; alt=&quot;escitalopram&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/ambien.png&quot; alt=&quot;ambien&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/seroquel.png&quot; alt=&quot;seroquel&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/valium.png&quot; alt=&quot;valium&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/zopiclone.png&quot; alt=&quot;zopiclone&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/ativan.png&quot; alt=&quot;ativan&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/paxam.png&quot; alt=&quot;paxam&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/zyprexa.png&quot; alt=&quot;zyprexa&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;height:0;overflow:visible;&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/escitalopram.png&quot; alt=&quot;escitalopram&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/ambien.png&quot; alt=&quot;ambien&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/seroquel.png&quot; alt=&quot;seroquel&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/valium.png&quot; alt=&quot;valium&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/zopiclone.png&quot; alt=&quot;zopiclone&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/ativan.png&quot; alt=&quot;ativan&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/paxam.png&quot; alt=&quot;paxam&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/zyprexa.png&quot; alt=&quot;zyprexa&quot;&gt;&lt;/div&gt;
 
 You should return to the present — the [[GP Office 1&lt;-doctor]] might be ready for you.
 Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata>
@@ -2526,10 +2537,10 @@ electricwhine: ./audio/electricwhine.mp3</tw-passagedata>
 <tw-passagedata pid="7" name="hal.config" tags="" position="325,25" size="100,100">showControls: false</tw-passagedata>
 <tw-passagedata pid="8" name="Title Screen" tags="titlescreen static collage collage-title" position="650,50" size="100,100">&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
-&lt;div class=&quot;wk-block&quot;&gt;&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;wk-info&quot;&gt;eLiterature work created for Digital Writing, RMIT (2026).&lt;/div&gt;&lt;div class=&quot;wk-desc&quot;&gt;Psychosis — Insatiability and uncertainty within the structures and institutions of modernity. An attempt at finding truth through digitisation.&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;wk-block&quot;&gt;&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryu-ichii.github.io/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;wk-info&quot;&gt;eLiterature work created for Digital Writing, RMIT (2026).&lt;/div&gt;&lt;div class=&quot;wk-desc&quot;&gt;Psychosis — insatiability and uncertainty within the structures and institutions of modernity. An attempt at finding and articulating truth through the practice of digitisation.&lt;/div&gt;&lt;/div&gt;
 &lt;div class=&quot;wk-github&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://github.com/ryu-ichii&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/div&gt;
 
-&lt;div class=&quot;title-actions&quot;&gt;[[GP Reception&lt;-Start]]&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
+&lt;div class=&quot;title-actions&quot;&gt;&lt;span class=&quot;start-link&quot;&gt;[[GP Reception&lt;-Start]]&lt;/span&gt;&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">Welcome to the waiting area. Your palms are a bit wet, but you should proceed into your appointment shortly.
 
 You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-wait]].</tw-passagedata>
