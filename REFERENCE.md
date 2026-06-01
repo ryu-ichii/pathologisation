@@ -87,11 +87,11 @@ Auto-plays a looping track when entering, stops when leaving:
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
 | `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
-| `collage-natural` | `images/collage/natural/` (10 images) | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` (18 images) | Car Park, Public Toilet Psychosis |
-| `collage-gloss` | `images/collage/gloss/` (10 images) | Pharmacy |
-| `collage-subsist` | `images/collage/subsist/` (11 images) | GP Daydream, GP Reflection |
-| `collage-title` | `images/collage/title/` (8 images) | Title Screen |
+| `collage-natural` | `images/collage/natural/` (13 images) | Park Encounter, Park Psychosis |
+| `collage-city` | `images/collage/city/` (20 images) | Car Park, Public Toilet Psychosis |
+| `collage-gloss` | `images/collage/gloss/` (11 images) | Pharmacy |
+| `collage-subsist` | `images/collage/subsist/` (16 images) | GP Daydream, GP Reflection |
+| `collage-title` | `images/collage/title/` (10 images) | Title Screen |
 
 **Image sizing:** width randomised 45–85vw per image, max-height 85vh. All pools use the same sizing function — title screen is not differentiated.
 
