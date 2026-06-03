@@ -78,6 +78,7 @@ Auto-plays a looping track when entering, stops when leaving:
 | `phonepsychosis` | `electricwhine.mp3` | Phone Psychosis |
 | `theftpsychosis` | `siren.mp3` | Theft Psychosis |
 | `parkinglot` | `traffic.mp3` | Car Park |
+| `parkpsychosis` | `psychosisbirds.mp3` | Park Psychosis |
 
 **To add a new room track:** add the audio file to `audio/`, register it in `hal.tracks` passage, add one line to `TAG_TRACKS` in Story JavaScript.
 
@@ -265,7 +266,7 @@ Every non-psychosis, non-titlescreen passage gets a random indentation mode and 
 
 Max indent range: **12–34vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
 
-**55% chance:** eligible sentence fragments split into word groups (up from 35%).
+**55% chance:** eligible sentence fragments split into word groups. Within the split, words of ≤3 letters have a **50% chance of being letter-stacked vertically** (each letter its own line), capped at **2 stacks per passage** to prevent layout overflow. Psychosis body text is unaffected — it has its own independent layout.
 
 Passage position: `left` 5–23%, `top` 3–42vh.
 
@@ -275,18 +276,20 @@ Skipped on: `[psychosis]`, `[titlescreen]`.
 
 Passage anchored: `position: fixed; width: 42vw; top: 8vh; left: 5–50%` (randomised each load).
 
-Body text reveals in two phases:
+Body text reveals in three phases:
 
-**Phase 1 (0–10s):** Body text is hidden (`opacity: 0`). Only smooth1–4 wandering hooks are visible.
+**Phase 1 (0–5s):** Body text is hidden (`opacity: 0`). smooth1–4 hooks wander as body-level proxy elements (escaping Harlowe's DOM for true viewport positioning), each assigned a shuffled screen quadrant with 55% full-screen breakout moves. smooth5 fake escape link appears at 2s with JS-driven chromatic aberration (200ms interval).
 
-**Phase 2 (10s+):** Smooth hooks fade out simultaneously (`opacity 0.8s ease`) while body text fragments reveal one unit at a time at 90ms intervals (typewriter over the scattered layout). The text is pre-processed into cummings-style units:
+**Phase 2 (5–25s):** Wander proxies removed. Each hook's text is extracted, broken into 5–7 word lines, and placed in its own fixed container anchored top→bottom (hook 1 ~5vh, hook 2 ~30vh, hook 3 ~56vh, hook 4 ~78vh) with a random `LAYOUT_MODES` scatter indent. Lines stagger in at 70ms intervals.
+
+**Phase 3 (25–40s):** Settle containers fade out (`opacity 0.8s ease`) and body text fragments reveal one unit at a time at 90ms intervals (typewriter over the scattered layout). The text is pre-processed into cummings-style units:
 - **Short words (≤3 letters):** 40% chance of being letter-stacked (each letter its own line). The rest join the word buffer.
 - **Long words (≥7 letters):** 28% chance of a mid-word break 2–5 chars in.
 - **Normal words:** grouped into chunks of up to 4 per scatter div to control total height.
 - **All units** get a bimodal scatter (`left: 0–2.6vw` or `5–12vw`) via `position: relative`.
 - Line height: `1.15` (tight, to prevent overflow).
 
-Auto-redirect at 20s fires regardless. Navigating away cancels the reveal cleanly. smooth1–5 hooks are untouched and re-appended intact.
+Auto-redirect at 40s fires regardless. Navigating away cancels the reveal cleanly and removes all proxies/settle containers.
 
 **CSS transition gotcha — why the hook fade uses `requestAnimationFrame`:** The wander cleanup sets `el.style.transition = 'none'`. If you then set `el.style.transition = 'opacity 0.8s ease'` and `el.style.opacity = '0'` in the same synchronous JS block, the browser collapses both transition assignments into one style recalculation frame — the `none` step is never committed — and the animation may not fire. Wrapping the opacity change in a `requestAnimationFrame` ensures the `none` state is painted first; the following frame then correctly transitions from opacity 1 → 0.
 
@@ -348,7 +351,7 @@ Handles all backgrounds — both image and solid colour. Always present, invisib
 | `electricwhine` | `electricwhine.mp3` | Tag-based (`phonepsychosis`) |
 | `siren` | `siren.mp3` | Tag-based (`theftpsychosis`) |
 | `traffic` | `traffic.mp3` | Tag-based (`parkinglot`) — Car Park |
-| `psychobirds` | `psychosisbirds.mp3` | Manual — `(track: 'psychobirds', 'play')` in Park Psychosis |
+| `psychobirds` | `psychosisbirds.mp3` | Tag-based (`parkpsychosis`) — Park Psychosis |
 | `printer` | `printer.mp3` | Manual — `(track: 'printer', 'seek', 5)` in New Medication |
 
 ---
@@ -394,20 +397,23 @@ Handles all backgrounds — both image and solid colour. Always present, invisib
 
 ### Font sources
 
-**Typekit** (`@import url('https://use.typekit.net/vnl6sno.css')`) — serves: `source-code-pro`, `heimat-mono`.
+**Typekit** (`@import url('https://use.typekit.net/vnl6sno.css')`) — serves: `source-code-pro`, `novel-mono-pro-condensed`, `fantabular-sans-mvb`.
 
 **Local WOFF2** (in `pathologisation/fonts/`) — serves: all `redaction` variants (`redaction`, `redaction-10` through `redaction-100`, each with Regular/Bold/Italic), `velvelyne`, `terminal-grotesque`, `tt-hoves-pro`, `karrik` (Regular + Italic). Registered via `@font-face` in Story Stylesheet.
 
 ### Font combo randomiser
 On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo is applied:
 
-| Combo | Body | Links | Dialogue | Attribution | Decor |
-|-------|------|-------|----------|-------------|-------|
-| 1 | `redaction` | `tt-hoves-pro` | `heimat-mono` | `redaction` | `redaction` |
-| 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` | `redaction-10` |
-| 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` | `redaction-20` |
-| 4 | `heimat-mono` | `redaction-20` | `tt-hoves-pro` | `heimat-mono` | `redaction-35` |
-| 5 | `karrik` | `source-code-pro` | `karrik` | `heimat-mono` | `redaction-50` |
+| Combo | Body | Links | Dialogue | Attribution |
+|-------|------|-------|----------|-------------|
+| 1 | `redaction` | `tt-hoves-pro` | `novel-mono-pro-condensed` | `redaction` |
+| 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` |
+| 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` |
+| 4 | `novel-mono-pro-condensed` | `redaction-20` | `tt-hoves-pro` | `novel-mono-pro-condensed` |
+| 5 | `karrik` | `source-code-pro` | `karrik` | `karrik` |
+| 6 | `fantabular-sans-mvb` | `novel-mono-pro-condensed` | `karrik` | `fantabular-sans-mvb` |
+
+Decor intrusion font (`.lp-intrusion`) is always picked independently by JS from `['redaction', 'redaction-10', 'redaction-20', 'redaction-35', 'redaction-50']` — not tied to the active combo.
 
 Dialogue always stays italic — only the family changes per combo. Attribution lines (`//like this//` → `em`/`i` inside `.dialogue`) are non-italic and use the body text font for that combo. Decor intrusion text (`.lp-intrusion`) uses a varying redaction variant per combo.
 
@@ -419,9 +425,9 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Default story base (`redaction-20`) | inherits from `tw-story` |
 | Breakdownfont body | `2.5em` |
 | Breakdownfont links | `48px !important` |
-| Psychosis body (`tw-passage`) | `1.25rem !important` — pinned via rem, independent of any em scaling |
+| Psychosis body (`tw-passage`) | `1.5rem !important` — pinned via rem, independent of any em scaling |
 | smooth1–4 hooks | `1.6rem !important` — pinned |
-| smooth5 + its link | `1.25rem` |
+| smooth5 + its link | `2.2rem` |
 | UI buttons (home, fullscreen) | `0.9rem` |
 | Title screen Start | `1.7rem` |
 | Title screen Fullscreen | `1rem` italic |
@@ -436,13 +442,13 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Default story base | `redaction-20` |
 | Psychosis body text | `redaction-50` |
 | smooth1–4 wandering hooks | `velvelyne` |
-| smooth5 escape link | `tt-hoves-pro` |
+| smooth5 fake escape link | `tt-hoves-pro` 2.2rem, JS chromatic aberration (200ms interval), appears at 2s, body-level proxy |
 | Title screen Start link | `terminal-grotesque`, 1.7rem, letter-spacing 0.55em, fidget + flicker |
 | Title screen "Ryu Konrad" | `redaction-70` regular weight, no fidget |
 | Title screen GitHub | `source-code-pro`, no fidget |
 | Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
 | Home button | `terminal-grotesque` |
-| Intrusion words (`.lp-intrusion`) | varies per combo: `redaction` / `10` / `20` / `35` / `50` |
+| Intrusion words (`.lp-intrusion`) | JS-randomised from `redaction` / `redaction-10` / `redaction-20` / `redaction-35` / `redaction-50` — independent of combo |
 | Breakdownfont body | `redaction-20` at 2.5em |
 | Breakdownfont links | `tt-hoves-pro` at 48px |
 
@@ -519,7 +525,7 @@ Do NOT add a CSS `background-color` rule on `tw-story` for this tag — JS handl
 
 **Auto-redirect after delay:**
 ```
-(live: 20s)[(goto: (either: "Passage A", "Passage B"))]
+(live: 40s)[(goto: (either: "Passage A", "Passage B"))]
 ```
 
 **Dissolving/echo/contradict passage:**

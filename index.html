@@ -403,14 +403,16 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] {
   visibility: hidden;
   font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif;
-  font-size: 1.25rem;
-  text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 2px rgba(255,255,255,0.4), 0 0 6px #000, 0 0 12px #000;
+  font-size: 2.2rem;
+  z-index: 500;
+  animation: chromatic-ab 1.8s steps(1) infinite;
+  text-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.5), 0 0 20px #fff;
 }
-/* Pin smooth5's link at normal passage size — overrides breakdownfont 48px */
+/* Pin smooth5's link to match hook size */
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link,
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:link,
 tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link:hover {
-  font-size: 1.25rem !important;
+  font-size: 2.2rem !important;
   font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif !important;
 }
 /* velvelyne for wandering hooks (smooth1–4) in psychosis rooms */
@@ -491,7 +493,7 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
    ────────────────────────────────────────────────────────────────────── */
 tw-story[tags~="psychosis"] tw-passage {
   font-family: 'redaction-50', Georgia, serif;
-  font-size: 1.25rem !important;
+  font-size: 1.5rem !important;
   animation: chromatic-ab 2.5s steps(1) infinite;
   position: fixed !important;
   width: 42vw !important;
@@ -696,43 +698,45 @@ tw-story.font-combo-1 { font-family: 'redaction', Georgia, serif; }
 tw-story.font-combo-1 tw-link,
 tw-story.font-combo-1 tw-link:link,
 tw-story.font-combo-1 .game-link { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-1 .dialogue { font-family: 'heimat-mono', sans-serif; }
-tw-story.font-combo-1 .lp-intrusion { font-family: 'redaction', Georgia, serif; }
+tw-story.font-combo-1 .dialogue { font-family: 'novel-mono-pro-condensed', sans-serif; font-weight: 400; font-style: normal; }
 
 tw-story.font-combo-2 { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-2 tw-link,
 tw-story.font-combo-2 tw-link:link,
 tw-story.font-combo-2 .game-link { font-family: 'velvelyne', Georgia, serif; }
 tw-story.font-combo-2 .dialogue { font-family: 'source-code-pro', monospace; }
-tw-story.font-combo-2 .lp-intrusion { font-family: 'redaction-10', Georgia, serif; }
 
 tw-story.font-combo-3 { font-family: 'source-code-pro', monospace; }
 tw-story.font-combo-3 tw-link,
 tw-story.font-combo-3 tw-link:link,
 tw-story.font-combo-3 .game-link { font-family: 'karrik', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-3 .dialogue { font-family: 'redaction-35', Georgia, serif; }
-tw-story.font-combo-3 .lp-intrusion { font-family: 'redaction-20', Georgia, serif; }
 
-tw-story.font-combo-4 { font-family: 'heimat-mono', sans-serif; }
+tw-story.font-combo-4 { font-family: 'novel-mono-pro-condensed', sans-serif; font-weight: 400; font-style: normal; }
 tw-story.font-combo-4 tw-link,
 tw-story.font-combo-4 tw-link:link,
 tw-story.font-combo-4 .game-link { font-family: 'redaction-20', Georgia, serif; }
 tw-story.font-combo-4 .dialogue { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-4 .lp-intrusion { font-family: 'redaction-35', Georgia, serif; }
 
 tw-story.font-combo-5 { font-family: 'karrik', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-5 tw-link,
 tw-story.font-combo-5 tw-link:link,
 tw-story.font-combo-5 .game-link { font-family: 'source-code-pro', monospace; }
 tw-story.font-combo-5 .dialogue { font-family: 'karrik', Arial, Helvetica, sans-serif; }
-tw-story.font-combo-5 .lp-intrusion { font-family: 'redaction-50', Georgia, serif; }
+
+tw-story.font-combo-6 { font-family: 'fantabular-sans-mvb', sans-serif; font-weight: 400; font-style: normal; }
+tw-story.font-combo-6 tw-link,
+tw-story.font-combo-6 tw-link:link,
+tw-story.font-combo-6 .game-link { font-family: 'novel-mono-pro-condensed', sans-serif; font-weight: 400; font-style: normal; }
+tw-story.font-combo-6 .dialogue { font-family: 'karrik', Arial, Helvetica, sans-serif; }
 
 /* Attribution lines //like this// use the body font, not the dialogue font */
 tw-story.font-combo-1 .dialogue em, tw-story.font-combo-1 .dialogue i { font-family: 'redaction', Georgia, serif; }
 tw-story.font-combo-2 .dialogue em, tw-story.font-combo-2 .dialogue i { font-family: 'tt-hoves-pro', Arial, Helvetica, sans-serif; }
 tw-story.font-combo-3 .dialogue em, tw-story.font-combo-3 .dialogue i { font-family: 'source-code-pro', monospace; }
-tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-family: 'heimat-mono', sans-serif; }
-tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-family: 'heimat-mono', sans-serif; }
+tw-story.font-combo-4 .dialogue em, tw-story.font-combo-4 .dialogue i { font-family: 'novel-mono-pro-condensed', sans-serif; font-weight: 400; font-style: normal; }
+tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-family: 'karrik', Arial, Helvetica, sans-serif; }
+tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-family: 'fantabular-sans-mvb', sans-serif; font-weight: 400; font-style: normal; }
 
 /**
  * Harlowe Audio Library (HAL), by Chapel, v2.3.0
@@ -1392,7 +1396,8 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     'nightambience':  'electrichum',
     'phonepsychosis': 'electricwhine',
     'theftpsychosis': 'siren',
-    'parkinglot':     'traffic'
+    'parkinglot':     'traffic',
+    'parkpsychosis':  'psychobirds'
     // 'psychosis':  'psychobirds',  // uncomment when ready
     // 'printroom':  'printer',
   };
@@ -1835,32 +1840,61 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
 
   function startPsychosisWander(passage) {
     stopPsychosisWander();
-    ['smooth1', 'smooth2', 'smooth3', 'smooth4'].forEach(function (name) {
-      var el = passage.querySelector('tw-hook[name="' + name + '"]');
-      if (!el) return;
+
+    /* Shuffle quadrant zones — one per hook, forced apart on screen */
+    var zones = [
+      { top: 0,  left: 0  },
+      { top: 0,  left: 50 },
+      { top: 50, left: 0  },
+      { top: 50, left: 50 }
+    ].sort(function() { return Math.random() - 0.5; });
+
+    ['smooth1', 'smooth2', 'smooth3', 'smooth4'].forEach(function (name, hookIdx) {
+      var hookEl = passage.querySelector('tw-hook[name="' + name + '"]');
+      if (!hookEl) return;
+
+      /* Hide original hook — proxy on body handles display */
+      hookEl.style.opacity = '0';
+
+      /* Create a body-level proxy so position:fixed escapes Harlowe's DOM */
+      var proxy = document.createElement('div');
+      proxy.className = '_wander-proxy';
+      proxy.textContent = hookEl.textContent || '';
+      proxy.style.cssText = [
+        'position:fixed',
+        'z-index:200',
+        "font-family:'velvelyne',Georgia,serif",
+        'font-size:1.6rem',
+        'color:#fff',
+        'pointer-events:none',
+        'max-width:55vw',
+        'white-space:normal'
+      ].join(';');
+      document.body.appendChild(proxy);
+
+      var zone = zones[hookIdx];
       var timer = null;
       var cancelled = false;
 
-      /* Drop element at a random starting position instantly */
-      el.style.transition = 'none';
-      el.style.top  = (5 + Math.random() * 72).toFixed(1) + '%';
-      el.style.left = (3 + Math.random() * 65).toFixed(1) + '%';
-      el.style.transform = 'none';
-      void el.offsetTop; /* force reflow so initial position commits before transition starts */
+      proxy.style.top  = (zone.top  + Math.random() * 42).toFixed(1) + '%';
+      proxy.style.left = (zone.left + Math.random() * 38).toFixed(1) + '%';
 
       function wander() {
         if (cancelled) return;
-        var top  = (5 + Math.random() * 72).toFixed(1);
-        var left = (3 + Math.random() * 65).toFixed(1);
-        var dur  = Math.floor(250 + Math.random() * 1200); /* 250–1450ms per move */
-
-        el.style.transition = 'top ' + dur + 'ms linear, left ' + dur + 'ms linear';
-        el.style.top        = top + '%';
-        el.style.left       = left + '%';
-        el.style.transform  = 'none';
-
-        /* Wait for move + random pause before next target */
-        timer = setTimeout(wander, dur + Math.floor(Math.random() * 350));
+        var top, left;
+        if (Math.random() < 0.55) {
+          /* full screen — really use the edges */
+          top  = (Math.random() * 88).toFixed(1);
+          left = (Math.random() * 60).toFixed(1);
+        } else {
+          top  = (zone.top  + Math.random() * 44).toFixed(1);
+          left = (zone.left + Math.random() * 44).toFixed(1);
+        }
+        var dur = Math.floor(100 + Math.random() * 300); /* snappier */
+        proxy.style.transition = 'top ' + dur + 'ms ease-in-out, left ' + dur + 'ms ease-in-out';
+        proxy.style.top  = top + '%';
+        proxy.style.left = left + '%';
+        timer = setTimeout(wander, dur + Math.floor(Math.random() * 20));
       }
 
       wander();
@@ -1868,44 +1902,71 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       _wanderCleanup.push(function () {
         cancelled = true;
         clearTimeout(timer);
-        el.style.transition = 'none';
+        if (proxy.parentNode) proxy.parentNode.removeChild(proxy);
       });
     });
 
-    /* smooth5 — fake escape link: placed once at a random spot, revealed after ~5s */
+    /* smooth5 — fake escape link: body-level div proxy, reveals at 2s */
     var esc = passage.querySelector('tw-hook[name="smooth5"]');
     if (esc) {
-      esc.style.transition = 'none';
-      esc.style.top  = (20 + Math.random() * 60).toFixed(1) + '%';
-      esc.style.left = (15 + Math.random() * 65).toFixed(1) + '%';
+      esc.style.visibility = 'hidden'; /* keep original hidden */
       var escTimer = setTimeout(function () {
-        esc.style.visibility = 'visible';
-      }, 5000);
+        var escLink = esc.querySelector('tw-link');
+        if (!escLink) return;
+        var top  = (20 + Math.random() * 55).toFixed(1);
+        var left = (10 + Math.random() * 60).toFixed(1);
+        var escProxy = document.createElement('div');
+        escProxy.id = '_smooth5-body';
+        escProxy.style.cssText = [
+          'position:fixed',
+          'display:block',
+          "font-family:'tt-hoves-pro',Arial,Helvetica,sans-serif",
+          'font-size:2.2rem',
+          'color:#fff',
+          'z-index:500',
+          'cursor:pointer',
+          'top:' + top + '%',
+          'left:' + left + '%'
+        ].join(';');
+        escProxy.textContent = escLink.textContent.trim();
+        document.body.appendChild(escProxy);
 
-      /* After click, (link-replace:) removes the tw-link — detect that and fade out */
-      var fadeTimer = null;
-      var clickObs = new MutationObserver(function () {
-        if (!esc.querySelector('tw-link')) {
-          clickObs.disconnect();
-          fadeTimer = setTimeout(function () {
-            esc.style.transition = 'opacity 1.2s ease';
-            esc.style.opacity = '0';
-            fadeTimer = setTimeout(function () {
-              esc.style.visibility = 'hidden';
-              esc.style.opacity = '';
-              esc.style.transition = 'none';
-            }, 1200);
-          }, 2500); /* linger 2.5s then fade */
-        }
-      });
-      clickObs.observe(esc, { childList: true, subtree: true });
+        var shadows = [
+          '-2px 0 rgba(255,0,50,0.55), 2px 0 rgba(0,230,255,0.55)',
+          '-5px 1px rgba(255,0,50,0.8), 5px -1px rgba(0,230,255,0.8)',
+          '-1px 0 rgba(255,0,50,0.3), 1px 0 rgba(0,230,255,0.3)',
+          '-8px 2px rgba(255,0,50,0.9), 8px -2px rgba(0,230,255,0.9)',
+          '-2px 0 rgba(255,0,50,0.45), 2px 0 rgba(0,230,255,0.45)',
+          '-4px 1px rgba(255,0,50,0.7), 4px -1px rgba(0,230,255,0.7)'
+        ];
+        var si = 0;
+        _s5ChromaInterval = setInterval(function() {
+          if (escProxy.parentNode) { escProxy.style.textShadow = shadows[si % shadows.length]; si++; }
+        }, 200);
+
+        escProxy.addEventListener('click', function handler() {
+          escProxy.removeEventListener('click', handler);
+          escLink.click(); /* trigger Harlowe link-replace on hidden hook */
+          clearInterval(_s5ChromaInterval);
+          _s5ChromaInterval = null;
+          setTimeout(function() {
+            /* read whatever Harlowe rendered as the response */
+            var resp = esc.textContent.trim();
+            escProxy.textContent = resp || 'nice try';
+            escProxy.style.cursor = 'default';
+            setTimeout(function() {
+              escProxy.style.transition = 'opacity 1.2s ease';
+              escProxy.style.opacity = '0';
+              setTimeout(function() {
+                if (escProxy.parentNode) escProxy.parentNode.removeChild(escProxy);
+              }, 1200);
+            }, 2500);
+          }, 50);
+        });
+      }, 2000);
 
       _wanderCleanup.push(function () {
         clearTimeout(escTimer);
-        clearTimeout(fadeTimer);
-        clickObs.disconnect();
-        esc.style.transition = 'none';
-        esc.style.opacity = '';
         esc.style.visibility = 'hidden';
       });
     }
@@ -2076,7 +2137,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
      Picks a random body/link font pair each passage load.
      Skipped for titlescreen and psychosis — those have fixed font rules.
      ────────────────────────────────────────────────────────────────────── */
-  var FONT_COMBOS = ['font-combo-1', 'font-combo-2', 'font-combo-3', 'font-combo-4', 'font-combo-5'];
+  var FONT_COMBOS = ['font-combo-1', 'font-combo-2', 'font-combo-3', 'font-combo-4', 'font-combo-5', 'font-combo-6'];
   function applyFontCombo(story, tags) {
     FONT_COMBOS.forEach(function(c) { story.classList.remove(c); });
     if (tags.indexOf('titlescreen') !== -1 || tags.indexOf('psychosis') !== -1) return;
@@ -2215,24 +2276,95 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       scatterDivs.push(div);
     });
 
-    // After 10s: body text starts typing AND hooks fade simultaneously
-    var REVEAL_DELAY = 10000;
+    // After 8s: stop wander, extract hook text, build word-group scatter layout
+    var SETTLE_DELAY = 5000;
+    var REVEAL_DELAY = 25000;
     var UNIT_STEP    = 90;  // ms between each word/letter appearing
-    var mainTimer = setTimeout(function() {
-      // Stop wander (sets transition:none on each hook via _wanderCleanup)
+
+    var settleTimer = setTimeout(function() {
+      // Stop wander
       _wanderCleanup.forEach(function(fn) { fn(); });
       _wanderCleanup = [];
-      // Use rAF so the browser commits the transition:none paint before we
-      // set the opacity transition — otherwise the two style changes collapse
-      // into one frame and the animation never fires.
-      requestAnimationFrame(function() {
-        ['smooth1','smooth2','smooth3','smooth4'].forEach(function(name) {
-          var hook = document.querySelector('tw-story[tags~="psychosis"] tw-hook[name="' + name + '"]');
-          if (!hook) return;
-          hook.style.transition = 'opacity 0.8s ease';
-          hook.style.opacity = '0';
+
+      // Fixed vertical anchors per hook (top→bottom order), random left
+      var vertBands = [
+        [4,  8],
+        [30, 34],
+        [55, 59],
+        [76, 80]
+      ];
+
+      ['smooth1','smooth2','smooth3','smooth4'].forEach(function(name, hookIdx) {
+        var hook = document.querySelector('tw-story[tags~="psychosis"] tw-hook[name="' + name + '"]');
+        if (!hook) return;
+
+        // Fade out original hook
+        hook.style.transition = 'opacity 0.4s ease';
+        hook.style.opacity = '0';
+
+        // Split this hook's text into 2-4 word groups
+        var words = (hook.textContent || '').trim().split(/\s+/).filter(Boolean);
+        var groups = [];
+        var wi = 0;
+        while (wi < words.length) {
+          var size = 5 + Math.floor(Math.random() * 3); // 5–7 words per line
+          groups.push(words.slice(wi, wi + size).join(' '));
+          wi += size;
+        }
+
+        // Build a container for this hook in its vertical band, random left
+        var band = vertBands[hookIdx];
+        var pos = {
+          top:  (band[0] + Math.random() * (band[1] - band[0])).toFixed(1) + 'vh',
+          left: (3 + Math.random() * 55).toFixed(1) + '%'
+        };
+        var sc = document.createElement('div');
+        sc.className = '_psych-settle';
+        sc.style.cssText = [
+          'position:fixed',
+          'width:38vw',
+          'max-width:560px',
+          'top:' + pos.top,
+          'left:' + pos.left,
+          'z-index:100',
+          'pointer-events:none',
+          "font-family:'velvelyne',Georgia,serif",
+          'font-size:1.6rem',
+          'color:#fff',
+          'line-height:1.15'
+        ].join(';');
+
+        var mode = LAYOUT_MODES[Math.floor(Math.random() * LAYOUT_MODES.length)];
+        var maxIndent = 3 + Math.random() * 7;
+        var staggerPool = [0, maxIndent*0.2, maxIndent*0.5, maxIndent*0.8, maxIndent*0.4, maxIndent*0.1];
+
+        groups.forEach(function(text, idx) {
+          var div = document.createElement('div');
+          div.style.cssText = 'display:block;position:relative;margin:0;padding:0;opacity:0;';
+          div.style.left = layoutIndent(mode, idx, groups.length, maxIndent, staggerPool).toFixed(1) + 'vw';
+          div.textContent = text;
+          sc.appendChild(div);
+          var t = setTimeout(function() {
+            div.style.transition = 'opacity 0.4s ease';
+            div.style.opacity = '1';
+          }, hookIdx * 150 + idx * 70);
+          _psychosisRevealTimers.push(t);
         });
-        // Body text reveals at the same time as hooks fade
+
+        document.body.appendChild(sc);
+      });
+    }, SETTLE_DELAY);
+    _psychosisRevealTimers.push(settleTimer);
+
+    // After 20s: fade settle container out, reveal body text
+    var mainTimer = setTimeout(function() {
+      requestAnimationFrame(function() {
+        document.querySelectorAll('._psych-settle').forEach(function(sc) {
+          sc.style.transition = 'opacity 0.8s ease';
+          sc.style.opacity = '0';
+          setTimeout(function() { if (sc.parentNode) sc.parentNode.removeChild(sc); }, 900);
+        });
+        // Body text reveals as settle fades
         scatterDivs.forEach(function(div, i) {
           var t = setTimeout(function() {
             div.style.transition = 'opacity 0.25s ease';
@@ -2246,9 +2378,16 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
   }
 
   var _psychosisRevealTimers = [];
+  var _s5ChromaInterval = null;
   function clearPsychosisReveal() {
     _psychosisRevealTimers.forEach(clearTimeout);
     _psychosisRevealTimers = [];
+    if (_s5ChromaInterval) { clearInterval(_s5ChromaInterval); _s5ChromaInterval = null; }
+    var s5 = document.getElementById('_smooth5-body');
+    if (s5 && s5.parentNode === document.body) document.body.removeChild(s5);
+    document.querySelectorAll('._psych-settle, ._wander-proxy').forEach(function(el) {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    });
   }
 
   // scatter, jump weighted more heavily — these create the most visual variance
@@ -2380,6 +2519,7 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     while (container.firstChild) container.removeChild(container.firstChild);
 
     var lineIdx = 0;
+    var stackCount = 0; /* max 2 vertical letter-stacks per passage */
     fragments.forEach(function(fragment) {
       if (fragment === null) {
         container.appendChild(document.createElement('br'));
@@ -2388,22 +2528,43 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
       var indent = layoutIndent(mode, lineIdx, nonEmpty, maxIndent, staggerPool);
       lineIdx++;
 
-      // ~20% chance: split a pure-text fragment into word-group sub-lines
+      // ~55% chance: split a pure-text fragment into word-group sub-lines
+      // Short words (≤3 letters) get a 50% chance to be letter-stacked vertically, max 2 stacks per passage
       var hasElements = fragment.some(function(n) { return n.nodeType === 1; });
       var fullText = fragment.map(function(n) { return n.textContent; }).join('').trim();
       var words = fullText.split(/\s+/).filter(Boolean);
       if (!hasElements && words.length >= 4 && Math.random() < 0.55) {
-        var numGroups = 2 + Math.floor(Math.random() * 2); // 2 or 3 groups
-        var groupSize = Math.ceil(words.length / numGroups);
-        for (var wi = 0; wi < words.length; wi += groupSize) {
-          var chunk = words.slice(wi, wi + groupSize).join(' ');
-          var subDiv = document.createElement('div');
-          subDiv.className = 'layout-line';
-          subDiv.style.cssText = 'display:block;line-height:inherit;margin:0;padding:0;word-wrap:break-word;position:relative;';
+        var numGroups = 2 + Math.floor(Math.random() * 2);
+        var targetSize = Math.ceil(words.length / numGroups);
+        var wi = 0;
+        while (wi < words.length) {
           var subIndent = Math.max(0, Math.min(indent + (Math.random() - 0.35) * maxIndent * 0.5, maxIndent));
-          subDiv.style.left = subIndent.toFixed(2) + 'vw';
-          subDiv.appendChild(document.createTextNode(chunk));
-          container.appendChild(subDiv);
+          var word = words[wi];
+          var alpha = word.replace(/[^a-zA-Z]/g, '');
+          if (alpha.length >= 2 && alpha.length <= 3 && Math.random() < 0.5 && stackCount < 2) {
+            stackCount++;
+            // Stack short word vertically — slight random drift per letter
+            word.split('').forEach(function(letter) {
+              var ld = document.createElement('div');
+              ld.className = 'layout-line';
+              ld.style.cssText = 'display:block;line-height:inherit;margin:0;padding:0;word-wrap:break-word;position:relative;';
+              var drift = subIndent + (Math.random() - 0.5) * 2.5;
+              ld.style.left = Math.max(0, drift).toFixed(2) + 'vw';
+              ld.appendChild(document.createTextNode(letter));
+              container.appendChild(ld);
+            });
+            wi++;
+          } else {
+            var end = Math.min(wi + targetSize, words.length);
+            var chunk = words.slice(wi, end).join(' ');
+            var subDiv = document.createElement('div');
+            subDiv.className = 'layout-line';
+            subDiv.style.cssText = 'display:block;line-height:inherit;margin:0;padding:0;word-wrap:break-word;position:relative;';
+            subDiv.style.left = subIndent.toFixed(2) + 'vw';
+            subDiv.appendChild(document.createTextNode(chunk));
+            container.appendChild(subDiv);
+            wi = end;
+          }
         }
         return;
       }
@@ -2451,8 +2612,8 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
         if (!p) return;
         var tags = story ? (story.getAttribute('tags') || '') : '';
         var tagsChanged = tags !== _lastRunTags;
+        clearPsychosisReveal();
         if (tagsChanged) {
-          clearPsychosisReveal();
           _lastRunTags = tags;
           updateBackground(tags);
           updateRoomAudio(tags);
@@ -2509,17 +2670,17 @@ tw-story.font-combo-5 .dialogue em, tw-story.font-combo-5 .dialogue i { font-fam
     onPassageChange();
   })();
 
-})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP Office 1" tags="GP clockroom collage collage-medical" position="775,200" size="100,100">The doctor looks up from his notepad to address you. He stares |charged&gt;[through]  you  before finally settling on your dry and irritated eyes. He seems a little put off by your appearance today.
+})();</script><tw-tag name="hal.tracks" color="purple"></tw-tag><tw-tag name="startup" color="yellow"></tw-tag><tw-tag name="waiting-background" color="orange"></tw-tag><tw-tag name="waitingroom" color="green"></tw-tag><tw-tag name="parkinglot" color="red"></tw-tag><tw-tag name="GP" color="green"></tw-tag><tw-tag name="GP2" color="blue"></tw-tag><tw-tag name="blue" color="yellow"></tw-tag><tw-tag name="smooth" color="purple"></tw-tag><tw-tag name="insanity" color="green"></tw-tag><tw-tag name="breakdownfont" color="purple"></tw-tag><tw-tag name="static" color="purple"></tw-tag><tw-tag name="parkbench" color="blue"></tw-tag><tw-passagedata pid="1" name="GP Office 1" tags="GP clockroom collage collage-medical" position="775,175" size="100,100">The doctor looks up from his notepad to address you. He stares |charged&gt;[through]  you  before finally settling on your dry and irritated eyes. He seems a little put off by your appearance today.
 &lt;div class=&quot;dialogue&quot;&gt;So. Have you actually been taking your medication? //he finally asks.//&lt;/div&gt;
 
 Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt;-lie]] and  feign conformity?</tw-passagedata>
-<tw-passagedata pid="2" name="GP Reflection" tags="pinktexture collage collage-subsist decor-subsist" position="950,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn&#x27;t cut it. You were supposed to take them daily but didn&#x27;t. You&#x27;ve been taking pills without question for years now. 
+<tw-passagedata pid="2" name="GP Reflection" tags="pinktexture collage collage-subsist decor-subsist" position="1000,175" size="100,100">You were prescribed Olanzapine 10mg after the Seroquel 50mg didn&#x27;t cut it. You were supposed to take them daily but didn&#x27;t. You&#x27;ve been taking pills without question for years now. 
 
 &lt;div style=&quot;height:0;overflow:visible;&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/escitalopram.png&quot; alt=&quot;escitalopram&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/ambien.png&quot; alt=&quot;ambien&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/seroquel.png&quot; alt=&quot;seroquel&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/valium.png&quot; alt=&quot;valium&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/zopiclone.png&quot; alt=&quot;zopiclone&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/ativan.png&quot; alt=&quot;ativan&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/paxam.png&quot; alt=&quot;paxam&quot;&gt;&lt;img class=&quot;floating-img&quot; src=&quot;./images/floating/zyprexa.png&quot; alt=&quot;zyprexa&quot;&gt;&lt;/div&gt;
 
 You should return to the present — the [[GP Office 1&lt;-doctor]] might be ready for you.
 Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata>
-<tw-passagedata pid="3" name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical" position="850,350" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
+<tw-passagedata pid="3" name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical" position="925,325" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
 It&#x27;s humiliating but noble that you would admit that.
@@ -2528,7 +2689,7 @@ It&#x27;s humiliating but noble that you would admit that.
 Do you [[New Medication&lt;-accept]] the offer of new pills or [[Same Medication&lt;-try again]] with the old ones.
 
 Or if you&#x27;re feeling brash, you could [[Car Park&lt;-leave]] the appointment altogether.</tw-passagedata>
-<tw-passagedata pid="4" name="GP Lie" tags="GP2 clockroom collage collage-medical decor-medical" position="700,350" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I... I... I&#x27;ve been taking it... everyday, like you said&lt;/div&gt;//you manage to dribble out.//&lt;/div&gt;
+<tw-passagedata pid="4" name="GP Lie" tags="GP2 clockroom collage collage-medical decor-medical" position="675,325" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I... I... I&#x27;ve been taking it... everyday, like you said&lt;/div&gt;//you manage to dribble out.//&lt;/div&gt;
 
 You sound like a bit of a fool.
 The doctor seems to smirk in response. Even he can see it. 
@@ -2561,7 +2722,7 @@ traffic:      ./audio/traffic.mp3</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">Welcome to the waiting area. Your palms are a bit wet, but you should proceed into your appointment shortly.
 
 You might have some time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could sit here passively and [[GP Office 1&lt;-wait]].</tw-passagedata>
-<tw-passagedata pid="10" name="New Medication" tags="" position="825,550" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
+<tw-passagedata pid="10" name="New Medication" tags="" position="750,500" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
 He types into his computer and clicks something a few times.
 
 He retrieves a prescription sheet from the printer and passes it you.
@@ -2569,11 +2730,11 @@ He retrieves a prescription sheet from the printer and passes it you.
 You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
 (track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata>
-<tw-passagedata pid="11" name="Car Park" tags="parkinglot collage collage-city decor-city" position="375,425" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
+<tw-passagedata pid="11" name="Car Park" tags="parkinglot collage collage-city decor-city" position="350,450" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
 
 You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata>
-<tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom collage collage-medical" position="650,550" size="100,100"></tw-passagedata>
-<tw-passagedata pid="13" name="GP Ignore" tags="collage collage-medical" position="550,675" size="100,100"></tw-passagedata>
+<tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom collage collage-medical" position="575,475" size="100,100"></tw-passagedata>
+<tw-passagedata pid="13" name="GP Ignore" tags="collage collage-medical" position="575,650" size="100,100"></tw-passagedata>
 <tw-passagedata pid="14" name="Park Encounter" tags="parkbench collage collage-natural decor-natural" position="400,700" size="100,100">You find a spot on a bench.
 Theres a strung out bloke stumbling through the playground making a string of guttural noises as he comes closer to you. 
 
@@ -2594,40 +2755,39 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him a
 
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;, &quot;ditch&quot;, &quot;wake up&quot;))[(either: &quot;nice try&quot;, &quot;that&#x27;s a shame&quot;, &quot;you might have to ride this out&quot;, &quot;you&#x27;re tripping&quot;, &quot;you&#x27;ve lost the plot&quot;)]]
 
-(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]
-(track: &#x27;psychobirds&#x27;, &#x27;play&#x27;)</tw-passagedata>
+(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
 <tw-passagedata pid="16" name="Phone Psychosis" tags="phonepsychosis" position="525,1100" size="100,100"></tw-passagedata>
-<tw-passagedata pid="17" name="Same Medication" tags="" position="975,500" size="100,100">[[Office]] or [[Home]]</tw-passagedata>
-<tw-passagedata pid="18" name="GP Office 2" tags="doctorsoffice3 collage collage-medical" position="875,825" size="100,100">You&#x27;re back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You&#x27;ve pissed him off good now. You&#x27;ve really gone and done it now.
+<tw-passagedata pid="17" name="Same Medication" tags="" position="950,525" size="100,100">[[Office]] or [[Home]]</tw-passagedata>
+<tw-passagedata pid="18" name="GP Office 2" tags="doctorsoffice3 collage collage-medical" position="850,825" size="100,100">You&#x27;re back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You&#x27;ve pissed him off good now. You&#x27;ve really gone and done it now.
 
 [[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata>
 <tw-passagedata pid="19" name="GP Office 3" tags="collage collage-medical" position="850,1300" size="100,100">[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata>
 <tw-passagedata pid="20" name="Psych Ward" tags="psychward" position="850,1075" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata>
-<tw-passagedata pid="21" name="Public Toilet" tags="toilet breathe" position="1325,800" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata>
+<tw-passagedata pid="21" name="Public Toilet" tags="toilet breathe" position="1175,775" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata>
 <tw-passagedata pid="22" name="Friend" tags="" position="350,1125" size="100,100"></tw-passagedata>
 <tw-passagedata pid="23" name="Jail" tags="jail" position="850,1625" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata>
-<tw-passagedata pid="24" name="Dream" tags="" position="600,800" size="100,100"></tw-passagedata>
+<tw-passagedata pid="24" name="Dream" tags="" position="575,800" size="100,100"></tw-passagedata>
 <tw-passagedata pid="25" name="Home" tags="decor-subsist" position="950,675" size="100,100">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata>
 <tw-passagedata pid="26" name="Pharmacy" tags="collage collage-gloss decor-gloss" position="725,700" size="100,100">You take or don&#x27;t take the new pills.
 
 Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata>
-<tw-passagedata pid="27" name="Office" tags="" position="1175,600" size="100,100"></tw-passagedata>
-<tw-passagedata pid="28" name="Ezymart" tags="ezymart" position="1150,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="27" name="Office" tags="" position="1125,625" size="100,100"></tw-passagedata>
+<tw-passagedata pid="28" name="Ezymart" tags="ezymart" position="1125,925" size="100,100"></tw-passagedata>
 <tw-passagedata pid="29" name="Cigarette Break" tags="" position="1150,1300" size="100,100"></tw-passagedata>
 <tw-passagedata pid="30" name="Conversation" tags="" position="425,875" size="100,100"></tw-passagedata>
 <tw-passagedata pid="31" name="Train" tags="" position="550,1250" size="100,100"></tw-passagedata>
 <tw-passagedata pid="32" name="GP Office 2 Accept" tags="collage collage-medical" position="725,950" size="100,100"></tw-passagedata>
-<tw-passagedata pid="33" name="Psychosis Fragment Pool" tags="fragment-pool" position="1875,1750" size="100,100">smooth1: What are you doing? | The fuck are you here for? | Are you ok?
-smooth2: You look retarded. | Shit fuck. | Wanna punch on?
-smooth3: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
-smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-passagedata>
+<tw-passagedata pid="33" name="Psychosis Fragment Pool" tags="fragment-pool" position="1875,1750" size="100,100">smooth1: I wrap the belt around my bicep and rip the ORANGE cap off like I have a rare and precious ANTIDOTE. In some ways I do. | f you haven’t got the BALLS to end it you might as well finish off with some FLAIR. Only then might YOU SEE what it’s truly like. | All that time running around, shaking your arse in the face of the inevitable. What does it achieve? The world fucks us one way or another.
+smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. |  Every day of shooting is another chance to escape the present situation and rise above the troubles of the cruel and intolerable world. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
+smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | he fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will fucking LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head then. I won&#x27;t waste another word on you. 
+smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrow in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH.</tw-passagedata>
 <tw-passagedata pid="34" name="Complete Reality Breakdown 1" tags="" position="1075,1550" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
-<tw-passagedata pid="35" name="GP Office 2 Reject" tags="collage collage-medical" position="975,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="35" name="GP Office 2 Reject" tags="collage collage-medical" position="1000,950" size="100,100"></tw-passagedata>
 <tw-passagedata pid="36" name="Complete Reality Breakdown 2" tags="" position="1025,1875" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
@@ -2640,12 +2800,12 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
-<tw-passagedata pid="38" name="Psych Ward Escape" tags="" position="725,1200" size="100,100"></tw-passagedata>
+<tw-passagedata pid="38" name="Psych Ward Escape" tags="" position="725,1175" size="100,100"></tw-passagedata>
 <tw-passagedata pid="39" name="Psych Ward Stay" tags="" position="1000,1200" size="100,100"></tw-passagedata>
 <tw-passagedata pid="40" name="GP Office Final" tags="" position="850,2025" size="100,100"></tw-passagedata>
 <tw-passagedata pid="41" name="Jail Escape" tags="" position="725,1725" size="100,100"></tw-passagedata>
 <tw-passagedata pid="42" name="Jail Stay" tags="" position="975,1725" size="100,100"></tw-passagedata>
-<tw-passagedata pid="43" name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city" position="1425,950" size="100,100">There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
+<tw-passagedata pid="43" name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city" position="1400,975" size="100,100">There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
 
 |smooth1&gt;[ ]
 
@@ -2656,8 +2816,8 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
 |smooth4&gt;[ ]
 
 
-(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="44" name="Complete Reality Breakdown 4" tags="" position="675,1875" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
+<tw-passagedata pid="44" name="Complete Reality Breakdown 4" tags="" position="650,1900" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
@@ -2671,7 +2831,7 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* — CRB DECOR POOL — one text option per line, shown randomly on CRB 1-4 — */</tw-passagedata>
-<tw-passagedata pid="45" name="CRB Decor Pool" tags="decor decor-crrf" position="1750,1750" size="100,100"># Same format as other decor passages — multi-line text, | size at end.
+<tw-passagedata pid="45" name="CRB Decor Pool" tags="decor decor-crrf" position="2300,1325" size="100,100"># Same format as other decor passages — multi-line text, | size at end.
 # Font is randomly redaction-70 or redaction-100 (ignores combo font).
 # Add more passages tagged [decor decor-crrf] to grow the pool.
 
@@ -2698,12 +2858,12 @@ smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-pas
 <tw-passagedata pid="59" name="CRB Links 2" tags="" position="2100,1400" size="100,100">[[Continue-&gt;Home]]
 [[Or-&gt;Psych Ward]]</tw-passagedata>
 <tw-passagedata pid="60" name="CRB Links 3" tags="" position="2100,1500" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
-<tw-passagedata pid="61" name="Elevator" tags="elevator" position="575,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="61" name="Elevator" tags="elevator" position="550,925" size="100,100"></tw-passagedata>
 <tw-passagedata pid="62" name="Night Walk" tags="nightambience" position="1200,1400" size="100,100"></tw-passagedata>
-<tw-passagedata pid="63" name="City Dissociation" tags="" position="550,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="63" name="City Dissociation" tags="" position="500,1500" size="100,100"></tw-passagedata>
 <tw-passagedata pid="64" name="GP Office 3 Escape" tags="collage collage-medical" position="975,1425" size="100,100"></tw-passagedata>
 <tw-passagedata pid="65" name="GP Office 3 Stay" tags="collage collage-medical" position="725,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="700,1075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="350,1275" size="100,100"></tw-passagedata>
 <tw-passagedata pid="67" name="Medical Decor" tags="decor decor-medical" position="225,125" size="100,100">Splatters of white
 burn into my eyes.
 The room hums and beeps.
@@ -2761,11 +2921,11 @@ predicament
 alone. 
 | md</tw-passagedata>
 <tw-passagedata pid="72" name="City Walk" tags="citywalk" position="250,975" size="100,100"></tw-passagedata>
-<tw-passagedata pid="73" name="City Transit" tags="citycommute" position="1125,725" size="100,100"></tw-passagedata>
+<tw-passagedata pid="73" name="City Transit" tags="citycommute" position="1275,575" size="100,100"></tw-passagedata>
 <tw-passagedata pid="74" name="Untitled Passage" tags="" position="1100,1075" size="100,100"></tw-passagedata>
 <tw-passagedata pid="75" name="Untitled Passage 1" tags="" position="1300,1250" size="100,100"></tw-passagedata>
 <tw-passagedata pid="76" name="Sleep" tags="" position="1300,1075" size="100,100"></tw-passagedata>
-<tw-passagedata pid="77" name="Drugs" tags="" position="400,1400" size="100,100"></tw-passagedata>
+<tw-passagedata pid="77" name="Drugs" tags="" position="350,1400" size="100,100"></tw-passagedata>
 </tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
