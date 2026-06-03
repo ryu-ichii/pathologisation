@@ -30,7 +30,7 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | Tag | Image | Currently used on |
 |-----|-------|------------------|
 | `waitingroom` | `backgroundwaiting.jpg` | GP Reception |
-| `parkinglot` | `parkinglot.jpg` | Car Park |
+| `parkinglot` | `parkinglot.gif` | Car Park |
 | `GP` | `gp.jpg` | GP Office 1, GP Reassess |
 | `GP2` | `gpoffice.jpg` | GP Confess, GP Lie |
 | `parkbench` | `parkbench.jpg` | Park Encounter |
@@ -60,7 +60,7 @@ The `SOLID_COLORS` map in `updateBackground()` is currently empty — no solid c
 |-----|--------|
 | `breathe` | Image rooms: `#bg-layer` scales/darkens on inhale/exhale (8s cycle). Solid colour rooms: `#bg-layer.colour-breathe` pulses the background-color between shades (e.g. blue → indigo → deep purple) — no filter, so floating images are unaffected. **GIFs never breathe** (too busy). |
 
-Currently used on: Car Park `[parkinglot breathe]`, Park Encounter `[parkbench breathe]`, GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
+Currently used on: Park Encounter `[parkbench breathe]`, GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
 
 **Colour breathe keyframes** (blue room, 8s ease-in-out):
 - 0% `#0029a3` → 18% `#2200e0` (electric indigo inhale peak) → 28% `#1a00b8` → 72% `#08003a` → 82% `#04001a` (near-black exhale) → 100% `#0029a3`
@@ -76,6 +76,7 @@ Auto-plays a looping track when entering, stops when leaving:
 | `nightambience` | `electrichum.mp3` | Night Walk |
 | `phonepsychosis` | `electricwhine.mp3` | Phone Psychosis |
 | `theftpsychosis` | `siren.mp3` | Theft Psychosis |
+| `parkinglot` | `traffic.mp3` | Car Park |
 
 **To add a new room track:** add the audio file to `audio/`, register it in `hal.tracks` passage, add one line to `TAG_TRACKS` in Story JavaScript.
 
@@ -86,10 +87,10 @@ Auto-plays a looping track when entering, stops when leaving:
 | Tag | Folder | Currently used on |
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
-| `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
+| `collage-medical` | `images/collage/medical/` (7 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
 | `collage-natural` | `images/collage/natural/` (13 images) | Park Encounter, Park Psychosis |
 | `collage-city` | `images/collage/city/` (20 images) | Car Park, Public Toilet Psychosis |
-| `collage-gloss` | `images/collage/gloss/` (11 images) | Pharmacy |
+| `collage-gloss` | `images/collage/gloss/` (12 images) | Pharmacy |
 | `collage-subsist` | `images/collage/subsist/` (16 images) | GP Daydream, GP Reflection |
 | `collage-title` | `images/collage/title/` (10 images) | Title Screen |
 
@@ -114,7 +115,7 @@ Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to th
 | `decor-gloss` | `Gloss Decor` | combo redaction (10–50) | Pharmacy |
 | `decor-subsist` | `Subsist Decor` | combo redaction (10–50) | Home |
 | `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter |
-| `decor-crrf` | `CRRF Decor Pool` | random `redaction-70` or `redaction-100` | CRRF 1–4 |
+| `decor-crrf` | `CRB Decor Pool` | random `redaction-70` or `redaction-100` | CRB 1–4 |
 
 **Format of a decor passage** — write in Twine, each option ends with `| size`:
 ```
@@ -210,7 +211,7 @@ Image that moves fast and jittery, glitch-flickers opacity and colour. Starts hi
 ```html
 <img class="erratic-img" src="./images/static.gif">
 ```
-Currently used in: CRRF passages. CRRF Image 2 uses `nightambience.jpg` as placeholder.
+Currently used in: CRB passages. CRB Image 2 uses `nightambience.jpg` as placeholder.
 
 ### `.crrf-bg-overlay`
 Full-screen background image overlay (z-index below text). Used inside display sub-passages.
@@ -218,7 +219,7 @@ Full-screen background image overlay (z-index below text). Used inside display s
 ```html
 <div class="crrf-bg-overlay" style="background-image: url('./images/static.gif')"></div>
 ```
-Opacity: 35%. Currently used in: CRRF Background 1–4.
+Opacity: 35%. Currently used in: CRB Background 1–4.
 
 ### `.game-link`
 Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plain `<a>` tag. Used for external links.
@@ -345,6 +346,7 @@ Handles all backgrounds — both image and solid colour. Always present, invisib
 | `electrichum` | `electrichum.mp3` | Tag-based (`nightambience`) |
 | `electricwhine` | `electricwhine.mp3` | Tag-based (`phonepsychosis`) |
 | `siren` | `siren.mp3` | Tag-based (`theftpsychosis`) |
+| `traffic` | `traffic.mp3` | Tag-based (`parkinglot`) — Car Park |
 | `psychobirds` | `psychosisbirds.mp3` | Manual — `(track: 'psychobirds', 'play')` in Park Psychosis |
 | `printer` | `printer.mp3` | Manual — `(track: 'printer', 'seek', 5)` in New Medication |
 
@@ -445,18 +447,18 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 
 ---
 
-## 8. CRRF SYSTEM (Complete Random Reality Fragmentation)
+## 8. CRB SYSTEM (Complete Reality Breakdown)
 
-A modular randomised passage system. Each CRRF passage assembles itself from 4 random pools:
+A modular randomised passage system. Each CRB passage assembles itself from 4 random pools:
 
 ```
-(display: (either: "CRRF Background 1", "CRRF Background 2", ...))
-(display: (either: "CRRF Image 1", "CRRF Image 2", ...))
-(display: (either: "CRRF Text 1", "CRRF Text 2", ...))
-(display: (either: "CRRF Links 1", "CRRF Links 2", "CRRF Links 3"))
+(display: (either: "CRB Background 1", "CRB Background 2", ...))
+(display: (either: "CRB Image 1", "CRB Image 2", ...))
+(display: (either: "CRB Text 1", "CRB Text 2", ...))
+(display: (either: "CRB Links 1", "CRB Links 2", "CRB Links 3"))
 ```
 
-**To add a new option to any pool:** create a new passage (e.g. `CRRF Text 5`) and add its name to the `(either:)` list.
+**To add a new option to any pool:** create a new passage (e.g. `CRB Text 5`) and add its name to the `(either:)` list.
 
 **Current pools:**
 - **Background 1–4:** full-screen overlay images (static.gif, parkpsychosis.gif, psychward.jpg, nightambience.jpg)
@@ -464,7 +466,7 @@ A modular randomised passage system. Each CRRF passage assembles itself from 4 r
 - **Text 1–4:** short placeholder text fragments
 - **Links 1–3:** navigation options (currently all lead to Home / Psych Ward)
 
-**Currently used on:** CRRF 1, 2, 3, 4 (four distinct passages using the same pool system).
+**Currently used on:** CRB 1, 2, 3, 4 (four distinct passages using the same pool system).
 
 ---
 
@@ -547,9 +549,9 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
 2. **Unlinked** — story passages not yet connected to the graph (works in progress, incomplete branches)
 3. **Randomisation** — two sub-sections:
-   - *text* — `[fragment-pool]` passages + `CRRF Text 1–4` + `CRRF Links 1–3`
-   - *images* — `CRRF Image 1–4` + `CRRF Background 1–4`
-   - Detection: CRRF sub-passages matched by name prefix; fragment-pool passages matched by tag
+   - *text* — `[fragment-pool]` passages + `CRB Text 1–4` + `CRB Links 1–3`
+   - *images* — `CRB Image 1–4` + `CRB Background 1–4`
+   - Detection: CRB sub-passages matched by name prefix; fragment-pool passages matched by tag
 4. **Decor** — passages tagged `[decor]` with a category tag (e.g. `[decor decor-medical]`). Sorted by category. Add content here to grow the decor pools.
 5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
 

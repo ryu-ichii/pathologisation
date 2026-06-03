@@ -80,7 +80,7 @@ The doctor coughs somewhere in the background.
 &lt;div class=&quot;dialogue&quot;&gt;Hello? Are you there? //he asks.//&lt;/div&gt;
 His far away. You can&#x27;t find the words or the way back.
 
-Do you want to [[Office&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical"><span class="tags">[GP2 clockroom collage collage-medical decor-medical]</span>
+Do you want to [[City Transit&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical"><span class="tags">[GP2 clockroom collage collage-medical decor-medical]</span>
 &lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
@@ -98,18 +98,19 @@ The doctor seems to smirk in response. Even he can see it.
 He sighs,
 &lt;div class=&quot;dialogue&quot;&gt;Lets try this again...&lt;/div&gt;
 
-You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-subsist]] the nightmare.</tw-passagedata><tw-passagedata name="Office"></tw-passagedata><tw-passagedata name="Same Medication">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
+You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-subsist]] the nightmare.</tw-passagedata><tw-passagedata name="City Transit" tags="citycommute"><span class="tags">[citycommute]</span>
+</tw-passagedata><tw-passagedata name="Same Medication">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
 He types into his computer and clicks something a few times.
-The printer groans into action.
-He retrieves a prescription sheet and passes it you.
+
+He retrieves a prescription sheet from the printer and passes it you.
 &lt;div class=&quot;dialogue&quot;&gt;Ok. Twice a day, morning and before bed.&lt;/div&gt;
 You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
-(track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata><tw-passagedata name="Car Park" tags="parkinglot breathe collage collage-city decor-city"><span class="tags">[parkinglot breathe collage collage-city decor-city]</span>
+(track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata><tw-passagedata name="Car Park" tags="parkinglot collage collage-city decor-city"><span class="tags">[parkinglot collage collage-city decor-city]</span>
 You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
 
 You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata><tw-passagedata name="GP Reassess" tags="GP clockroom collage collage-medical"><span class="tags">[GP clockroom collage collage-medical]</span>
-</tw-passagedata><tw-passagedata name="Home" tags="decor-subsist"><span class="tags">[decor-subsist]</span>
+</tw-passagedata><tw-passagedata name="Office"></tw-passagedata><tw-passagedata name="Home" tags="decor-subsist"><span class="tags">[decor-subsist]</span>
 [[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata name="Pharmacy" tags="collage collage-gloss decor-gloss"><span class="tags">[collage collage-gloss decor-gloss]</span>
 You take or don&#x27;t take the new pills.
 
@@ -158,53 +159,52 @@ My body is in revolt against itself, just existing—walking, seeing, breathing�
 </tw-passagedata><tw-passagedata name="GP Office 3" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 [[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata><tw-passagedata name="Public Toilet" tags="toilet breathe"><span class="tags">[toilet breathe]</span>
 [[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata name="Friend"></tw-passagedata><tw-passagedata name="Jail">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="Ezymart" tags="ezymart"><span class="tags">[ezymart]</span>
-</tw-passagedata><tw-passagedata name="Cigarette Break"></tw-passagedata><tw-passagedata name="Conversation"></tw-passagedata><tw-passagedata name="Train"></tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 1">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
-(display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
+</tw-passagedata><tw-passagedata name="Cigarette Break"></tw-passagedata><tw-passagedata name="Conversation"></tw-passagedata><tw-passagedata name="Train"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 1">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
-(display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
+(display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 2">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
-(display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
+(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 2">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
-(display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
+(display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 3">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
-(display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
+(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 3">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
-(display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
+(display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final"></tw-passagedata><tw-passagedata name="Jail Escape"></tw-passagedata><tw-passagedata name="Jail Stay"></tw-passagedata><tw-passagedata name="Complete Random Reality Fragmentation 4">(display: (either: &quot;CRRF Background 1&quot;, &quot;CRRF Background 2&quot;, &quot;CRRF Background 3&quot;, &quot;CRRF Background 4&quot;))
-(display: (either: &quot;CRRF Image 1&quot;, &quot;CRRF Image 2&quot;, &quot;CRRF Image 3&quot;, &quot;CRRF Image 4&quot;))
+(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final"></tw-passagedata><tw-passagedata name="Jail Escape"></tw-passagedata><tw-passagedata name="Jail Stay"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 4">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
-(display: (either: &quot;CRRF Text 1&quot;, &quot;CRRF Text 2&quot;, &quot;CRRF Text 3&quot;, &quot;CRRF Text 4&quot;))
+(display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
-(display: (either: &quot;CRRF Links 1&quot;, &quot;CRRF Links 2&quot;, &quot;CRRF Links 3&quot;))
+(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))
 
 /* ═══════════════════════════════════════════════════════════════════════
-   CRRF POOLS — edit these sub-passages to change the random content.
-   To add more options: create a new passage (e.g. &quot;CRRF Image 5&quot;) and
-   add its name to the (either: ...) list in each CRRF passage above.
+   CRB POOLS — edit these sub-passages to change the random content.
+   To add more options: create a new passage (e.g. &quot;CRB Image 5&quot;) and
+   add its name to the (either: ...) list in each CRB passage above.
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* — CRRF DECOR POOL — one text option per line, shown randomly on CRRF 1-4 — */</tw-passagedata><tw-passagedata name="Elevator" tags="elevator"><span class="tags">[elevator]</span>
+/* — CRB DECOR POOL — one text option per line, shown randomly on CRB 1-4 — */</tw-passagedata><tw-passagedata name="Elevator" tags="elevator"><span class="tags">[elevator]</span>
 </tw-passagedata><tw-passagedata name="Night Walk" tags="nightambience"><span class="tags">[nightambience]</span>
 </tw-passagedata><tw-passagedata name="City Dissociation"></tw-passagedata><tw-passagedata name="GP Office 3 Escape" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 </tw-passagedata><tw-passagedata name="GP Office 3 Stay" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 </tw-passagedata><tw-passagedata name="Theft Psychosis" tags="theftpsychosis psychosis"><span class="tags">[theftpsychosis psychosis]</span>
 </tw-passagedata><tw-passagedata name="City Walk" tags="citywalk"><span class="tags">[citywalk]</span>
-</tw-passagedata><tw-passagedata name="City Transit" tags="citycommute"><span class="tags">[citycommute]</span>
-</tw-passagedata><tw-passagedata name="Untitled Passage"></tw-passagedata><tw-passagedata name="Untitled Passage 1"></tw-passagedata><tw-passagedata name="Untitled Passage 2"></tw-passagedata><h2 class="section-divider">— Randomisation —</h2><h3 class="sub-divider">Text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="tags">[fragment-pool]</span>
+</tw-passagedata><tw-passagedata name="Untitled Passage"></tw-passagedata><tw-passagedata name="Untitled Passage 1"></tw-passagedata><tw-passagedata name="Sleep"></tw-passagedata><tw-passagedata name="Drugs"></tw-passagedata><h2 class="section-divider">— Randomisation —</h2><h3 class="sub-divider">Text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="tags">[fragment-pool]</span>
 smooth1: What are you doing? | The fuck are you here for? | Are you ok?
 smooth2: You look retarded. | Shit fuck. | Wanna punch on?
 smooth3: Just like me. | Alone and afraid. | Needles. Government Psy-Op.
-smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-passagedata><tw-passagedata name="CRRF Text 1">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRRF Text 2">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRRF Text 3">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRRF Text 4">Time passes differently here. Or maybe it does not pass at all.
+smooth4: Just like me. | Alone and afraid. | Needles. Government Psy-Op.</tw-passagedata><tw-passagedata name="CRB Text 1">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRB Text 2">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRB Text 3">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRB Text 4">Time passes differently here. Or maybe it does not pass at all.
 
-/* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata name="CRRF Links 1">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata name="CRRF Links 2">[[Continue-&gt;Home]]
-[[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata name="CRRF Links 3">[[Continue-&gt;Home]]</tw-passagedata><h3 class="sub-divider">Images</h3><tw-passagedata name="CRRF Image 1">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 2">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 3">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRRF Image 4">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
+/* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata name="CRB Links 1">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata name="CRB Links 2">[[Continue-&gt;Home]]
+[[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata name="CRB Links 3">[[Continue-&gt;Home]]</tw-passagedata><h3 class="sub-divider">Images</h3><tw-passagedata name="CRB Image 1">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 2">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 3">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 4">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
 
-/* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata><tw-passagedata name="CRRF Background 1">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 2">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 3">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRRF Background 4">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
+/* — BACKGROUNDS — full-screen overlay, swap the url() to change image — */</tw-passagedata><tw-passagedata name="CRB Background 1">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/static.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRB Background 2">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/parkpsychosis.gif&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRB Background 3">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/psychward.jpg&#x27;)&quot;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata name="CRB Background 4">&lt;div class=&quot;crrf-bg-overlay&quot; style=&quot;background-image: url(&#x27;./images/nightambience.jpg&#x27;)&quot;&gt;&lt;/div&gt;
 
-/* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata><h2 class="section-divider">— Decor Passages —</h2><tw-passagedata name="CRRF Decor Pool" tags="decor decor-crrf"><span class="tags">[decor decor-crrf]</span>
+/* — TEXT — replace with real content when ready ————————————————————— */</tw-passagedata><h2 class="section-divider">— Decor Passages —</h2><tw-passagedata name="CRB Decor Pool" tags="decor decor-crrf"><span class="tags">[decor decor-crrf]</span>
 # Same format as other decor passages — multi-line text, | size at end.
 # Font is randomly redaction-70 or redaction-100 (ignores combo font).
 # Add more passages tagged [decor decor-crrf] to grow the pool.
@@ -272,5 +272,6 @@ psychobirds:  ./audio/psychosisbirds.mp3
 printer:      ./audio/printer.mp3
 siren:        ./audio/siren.mp3
 electrichum:  ./audio/electrichum.mp3
-electricwhine: ./audio/electricwhine.mp3</tw-passagedata><tw-passagedata name="hal.config">showControls: false</tw-passagedata>
+electricwhine: ./audio/electricwhine.mp3
+traffic:      ./audio/traffic.mp3</tw-passagedata><tw-passagedata name="hal.config">showControls: false</tw-passagedata>
 </body></html>
