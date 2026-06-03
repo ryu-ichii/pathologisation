@@ -47,6 +47,7 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `citycommute` | `citycommute.png` | City Transit |
 | `pinktexture` | `pinktexture.gif` | GP Reflection |
 | `glitter` | `lightjitter.gif` | *(unassigned)* |
+| `jail` | `jail.jpg` | Jail |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
@@ -60,7 +61,7 @@ The `SOLID_COLORS` map in `updateBackground()` is currently empty — no solid c
 |-----|--------|
 | `breathe` | Image rooms: `#bg-layer` scales/darkens on inhale/exhale (8s cycle). Solid colour rooms: `#bg-layer.colour-breathe` pulses the background-color between shades (e.g. blue → indigo → deep purple) — no filter, so floating images are unaffected. **GIFs never breathe** (too busy). |
 
-Currently used on: Park Encounter `[parkbench breathe]`, GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
+Currently used on: GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
 
 **Colour breathe keyframes** (blue room, 8s ease-in-out):
 - 0% `#0029a3` → 18% `#2200e0` (electric indigo inhale peak) → 28% `#1a00b8` → 72% `#08003a` → 82% `#04001a` (near-black exhale) → 100% `#0029a3`
@@ -87,7 +88,7 @@ Auto-plays a looping track when entering, stops when leaving:
 | Tag | Folder | Currently used on |
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
-| `collage-medical` | `images/collage/medical/` (7 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
+| `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
 | `collage-natural` | `images/collage/natural/` (13 images) | Park Encounter, Park Psychosis |
 | `collage-city` | `images/collage/city/` (20 images) | Car Park, Public Toilet Psychosis |
 | `collage-gloss` | `images/collage/gloss/` (12 images) | Pharmacy |
