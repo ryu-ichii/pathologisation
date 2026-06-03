@@ -80,7 +80,7 @@ The doctor coughs somewhere in the background.
 &lt;div class=&quot;dialogue&quot;&gt;Hello? Are you there? //he asks.//&lt;/div&gt;
 His far away. You can&#x27;t find the words or the way back.
 
-Do you want to [[City Transit&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical"><span class="tags">[GP2 clockroom collage collage-medical decor-medical]</span>
+Do you want to [[Public Toilet&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata><tw-passagedata name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical"><span class="tags">[GP2 clockroom collage collage-medical decor-medical]</span>
 &lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
@@ -98,8 +98,8 @@ The doctor seems to smirk in response. Even he can see it.
 He sighs,
 &lt;div class=&quot;dialogue&quot;&gt;Lets try this again...&lt;/div&gt;
 
-You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-subsist]] the nightmare.</tw-passagedata><tw-passagedata name="City Transit" tags="citycommute"><span class="tags">[citycommute]</span>
-</tw-passagedata><tw-passagedata name="Same Medication">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
+You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[GP Reassess&lt;-subsist]] the nightmare.</tw-passagedata><tw-passagedata name="Public Toilet" tags="toilet breathe"><span class="tags">[toilet breathe]</span>
+[[Office]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata name="Same Medication">[[Office]] or [[Home]]</tw-passagedata><tw-passagedata name="New Medication">&lt;div class=&quot;dialogue&quot;&gt;Yep. Just look. Let&#x27;s just try you on something else then. //he says.//&lt;/div&gt;
 He types into his computer and clicks something a few times.
 
 He retrieves a prescription sheet from the printer and passes it you.
@@ -110,19 +110,7 @@ You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-ac
 You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
 
 You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata><tw-passagedata name="GP Reassess" tags="GP clockroom collage collage-medical"><span class="tags">[GP clockroom collage collage-medical]</span>
-</tw-passagedata><tw-passagedata name="Office"></tw-passagedata><tw-passagedata name="Home" tags="decor-subsist"><span class="tags">[decor-subsist]</span>
-[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata name="Pharmacy" tags="collage collage-gloss decor-gloss"><span class="tags">[collage collage-gloss decor-gloss]</span>
-You take or don&#x27;t take the new pills.
-
-Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata><tw-passagedata name="Park Encounter" tags="parkbench collage collage-natural decor-natural"><span class="tags">[parkbench collage collage-natural decor-natural]</span>
-You find a spot on a bench.
-Theres a strung out bloke stumbling through the playground making a string of guttural noises as he comes closer to you. 
-
-His eyes meet yours as you sit there minding your business.
-
-The man approaches you in search of conversation.
-
-Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata><tw-passagedata name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city"><span class="tags">[psychosis brokentoilet collage collage-city]</span>
+</tw-passagedata><tw-passagedata name="Office"></tw-passagedata><tw-passagedata name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city"><span class="tags">[psychosis brokentoilet collage collage-city]</span>
 There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
 
 |smooth1&gt;[ ]
@@ -134,10 +122,24 @@ There are plenty of rooms like this, where societal disease sits and mutates out
 |smooth4&gt;[ ]
 
 
-(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="Dream"></tw-passagedata><tw-passagedata name="GP Office 2" tags="doctorsoffice3 collage collage-medical"><span class="tags">[doctorsoffice3 collage collage-medical]</span>
-You&#x27;re back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You&#x27;ve pissed him off good now. You&#x27;ve really gone and done it now.
+(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="Home" tags="decor-subsist"><span class="tags">[decor-subsist]</span>
+[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata><tw-passagedata name="Pharmacy" tags="collage collage-gloss decor-gloss"><span class="tags">[collage collage-gloss decor-gloss]</span>
+You take or don&#x27;t take the new pills.
 
-[[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata><tw-passagedata name="Park Psychosis" tags="parkpsychosis psychosis collage collage-natural"><span class="tags">[parkpsychosis psychosis collage collage-natural]</span>
+Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata><tw-passagedata name="Park Encounter" tags="parkbench collage collage-natural decor-natural"><span class="tags">[parkbench collage collage-natural decor-natural]</span>
+You find a spot on a bench.
+Theres a strung out bloke stumbling through the playground making a string of guttural noises as he comes closer to you. 
+
+His eyes meet yours as you sit there minding your business.
+
+The man approaches you in search of conversation.
+
+Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him and begin your journey home.</tw-passagedata><tw-passagedata name="GP Office 2" tags="doctorsoffice3 collage collage-medical"><span class="tags">[doctorsoffice3 collage collage-medical]</span>
+You&#x27;re back. The doctor seems to have AGED: the crinkles on his face work together to form a DERANGED and spiteful grin. YOU can&#x27;t remember if you TOOK his pills or NOT. What medication was it? Which one for fucks sake? 
+&lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time?&lt;/div&gt;
+
+This doctor is a pill-FIEND. You consider telling him to and his pills to [[GP Office 2 Abuse&lt;-fuck off]] and die, or playing it safer and admitting you [[GP Office 2 Unsure&lt;-don&#x27;t know]].</tw-passagedata><tw-passagedata name="Psych Ward" tags="psychward"><span class="tags">[psychward]</span>
+[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="Dream"></tw-passagedata><tw-passagedata name="Park Psychosis" tags="parkpsychosis psychosis collage collage-natural"><span class="tags">[parkpsychosis psychosis collage collage-natural]</span>
 My body is in revolt against itself, just existing—walking, seeing, breathing—is the most punishing thing I have ever done. Who or what is going to save me? 
 
 |smooth1&gt;[ ]
@@ -150,16 +152,16 @@ My body is in revolt against itself, just existing—walking, seeing, breathing�
 
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;, &quot;ditch&quot;, &quot;wake up&quot;))[(either: &quot;nice try&quot;, &quot;that&#x27;s a shame&quot;, &quot;you might have to ride this out&quot;, &quot;you&#x27;re tripping&quot;, &quot;you&#x27;ve lost the plot&quot;)]]
 
-(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="Psych Ward" tags="psychward"><span class="tags">[psychward]</span>
-[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="GP Office 2 Accept" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
-</tw-passagedata><tw-passagedata name="GP Office 2 Reject" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
+(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata><tw-passagedata name="GP Office 2 Abuse" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
+&lt;div class=&quot;dialogue&quot;&gt;Fuck your pills mate. I don&#x27;t want them alright. They don&#x27;t fix shit and neither do you.&lt;/div&gt;//you manage to dribble out.//&lt;/div&gt;</tw-passagedata><tw-passagedata name="GP Office 2 Unsure" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 </tw-passagedata><tw-passagedata name="Psych Ward Escape"></tw-passagedata><tw-passagedata name="Psych Ward Stay"></tw-passagedata><h2 class="section-divider">— Passages Not Yet Reached Via Links —</h2><tw-passagedata name="GP Ignore" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 </tw-passagedata><tw-passagedata name="Phone Psychosis" tags="phonepsychosis"><span class="tags">[phonepsychosis]</span>
 </tw-passagedata><tw-passagedata name="GP Office 3" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
-[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata><tw-passagedata name="Public Toilet" tags="toilet breathe"><span class="tags">[toilet breathe]</span>
-[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata><tw-passagedata name="Friend"></tw-passagedata><tw-passagedata name="Jail" tags="jail"><span class="tags">[jail]</span>
+The doctor’s face has creased and wrinkled since LAST time. He sneers as he looks you up and down. The VICIOUS fuck is trying to kill you. His been watching you through your PHONE and dropping PILLS down your throat while you SLEEP.
+
+Do you [[GP Office 3 Kill&lt;-kill]] him or just [[GP Office 3 Scream&lt;-scream]].</tw-passagedata><tw-passagedata name="Phone"></tw-passagedata><tw-passagedata name="Jail" tags="jail"><span class="tags">[jail]</span>
 [[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata><tw-passagedata name="Ezymart" tags="ezymart"><span class="tags">[ezymart]</span>
-</tw-passagedata><tw-passagedata name="Cigarette Break"></tw-passagedata><tw-passagedata name="Conversation"></tw-passagedata><tw-passagedata name="Train"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 1">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+</tw-passagedata><tw-passagedata name="Cigarette Break"></tw-passagedata><tw-passagedata name="Religion"></tw-passagedata><tw-passagedata name="Train"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 1">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
@@ -174,7 +176,7 @@ My body is in revolt against itself, just existing—walking, seeing, breathing�
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
-(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final"></tw-passagedata><tw-passagedata name="Jail Escape"></tw-passagedata><tw-passagedata name="Jail Stay"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 4">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+(display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata><tw-passagedata name="GP Office Final Randomised"></tw-passagedata><tw-passagedata name="Jail Escape"></tw-passagedata><tw-passagedata name="Jail Stay"></tw-passagedata><tw-passagedata name="Complete Reality Breakdown 4">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
@@ -189,15 +191,16 @@ My body is in revolt against itself, just existing—walking, seeing, breathing�
 
 /* — CRB DECOR POOL — one text option per line, shown randomly on CRB 1-4 — */</tw-passagedata><tw-passagedata name="Elevator" tags="elevator"><span class="tags">[elevator]</span>
 </tw-passagedata><tw-passagedata name="Night Walk" tags="nightambience"><span class="tags">[nightambience]</span>
-</tw-passagedata><tw-passagedata name="City Dissociation"></tw-passagedata><tw-passagedata name="GP Office 3 Escape" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
-</tw-passagedata><tw-passagedata name="GP Office 3 Stay" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
+</tw-passagedata><tw-passagedata name="City Dissociation"></tw-passagedata><tw-passagedata name="GP Office 3 Scream" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
+</tw-passagedata><tw-passagedata name="GP Office 3 Kill" tags="collage collage-medical"><span class="tags">[collage collage-medical]</span>
 </tw-passagedata><tw-passagedata name="Theft Psychosis" tags="theftpsychosis psychosis"><span class="tags">[theftpsychosis psychosis]</span>
 </tw-passagedata><tw-passagedata name="City Walk" tags="citywalk"><span class="tags">[citywalk]</span>
-</tw-passagedata><tw-passagedata name="Untitled Passage"></tw-passagedata><tw-passagedata name="Untitled Passage 1"></tw-passagedata><tw-passagedata name="Sleep"></tw-passagedata><tw-passagedata name="Drugs"></tw-passagedata><h2 class="section-divider">— Randomisation —</h2><h3 class="sub-divider">Text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="tags">[fragment-pool]</span>
-smooth1: I wrap the belt around my bicep and rip the ORANGE cap off like I have a rare and precious ANTIDOTE. In some ways I do. | f you haven’t got the BALLS to end it you might as well finish off with some FLAIR. Only then might YOU SEE what it’s truly like. | All that time running around, shaking your arse in the face of the inevitable. What does it achieve? The world fucks us one way or another.
-smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. |  Every day of shooting is another chance to escape the present situation and rise above the troubles of the cruel and intolerable world. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
-smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | he fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will fucking LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head then. I won&#x27;t waste another word on you. 
-smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrow in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH.</tw-passagedata><tw-passagedata name="CRB Text 1">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRB Text 2">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRB Text 3">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRB Text 4">Time passes differently here. Or maybe it does not pass at all.
+</tw-passagedata><tw-passagedata name="City Transit" tags="citycommute"><span class="tags">[citycommute]</span>
+</tw-passagedata><tw-passagedata name="Insomnia"></tw-passagedata><tw-passagedata name="Office Computer"></tw-passagedata><tw-passagedata name="Sleep"></tw-passagedata><tw-passagedata name="Drugs"></tw-passagedata><h2 class="section-divider">— Randomisation —</h2><h3 class="sub-divider">Text</h3><tw-passagedata name="Psychosis Fragment Pool" tags="fragment-pool"><span class="tags">[fragment-pool]</span>
+smooth1: I wrap the belt around my bicep and rip the ORANGE cap off like I have a rare and precious ANTIDOTE. In some ways I do. | If you haven’t got the BALLS to end it you might as well finish off with some FLAIR. Only then might YOU SEE what it’s truly like. | All that time running around, shaking your arse in the face of the inevitable. What does it achieve? The world fucks us one way or another.
+smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting is another chance to escape the present situation and rise above the troubles of the cruel and intolerable world. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
+smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
+smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata><tw-passagedata name="CRB Text 1">The walls are breathing. You are not sure where here is.</tw-passagedata><tw-passagedata name="CRB Text 2">Something is repeating. The loop is unbroken.</tw-passagedata><tw-passagedata name="CRB Text 3">This does not feel like a place. It feels like a thought you cannot leave.</tw-passagedata><tw-passagedata name="CRB Text 4">Time passes differently here. Or maybe it does not pass at all.
 
 /* — LINKS — replace destinations when story structure is finalised ——— */</tw-passagedata><tw-passagedata name="CRB Links 1">[[Continue-&gt;Home]]</tw-passagedata><tw-passagedata name="CRB Links 2">[[Continue-&gt;Home]]
 [[Or-&gt;Psych Ward]]</tw-passagedata><tw-passagedata name="CRB Links 3">[[Continue-&gt;Home]]</tw-passagedata><h3 class="sub-divider">Images</h3><tw-passagedata name="CRB Image 1">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/static.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 2">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/nightambience.jpg&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 3">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/parkpsychosis.gif&quot;&gt;</tw-passagedata><tw-passagedata name="CRB Image 4">&lt;img class=&quot;erratic-img&quot; src=&quot;./images/brokentoilet.jpg&quot;&gt;
@@ -240,7 +243,13 @@ They always want to talk.
 | md
 
 You nod but do you actually agree?
-| lg</tw-passagedata><tw-passagedata name="Gloss Decor" tags="decor decor-gloss"><span class="tags">[decor decor-gloss]</span>
+| lg
+
+These long
+dead
+nights
+are not for
+the weak. | md</tw-passagedata><tw-passagedata name="Gloss Decor" tags="decor decor-gloss"><span class="tags">[decor decor-gloss]</span>
 Resonant ticks.
 White noise
 in
@@ -248,24 +257,64 @@ your mind,
 your eyes.
 | md
 
-The language doesn&#x27;t work.
-| md</tw-passagedata><tw-passagedata name="Subsist Decor" tags="decor decor-subsist"><span class="tags">[decor decor-subsist]</span>
-You&#x27;re not sure. You&#x27;re not very sure of anything to be fair.
+The words don&#x27;t work.
 | md
 
-unconscionable tortue.
-| lg</tw-passagedata><tw-passagedata name="Natural Decor" tags="decor decor-natural"><span class="tags">[decor decor-natural]</span>
-Even the walls
+The agonising
+farce
+that is;
+you. 
+| lg
+
+The truth of it is rotten. 
+| lg
+
+Particles of light.</tw-passagedata><tw-passagedata name="Subsist Decor" tags="decor decor-subsist"><span class="tags">[decor decor-subsist]</span>
+You&#x27;re not very sure of anything to be fair.
+| md
+
+unconscionable torture.
+| lg
+
+after many
+torturous hours.
+The slivers of dawn
+start in
+through
+the windows. | md
+
+It&#x27;s tough,
+enduring,
+in a body 
+that is in
+constant revolt
+against itself. | md
+
+It takes every
+bit of 
+strength,
+every ounce
+of will 
+to just
+go 
+on. | md</tw-passagedata><tw-passagedata name="Natural Decor" tags="decor decor-natural"><span class="tags">[decor decor-natural]</span>
+The walls
+of the earth
+seem to
 groan
-and
-seem to ache
+and ache
 too.
 | md
 
 You are left to face your
 predicament 
 alone. 
-| md</tw-passagedata><h2 class="section-divider">— System/Function Passages —</h2><tw-passagedata name="hal.tracks">background:   ./audio/background.mp3
+| md
+
+The birds
+are up early
+just to
+laugh at you. | lg</tw-passagedata><h2 class="section-divider">— System/Function Passages —</h2><tw-passagedata name="hal.tracks">background:   ./audio/background.mp3
 clock:        ./audio/clock.mp3
 crickets:     ./audio/crickets.mp3
 psychobirds:  ./audio/psychosisbirds.mp3

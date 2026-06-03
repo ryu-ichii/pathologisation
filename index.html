@@ -1223,29 +1223,21 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
      ────────────────────────────────────────────────────────────────────── */
   // Default pool — used when [collage] is present but no named pool tag matches.
   // Populate with a curated mix, or leave empty to disable default collage.
-  var COLLAGE_IMAGES = [
-    './images/collage/medical/gpoffice.png',
-    './images/collage/medical/medicalcollage.jpg',
-    './images/collage/city/abstractpattern.png',
-    './images/collage/gloss/convenience.gif',
-    './images/collage/subsist/cigarettes.jpg',
-    './images/collage/natural/IMG_3332.jpg',
-  ];
+  var COLLAGE_IMAGES = [];
 
   // Named pools — tag a passage [collage collage-medical], [collage collage-city], etc.
   var COLLAGE_POOLS = {
     'collage-medical': [
-      './images/collage/medical/gpoffice.png',
-      './images/collage/medical/medicalcollage.jpg',
       './images/collage/medical/IMG_20191127_011708_Original.jpg',
       './images/collage/medical/imageedit_207_6906538460.gif',
       './images/collage/medical/imageedit_302_7890718183.jpg',
       './images/collage/medical/imageedit_340_6541155725.jpg',
       './images/collage/medical/imageedit_383_5339919955.gif',
       './images/collage/medical/imageedit_499_2096033696.gif',
+      './images/collage/medical/gpoffice.png',
+      './images/collage/medical/medicalcollage.jpg',
     ],
     'collage-city': [
-      './images/collage/city/abstractpattern.png',
       './images/collage/city/20160327_162659_Original.jpg',
       './images/collage/city/20160407_185206_Original.jpg',
       './images/collage/city/20160611_001206_Original.jpg',
@@ -1265,9 +1257,9 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/city/images (3).jpeg',
       './images/collage/city/IMG_3366.jpg',
       './images/collage/city/IMG_3369.jpg',
+      './images/collage/city/abstractpattern.png',
     ],
     'collage-gloss': [
-      './images/collage/gloss/convenience.gif',
       './images/collage/gloss/convenience2.gif',
       './images/collage/gloss/81130023_Original.jpg',
       './images/collage/gloss/81130024_Original.jpg',
@@ -1279,9 +1271,9 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/gloss/imageedit_412_4256672589.jpg',
       './images/collage/gloss/IMG_3403.jpg',
       './images/collage/gloss/IMG_3407.jpg',
+      './images/collage/gloss/convenience.gif',
     ],
     'collage-subsist': [
-      './images/collage/subsist/cigarettes.jpg',
       './images/collage/subsist/ciggies.gif',
       './images/collage/subsist/IMG_0216_Original.jpg',
       './images/collage/subsist/IMG_20141130_194328_Original.jpg',
@@ -1297,6 +1289,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/subsist/IMG_3377.jpg',
       './images/collage/subsist/IMG_3402.jpg',
       './images/collage/subsist/IMG_3403.jpg',
+      './images/collage/subsist/cigarettes.jpg',
     ],
     'collage-title': [
       './images/collage/title/81130023_Original.jpg',
@@ -1305,17 +1298,16 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/title/IMG_20180505_232257981_Original.jpg',
       './images/collage/title/IMG_20180505_232307239_LL_Original.jpg',
       './images/collage/title/IMG_20180720_232145674_Original.jpg',
-      './images/collage/title/gpoffice.png',
       './images/collage/title/imageedit_431_5815206825.gif',
       './images/collage/title/IMG_3403.jpg',
       './images/collage/title/imageedit_457_5516227130.jpg',
+      './images/collage/title/gpoffice.png',
     ],
     'collage-natural': [
       './images/collage/natural/IMG_0191_Original.jpg',
       './images/collage/natural/IMG_0429_Original.jpg',
       './images/collage/natural/IMG_20180909_190811866_Original.jpg',
       './images/collage/natural/IMG_20190613_072704536_Original.jpg',
-      './images/collage/natural/IMG_3332.jpg',
       './images/collage/natural/White_pigeon_walking_on_cracked_pavement,_King_Street,_Gillingham,_Kent_-_5_October_2025_02.jpg',
       './images/collage/natural/imageedit_242_8164594044.png',
       './images/collage/natural/imageedit_387_7898773703.png',
@@ -1324,6 +1316,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/natural/IMG_3363.jpg',
       './images/collage/natural/IMG_3368.jpg',
       './images/collage/natural/IMG_3403.jpg',
+      './images/collage/natural/IMG_3332.jpg',
     ],
   };
 
@@ -2680,7 +2673,7 @@ Do you want to tell him the [[GP Confess&lt;-truth]] or would rather [[GP Lie&lt
 
 You should return to the present — the [[GP Office 1&lt;-doctor]] might be ready for you.
 Or I guess you could [[GP Daydream&lt;-ruminate]] a little longer.</tw-passagedata>
-<tw-passagedata pid="3" name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical" position="925,325" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
+<tw-passagedata pid="3" name="GP Confess" tags="GP2 clockroom collage collage-medical decor-medical" position="900,325" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;I don&#x27;t like how it makes me feel. I had to stop, //you tell the doctor.//&lt;/div&gt;
 
 He nods in response.
 It&#x27;s humiliating but noble that you would admit that.
@@ -2702,7 +2695,7 @@ You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[
 &lt;div class=&quot;dialogue&quot;&gt;Hello? Are you there? //he asks.//&lt;/div&gt;
 His far away. You can&#x27;t find the words or the way back.
 
-Do you want to [[City Transit&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata>
+Do you want to [[Public Toilet&lt;-ignore]] the situation and continue floating away or attempt to [[Same Medication&lt;-rejoin]] the interaction taking place.</tw-passagedata>
 <tw-passagedata pid="6" name="hal.tracks" tags="" position="225,25" size="100,100">background:   ./audio/background.mp3
 clock:        ./audio/clock.mp3
 crickets:     ./audio/crickets.mp3
@@ -2730,12 +2723,12 @@ He retrieves a prescription sheet from the printer and passes it you.
 You&#x27;re backed into a corner here, it feels as if you must [[Pharmacy&lt;-accept]].
 
 (track: &#x27;printer&#x27;, &#x27;seek&#x27;, 5)</tw-passagedata>
-<tw-passagedata pid="11" name="Car Park" tags="parkinglot collage collage-city decor-city" position="350,450" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
+<tw-passagedata pid="11" name="Car Park" tags="parkinglot collage collage-city decor-city" position="375,475" size="100,100">You stagger out of the building in a hurry. The sunlight flicks off the 3M carpark lines and blinds you. It&#x27;s hot and bright. You can&#x27;t think.
 
 You should get a drink and sit in the [[park-&gt;Park Encounter]] for a while.</tw-passagedata>
-<tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom collage collage-medical" position="575,475" size="100,100"></tw-passagedata>
-<tw-passagedata pid="13" name="GP Ignore" tags="collage collage-medical" position="575,650" size="100,100"></tw-passagedata>
-<tw-passagedata pid="14" name="Park Encounter" tags="parkbench collage collage-natural decor-natural" position="400,700" size="100,100">You find a spot on a bench.
+<tw-passagedata pid="12" name="GP Reassess" tags="GP clockroom collage collage-medical" position="600,475" size="100,100"></tw-passagedata>
+<tw-passagedata pid="13" name="GP Ignore" tags="collage collage-medical" position="575,625" size="100,100"></tw-passagedata>
+<tw-passagedata pid="14" name="Park Encounter" tags="parkbench collage collage-natural decor-natural" position="375,675" size="100,100">You find a spot on a bench.
 Theres a strung out bloke stumbling through the playground making a string of guttural noises as he comes closer to you. 
 
 His eyes meet yours as you sit there minding your business.
@@ -2756,39 +2749,42 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-ignore]] him a
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;, &quot;ditch&quot;, &quot;wake up&quot;))[(either: &quot;nice try&quot;, &quot;that&#x27;s a shame&quot;, &quot;you might have to ride this out&quot;, &quot;you&#x27;re tripping&quot;, &quot;you&#x27;ve lost the plot&quot;)]]
 
 (live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="16" name="Phone Psychosis" tags="phonepsychosis" position="525,1100" size="100,100"></tw-passagedata>
-<tw-passagedata pid="17" name="Same Medication" tags="" position="950,525" size="100,100">[[Office]] or [[Home]]</tw-passagedata>
-<tw-passagedata pid="18" name="GP Office 2" tags="doctorsoffice3 collage collage-medical" position="850,825" size="100,100">You&#x27;re back again. The doctor seems to have aged, the creases and lineaments reflect a sort of resentment. You&#x27;ve pissed him off good now. You&#x27;ve really gone and done it now.
+<tw-passagedata pid="16" name="Phone Psychosis" tags="phonepsychosis" position="400,1075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="17" name="Same Medication" tags="" position="1025,500" size="100,100">[[Office]] or [[Home]]</tw-passagedata>
+<tw-passagedata pid="18" name="GP Office 2" tags="doctorsoffice3 collage collage-medical" position="850,825" size="100,100">You&#x27;re back. The doctor seems to have AGED: the crinkles on his face work together to form a DERANGED and spiteful grin. YOU can&#x27;t remember if you TOOK his pills or NOT. What medication was it? Which one for fucks sake? 
+&lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time?&lt;/div&gt;
 
-[[GP Office 2 Accept&lt;-accept]] or [[GP Office 2 Reject&lt;-reject]]</tw-passagedata>
-<tw-passagedata pid="19" name="GP Office 3" tags="collage collage-medical" position="850,1300" size="100,100">[[GP Office 3 Escape]] or [[GP Office 3 Stay]]</tw-passagedata>
-<tw-passagedata pid="20" name="Psych Ward" tags="psychward" position="850,1075" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata>
-<tw-passagedata pid="21" name="Public Toilet" tags="toilet breathe" position="1175,775" size="100,100">[[GP Office 2]] or [[Public Toilet Psychosis]]</tw-passagedata>
-<tw-passagedata pid="22" name="Friend" tags="" position="350,1125" size="100,100"></tw-passagedata>
-<tw-passagedata pid="23" name="Jail" tags="jail" position="850,1625" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata>
-<tw-passagedata pid="24" name="Dream" tags="" position="575,800" size="100,100"></tw-passagedata>
-<tw-passagedata pid="25" name="Home" tags="decor-subsist" position="950,675" size="100,100">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata>
-<tw-passagedata pid="26" name="Pharmacy" tags="collage collage-gloss decor-gloss" position="725,700" size="100,100">You take or don&#x27;t take the new pills.
+This doctor is a pill-FIEND. You consider telling him to and his pills to [[GP Office 2 Abuse&lt;-fuck off]] and die, or playing it safer and admitting you [[GP Office 2 Unsure&lt;-don&#x27;t know]].</tw-passagedata>
+<tw-passagedata pid="19" name="GP Office 3" tags="collage collage-medical" position="850,1300" size="100,100">The doctor’s face has creased and wrinkled since LAST time. He sneers as he looks you up and down. The VICIOUS fuck is trying to kill you. His been watching you through your PHONE and dropping PILLS down your throat while you SLEEP.
+
+Do you [[GP Office 3 Kill&lt;-kill]] him or just [[GP Office 3 Scream&lt;-scream]].</tw-passagedata>
+<tw-passagedata pid="20" name="Psych Ward" tags="psychward" position="850,1050" size="100,100">[[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]]</tw-passagedata>
+<tw-passagedata pid="21" name="Public Toilet" tags="toilet breathe" position="1325,600" size="100,100">[[Office]] or [[Public Toilet Psychosis]]</tw-passagedata>
+<tw-passagedata pid="22" name="Phone" tags="" position="400,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="23" name="Jail" tags="jail" position="875,1550" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata>
+<tw-passagedata pid="24" name="Dream" tags="" position="500,825" size="100,100"></tw-passagedata>
+<tw-passagedata pid="25" name="Home" tags="decor-subsist" position="925,650" size="100,100">[[Public Toilet Psychosis&lt;-dev: toilet psychosis]]</tw-passagedata>
+<tw-passagedata pid="26" name="Pharmacy" tags="collage collage-gloss decor-gloss" position="775,650" size="100,100">You take or don&#x27;t take the new pills.
 
 Leads to [[Dream]] or [[GP Office 2]]</tw-passagedata>
-<tw-passagedata pid="27" name="Office" tags="" position="1125,625" size="100,100"></tw-passagedata>
-<tw-passagedata pid="28" name="Ezymart" tags="ezymart" position="1125,925" size="100,100"></tw-passagedata>
-<tw-passagedata pid="29" name="Cigarette Break" tags="" position="1150,1300" size="100,100"></tw-passagedata>
-<tw-passagedata pid="30" name="Conversation" tags="" position="425,875" size="100,100"></tw-passagedata>
-<tw-passagedata pid="31" name="Train" tags="" position="550,1250" size="100,100"></tw-passagedata>
-<tw-passagedata pid="32" name="GP Office 2 Accept" tags="collage collage-medical" position="725,950" size="100,100"></tw-passagedata>
-<tw-passagedata pid="33" name="Psychosis Fragment Pool" tags="fragment-pool" position="1875,1750" size="100,100">smooth1: I wrap the belt around my bicep and rip the ORANGE cap off like I have a rare and precious ANTIDOTE. In some ways I do. | f you haven’t got the BALLS to end it you might as well finish off with some FLAIR. Only then might YOU SEE what it’s truly like. | All that time running around, shaking your arse in the face of the inevitable. What does it achieve? The world fucks us one way or another.
-smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. |  Every day of shooting is another chance to escape the present situation and rise above the troubles of the cruel and intolerable world. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
-smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | he fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will fucking LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head then. I won&#x27;t waste another word on you. 
-smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrow in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH.</tw-passagedata>
-<tw-passagedata pid="34" name="Complete Reality Breakdown 1" tags="" position="1075,1550" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+<tw-passagedata pid="27" name="Office" tags="" position="1250,775" size="100,100"></tw-passagedata>
+<tw-passagedata pid="28" name="Ezymart" tags="ezymart" position="175,1125" size="100,100"></tw-passagedata>
+<tw-passagedata pid="29" name="Cigarette Break" tags="" position="1200,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="30" name="Religion" tags="" position="400,1250" size="100,100"></tw-passagedata>
+<tw-passagedata pid="31" name="Train" tags="" position="575,1275" size="100,100"></tw-passagedata>
+<tw-passagedata pid="32" name="GP Office 2 Abuse" tags="collage collage-medical" position="725,950" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck your pills mate. I don&#x27;t want them alright. They don&#x27;t fix shit and neither do you.&lt;/div&gt;//you manage to dribble out.//&lt;/div&gt;</tw-passagedata>
+<tw-passagedata pid="33" name="Psychosis Fragment Pool" tags="fragment-pool" position="1875,1750" size="100,100">smooth1: I wrap the belt around my bicep and rip the ORANGE cap off like I have a rare and precious ANTIDOTE. In some ways I do. | If you haven’t got the BALLS to end it you might as well finish off with some FLAIR. Only then might YOU SEE what it’s truly like. | All that time running around, shaking your arse in the face of the inevitable. What does it achieve? The world fucks us one way or another.
+smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting is another chance to escape the present situation and rise above the troubles of the cruel and intolerable world. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
+smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
+smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata>
+<tw-passagedata pid="34" name="Complete Reality Breakdown 1" tags="" position="1200,1600" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
-<tw-passagedata pid="35" name="GP Office 2 Reject" tags="collage collage-medical" position="1000,950" size="100,100"></tw-passagedata>
-<tw-passagedata pid="36" name="Complete Reality Breakdown 2" tags="" position="1025,1875" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+<tw-passagedata pid="35" name="GP Office 2 Unsure" tags="collage collage-medical" position="1000,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="36" name="Complete Reality Breakdown 2" tags="" position="1100,1925" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
@@ -2801,11 +2797,11 @@ smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good t
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
 <tw-passagedata pid="38" name="Psych Ward Escape" tags="" position="725,1175" size="100,100"></tw-passagedata>
-<tw-passagedata pid="39" name="Psych Ward Stay" tags="" position="1000,1200" size="100,100"></tw-passagedata>
-<tw-passagedata pid="40" name="GP Office Final" tags="" position="850,2025" size="100,100"></tw-passagedata>
-<tw-passagedata pid="41" name="Jail Escape" tags="" position="725,1725" size="100,100"></tw-passagedata>
-<tw-passagedata pid="42" name="Jail Stay" tags="" position="975,1725" size="100,100"></tw-passagedata>
-<tw-passagedata pid="43" name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city" position="1400,975" size="100,100">There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
+<tw-passagedata pid="39" name="Psych Ward Stay" tags="" position="1025,1175" size="100,100"></tw-passagedata>
+<tw-passagedata pid="40" name="GP Office Final Randomised" tags="" position="850,2075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="41" name="Jail Escape" tags="" position="750,1700" size="100,100"></tw-passagedata>
+<tw-passagedata pid="42" name="Jail Stay" tags="" position="1025,1700" size="100,100"></tw-passagedata>
+<tw-passagedata pid="43" name="Public Toilet Psychosis" tags="psychosis brokentoilet collage collage-city" position="1475,800" size="100,100">There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
 
 |smooth1&gt;[ ]
 
@@ -2817,7 +2813,7 @@ smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good t
 
 
 (live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="44" name="Complete Reality Breakdown 4" tags="" position="650,1900" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
+<tw-passagedata pid="44" name="Complete Reality Breakdown 4" tags="" position="700,1900" size="100,100">(display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 (display: (either: &quot;CRB Image 1&quot;, &quot;CRB Image 2&quot;, &quot;CRB Image 3&quot;, &quot;CRB Image 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
@@ -2858,12 +2854,12 @@ smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good t
 <tw-passagedata pid="59" name="CRB Links 2" tags="" position="2100,1400" size="100,100">[[Continue-&gt;Home]]
 [[Or-&gt;Psych Ward]]</tw-passagedata>
 <tw-passagedata pid="60" name="CRB Links 3" tags="" position="2100,1500" size="100,100">[[Continue-&gt;Home]]</tw-passagedata>
-<tw-passagedata pid="61" name="Elevator" tags="elevator" position="550,925" size="100,100"></tw-passagedata>
-<tw-passagedata pid="62" name="Night Walk" tags="nightambience" position="1200,1400" size="100,100"></tw-passagedata>
-<tw-passagedata pid="63" name="City Dissociation" tags="" position="500,1500" size="100,100"></tw-passagedata>
-<tw-passagedata pid="64" name="GP Office 3 Escape" tags="collage collage-medical" position="975,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="65" name="GP Office 3 Stay" tags="collage collage-medical" position="725,1425" size="100,100"></tw-passagedata>
-<tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="350,1275" size="100,100"></tw-passagedata>
+<tw-passagedata pid="61" name="Elevator" tags="elevator" position="575,975" size="100,100"></tw-passagedata>
+<tw-passagedata pid="62" name="Night Walk" tags="nightambience" position="1400,1100" size="100,100"></tw-passagedata>
+<tw-passagedata pid="63" name="City Dissociation" tags="" position="475,1525" size="100,100"></tw-passagedata>
+<tw-passagedata pid="64" name="GP Office 3 Scream" tags="collage collage-medical" position="975,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="65" name="GP Office 3 Kill" tags="collage collage-medical" position="725,1425" size="100,100"></tw-passagedata>
+<tw-passagedata pid="66" name="Theft Psychosis" tags="theftpsychosis psychosis" position="225,1275" size="100,100"></tw-passagedata>
 <tw-passagedata pid="67" name="Medical Decor" tags="decor decor-medical" position="225,125" size="100,100">Splatters of white
 burn into my eyes.
 The room hums and beeps.
@@ -2894,7 +2890,13 @@ Sterilise, treat, restrain.
 | md
 
 You nod but do you actually agree?
-| lg</tw-passagedata>
+| lg
+
+These long
+dead
+nights
+are not for
+the weak. | md</tw-passagedata>
 <tw-passagedata pid="69" name="Gloss Decor" tags="decor decor-gloss" position="225,325" size="100,100">Resonant ticks.
 White noise
 in
@@ -2902,29 +2904,69 @@ your mind,
 your eyes.
 | md
 
-The language doesn&#x27;t work.
-| md</tw-passagedata>
-<tw-passagedata pid="70" name="Subsist Decor" tags="decor decor-subsist" position="325,225" size="100,100">You&#x27;re not sure. You&#x27;re not very sure of anything to be fair.
+The words don&#x27;t work.
 | md
 
-unconscionable tortue.
-| lg</tw-passagedata>
-<tw-passagedata pid="71" name="Natural Decor" tags="decor decor-natural" position="225,225" size="100,100">Even the walls
+The agonising
+farce
+that is;
+you. 
+| lg
+
+The truth of it is rotten. 
+| lg
+
+Particles of light.</tw-passagedata>
+<tw-passagedata pid="70" name="Subsist Decor" tags="decor decor-subsist" position="325,225" size="100,100">You&#x27;re not very sure of anything to be fair.
+| md
+
+unconscionable torture.
+| lg
+
+after many
+torturous hours.
+The slivers of dawn
+start in
+through
+the windows. | md
+
+It&#x27;s tough,
+enduring,
+in a body 
+that is in
+constant revolt
+against itself. | md
+
+It takes every
+bit of 
+strength,
+every ounce
+of will 
+to just
+go 
+on. | md</tw-passagedata>
+<tw-passagedata pid="71" name="Natural Decor" tags="decor decor-natural" position="225,225" size="100,100">The walls
+of the earth
+seem to
 groan
-and
-seem to ache
+and ache
 too.
 | md
 
 You are left to face your
 predicament 
 alone. 
-| md</tw-passagedata>
+| md
+
+The birds
+are up early
+just to
+laugh at you. | lg</tw-passagedata>
 <tw-passagedata pid="72" name="City Walk" tags="citywalk" position="250,975" size="100,100"></tw-passagedata>
-<tw-passagedata pid="73" name="City Transit" tags="citycommute" position="1275,575" size="100,100"></tw-passagedata>
-<tw-passagedata pid="74" name="Untitled Passage" tags="" position="1100,1075" size="100,100"></tw-passagedata>
-<tw-passagedata pid="75" name="Untitled Passage 1" tags="" position="1300,1250" size="100,100"></tw-passagedata>
-<tw-passagedata pid="76" name="Sleep" tags="" position="1300,1075" size="100,100"></tw-passagedata>
+<tw-passagedata pid="73" name="City Transit" tags="citycommute" position="675,800" size="100,100"></tw-passagedata>
+<tw-passagedata pid="74" name="Insomnia" tags="" position="1025,800" size="100,100"></tw-passagedata>
+<tw-passagedata pid="75" name="Office Computer" tags="" position="1250,950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="76" name="Sleep" tags="" position="1175,1275" size="100,100"></tw-passagedata>
 <tw-passagedata pid="77" name="Drugs" tags="" position="350,1400" size="100,100"></tw-passagedata>
 </tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
