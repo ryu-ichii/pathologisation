@@ -19,9 +19,11 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
 | `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
-| `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | *(not yet used)* |
-| `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis |
+| `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs |
+| `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis, TV Psychosis, Phone Psychosis, Servo 2, Theft Psychosis |
 | `pinktexture` | `pinktexture.gif` background | GP Reflection |
+| `floating` | Loads all images from `FLOATING_POOL` (Story JavaScript) as drifting `floating-img` elements. No `<img>` tags needed in passage. Add paths to `FLOATING_POOL`, drop files in `images/floating/`. | GP Reflection |
+| `erratic` | Loads 2–4 random images from `ERRATIC_POOL` (Story JavaScript) as jittery `erratic-img` elements. Add paths to `ERRATIC_POOL`, drop files in `images/erratic/`. | Complete Reality Breakdown 1–4 |
 
 ### Background Image Tags
 
@@ -46,7 +48,7 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `citywalk` | `citywalk.png` | City Walk |
 | `citycommute` | `citycommute.png` | City Transit |
 | `pinktexture` | `pinktexture.gif` | GP Reflection |
-| `glitter` | `lightjitter.gif` | *(unassigned)* |
+| `glitter` | `lightjitter.gif` | City Dissociation |
 | `jail` | `jail.jpg` | Jail |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
@@ -54,17 +56,6 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 ### Solid Colour Background Tags
 
 The `SOLID_COLORS` map in `updateBackground()` is currently empty — no solid colour rooms active. To add one: `'mytag': '#hexcolor'` in `SOLID_COLORS`, then tag the passage.
-
-### Breathing Background Tag
-
-| Tag | Effect |
-|-----|--------|
-| `breathe` | Image rooms: `#bg-layer` scales/darkens on inhale/exhale (8s cycle). Solid colour rooms: `#bg-layer.colour-breathe` pulses the background-color between shades (e.g. blue → indigo → deep purple) — no filter, so floating images are unaffected. **GIFs never breathe** (too busy). |
-
-Currently used on: GP Reflection `[pinktexture breathe]`, Public Toilet `[toilet breathe]`.
-
-**Colour breathe keyframes** (blue room, 8s ease-in-out):
-- 0% `#0029a3` → 18% `#2200e0` (electric indigo inhale peak) → 28% `#1a00b8` → 72% `#08003a` → 82% `#04001a` (near-black exhale) → 100% `#0029a3`
 
 ### Audio Tags
 
@@ -136,13 +127,13 @@ Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments. One bl
 
 **To add a new category:** add `'decor-newname': []` to `DECOR_POOLS` in Story JavaScript, then tag passages `[decor-newname]`.
 
-### Effect Tags (ready to use, not yet applied)
+### Effect Tags
 
-| Tag | Effect |
-|-----|--------|
-| `echo` | Ghosted shadow of the passage text drifts slightly offset, slowly animated. JS rewrites it with tense/subject shifts (I→you, was→is, etc.). |
-| `dissolve` | ~30% of words in the passage slowly fade to invisible over 3–15s after arrival. |
-| `contradict` | Words marked with `data-contradict="alt text"` typewriter-overwrite themselves with the alt, then erase, loop. |
+| Tag | Effect | Currently used on |
+|-----|--------|------------------|
+| `echo` | Ghosted shadow of the passage text drifts slightly offset, slowly animated. JS rewrites it with tense/subject shifts (I→you, was→is, etc.). | *(not yet used)* |
+| `dissolve` | ~30% of words in the passage slowly fade to invisible over 3–15s after arrival. | New Medication |
+| `contradict` | Words marked with `data-contradict="alt text"` typewriter-overwrite themselves with the alt, then erase, loop. | Dream |
 
 **Usage:**
 - Add tag to passage header
@@ -158,7 +149,7 @@ Word softly blurs and fades in/out on a 4s cycle. Feels like a word losing focus
 ```
 The |charged>[resonant] ticks.
 ```
-Currently used in: GP Office 1.
+Currently used in: ~50% of passages (applied automatically). Add manually to any word: `|charged>[WORD]`.
 
 ### `|smooth1>` `|smooth2>` `|smooth3>` `|smooth4>`
 **Psychosis rooms only.** Text fragments that wander randomly across the screen continuously. Text is injected from a `[fragment-pool]` passage — leave the hook empty in the passage:
@@ -203,17 +194,21 @@ Image that drifts slowly around the screen. Starts hidden, pops in within 0–8s
 **Why hide originals:** Original `<img class="floating-img">` elements remain in the passage DOM after `startFloatingImages` clones them. They have `position: absolute` from the CSS, so they end up stacked at the top-left of their nearest `position: relative` ancestor (a sentence div in the layout system). The `float-breathe` animation then makes the stack visibly pulse in one spot. Setting `display: none` on each original as its src is collected eliminates this.
 
 **Important:** Wrap the `<img>` tags in a container div — do NOT put them as bare children of the passage root. The layout system (`splitAtSentences`) filters out subgroups with no text content; a bare `<img>` with no surrounding text would be silently dropped from the rebuilt DOM. Wrapping in a `<div>` preserves them as element nodes.
-Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection. Floating images live in `images/floating/` (medication PNGs: escitalopram, ambien, seroquel, valium, zopiclone, ativan, paxam, zyprexa).
+Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection via `[floating]` tag. Floating images live in `images/floating/` (medication PNGs: escitalopram, ambien, seroquel, valium, zopiclone, ativan, paxam, zyprexa).
 
 **Note:** floating images use `position: fixed; z-index: -1`. They only show if `tw-story` is transparent (`has-bg-image` class). Solid-colour and image-backed rooms both add `has-bg-image` via JS, so images always show. Do not give `tw-story` a CSS `background-color` for any room that has floating images.
+
+**Pool system:** Tag a passage `[floating]` to automatically load all images from `FLOATING_POOL` in Story JavaScript — no `<img>` tags needed in the passage. Add paths to `FLOATING_POOL` to grow the pool. Hardcoded `<img class="floating-img">` tags still work alongside the pool.
 
 ### `erratic-img`
 Image that moves fast and jittery, glitch-flickers opacity and colour. Starts hidden, appears within 0–3s.
 
 ```html
-<img class="erratic-img" src="./images/static.gif">
+<img class="erratic-img" src="./images/erratic/static.gif">
 ```
-Currently used in: CRB passages. CRB Image 2 uses `nightambience.jpg` as placeholder.
+Images live in `images/erratic/` (static.gif, nightambience.jpg, parkpsychosis.gif, brokentoilet.jpg).
+
+**Pool system:** Tag a passage `[erratic]` to automatically load 2–4 random images from `ERRATIC_POOL` in Story JavaScript. Add paths to `ERRATIC_POOL` to grow the pool. Drop new images in `images/erratic/` and add their paths to activate them.
 
 ### `.crrf-bg-overlay`
 Full-screen background image overlay (z-index below text). Used inside display sub-passages.
@@ -410,8 +405,8 @@ On every passage load (except `[titlescreen]` and `[psychosis]`), a random combo
 | 2 | `tt-hoves-pro` | `velvelyne` | `source-code-pro` | `tt-hoves-pro` |
 | 3 | `source-code-pro` | `karrik` | `redaction-35` italic | `source-code-pro` |
 | 4 | `novel-mono-pro-condensed` | `redaction-20` | `tt-hoves-pro` | `novel-mono-pro-condensed` |
-| 5 | `karrik` | `source-code-pro` | `karrik` | `karrik` |
-| 6 | `fantabular-sans-mvb` | `novel-mono-pro-condensed` | `karrik` | `fantabular-sans-mvb` |
+| 5 | `karrik` | `source-code-pro` | `redaction-35` italic | `karrik` |
+| 6 | `fantabular-sans-mvb` | `novel-mono-pro-condensed` | `tt-hoves-pro` | `fantabular-sans-mvb` |
 
 Decor intrusion font (`.lp-intrusion`) is always picked independently by JS from `['redaction', 'redaction-10', 'redaction-20', 'redaction-35', 'redaction-50']` — not tied to the active combo.
 
@@ -460,7 +455,6 @@ A modular randomised passage system. Each CRB passage assembles itself from 4 ra
 
 ```
 (display: (either: "CRB Background 1", "CRB Background 2", ...))
-(display: (either: "CRB Image 1", "CRB Image 2", ...))
 (display: (either: "CRB Text 1", "CRB Text 2", ...))
 (display: (either: "CRB Links 1", "CRB Links 2", "CRB Links 3"))
 ```
@@ -469,11 +463,13 @@ A modular randomised passage system. Each CRB passage assembles itself from 4 ra
 
 **Current pools:**
 - **Background 1–4:** full-screen overlay images (static.gif, parkpsychosis.gif, psychward.jpg, nightambience.jpg)
-- **Image 1–4:** erratic-img (static.gif, nightambience.jpg [placeholder], parkpsychosis.gif, brokentoilet.jpg)
+- **Images:** via `[erratic]` tag — 2–4 random images drawn from `ERRATIC_POOL` per visit (static.gif, nightambience.jpg, parkpsychosis.gif, brokentoilet.jpg). Add to `ERRATIC_POOL` to grow.
 - **Text 1–4:** short placeholder text fragments
-- **Links 1–3:** navigation options (currently all lead to Home / Psych Ward)
+- **Links 1–3:** navigation options (currently all lead to Home / Psych Ward / Jail)
 
 **Currently used on:** CRB 1, 2, 3, 4 (four distinct passages using the same pool system).
+
+**Exit loop:** Each CRB passage increments `$crbVisits`. On the 3rd visit, `triggerCRBDissolve()` fires — fades `tw-passage`, `#bg-layer`, and the collage layer to opacity 0 over 2s — then `(live: 2s)[(goto: "GP Office Final Randomised")]` redirects. Counter and threshold are in each CRB passage body.
 
 ---
 
@@ -496,14 +492,14 @@ A `[dev] toilet psychosis` placeholder link on the Title Screen links directly t
 
 **New room with background + audio:**
 ```
-:: Room Name [mytag breathe] {"position": "x,y", "size": "100,100"}
+:: Room Name [mytag] {"position": "x,y", "size": "100,100"}
 ```
 Add to `TAG_BACKGROUNDS`: `'mytag': './images/myimage.jpg'`  
 Add to `TAG_TRACKS`: `'mytag': 'mytrack'`
 
 **New solid-colour room:**
 ```
-:: Room Name [blue breathe] {"position": "x,y", "size": "100,100"}
+:: Room Name [blue] {"position": "x,y", "size": "100,100"}
 ```
 Add to `SOLID_COLORS` in `updateBackground()`: `'blue': '#0029a3'`  
 Do NOT add a CSS `background-color` rule on `tw-story` for this tag — JS handles it.
@@ -557,7 +553,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 2. **Unlinked** — story passages not yet connected to the graph (works in progress, incomplete branches)
 3. **Randomisation** — two sub-sections:
    - *text* — `[fragment-pool]` passages + `CRB Text 1–4` + `CRB Links 1–3`
-   - *images* — `CRB Image 1–4` + `CRB Background 1–4`
+   - *images* — `CRB Background 1–4`
    - Detection: CRB sub-passages matched by name prefix; fragment-pool passages matched by tag
 4. **Decor** — passages tagged `[decor]` with a category tag (e.g. `[decor decor-medical]`). Sorted by category. Add content here to grow the decor pools.
 5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
