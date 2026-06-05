@@ -2651,7 +2651,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     var story = document.querySelector('tw-story');
     if (!story) { setTimeout(setupPassageObserver, 100); return; }
     new MutationObserver(onPassageChange)
-      .observe(story, { attributes: true, attributeFilter: ['tags'] });
+      .observe(story, { attributes: true, attributeFilter: ['tags'], childList: true });
     onPassageChange();
   })();
 
@@ -2721,7 +2721,7 @@ What the hell is he ON about? You might be hearing things again.
 Is it [[Psych Ward&lt;-real]]? Or are you just [[Train&lt;-tripping]] OUT.</tw-passagedata>
 <tw-passagedata pid="13" name="Mirror" tags="phonepsychosis psychosis collage collage-gloss" position="1325,850" size="100,100">You rip the phone up. You cut your hands on it, stomp ON it, you DESTROY IT. and catch sight of yourself in the mirror. You LOOK disgusting. YOU stare deep into your sunken, vacant eyes for an agonising moment.
 
-(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
+(live: 15s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
 <tw-passagedata pid="14" name="Park Encounter" tags="parkbench collage collage-natural decor-natural" position="325,650" size="100,100">You find a spot on a bench. A STUNG out junkie stumbles through the playground making a startling SERIES of guttural noises. 
 
 Her eyes meet yours as you sit there minding your business. 
@@ -2740,12 +2740,12 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie OR [[Dream&lt;-leave]] briskl
 
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;, &quot;ditch&quot;, &quot;wake up&quot;))[(either: &quot;nice try&quot;, &quot;that&#x27;s a shame&quot;, &quot;you might have to ride this out&quot;, &quot;you&#x27;re tripping&quot;, &quot;you&#x27;ve lost the plot&quot;)]]
 
-(live: 30s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
+(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
 <tw-passagedata pid="16" name="Phone Psychosis" tags="phonepsychosis psychosis collage collage-gloss" position="575,1100" size="100,100">There seems to be a message spanning several reels. A message directed at you. A monotone woman.
 
 Your finger bleeds from a piece of glass. The DEAD pixels glisten at you.
 
-(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Jail&quot;))]</tw-passagedata>
+(live: 15s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Jail&quot;))]</tw-passagedata>
 <tw-passagedata pid="17" name="GP Office 2" tags="doctorsoffice3 floating collage collage-medical decor-medical" position="850,775" size="100,100">You&#x27;re back. The doctor seems to have AGED: the crinkles and LUMPS on his face form a DERANGED and spiteful grin. YOU can&#x27;t remember if you |charged&gt;[TOOK] the pills or not. What medication was it? Which one for fucks sake? 
 &lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time? //he asks//&lt;/div&gt;
 
@@ -2900,7 +2900,7 @@ Maybe you [[GP Office 3&lt;-fight]] back or maybe you  (link: &quot;CAVE&quot;)[
 
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;))[(either: &quot;nice try&quot;, &quot;you&#x27;re tripping&quot;)]]
 
-(live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
+(live: 20s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
 <tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb" position="650,1950" size="100,100">(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
@@ -3143,7 +3143,7 @@ The SHINY does nothing. It fulfils NO promise and no hope. It has no ANWER for a
 
 The glass EXPLODES loud, it propels and dances with great THEATRICS, scattering itself across the paveMENT.
 You can only stand and [[Jail&lt;-enjoy]] the show.</tw-passagedata>
-<tw-passagedata pid="61" name="Theft Psychosis" tags="ruinworld theftpsychosis psychosis collage collage-city" position="1375,1600" size="100,100">(live: 20s)[(goto: (either: &quot;Jail&quot;, &quot;GP Office 3&quot;))]</tw-passagedata>
+<tw-passagedata pid="61" name="Theft Psychosis" tags="ruinworld theftpsychosis psychosis collage collage-city" position="1375,1600" size="100,100">(live: 15s)[(goto: (either: &quot;Jail&quot;, &quot;GP Office 3&quot;))]</tw-passagedata>
 <tw-passagedata pid="62" name="Abuse Witch" tags="citychurch breakdownfont collage collage-city decor-city" position="1050,1375" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck OFF and die you EVIL bitch. //you yell.//&lt;/div&gt;
 You yell REALLY loud. Too LOUD. Half the street turns to look at you. Their STARES, their COLD eyes of |charged&gt;[critique] pierce through you.
 
