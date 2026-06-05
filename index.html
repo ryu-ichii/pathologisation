@@ -1282,6 +1282,13 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/natural/IMG_3403.jpg',
       './images/collage/natural/IMG_3332.jpg',
     ],
+    'collage-psychosis': [
+      './images/collage/psychosis/IMG_0333_Original.jpg',
+      './images/collage/psychosis/IMG_20141130_194328_Original.jpg',
+      './images/collage/psychosis/IMG_3403.jpg',
+      './images/collage/psychosis/imageedit_305_2234257438.png',
+      './images/collage/psychosis/imageedit_457_5516227130.jpg',
+    ],
   };
 
   var _collageLayer = null;
@@ -2777,7 +2784,7 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie or [[Dream&lt;-leave]] briskl
 Your finger bleeds from a piece of glass. The DEAD pixels glisten at you.
 
 (live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Jail&quot;))]</tw-passagedata>
-<tw-passagedata pid="17" name="GP Office 2" tags="doctorsoffice3 collage collage-medical" position="850,775" size="100,100">You&#x27;re back. The doctor seems to have AGED: the crinkles and LUMPS on his face form a DERANGED and spiteful grin. YOU can&#x27;t remember if you |charged&gt;[TOOK] the pills or not. What medication was it? Which one for fucks sake? 
+<tw-passagedata pid="17" name="GP Office 2" tags="doctorsoffice3 floating collage collage-medical" position="850,775" size="100,100">You&#x27;re back. The doctor seems to have AGED: the crinkles and LUMPS on his face form a DERANGED and spiteful grin. YOU can&#x27;t remember if you |charged&gt;[TOOK] the pills or not. What medication was it? Which one for fucks sake? 
 &lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time? //he asks//&lt;/div&gt;
 
 This doctor is a pill-FIEND. You consider telling him to and his pills to [[GP Office 2 Abuse&lt;-fuck up]] and die, or playing it safer and admitting you [[GP Office 2 Unsure&lt;-don&#x27;t remember]] shit.</tw-passagedata>
@@ -2838,7 +2845,7 @@ You CATCH yourself before it DESCENDS further. The doctor doesn&#x27;t respond. 
 smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting up is another chance to escape the present situation and rise above the troubles of our  intolerable and SENSELESS reality. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
 smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
 smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata>
-<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="erratic" position="1175,1625" size="100,100">(set: $crbVisits to ($crbVisits + 1))
+<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="erratic collage collage-psychosis" position="1175,1625" size="100,100">(set: $crbVisits to ($crbVisits + 1))
 (if: $crbVisits &gt;= 3)[&lt;script&gt;triggerCRBDissolve();&lt;/script&gt;(live: 2s)[(goto: &quot;GP Office Final Randomised&quot;)]]
 (display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 
@@ -2846,14 +2853,14 @@ smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good t
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
 <tw-passagedata pid="33" name="GP Office 2 Unsure" tags="dissolve collage collage-medical" position="975,900" size="100,100">[[Psych Ward&lt;-ASSESSED]] or [[Train&lt;-LEAVE]]</tw-passagedata>
-<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="erratic" position="1025,1925" size="100,100">(set: $crbVisits to ($crbVisits + 1))
+<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="erratic collage collage-psychosis" position="1025,1925" size="100,100">(set: $crbVisits to ($crbVisits + 1))
 (if: $crbVisits &gt;= 3)[&lt;script&gt;triggerCRBDissolve();&lt;/script&gt;(live: 2s)[(goto: &quot;GP Office Final Randomised&quot;)]]
 (display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 
 (display: (either: &quot;CRB Text 1&quot;, &quot;CRB Text 2&quot;, &quot;CRB Text 3&quot;, &quot;CRB Text 4&quot;))
 
 (display: (either: &quot;CRB Links 1&quot;, &quot;CRB Links 2&quot;, &quot;CRB Links 3&quot;))</tw-passagedata>
-<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="erratic" position="575,1700" size="100,100">(set: $crbVisits to ($crbVisits + 1))
+<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="erratic collage collage-psychosis" position="575,1700" size="100,100">(set: $crbVisits to ($crbVisits + 1))
 (if: $crbVisits &gt;= 3)[&lt;script&gt;triggerCRBDissolve();&lt;/script&gt;(live: 2s)[(goto: &quot;GP Office Final Randomised&quot;)]]
 (display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 
@@ -2878,7 +2885,7 @@ smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good t
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;))[(either: &quot;nice try&quot;, &quot;you&#x27;re tripping&quot;)]]
 
 (live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="erratic" position="650,1925" size="100,100">(set: $crbVisits to ($crbVisits + 1))
+<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="erratic collage collage-psychosis" position="650,1925" size="100,100">(set: $crbVisits to ($crbVisits + 1))
 (if: $crbVisits &gt;= 3)[&lt;script&gt;triggerCRBDissolve();&lt;/script&gt;(live: 2s)[(goto: &quot;GP Office Final Randomised&quot;)]]
 (display: (either: &quot;CRB Background 1&quot;, &quot;CRB Background 2&quot;, &quot;CRB Background 3&quot;, &quot;CRB Background 4&quot;))
 
