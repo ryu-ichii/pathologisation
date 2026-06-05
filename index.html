@@ -1097,7 +1097,29 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     'citywalk':       './images/citywalk.png',
     'citycommute':    './images/citycommute.png',
     'pinktexture':    './images/pinktexture.gif',
-    'glitter':        './images/lightjitter.gif'
+    'glitter':        './images/lightjitter.gif',
+    'examroom':       './images/Doctor\'s_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg',
+    'examroomdark':   './images/2_Doctor\'s_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg',
+    'cliniccorridor': './images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_16_de_junio_de_2023.jpg',
+    'cliniccorridor2':'./images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_16_de_junio_de_2023_2.jpg',
+    'clinicwaiting':  './images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_21_de_febrero_de_2025.jpg',
+    'hospitalward':   './images/Inauguración_del_Hospital_Regional_de_Apatzingán._(20503993770).jpg',
+    'parliamentstation': './images/parliamentstation.jpg',
+    'stationunderpass':  './images/Patterson_Station_underpass_-_panoramio.jpg',
+    'jailstay':       './images/imageedit_574_5932585311.jpg',
+    'librarylookout': './images/Library_Out_View_(2652170151).jpg',
+    'nightalley':     './images/Ruelle_avec_neige.jpg',
+    'citychurch':     './images/Screenshot_2014-11-20-19-29-31~2_Original.jpg',
+    'fluoro':         './images/IMG_0238_Original.jpg',
+    'publictiolet':   './images/jupiter-nz-gold-interior-accessible-lhs.jpg.1200x800_q90_crop-smart_upscale.jpg',
+    'pharmacy':       './images/phatmacy.png',
+    'servotv':        './images/IMAG0475_Original.jpg',
+    'phonefog':       './images/download (2).png',
+    'phonepsychosis': './images/London_1110092.jpg',
+    'homedecay':      './images/subsisttttt.jpg',
+    'demolished':     './images/abstractsurface.jpg',
+    'naturlworld':    './images/Naturlworld.jpg',
+    'ruinworld':      './images/naturalworld.jpg'
   };
 
   var _bgLayer = null;
@@ -1182,6 +1204,9 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/medical/imageedit_499_2096033696.gif',
       './images/collage/medical/gpoffice.png',
       './images/collage/medical/medicalcollage.jpg',
+      './images/collage/medical/Medical_Office_-_Exam_Room.jpg',
+      './images/collage/medical/Doctorsoffice.jpg',
+      './images/collage/medical/IMG_20190624_062710943_Original.jpg',
     ],
     'collage-city': [
       './images/collage/city/20160327_162659_Original.jpg',
@@ -1204,6 +1229,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/city/IMG_3366.jpg',
       './images/collage/city/IMG_3369.jpg',
       './images/collage/city/abstractpattern.png',
+      './images/collage/city/2025_Degraves_Street_Subway_Platform_4_&_5_Stairway_Arch 2.jpg',
     ],
     'collage-gloss': [
       './images/collage/gloss/convenience2.gif',
@@ -1218,6 +1244,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/gloss/IMG_3403.jpg',
       './images/collage/gloss/IMG_3407.jpg',
       './images/collage/gloss/convenience.gif',
+      './images/collage/gloss/2025_Degraves_Street_Subway_Platform_4_&_5_Stairway_Arch.jpg',
     ],
     'collage-subsist': [
       './images/collage/subsist/ciggies.gif',
@@ -1248,6 +1275,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       './images/collage/title/IMG_3403.jpg',
       './images/collage/title/imageedit_457_5516227130.jpg',
       './images/collage/title/gpoffice.png',
+      './images/collage/title/Screenshot_2014-10-12-19-29-46_Original.jpg',
     ],
     'collage-natural': [
       './images/collage/natural/IMG_0191_Original.jpg',
@@ -2219,8 +2247,9 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     });
 
     // After 8s: stop wander, extract hook text, build word-group scatter layout
+    var hasHooks = SMOOTH_HOOK_NAMES.some(function(n) { return !!passage.querySelector('tw-hook[name="' + n + '"]'); });
     var SETTLE_DELAY = 5000;
-    var REVEAL_DELAY = 25000;
+    var REVEAL_DELAY = hasHooks ? 25000 : 1500;
     var UNIT_STEP    = 90;  // ms between each word/letter appearing
 
     var settleTimer = setTimeout(function() {
@@ -2672,7 +2701,7 @@ traffic:      ./audio/traffic.mp3</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">Welcome to the WAITing area. Your palms are wet, and your HEAD throbs but you should proceed into your appointment shortly.
 
 You may have SOME time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could just sit here and [[GP Office 1&lt;-wait]] to go IN.</tw-passagedata>
-<tw-passagedata pid="10" name="New Medication" tags="dissolve collage collage-medical decor-medical" position="825,525" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;OK. Look. Let&#x27;s try you on something else. A diffERENT pill //he says.//&lt;/div&gt;
+<tw-passagedata pid="10" name="New Medication" tags="cliniccorridor2 dissolve collage collage-medical decor-medical" position="825,525" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;OK. Look. Let&#x27;s try you on something else. A diffERENT pill //he says.//&lt;/div&gt;
 He types and CLICKS. He CHEWS his lips and hums softly.
 Is he GOOGLING what to give you?
 
@@ -2722,7 +2751,7 @@ Your finger bleeds from a piece of glass. The DEAD pixels glisten at you.
 &lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time? //he asks//&lt;/div&gt;
 
 This doctor is a pill-FIEND. You consider telling him to and his pills to [[GP Office 2 Abuse&lt;-fuck up]] and die, or playing it safer and admitting you [[GP Office 2 Unsure&lt;-don&#x27;t remember]] shit.</tw-passagedata>
-<tw-passagedata pid="18" name="GP Office 3" tags="collage collage-medical decor-medical" position="875,1400" size="100,100">The doctor’s face  has boils that are up to 10 centimetres wide. His eyes bulge out their UNDERSIZED socket. Is the doctor OK? He sneers as he looks you up and down. The VICIOUS fuck is trying to kill you. He’s been watching you through your PHONE and dropping PILLS down your throat while you SLEEP.
+<tw-passagedata pid="18" name="GP Office 3" tags="examroom collage collage-medical decor-medical" position="875,1400" size="100,100">The doctor’s face  has boils that are up to 10 centimetres wide. His eyes bulge out their UNDERSIZED socket. Is the doctor OK? He sneers as he looks you up and down. The VICIOUS fuck is trying to kill you. He’s been watching you through your PHONE and dropping PILLS down your throat while you SLEEP.
 
 Do you [[GP Office 3 Kill&lt;-kill]] him or just [[GP Office 3 Scream&lt;-scream]].</tw-passagedata>
 <tw-passagedata pid="19" name="Psych Ward" tags="psychward breakdownfont collage collage-medical decor-medical" position="850,1025" size="100,100">YOU can’t move. There’s something in the AIR, in the WALLS, in your ears. Harsh, FLUROESCENT light blinds your eyes and MIND. People SCREAM and murmur unintelligle NONsense. It’s HELL on earth.
@@ -2734,14 +2763,18 @@ You could try [[Psych Ward Escape&lt;-escape]] or [[Psych Ward Stay&lt;-stay]] a
 <tw-passagedata pid="20" name="Exeloo" tags="toilet collage collage-city decor-city" position="1425,525" size="100,100">You LURCH at the concentrated wafts of defecation and bad hygiene. The monoTONE voice of knowing directs YOU like a fool. THere is an UNDERlying sadness to the music. The scribbles of other FOOLS are sprawled across the walls. SHIT and piss cover everything. Needles topple out the syringe DISPOSAL onTO the floor.
 
 Do you watch [[Phone Toilet&lt;-reels]]] or [[Exeloo Episode&lt;-ponder]] silently as YOU shit</tw-passagedata>
-<tw-passagedata pid="21" name="Phone" tags="collage collage-gloss decor-gloss" position="525,950" size="100,100">On your PHONE the world is even SCARIER than the dreams. You FLICK through the videos like a machine in an exeriment.
+<tw-passagedata pid="21" name="Phone" tags="phonefog collage collage-gloss decor-gloss" position="525,950" size="100,100">On your PHONE the world is even SCARIER than the dreams. You FLICK through the videos like a machine in an exeriment.
 
 The videos don’t make sense. From a livestreamed beHEADING to a Yank fanning stacks of |charged&gt;[CASH]. Then a hyper-AGGRESSIVE fitness coach SCREAMS. It’s all random and INtangible.
 
 You should get OFF before it becomes TOO Much.
 [[Cigarette&lt;-Get OFF]] or [[Phone Psychosis&lt;-keep LOOking]] for answers.</tw-passagedata>
-<tw-passagedata pid="22" name="Jail" tags="jail collage collage-city decor-city" position="900,1625" size="100,100">[[Jail Escape&lt;-escape]] or [[Jail Stay&lt;-stay]]</tw-passagedata>
-<tw-passagedata pid="23" name="Dream" tags="collage collage-natural decor-natural" position="500,775" size="100,100">Back home in your bed, YOUR apartment, YOU dream.
+<tw-passagedata pid="22" name="Jail" tags="jail collage collage-city decor-city" position="900,1625" size="100,100">PINCHED, DONE over, locked. It&#x27;s not easy to get in HERE as a BLITHERING idioT. 
+THE colours of the walls, THE sullEN faces, the BUILDING for FUCKS SAKE.
+These are not my people, YOU think. 
+
+Try[[Jail Escape&lt;-escaping]] or [[Jail Stay&lt;-stay]] if you don&#x27;t have the GUTS.</tw-passagedata>
+<tw-passagedata pid="23" name="Dream" tags="naturlworld collage collage-natural decor-natural" position="500,775" size="100,100">Back home in your bed, YOUR apartment, YOU dream.
 
 The MIND trawls experience for PATTERNS.
 
@@ -2752,13 +2785,13 @@ They have TVs with live footage of the carriage. It&#x27;s a laboratory NOT a tr
 The train STOPS. THOUSANDS of little insects SWARM the carriage and you wake up. 
 
 Is there [[GP Office 2&lt;-MEANING]] and sense to it or does it mean [[Phone&lt;-nothing]]?</tw-passagedata>
-<tw-passagedata pid="24" name="Home" tags="decor-subsist collage collage-subsist" position="950,650" size="100,100">Back in your low-rent apartment you can&#x27;t sleep. The walls groans and creak. The walls hum with electricity. It&#x27;s driving you |charged&gt;[INSANE]. Up the wall. Just rolling around and AROUND and thinking, hearing, seeing. Just BREATHING is pissing you OFF.
+<tw-passagedata pid="24" name="Home" tags="homedecay decor-subsist collage collage-subsist" position="950,650" size="100,100">Back in your low-rent apartment you can&#x27;t sleep. The walls groans and creak. The walls hum with electricity. It&#x27;s driving you |charged&gt;[INSANE]. Up the wall. Just rolling around and AROUND and thinking, hearing, seeing. Just BREATHING is pissing you OFF.
 
 You could hit up the servo [[Servo&lt;-servo]] or [[Insomnia&lt;-hope]] you pass out soon.</tw-passagedata>
-<tw-passagedata pid="25" name="Pharmacy" tags="floating collage collage-gloss decor-gloss" position="700,650" size="100,100">You take or don&#x27;t take the new pills.
+<tw-passagedata pid="25" name="Pharmacy" tags="pharmacy floating collage collage-gloss decor-gloss" position="700,650" size="100,100">it&#x27;s TIME to COP your REup. Time for another round of pills. YOU get a depraved satisfaction out of seeing the new LABEL for your pills. THE brand name the chemical COMPOSition. It gives you REASON to feel nice. THE pharmacist raises his eyeBROWs when he reads the presription.
 
-Leads to [[Dream]] or [[City Transit]]</tw-passagedata>
-<tw-passagedata pid="26" name="Phone Toilet" tags="collage collage-gloss decor-gloss" position="1250,675" size="100,100">The phone only stifles your experience on the toilet. You put it down on the BACTERIA laden floor of the Exeloo. What it&#x27;s for anymore? You DON&#x27;t know, you&#x27;re only torturing yourself. 
+DO you take one [right[-&gt;Dream]] away, or [[save-&gt;City Transit]] one FOR later.</tw-passagedata>
+<tw-passagedata pid="26" name="Phone Toilet" tags="publictiolet collage collage-gloss decor-gloss" position="1250,675" size="100,100">The phone only stifles your experience on the toilet. You put it down on the BACTERIA laden floor of the Exeloo. What it&#x27;s for anymore? You DON&#x27;t know, you&#x27;re only torturing yourself. 
 
 A UNKNOWN number starts calling. THAT&#x27;S done it. HOPELESS and desperate, you clasp for it to smash it up. Or should you?
 
@@ -2771,14 +2804,14 @@ Maybe have a [[Cigarette&lt;-CIGGIE]] or [[City Dissociation&lt;-WALK]] around s
 <tw-passagedata pid="28" name="Cigarette" tags="dissolve collage collage-subsist decor-subsist" position="325,1050" size="100,100">INhale, exHALe. Fat puffs of SMOKE. Your body trembles as the smoke HITs your tonsils on the WAY in and out. You gag on the nasty chop-CHOP cigarette BEFORE coughing UP a mouthful of BLACK and bloody phlegm.
 
 You should[[Night Walk&lt;-FIND]] a doctor.  [[Train&lt;-LEAVE]]</tw-passagedata>
-<tw-passagedata pid="29" name="Train" tags="breakdownfont collage collage-city decor-city" position="425,1200" size="100,100">Everyone’s PACKED together — jammed and ARRANGED towards their destination. They don’t LOOK happy. A misery made for jails and institutions seems to strangle the NECKS of the carriage.
+<tw-passagedata pid="29" name="Train" tags="parliamentstation breakdownfont collage collage-city decor-city" position="425,1200" size="100,100">Everyone’s PACKED together — jammed and ARRANGED towards their destination. They don’t LOOK happy. A misery made for jails and institutions seems to strangle the NECKS of the carriage.
 The brakes SQUEAL. But everything goes on the SAME.
 
 It doesn’t make SENSE. None of it. How is everyone so CALM.
 Everyone on this carriage has somewhere to BE. Do YOU?
 
 [[Drugs&lt;-YES]] or [[Psych Ward&lt;-NO]]?</tw-passagedata>
-<tw-passagedata pid="30" name="GP Office 2 Abuse" tags="collage collage-medical decor-medical" position="675,850" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck your PILLS and fuck you. //you shout.//&lt;/div&gt;
+<tw-passagedata pid="30" name="GP Office 2 Abuse" tags="examroomdark collage collage-medical decor-medical" position="675,850" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck your PILLS and fuck you. //you shout.//&lt;/div&gt;
 Another wave grabs HOLD of you as the doctor hesitates for a moment. 
 &lt;div class=&quot;dialogue&quot;&gt;HOLLOW and pathetic piece of shit. MisDIAGNOSING fuckbag. Big Pharma BOOTlicker.&lt;/div&gt;
 
@@ -2787,7 +2820,7 @@ You CATCH yourself before it DESCENDS further. The doctor doesn&#x27;t respond. 
 smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting up is another chance to escape the present situation and rise above the troubles of our  intolerable and SENSELESS reality. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
 smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
 smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata>
-<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb" position="1175,1625" size="100,100">(set: _t to (random: 1, 4))
+<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb" position="1175,1650" size="100,100">(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -2802,7 +2835,7 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
 (if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
 (if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
-<tw-passagedata pid="33" name="GP Office 2 Unsure" tags="dissolve collage collage-medical decor-medical" position="975,900" size="100,100">You CAN&#x27;T strand the words together. The doctor looks disgusted as he listens to you. Even you are taken ABACK by how pathetic you sound, LABOURing to FORM a sentence.
+<tw-passagedata pid="33" name="GP Office 2 Unsure" tags="cliniccorridor dissolve collage collage-medical decor-medical" position="975,900" size="100,100">You CAN&#x27;T strand the words together. The doctor looks disgusted as he listens to you. Even you are taken ABACK by how pathetic you sound, LABOURing to FORM a sentence.
 &lt;div class=&quot;dialogue&quot;&gt;Are you done?//he asks,//&lt;/div&gt; as you give up.
 
 It&#x27;s not too late to [[Psych Ward&lt;-switch up]] on him or [[Train&lt;-get out]].</tw-passagedata>
@@ -2836,19 +2869,26 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
 (if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
 (if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
-<tw-passagedata pid="36" name="Psych Ward Escape" tags="collage collage-medical decor-medical" position="750,1225" size="100,100">[[Train&lt;-DISCHARGED]] or [[Jail&lt;-CONTINUE]]</tw-passagedata>
-<tw-passagedata pid="37" name="Psych Ward Stay" tags="collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve shooting in your arm. It&#x27;s been... 
+<tw-passagedata pid="36" name="Psych Ward Escape" tags="clinicwaiting collage collage-medical decor-medical" position="750,1225" size="100,100">A middle-AGED man drools over you as he hobbles past with his QUAD cane. A woman THINKS you&#x27;re HER LONG LOST RELATIVE. 
+
+IT&#x27;s a joke. THIS building is not for YOU. YOU see the WORLD for what it is.
+
+[[Train&lt;-Prove]] your sanity to the staff or [[Jail&lt;-escape]].</tw-passagedata>
+<tw-passagedata pid="37" name="Psych Ward Stay" tags="hospitalward collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve shooting in your arm. It&#x27;s been LAZY. It&#x27;s been easy.
 
 (live: 15s)(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))</tw-passagedata>
-<tw-passagedata pid="38" name="GP Office Final Randomised" tags="psychosis ending collage collage-medical decor-medical" position="850,2050" size="100,100">THE ROOM is bright and exposing. The doctor CRUMPLES his sunken face into his notebook. HE can&#x27;t LOOK you in the eyes. YOU SPARK a cigarette and put your feet on his table.
+<tw-passagedata pid="38" name="GP Office Final Randomised" tags="examroomdark psychosis ending collage collage-medical decor-medical" position="850,2050" size="100,100">THE ROOM is bright and exposing. The doctor CRUMPLES his sunken face into his notebook. HE can&#x27;t LOOK you in the eyes. YOU SPARK a cigarette and put your feet on his table.
 
 You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are bouncing off you.
 
 |smooth5&gt;[(link: &quot;LEAVE&quot;)[(live: 3s)[(stop:)(goto: &quot;Title Screen&quot;)]]]</tw-passagedata>
-<tw-passagedata pid="39" name="Jail Escape" tags="collage collage-city decor-city" position="750,1775" size="100,100">THE officer LETS you out for nothing. HE says nothing and unlock a corridor FOR you. What are YOU escaping. This can&#x27;t be JAIL. THIS can&#x27;t be anything that remotely resembles REALITY.
+<tw-passagedata pid="39" name="Jail Escape" tags="stationunderpass collage collage-city decor-city" position="750,1775" size="100,100">THE officer LETS you out for nothing. HE says nothing as he unLOCKS a corridor. What on EARTH are YOU escaping. This can&#x27;t be JAIL. THIS can&#x27;t be anything that remotely that exists in ACTUALITY.
 
-[[Servo 2&lt;-RELEASED]] or [[Home&lt;-LEAVE]]</tw-passagedata>
-<tw-passagedata pid="40" name="Jail Stay" tags="collage collage-city decor-city" position="1025,1775" size="100,100">[[GP Office 3&lt;-CONTINUE]] or (link: &quot;BREAKDOWN&quot;)[(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))]</tw-passagedata>
+Where to go? Who to see? 
+Where you [[Servo 2&lt;-WANT]] or [[Home&lt;-NEED]]?</tw-passagedata>
+<tw-passagedata pid="40" name="Jail Stay" tags="jailstay collage collage-city decor-city" position="1025,1775" size="100,100">YOU try TO WALK down the halls with PURPOSE. Like you BELONG. It&#x27;s possible that YOU do. You&#x27;ve BEEN belted SO many times. It&#x27;s weak. It&#x27;s a matter of survival in HERE.
+
+Maybe you [[GP Office 3&lt;-fight]] back or maybe you  (link: &quot;CAVE&quot;)[(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))] to the DESIRES of idiots.</tw-passagedata>
 <tw-passagedata pid="41" name="Exeloo Episode" tags="psychosis brokentoilet collage collage-city decor-subsist" position="1575,850" size="100,100">There are plenty of rooms like this, where societal disease sits and mutates out of sight. Holding cells for the ugly side of existence, where the mangled scraps are banished. 
 
 |smooth1&gt;[ ]
@@ -2862,7 +2902,7 @@ You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are boun
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;))[(either: &quot;nice try&quot;, &quot;you&#x27;re tripping&quot;)]]
 
 (live: 40s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb" position="650,1925" size="100,100">(set: _t to (random: 1, 4))
+<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb" position="650,1950" size="100,100">(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -2901,14 +2941,14 @@ Everything BEGS for our attention. Everything shiny and BRIGHT claws at your sen
 
 You need to CALM down in a new location. 
 Walk to the [[The Faces&lt;-bus stop]] or a different corner of [[Night Walk&lt;-the city]].</tw-passagedata>
-<tw-passagedata pid="47" name="GP Office 3 Scream" tags="collage collage-medical decor-medical" position="1100,1525" size="100,100">You shout, kick and BEG for mercy. You roar with 
+<tw-passagedata pid="47" name="GP Office 3 Scream" tags="examroom collage collage-medical decor-medical" position="1100,1525" size="100,100">You shout, kick and BEG for mercy. You roar with 
 
 
 [[Psych Ward&lt;-SECTIONED]] or [[Jail&lt;-ARRESTED]]</tw-passagedata>
-<tw-passagedata pid="48" name="GP Office 3 Kill" tags="collage collage-medical decor-medical" position="700,1500" size="100,100">The doctor BRACES himself as you grab a blood PRESSURE monitor and slam it into his head. You flip his desk, his monitor, printer. But he keeps coming. He keeps throwing HIMSELF at you. 
+<tw-passagedata pid="48" name="GP Office 3 Kill" tags="examroom collage collage-medical decor-medical" position="700,1500" size="100,100">The doctor BRACES himself as you grab a blood PRESSURE monitor and slam it into his head. You flip his desk, his monitor, printer. But he keeps coming. He keeps throwing HIMSELF at you. 
 
 It looks like you&#x27;re [[Jail&lt;-fucked]].</tw-passagedata>
-<tw-passagedata pid="49" name="Servo 2" tags="collage collage-gloss decor-gloss" position="1425,1425" size="100,100">Another DAY another bloody SERVO. More labels, and wants. It FEEls as if this can of ENERGY drink might save you from something or someone. HALF of the stuff in here could be the ANTIdote. 
+<tw-passagedata pid="49" name="Servo 2" tags="servotv collage collage-gloss decor-gloss" position="1425,1425" size="100,100">Another DAY another bloody SERVO. More labels, and wants. It FEEls as if this can of ENERGY drink might save you from something or someone. HALF of the stuff in here could be the ANTIdote. 
 
 DO you [[Theft Psychosis&lt;-steal]] and fill up a bag or [[Night Walk&lt;-LEAVE]] it.</tw-passagedata>
 <tw-passagedata pid="50" name="Medical Decor" tags="decor decor-medical" position="2150,1950" size="100,100">Splatters of white
@@ -3049,30 +3089,30 @@ Maybe you [[Night Walk&lt;-SAVOUR]] the experience, maybe you get OUT of the [[T
 
 What will it be. 
 GO [[Train&lt;-]outside] or try your luck at the [[Phone&lt;-phone]] again.</tw-passagedata>
-<tw-passagedata pid="58" name="Drugs" tags="breakdownfont collage collage-subsist decor-subsist" position="575,1300" size="100,100">In a fire escape near CHINAtown you WIELD a syringe with more precision and grace than the nurses at EMERGENCY.
+<tw-passagedata pid="58" name="Drugs" tags="demolished breakdownfont collage collage-subsist decor-subsist" position="575,1300" size="100,100">In a fire escape near CHINAtown you WIELD a syringe with more precision and grace than the nurses at EMERGENCY.
 
 You load UP a SHOT and prepare your forearm, all in a matter of seconds. You jab and STARE into your sickly BLOOD on the drawback. That’s the WORST part of all this — looking at your |charged&gt;[ROTTEN] INSIDES before you send the STUFF through it. 
 
 You&#x27;ve done it. Are you [[GP Office 3&lt;-happy]] now or [[Smash Up&lt;-NOT]]?</tw-passagedata>
-<tw-passagedata pid="59" name="The Faces" tags="dissolve collage collage-city decor-city" position="525,1475" size="100,100">The |charged&gt;[FACES] at the BUS stop are cold and gaunt. Even the smiles convey a sense of impending DOOM. They are not your people.
+<tw-passagedata pid="59" name="The Faces" tags="librarylookout dissolve collage collage-city decor-city" position="525,1475" size="100,100">The |charged&gt;[FACES] at the BUS stop are cold and gaunt. Even the smiles convey a sense of impending DOOM. They are not your people.
 
 Your EYES become headlights that expel your RESENTment. You CATCH yourself GROWLING and muttering. Sometimes it’s better to FACE the world in private.
 
 You should [[Witch Encounter&lt;-walk away]] before you [[Smash Up&lt;-slip up]].</tw-passagedata>
-<tw-passagedata pid="60" name="Smash Up" tags="breakdownfont collage collage-city decor-city" position="350,1575" size="100,100">You find a |charged&gt;[BRICK] and LAUNCH it through a BUS with all its LIGHTS and banners. 
+<tw-passagedata pid="60" name="Smash Up" tags="nightalley breakdownfont collage collage-city decor-city" position="350,1575" size="100,100">You find a |charged&gt;[BRICK] and LAUNCH it through a BUS with all its LIGHTS and banners. 
 
 The SHINY does nothing. It fulfils NO promise and no hope. It has no ANWER for anything. It fucks you OFF. 
 
 The glass EXPLODES loud, it propels and dances with great THEATRICS, scattering itself across the paveMENT.
 You can only stand and [[Jail&lt;-enjoy]] the show.</tw-passagedata>
-<tw-passagedata pid="61" name="Theft Psychosis" tags="theftpsychosis psychosis collage collage-city" position="1375,1600" size="100,100">(live: 20s)[(goto: (either: &quot;Jail&quot;, &quot;GP Office 3&quot;))]</tw-passagedata>
-<tw-passagedata pid="62" name="Abuse Witch" tags="breakdownfont collage collage-city decor-city" position="1050,1375" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck OFF and die you EVIL bitch. //you yell.//&lt;/div&gt;
+<tw-passagedata pid="61" name="Theft Psychosis" tags="ruinworld theftpsychosis psychosis collage collage-city" position="1375,1600" size="100,100">(live: 20s)[(goto: (either: &quot;Jail&quot;, &quot;GP Office 3&quot;))]</tw-passagedata>
+<tw-passagedata pid="62" name="Abuse Witch" tags="citychurch breakdownfont collage collage-city decor-city" position="1050,1375" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck OFF and die you EVIL bitch. //you yell.//&lt;/div&gt;
 You yell REALLY loud. Too LOUD. Half the street turns to look at you. Their STARES, their COLD eyes of |charged&gt;[critique] pierce through you.
 
 The witch looks like a NORMAL woman now. She looks frightened BY YOU. She quickens her PACE and leaves YOU there with your audience.
 
 [[Jail&lt;-ARRESTED]]</tw-passagedata>
-<tw-passagedata pid="63" name="Ignore Witch" tags="collage collage-city decor-city" position="1250,1375" size="100,100">Y
+<tw-passagedata pid="63" name="Ignore Witch" tags="fluoro collage collage-city decor-city" position="1250,1375" size="100,100">Y
 
 [[Train&lt;-CONTINUE]] or [[Night Walk&lt;-WANDER]]</tw-passagedata>
 </tw-storydata>
