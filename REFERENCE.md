@@ -19,7 +19,7 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
 | `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
-| `breakdownfont` | `redaction-20` body at 2.5em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch). Ready for future non-psychosis breakdown passages. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs |
+| `breakdownfont` | `redaction-20` body at 0.9em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch), stagger layout (same as other passages, top constrained to 3–8vh). Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs, Smash Up, Abuse Witch |
 | `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis, TV Psychosis, Phone Psychosis, Servo 2, Theft Psychosis |
 | `pinktexture` | `pinktexture.gif` background | GP Reflection |
 | `floating` | Loads all images from `FLOATING_POOL` (Story JavaScript) as drifting `floating-img` elements. No `<img>` tags needed in passage. Add paths to `FLOATING_POOL`, drop files in `images/floating/`. | GP Reflection |
@@ -86,6 +86,7 @@ Auto-plays a looping track when entering, stops when leaving:
 | `collage-gloss` | `images/collage/gloss/` (12 images) | Pharmacy |
 | `collage-subsist` | `images/collage/subsist/` (16 images) | GP Daydream, GP Reflection |
 | `collage-title` | `images/collage/title/` (10 images) | Title Screen |
+| `collage-psychosis` | `images/collage/psychosis/` (5 images) | Complete Reality Breakdown 1–4 |
 
 **Image sizing:** width randomised 45–85vw per image, max-height 85vh. All pools use the same sizing function — title screen is not differentiated.
 
@@ -108,7 +109,7 @@ Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to th
 | `decor-gloss` | `Gloss Decor` | combo redaction (10–50) | Pharmacy |
 | `decor-subsist` | `Subsist Decor` | combo redaction (10–50) | Home |
 | `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter |
-| `decor-crrf` | `CRB Decor Pool` | random `redaction-70` or `redaction-100` | CRB 1–4 |
+| `decor-crb` | `CRB Decor Pool` | random `redaction-70` or `redaction-100` | Complete Reality Breakdown 1–4 |
 
 **Format of a decor passage** — write in Twine, each option ends with `| size`:
 ```
@@ -211,12 +212,7 @@ Images live in `images/erratic/` (static.gif, nightambience.jpg, parkpsychosis.g
 **Pool system:** Tag a passage `[erratic]` to automatically load 2–4 random images from `ERRATIC_POOL` in Story JavaScript. Add paths to `ERRATIC_POOL` to grow the pool. Drop new images in `images/erratic/` and add their paths to activate them.
 
 ### `.crrf-bg-overlay`
-Full-screen background image overlay (z-index below text). Used inside display sub-passages.
-
-```html
-<div class="crrf-bg-overlay" style="background-image: url('./images/static.gif')"></div>
-```
-Opacity: 35%. Currently used in: CRB Background 1–4.
+Full-screen background image overlay (z-index below text). Available for future use — not currently active (CRB backgrounds are now handled by `CRB_BACKGROUNDS` array in JS).
 
 ### `.game-link`
 Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plain `<a>` tag. Used for external links.
@@ -418,7 +414,7 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 |---------|------|
 | Global base (`tw-story`) | `1.35em` |
 | Default story base (`redaction-20`) | inherits from `tw-story` |
-| Breakdownfont body | `2.5em` |
+| Breakdownfont body | `0.9em` |
 | Breakdownfont links | `48px !important` |
 | Psychosis body (`tw-passage`) | `1.5rem !important` — pinned via rem, independent of any em scaling |
 | smooth1–4 hooks | `1.6rem !important` — pinned |
@@ -444,36 +440,62 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
 | Home button | `terminal-grotesque` |
 | Intrusion words (`.lp-intrusion`) | JS-randomised from `redaction` / `redaction-10` / `redaction-20` / `redaction-35` / `redaction-50` — independent of combo |
-| Breakdownfont body | `redaction-20` at 2.5em |
+| Breakdownfont body | `redaction-20` at 0.9em |
 | Breakdownfont links | `tt-hoves-pro` at 48px |
 
 ---
 
 ## 8. CRB SYSTEM (Complete Reality Breakdown)
 
-A modular randomised passage system. Each CRB passage assembles itself from 4 random pools:
+Each CRB passage (1–4) independently randomises its own text (4 options) and exit links (3 pairs) inline using Harlowe `(random:)` — no sub-passages.
 
+**Text randomisation:** `(set: _t to (random: 1, 4))` + `(if: _t is N)[...]` — 4 text options per passage.
+
+**Link randomisation:** `(set: _l to (random: 1, 3))` + `(if: _l is N)[...]` — 3 link pairs (Night Walk/Psych Ward, Drugs/Jail, Home/GP Office 2).
+
+**To add a new text or link option:** edit the `(if:)` blocks directly in each CRB passage and update the `(random: 1, N)` range.
+
+**Background:** randomly picked from `CRB_BACKGROUNDS` array in Story JavaScript on each visit:
+```javascript
+var CRB_BACKGROUNDS = [
+  './images/static.gif',
+  './images/parkpsychosis.gif',
+  './images/psychward.jpg',
+  './images/nightambience.jpg',
+];
 ```
-(display: (either: "CRB Background 1", "CRB Background 2", ...))
-(display: (either: "CRB Text 1", "CRB Text 2", ...))
-(display: (either: "CRB Links 1", "CRB Links 2", "CRB Links 3"))
-```
+Add or swap paths here to change CRB background options.
 
-**To add a new option to any pool:** create a new passage (e.g. `CRB Text 5`) and add its name to the `(either:)` list.
+**Collage:** `[collage collage-psychosis]` — 5 images from `images/collage/psychosis/`.
 
-**Current pools:**
-- **Background 1–4:** full-screen overlay images (static.gif, parkpsychosis.gif, psychward.jpg, nightambience.jpg)
-- **Images:** via `[erratic]` tag — 2–4 random images drawn from `ERRATIC_POOL` per visit (static.gif, nightambience.jpg, parkpsychosis.gif, brokentoilet.jpg). Add to `ERRATIC_POOL` to grow.
-- **Text 1–4:** short placeholder text fragments
-- **Links 1–3:** navigation options (currently all lead to Home / Psych Ward / Jail)
+**Decor:** `[decor-crb]` — draws from `CRB Decor Pool` passage (`redaction-70` or `redaction-100`).
 
-**Currently used on:** CRB 1, 2, 3, 4 (four distinct passages using the same pool system).
-
-**Exit loop:** Each CRB passage increments `$crbVisits`. On the 3rd visit, `triggerCRBDissolve()` fires — fades `tw-passage`, `#bg-layer`, and the collage layer to opacity 0 over 2s — then `(live: 2s)[(goto: "GP Office Final Randomised")]` redirects. Counter and threshold are in each CRB passage body.
+**Exit loop:** Counter lives in `sessionStorage.crbVisits` (persists through page refresh, resets to 0 on return to GP Reception). On 3rd visit `triggerCRBDissolve()` fades passage + background + collage to opacity 0 over 2s, then `Engine.goToPassage('GP Office Final Randomised')` navigates. Refresh during a CRB visit does not increment the counter.
 
 ---
 
-## 9. LINK BEHAVIOUR
+## 9. ENDING SEQUENCE (GP Office Final Randomised)
+
+Tags: `[psychosis ending collage collage-medical decor-medical]`
+
+Triggered by `applyEndingSequence(passage)` — detected in observer when both `psychosis` and `ending` tags are present. Bypasses standard `applyPsychosisLayout`.
+
+**Sequence:**
+1. Passage centred on screen (`position:fixed`, `55vw`, `transform:translate(-50%,-50%)`)
+2. Typewriter at 20ms/char — body text (~5.2s) then word-salad dialogue (~7.7–9s total)
+3. Word-salad: `.dialogue` div injected before `smooth5`, built by `buildWordSalad()` — scrapes all `tw-passagedata` text, strips Harlowe/HTML syntax, shuffles words, picks 18–28. Different each visit.
+4. `smooth5` fades in at exactly 10s via `setTimeout`
+5. Click LEAVE → Harlowe `(live: 3s)[(stop:)(goto: "Title Screen")]` — 3s then title
+
+**To adjust:**
+- Word count: change `18 + Math.floor(Math.random() * 10)` in `buildWordSalad()`
+- Typewriter speed: change `20` ms in `applyEndingSequence`
+- Smooth5 timing: change `10000` ms in `applyEndingSequence`
+- Click delay: change `3s` in the passage's `(live: 3s)` macro
+
+---
+
+## 10. LINK BEHAVIOUR
 
 | State | Appearance |
 |-------|-----------|
@@ -488,7 +510,7 @@ A `[dev] toilet psychosis` placeholder link on the Title Screen links directly t
 
 ---
 
-## 10. QUICK RECIPE GUIDE
+## 11. QUICK RECIPE GUIDE
 
 **New room with background + audio:**
 ```
@@ -540,7 +562,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 
 ---
 
-## 11. BUILD SCRIPTS (`twine-twee-edit/`)
+## 12. BUILD SCRIPTS (`twine-twee-edit/`)
 
 | Script | What it does |
 |--------|-------------|
@@ -551,10 +573,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 **Proof sections:**
 1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
 2. **Unlinked** — story passages not yet connected to the graph (works in progress, incomplete branches)
-3. **Randomisation** — two sub-sections:
-   - *text* — `[fragment-pool]` passages + `CRB Text 1–4` + `CRB Links 1–3`
-   - *images* — `CRB Background 1–4`
-   - Detection: CRB sub-passages matched by name prefix; fragment-pool passages matched by tag
+3. **Randomisation** — `[fragment-pool]` passages (psychosis text pools). CRB randomisation is now inline in each CRB passage — no sub-passages.
 4. **Decor** — passages tagged `[decor]` with a category tag (e.g. `[decor decor-medical]`). Sorted by category. Add content here to grow the decor pools.
 5. **System** — `hal.tracks`, `hal.config`; excluded: StoryTitle, StoryData, Story Stylesheet, Story JavaScript (same as Twine's own proof)
 
