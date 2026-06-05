@@ -965,11 +965,10 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
 
   var _decorLastEl = null;
   function tryApplyDecor(attempts) {
-    var name = getCurrentPassageName();
     var story = document.querySelector('tw-story');
     var tags = story ? (story.getAttribute('tags') || '') : '';
-    if (name) {
-      applyDecor(name, tags);
+    if (tags) {
+      applyDecor('', tags);
     } else if (attempts > 0) {
       setTimeout(function () { tryApplyDecor(attempts - 1); }, 150);
     }
@@ -1378,13 +1377,13 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
 
   /* ── AUDIO ──────────────────────────────────────────────────────────── */
   var TAG_TRACKS = {
-    'clockroom':      'clock',
-    'parkbench':      'crickets',
-    'nightambience':  'electrichum',
-    'phonepsychosis': 'electricwhine',
-    'theftpsychosis': 'siren',
-    'parkinglot':     'traffic',
-    'parkpsychosis':  'psychobirds'
+    'clockroom':        'clock',
+    'parkbench':        'crickets',
+    'nightambience':    'electrichum',
+    'phonepsychosis':   'electricwhine',
+    'theftpsychosis':   'siren',
+    'parkinglot':       'traffic',
+    'parkpsychosis':    'psychobirds',
     // 'psychosis':  'psychobirds',  // uncomment when ready
     // 'printroom':  'printer',
   };
@@ -2682,15 +2681,15 @@ You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[
 His far away. You can&#x27;t find the words or the way back.
 
 [[GP Office 1&lt;-RETURN]] or [[Exeloo&lt;-IGNORE]]</tw-passagedata>
-<tw-passagedata pid="6" name="hal.tracks" tags="" position="1900,2075" size="100,100">background:   ./audio/background.mp3
-clock:        ./audio/clock.mp3
-crickets:     ./audio/crickets.mp3
-psychobirds:  ./audio/psychosisbirds.mp3
-printer:      ./audio/printer.mp3
-siren:        ./audio/siren.mp3
-electrichum:  ./audio/electrichum.mp3
-electricwhine: ./audio/electricwhine.mp3
-traffic:      ./audio/traffic.mp3</tw-passagedata>
+<tw-passagedata pid="6" name="hal.tracks" tags="" position="1900,2075" size="100,100">background:      ./audio/background.mp3
+clock:           ./audio/clock.mp3
+crickets:        ./audio/crickets.mp3
+psychobirds:     ./audio/psychosisbirds.mp3
+printer:         ./audio/printer.mp3
+siren:           ./audio/siren.mp3
+electrichum:     ./audio/electrichum.mp3
+electricwhine:   ./audio/electricwhine.mp3
+traffic:         ./audio/traffic.mp3</tw-passagedata>
 <tw-passagedata pid="7" name="hal.config" tags="" position="2000,2075" size="100,100">showControls: false</tw-passagedata>
 <tw-passagedata pid="8" name="Title Screen" tags="titlescreen static collage collage-title" position="650,50" size="100,100">&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
@@ -2925,7 +2924,13 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* — CRB DECOR POOL — one text option per line, shown randomly on CRB 1-4 — */</tw-passagedata>
-<tw-passagedata pid="43" name="CRB Decor Pool" tags="decor decor-crb" position="1750,1950" size="100,100"></tw-passagedata>
+<tw-passagedata pid="43" name="CRB Decor Pool" tags="decor decor-crb" position="1750,1950" size="100,100">It flickers,
+spins,
+mutates.
+| xl
+
+fuck reason and restraint
+| xxl</tw-passagedata>
 <tw-passagedata pid="44" name="Elevator" tags="elevator collage collage-city decor-city" position="1125,1025" size="100,100">It&#x27;s the WORST when the elevator DOORS close. The air IS tighter. The breathing of OTHERS begins to strangle YOU. It feels like someone is about to GET you. 
 
 The vessel WHINES as it begins its descent. Your heartRATE and REMINDS you that you&#x27;re ALIVE and vulnerable. You&#x27;ve got to keep going. 
@@ -2979,7 +2984,19 @@ Making calculations and figuring you out.
 | md
 
 Sterilise, treat, restrain.
-| md</tw-passagedata>
+| md
+
+We get lost in the hell of detail, in the minutiae.
+| md
+
+Control is about lying to yourself.
+| lg
+
+Who designed this hell?
+| xl
+
+the truth is harsh and unpalatable
+| lg</tw-passagedata>
 <tw-passagedata pid="51" name="City Decor" tags="decor decor-city" position="2250,1950" size="100,100">a shiny, blaring mess. 
 | md
 
@@ -2997,7 +3014,10 @@ The city is a glittery, dazzling lie
 | md
 
 Everything is wrong.
-| lg</tw-passagedata>
+| lg
+
+Things feel different in the night
+| md</tw-passagedata>
 <tw-passagedata pid="52" name="Gloss Decor" tags="decor decor-gloss" position="1950,1950" size="100,100">Resonant ticks.
 White noise
 in
@@ -3014,8 +3034,18 @@ that is;
 you. 
 | lg
 
-The truth of it is rotten. 
-| lg</tw-passagedata>
+The truth of it is rotten.
+| lg
+
+Modernity loses its glow in certain places.
+| xl
+
+just enough noise
+to drown out the torture.
+| lg
+
+to hit the spot
+| md</tw-passagedata>
 <tw-passagedata pid="53" name="Subsist Decor" tags="decor decor-subsist" position="1850,1950" size="100,100">not very sure of anything.
 | md
 
@@ -3044,8 +3074,16 @@ strength,
 every ounce
 of will 
 to just
-go 
-on. 
+go
+on.
+| md
+
+escape the heinous monotony for a juncture
+| lg
+
+It sits,
+in the shadows
+of the mind.
 | md</tw-passagedata>
 <tw-passagedata pid="54" name="Natural Decor" tags="decor decor-natural" position="2050,1950" size="100,100">The walls
 of the earth
