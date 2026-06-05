@@ -497,6 +497,12 @@ tw-story[tags~="psychosis"] tw-passage {
   overflow: visible !important;
   box-sizing: border-box !important;
 }
+tw-story[tags~="collage-psychosis"] tw-link,
+tw-story[tags~="collage-psychosis"] tw-link:link,
+tw-story[tags~="ending"] tw-link,
+tw-story[tags~="ending"] tw-link:link {
+  font-family: 'source-code-pro', monospace;
+}
 tw-story[tags~="ending"] tw-passage {
   position: fixed !important;
   top: 50% !important;
@@ -728,24 +734,6 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     var _orig = Engine.goToPassage;
     Engine.goToPassage = function (name) {
       window._currentPassageName = name;
-      if (name === 'waitingroom') {
-        sessionStorage.setItem('crbVisits', '0');
-      }
-      if (/^Complete Reality Breakdown/.test(name)) {
-        var count = parseInt(sessionStorage.getItem('crbVisits') || '0') + 1;
-        sessionStorage.setItem('crbVisits', '' + count);
-        if (count >= 3) {
-          var _self = this;
-          setTimeout(function() {
-            sessionStorage.setItem('crbVisits', '0');
-            if (typeof window._crbFinalTrigger === 'function') {
-              window._crbFinalTrigger();
-            } else {
-              _orig.call(_self, 'GP Office Final Randomised');
-            }
-          }, 1000);
-        }
-      }
       return _orig.apply(this, arguments);
     };
     Engine.goToPassage._lp_patched = true;
@@ -957,27 +945,35 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     buildDecorPools();
     var pool = DECOR_POOLS['decor-crb'];
     if (!pool || !pool.length) return;
-    var entry = pool[Math.floor(Math.random() * pool.length)];
-    var fonts = ['redaction-70', 'redaction-100'];
-    var font  = fonts[Math.floor(Math.random() * fonts.length)];
-    var slot  = INTRUSION_SLOTS[Math.floor(Math.random() * INTRUSION_SLOTS.length)];
-    var el = document.createElement('div');
-    el.className = 'lp-intrusion';
-    el.style.fontFamily = "'" + font + "', Georgia, serif";
-    el.style.fontSize   = SIZE_MAP[entry.size] || SIZE_MAP['lg'];
-    el.textContent      = entry.text;
-    ['top','bottom','left','right'].forEach(function(k) { if (slot[k] !== undefined) el.style[k] = slot[k]; });
-    el.style.rotate = ((Math.random() - 0.5) * 6).toFixed(1) + 'deg';
-    el.style.setProperty('--lp-delay', '0.4s');
-    document.body.appendChild(el);
-    try {
-      var anchorRight = (slot.right !== undefined), anchorBottom = (slot.bottom !== undefined);
-      var dx = (220 + Math.random() * 180) * (anchorRight ? -1 : 1);
-      var dy = (120 + Math.random() * 140) * (anchorBottom ? -1 : 1);
-      var dur = (8 + Math.random() * 6) * 1000;
-      el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px)' }],
-        { duration: dur, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
-    } catch(e) {}
+    var count = 2 + Math.floor(Math.random() * 2); // 2 or 3
+    var fonts = ['redaction-50', 'redaction-70'];
+    var usedSlots = [];
+    for (var i = 0; i < count; i++) {
+      var entry = pool[Math.floor(Math.random() * pool.length)];
+      var font  = fonts[Math.floor(Math.random() * fonts.length)];
+      // Pick a slot not already used this render
+      var availableSlots = INTRUSION_SLOTS.filter(function(s, idx) { return usedSlots.indexOf(idx) === -1; });
+      var slotIdx = Math.floor(Math.random() * availableSlots.length);
+      var slot = availableSlots[slotIdx];
+      usedSlots.push(INTRUSION_SLOTS.indexOf(slot));
+      var el = document.createElement('div');
+      el.className = 'lp-intrusion';
+      el.style.fontFamily = "'" + font + "', Georgia, serif";
+      el.style.fontSize   = SIZE_MAP[entry.size] || SIZE_MAP['lg'];
+      el.textContent      = entry.text;
+      ['top','bottom','left','right'].forEach(function(k) { if (slot[k] !== undefined) el.style[k] = slot[k]; });
+      el.style.rotate = ((Math.random() - 0.5) * 6).toFixed(1) + 'deg';
+      el.style.setProperty('--lp-delay', (0.3 + i * 0.25).toFixed(2) + 's');
+      document.body.appendChild(el);
+      try {
+        var anchorRight = (slot.right !== undefined), anchorBottom = (slot.bottom !== undefined);
+        var dx = (220 + Math.random() * 180) * (anchorRight ? -1 : 1);
+        var dy = (120 + Math.random() * 140) * (anchorBottom ? -1 : 1);
+        var dur = (8 + Math.random() * 6) * 1000;
+        el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px)' }],
+          { duration: dur, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      } catch(e) {}
+    }
   }
 
   function spawnDecorEntry(entry) {
@@ -1217,10 +1213,10 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   }
 
   var CRB_BACKGROUNDS = [
-    './images/static.gif',
-    './images/parkpsychosis.gif',
-    './images/psychward.jpg',
-    './images/nightambience.jpg',
+    './images/imageedit_285_8113537643.jpg',
+    './images/imageedit_449_8256361766.gif',
+    './images/81130024_Original.jpg',
+    './images/IMG_20180317_232214874_Original.jpg',
   ];
 
   function updateBackground(tags) {
@@ -1242,7 +1238,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     });
     var isGif = img && img.slice(-4) === '.gif';
     if (img) {
-      layer.style.backgroundImage = 'url(' + img + ')';
+      layer.style.backgroundImage = 'url("' + img + '")';
       layer.style.backgroundColor = '';
       layer.className = '';
       if (story) {
@@ -1475,10 +1471,10 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     'theftpsychosis':     'siren',
     'parkinglot':         'traffic',
     'parkpsychosis':      'psychobirds',
-    'psychosis':          'metawarp',
+    // 'psychosis':          'metawarp',
     'parliamentstation':  'train-arrive',
     'stationunderpass':   'tube-announce',
-    'waitingroom':        'muffled-tv',
+    // 'waitingroom':        'muffled-tv',
     'hospitalward':       'alarm-clock',
     'jailstay':           'whitenoise',
     'jail':               'metal-door',
@@ -2235,14 +2231,23 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   var SMOOTH_HOOK_NAMES = ['smooth1','smooth2','smooth3','smooth4','smooth5'];
 
   function applyPsychosisLayout(passage) {
-    // Randomise horizontal position each load — passage is 42vw wide so max ~50% left
-    var leftPct = 5 + Math.floor(Math.random() * 46);
-    passage.style.setProperty('left', leftPct + '%', 'important');
+    var hasHooks = SMOOTH_HOOK_NAMES.some(function(n) { return !!passage.querySelector('tw-hook[name="' + n + '"]'); });
+
+    if (!hasHooks) {
+      passage.style.setProperty('width', '82vw', 'important');
+      var crbLeft = 3 + Math.floor(Math.random() * 10);
+      passage.style.setProperty('left', crbLeft + '%', 'important');
+    } else {
+      var leftPct = 5 + Math.floor(Math.random() * 46);
+      passage.style.setProperty('left', leftPct + '%', 'important');
+    }
 
     // Find the container that has the body text (same logic as applyLayout)
+    // Only non-whitespace text nodes count — <br> nodes from Harlowe rendering newlines between
+    // (set:)/(if:) macros must not trigger this, or the tw-hook fallback never fires for CRB.
     function hasBodyContent(el) {
       return Array.from(el.childNodes).some(function(n) {
-        return n.nodeName === 'BR' || n.nodeType === 3;
+        return n.nodeType === 3 && n.textContent.trim().length > 0;
       });
     }
     var container = passage;
@@ -2269,13 +2274,14 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
 
     var allNodes = Array.from(container.childNodes);
     var fragments = [];
-    var SHORT = /^[a-zA-Z]{1,3}$/; // 1–3 letter words eligible for stacking
-    var STACK_CHANCE  = 0.4;  // only 40% of short words get letter-stacked
-    var BREAK_CHANCE  = 0.28; // 28% of long words get mid-word broken (was 45%)
+    var SHORT = /^[a-zA-Z]{1,3}$/;
+    // CRB (no hooks) has long text — disable letter-stacking and word-breaking so phrases
+    // group into a manageable number of lines that scatter horizontally rather than stacking.
+    var STACK_CHANCE  = !hasHooks ? 0 : 0.4;
+    var BREAK_CHANCE  = !hasHooks ? 0.08 : 0.28; // slight occasional breaks for CRB variety
 
-    // Buffer for consecutive "normal" words — flushed as a single grouped div
     var wordBuf = [];
-    var CHUNK = 4; // max words per grouped div
+    var CHUNK = !hasHooks ? (4 + Math.floor(Math.random() * 5)) : 4; // CRB: 4–8 words per group
     function flushWords() {
       if (wordBuf.length === 0) return;
       fragments.push({ type: 'text', text: wordBuf.join(' ') });
@@ -2332,7 +2338,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     // Rebuild container
     while (container.firstChild) container.removeChild(container.firstChild);
 
-    var maxShift = 12; // vw — pulled back a touch
+    var maxShift = !hasHooks ? (18 + Math.floor(Math.random() * 16)) : 12; // CRB: 18–33vw
     var scatterDivs = [];
 
     fragments.forEach(function(frag) {
@@ -2361,7 +2367,36 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
       scatterDivs.push(div);
     });
 
-    var hasHooks = SMOOTH_HOOK_NAMES.some(function(n) { return !!passage.querySelector('tw-hook[name="' + n + '"]'); });
+    // For CRB: find the link hook (sibling of body container) and hide it for delayed reveal
+    var linkHook = null;
+    if (!hasHooks) {
+      Array.from(passage.querySelectorAll('tw-hook')).forEach(function(h) {
+        if (SMOOTH_HOOK_NAMES.indexOf(h.getAttribute('name')) !== -1) return;
+        if (h === container) return;
+        if (!linkHook && h.querySelector('tw-link')) linkHook = h;
+      });
+      if (linkHook) {
+        linkHook.style.opacity = '0';
+        linkHook.style.display = 'block';
+        linkHook.style.marginTop = (1 + Math.random() * 1.2).toFixed(1) + 'em';
+        // Scatter each link individually across the passage width
+        Array.from(linkHook.querySelectorAll('tw-link')).forEach(function(lk) {
+          lk.style.display = 'block';
+          lk.style.position = 'relative';
+          lk.style.left = (Math.random() * maxShift * 1.1).toFixed(1) + 'vw';
+          lk.style.marginTop = (0.3 + Math.random() * 1.2).toFixed(1) + 'em';
+        });
+      }
+    }
+
+    // Clamp passage to viewport — pull top up if scatter content overflows bottom edge
+    void passage.offsetHeight;
+    var rect = passage.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight - 60) {
+      var newTopPx = Math.max(window.innerHeight * 0.02, rect.top - (rect.bottom - (window.innerHeight - 60)));
+      passage.style.setProperty('top', (newTopPx / window.innerHeight * 100).toFixed(1) + 'vh', 'important');
+    }
+
     var SETTLE_DELAY = hasHooks ? (6000 + Math.floor(Math.random() * 4001)) : 5000;
     var REVEAL_DELAY = hasHooks ? 10000 : 1500;
     var UNIT_STEP    = 90;  // ms between each word/letter appearing
@@ -2457,6 +2492,14 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
           }, i * UNIT_STEP);
           _psychosisRevealTimers.push(t);
         });
+        // Reveal CRB link hook after body text finishes
+        if (linkHook) {
+          var lt = setTimeout(function() {
+            linkHook.style.transition = 'opacity 0.5s ease';
+            linkHook.style.opacity = '1';
+          }, scatterDivs.length * UNIT_STEP + 400);
+          _psychosisRevealTimers.push(lt);
+        }
       });
     }, REVEAL_DELAY);
     _psychosisRevealTimers.push(mainTimer);
@@ -2727,7 +2770,14 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
         applyLayout(p, tags);
         startFloatingImages(p, tags);
         if (tags.indexOf('psychosis') !== -1 && tags.indexOf('ending') !== -1) {
-          applyEndingSequence();
+          var _s5 = p.querySelector('tw-hook[name="smooth5"]');
+          Array.from(p.childNodes).forEach(function(n) { if (n !== _s5) p.removeChild(n); });
+          p.insertBefore(document.createTextNode(buildWordSalad()), _s5);
+          injectFragmentPoolBody(p, tags);
+          applyPsychosisLayout(p);
+          injectFragmentPool(p, tags);
+          p.style.opacity = '1';
+          startPsychosisWander(p);
         } else if (tags.indexOf('psychosis') !== -1) {
           injectFragmentPoolBody(p, tags);
           applyPsychosisLayout(p);
@@ -2796,7 +2846,6 @@ train-arrive:    ./audio/62031__lukeirl__underground-train-pulls-into-station.mp
 tube-announce:   ./audio/327942__kwahmah_02__london-underground-mind-the-gap.mp3
 muffled-tv:      ./audio/123678__timbre__tv-in-next-room-simulation-muffled.mp3
 alarm-clock:     ./audio/171043__st303__mechanical-alarm-clock-is-ticking-slava.mp3
-metawarp:        ./audio/184476__andromadax24__meta-warp.mp3
 whitenoise:      ./audio/322446__tapepusher__offbeat-white-noise-128bpm.mp3
 metal-door:      ./audio/264014__cell31_sound_productions__door_metal_groans_ext.mp3</tw-passagedata>
 <tw-passagedata pid="7" name="hal.config" tags="" position="2000,2075" size="100,100">showControls: false</tw-passagedata>
@@ -2806,7 +2855,7 @@ metal-door:      ./audio/264014__cell31_sound_productions__door_metal_groans_ext
 &lt;div class=&quot;wk-github&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://github.com/ryu-ichii&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/div&gt;
 
 &lt;div class=&quot;title-actions&quot;&gt;&lt;span class=&quot;start-link&quot;&gt;[[GP Reception&lt;-Start]]&lt;/span&gt;&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
-<tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">Welcome to the WAITing area. Your palms are wet, and your HEAD throbs but you should proceed into your appointment shortly.
+<tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">(set: $crbCount to 0)Welcome to the WAITing area. Your palms are wet, and your HEAD throbs but you should proceed into your appointment shortly.
 
 You may have SOME time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could just sit here and [[GP Office 1&lt;-wait]] to go IN.</tw-passagedata>
 <tw-passagedata pid="10" name="New Medication" tags="cliniccorridor2 dissolve collage collage-medical decor-medical" position="825,525" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;OK. Look. Let&#x27;s try you on something else. A diffERENT pill //he says.//&lt;/div&gt;
@@ -2881,7 +2930,7 @@ You should get OFF before it becomes TOO Much.
 THE colours of the walls, THE sullEN faces, the BUILDING for FUCKS SAKE.
 These are not my people, YOU think. 
 
-Try[[Jail Escape&lt;-escaping]] or [[Jail Stay&lt;-stay]] if you don&#x27;t have the GUTS.</tw-passagedata>
+Try [[Jail Escape&lt;-escaping]] or [[Jail Stay&lt;-stay]] if you don&#x27;t have the GUTS.</tw-passagedata>
 <tw-passagedata pid="23" name="Dream" tags="naturlworld collage collage-natural decor-natural" position="500,775" size="100,100">Back home in your bed, YOUR apartment, YOU dream.
 
 The MIND trawls experience for PATTERNS.
@@ -2896,9 +2945,9 @@ Is there [[GP Office 2&lt;-MEANING]] and sense to it or does it mean [[Phone&lt;
 <tw-passagedata pid="24" name="Home" tags="homedecay decor-subsist collage collage-subsist" position="950,650" size="100,100">Back in your low-rent apartment you can&#x27;t sleep. The walls groans and creak. The walls hum with electricity. It&#x27;s driving you |charged&gt;[INSANE]. Up the wall. Just rolling around and AROUND and thinking, hearing, seeing. Just BREATHING is pissing you OFF.
 
 You could hit up the servo [[Servo&lt;-servo]] or [[Insomnia&lt;-hope]] you pass out soon.</tw-passagedata>
-<tw-passagedata pid="25" name="Pharmacy" tags="pharmacy floating collage collage-gloss decor-gloss" position="700,650" size="100,100">it&#x27;s TIME to COP your REup. Time for another round of pills. YOU get a depraved satisfaction out of seeing the new LABEL for your pills. THE brand name the chemical COMPOSition. It gives you REASON to feel nice. THE pharmacist raises his eyeBROWs when he reads the presription.
+<tw-passagedata pid="25" name="Pharmacy" tags="pharmacy floating collage collage-gloss decor-gloss" position="700,650" size="100,100">It&#x27;s TIME to COP your REup. Time for another round of pills. YOU get a depraved satisfaction out of seeing the new LABEL for your pills. THE brand name the chemical COMPOSition. It gives you REASON to feel nice. THE pharmacist raises his eyeBROWs when he reads the presription.
 
-DO you take one [right[-&gt;Dream]] away, or [[save-&gt;City Transit]] one FOR later.</tw-passagedata>
+DO you take one [[right-&gt;Dream]] away, or [[save-&gt;City Transit]] one FOR later.</tw-passagedata>
 <tw-passagedata pid="26" name="Phone Toilet" tags="publictiolet collage collage-gloss decor-gloss" position="1250,675" size="100,100">The phone only stifles your experience on the toilet. You put it down on the BACTERIA laden floor of the Exeloo. What it&#x27;s for anymore? You DON&#x27;t know, you&#x27;re only torturing yourself. 
 
 A UNKNOWN number starts calling. THAT&#x27;S done it. HOPELESS and desperate, you clasp for it to smash it up. Or should you?
@@ -2911,7 +2960,7 @@ Huh?
 Maybe have a [[Cigarette&lt;-CIGGIE]] or [[City Dissociation&lt;-WALK]] around some more.</tw-passagedata>
 <tw-passagedata pid="28" name="Cigarette" tags="dissolve collage collage-subsist decor-subsist" position="325,1050" size="100,100">INhale, exHALe. Fat puffs of SMOKE. Your body trembles as the smoke HITs your tonsils on the WAY in and out. You gag on the nasty chop-CHOP cigarette BEFORE coughing UP a mouthful of BLACK and bloody phlegm.
 
-You should[[Night Walk&lt;-FIND]] a doctor.  [[Train&lt;-LEAVE]]</tw-passagedata>
+You should [[Night Walk&lt;-FIND]] a doctor or do [[Train&lt;-WHATEVER]]. All gooD.</tw-passagedata>
 <tw-passagedata pid="29" name="Train" tags="parliamentstation breakdownfont collage collage-city decor-city" position="425,1200" size="100,100">Everyone’s PACKED together — jammed and ARRANGED towards their destination. They don’t LOOK happy. A misery made for jails and institutions seems to strangle the NECKS of the carriage.
 The brakes SQUEAL. But everything goes on the SAME.
 
@@ -2928,7 +2977,8 @@ You CATCH yourself before it DESCENDS further. The doctor doesn&#x27;t respond. 
 smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting up is another chance to escape the present situation and rise above the troubles of our  intolerable and SENSELESS reality. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
 smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
 smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata>
-<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb psychosis" position="1175,1650" size="100,100">(set: _t to (random: 1, 4))
+<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb psychosis" position="1175,1650" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -2940,14 +2990,15 @@ Hundreds of MICE and thousands of CRICKETS flood the carriage.]
 The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY. YOu FLOAT above the doubts.]
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
-(if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
-(if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
-(if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
+(if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="33" name="GP Office 2 Unsure" tags="cliniccorridor dissolve collage collage-medical decor-medical" position="975,900" size="100,100">You CAN&#x27;T strand the words together. The doctor looks disgusted as he listens to you. Even you are taken ABACK by how pathetic you sound, LABOURing to FORM a sentence.
 &lt;div class=&quot;dialogue&quot;&gt;Are you done?//he asks,//&lt;/div&gt; as you give up.
 
 It&#x27;s not too late to [[Psych Ward&lt;-switch up]] on him or [[Train&lt;-get out]].</tw-passagedata>
-<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis" position="1025,1925" size="100,100">(set: _t to (random: 1, 4))
+<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis" position="1025,1925" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -2959,10 +3010,11 @@ Hundreds of MICE and thousands of CRICKETS flood the carriage.]
 The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY. YOu FLOAT above the doubts.]
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
-(if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
-(if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
-(if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
-<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis" position="550,1700" size="100,100">(set: _t to (random: 1, 4))
+(if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
+<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis" position="550,1700" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -2974,23 +3026,23 @@ Hundreds of MICE and thousands of CRICKETS flood the carriage.]
 The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY. YOu FLOAT above the doubts.]
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
-(if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
-(if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
-(if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
+(if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="36" name="Psych Ward Escape" tags="clinicwaiting collage collage-medical decor-medical" position="750,1225" size="100,100">A middle-AGED man drools over you as he hobbles past with his QUAD cane. A woman THINKS you&#x27;re HER LONG LOST RELATIVE. 
 
 IT&#x27;s a joke. THIS building is not for YOU. YOU see the WORLD for what it is.
 
 [[Train&lt;-Prove]] your sanity to the staff or [[Jail&lt;-escape]].</tw-passagedata>
-<tw-passagedata pid="37" name="Psych Ward Stay" tags="hospitalward collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve shooting in your arm. It&#x27;s been LAZY. It&#x27;s been easy. YOU float upon WAVES of DOUBT and EAT pizza by the TV.
+<tw-passagedata pid="37" name="Psych Ward Stay" tags="hospitalward collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve been shooting in your arm. It&#x27;s been LAZY. It&#x27;s been easy. YOU float upon WAVES of DOUBT and EAT pizza by the TV.
 
 (live: 10s)[(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))]</tw-passagedata>
 <tw-passagedata pid="38" name="GP Office Final Randomised" tags="examroomdark psychosis ending collage collage-medical decor-medical" position="850,2050" size="100,100">THE ROOM is bright and exposing. The doctor CRUMPLES his sunken face into his notebook. HE can&#x27;t LOOK you in the eyes. YOU SPARK a cigarette and put your feet on his table.
 
 You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are bouncing off you.
 
-|smooth5&gt;[(link: &quot;LEAVE&quot;)[(live: 3s)[(stop:)(goto: &quot;Title Screen&quot;)]]]</tw-passagedata>
-<tw-passagedata pid="39" name="Jail Escape" tags="stationunderpass collage collage-city decor-city" position="750,1775" size="100,100">THE officer LETS you out for nothing. HE says nothing as he unLOCKS a corridor. What on EARTH are YOU escaping. This can&#x27;t be JAIL. THIS can&#x27;t be anything that remotely that exists in ACTUALITY.
+|smooth5&gt;[(link-replace: &quot;Pathologise&quot;)[see YOU again SOON(live: 3s)[(stop:)(goto: &quot;Title Screen&quot;)]]]</tw-passagedata>
+<tw-passagedata pid="39" name="Jail Escape" tags="stationunderpass collage collage-city decor-city" position="750,1775" size="100,100">THE officer LETS you out for nothing. HE says nothing as he unLOCKS a corridor. What on EARTH are YOU escaping. This can&#x27;t be JAIL. THIS can&#x27;t be anything that remotely  exists in ACTUALITY.
 
 Where to go? Who to see? 
 Where you [[Servo 2&lt;-WANT]] or [[Home&lt;-NEED]]?</tw-passagedata>
@@ -3010,7 +3062,8 @@ Maybe you [[GP Office 3&lt;-fight]] back or maybe you  (link: &quot;CAVE&quot;)[
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;))[(either: &quot;nice try&quot;, &quot;you&#x27;re tripping&quot;)]]
 
 (live: 15s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb psychosis" position="650,1950" size="100,100">(set: _t to (random: 1, 4))
+<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb psychosis" position="650,1950" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+(set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
 You CLAW desperately, pathetically for MEANING where there is NONE. There IS no structure of meaning to be found.]
@@ -3022,16 +3075,43 @@ Hundreds of MICE and thousands of CRICKETS flood the carriage.]
 The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY. YOu FLOAT above the doubts.]
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
-(if: _l is 1)[[[Night Walk&lt;-WANDER]] or [[Psych Ward&lt;-RETURN]]]
-(if: _l is 2)[[[Drugs&lt;-CONTINUE]] or [[Jail&lt;-RETURN]]]
-(if: _l is 3)[[[Home&lt;-RETURN]] or [[GP Office 2&lt;-CONTINUE]]]</tw-passagedata>
+(if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="43" name="CRB Decor Pool" tags="decor decor-crb" position="1750,1950" size="100,100">It flickers,
 spins,
 mutates.
 | xl
 
 fuck reason and restraint
-| xxl</tw-passagedata>
+| xxl
+
+Control is about lying to yourself.
+| lg
+
+Who designed this hell?
+| xl
+
+the truth is harsh and unpalatable
+| lg
+
+It&#x27;s tough,
+enduring,
+in a body
+that is in
+constant revolt
+against itself.
+| md
+
+It takes every
+bit of
+strength,
+every ounce
+of will
+to just
+go
+on.
+| md</tw-passagedata>
 <tw-passagedata pid="44" name="Elevator" tags="elevator collage collage-city decor-city" position="1125,1025" size="100,100">It&#x27;s the WORST when the elevator DOORS close. The air IS tighter. The breathing of OTHERS begins to strangle YOU. It feels like someone is about to GET you. 
 
 The vessel WHINES as it begins its descent. Your heartRATE and REMINDS you that you&#x27;re ALIVE and vulnerable. You&#x27;ve got to keep going. 
@@ -3047,10 +3127,12 @@ Everything BEGS for our attention. Everything shiny and BRIGHT claws at your sen
 
 You need to CALM down in a new location. 
 Walk to the [[The Faces&lt;-bus stop]] or a different corner of [[Night Walk&lt;-the city]].</tw-passagedata>
-<tw-passagedata pid="47" name="GP Office 3 Scream" tags="examroom collage collage-medical decor-medical" position="1100,1525" size="100,100">You shout, kick and BEG for mercy. You roar with 
+<tw-passagedata pid="47" name="GP Office 3 Scream" tags="examroom collage collage-medical decor-medical" position="1100,1525" size="100,100">You shout, kick and BEG for mercy. YOU whimper, you actually WHIMPER?
+YOU carry on like the child that can&#x27;t compute before realising you can&#x27;t even see HIM?
 
+The DOCTOR isn&#x27;t HERE.
 
-[[Psych Ward&lt;-SECTIONED]] or [[Jail&lt;-ARRESTED]]</tw-passagedata>
+WHY don&#x27;t you [[Psych Ward&lt;-WHIMPER]] more or grow up and [[Jail&lt;-TWEAK]] properly?</tw-passagedata>
 <tw-passagedata pid="48" name="GP Office 3 Kill" tags="examroom collage collage-medical decor-medical" position="700,1500" size="100,100">The doctor BRACES himself as you grab a blood PRESSURE monitor and slam it into his head. You flip his desk, his monitor, printer. But he keeps coming. He keeps throwing HIMSELF at you. 
 
 It looks like you&#x27;re [[Jail&lt;-fucked]].</tw-passagedata>
@@ -3212,7 +3294,7 @@ but navigate dramatically
 different 
 worlds.
 | md</tw-passagedata>
-<tw-passagedata pid="55" name="Witch Encounter" tags="citywalk collage collage-city decor-city" position="1150,1225" size="100,100">Now a WITCH is following you. SHE follows you from store to store. DOWN cobbled alleys and BUSY streets. You stop and lock eyes for a moment as you turn around yourself to LOSE her.
+<tw-passagedata pid="55" name="Witch Encounter" tags="citywalk collage collage-city decor-city" position="1150,1225" size="100,100">A WITCH is following you. SHE follows you from store to store. DOWN cobbled alleys and BUSY streets. You stop and lock eyes for a moment as you turn around yourself to LOSE her.
 
 She stumbles up to you and curls her lips up into a patronising smirk.
 &lt;div class=&quot;dialogue&quot;&gt;You can&#x27;t save them. They won&#x27;t listen to YOU. //she whispers//&lt;/div&gt;
@@ -3254,9 +3336,9 @@ You yell REALLY loud. Too LOUD. Half the street turns to look at you. Their STAR
 The witch looks like a NORMAL woman now. She looks frightened BY YOU. She quickens her PACE and leaves YOU there with your audience.
 
 [[Jail&lt;-ARRESTED]]</tw-passagedata>
-<tw-passagedata pid="63" name="Ignore Witch" tags="fluoro collage collage-city decor-city" position="1250,1375" size="100,100">Y
+<tw-passagedata pid="63" name="Ignore Witch" tags="fluoro collage collage-city decor-city" position="1250,1375" size="100,100">Better OFF NOT engaging with HER, you think. BUT you are wrong. IGNORING her didn&#x27;t fix SHIT either. SHE CACKLES as SHE TRIPS you over without TOUCHING you. The sickly woman IS a witch for CHRISTS sake. YOU see her pull a needle from her tattered grey trackies. TIME to run.
 
-[[Train&lt;-CONTINUE]] or [[Night Walk&lt;-WANDER]]</tw-passagedata>
+To the [[Train&lt;-station]]? Or the [[Night Walk&lt;-alleyways]]?</tw-passagedata>
 </tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
