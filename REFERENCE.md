@@ -49,9 +49,13 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `citycommute` | `citycommute.png` | City Transit |
 | `pinktexture` | `pinktexture.gif` | GP Reflection |
 | `glitter` | `lightjitter.gif` | City Dissociation |
-| `jail` | `jail.jpg` | Jail |
+| `jail` | `JAILFINAL.jpg` | Jail |
+
+| `examroomdark` | `GPFINAL.jpg` | GP Office Final (ending) |
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
+
+**Critical backgrounds preloaded at page load:** `GPFINAL.jpg` and `brokentoilet.jpg` are preloaded via `new Image()` at the very top of Story JavaScript (`window._gpBgImg`, `window._toiletBgImg`) to ensure they're available on first visit without a page refresh. If you replace these images, update both `TAG_BACKGROUNDS` and those two preload lines.
 
 ### Solid Colour Background Tags
 
@@ -451,7 +455,7 @@ Each CRB passage (1–4) independently randomises its own text (4 options) and e
 
 **Text randomisation:** `(set: _t to (random: 1, 4))` + `(if: _t is N)[...]` — 4 text options per passage.
 
-**Link randomisation:** `(set: _l to (random: 1, 3))` + `(if: _l is N)[...]` — 3 link pairs (Night Walk/Psych Ward, Drugs/Jail, Home/GP Office 2).
+**Link randomisation:** `(set: _l to (random: 1, 3))` + `(if: _l is N)[...]` — 3 link pairs (Night Walk/Psych Ward, Drugs/Theft Psychosis, Home/GP Office 2).
 
 **To add a new text or link option:** edit the `(if:)` blocks directly in each CRB passage and update the `(random: 1, N)` range.
 
@@ -470,28 +474,32 @@ Add or swap paths here to change CRB background options.
 
 **Decor:** `[decor-crb]` — draws from `CRB Decor Pool` passage (`redaction-70` or `redaction-100`).
 
-**Exit loop:** Counter lives in `sessionStorage.crbVisits` (persists through page refresh, resets to 0 on return to GP Reception). On 3rd visit `triggerCRBDissolve()` fades passage + background + collage to opacity 0 over 2s, then `Engine.goToPassage('GP Office Final Randomised')` navigates. Refresh during a CRB visit does not increment the counter.
+**Exit loop:** Counter tracked in JS (`_jsCrbCount`). On 3rd visit, a 7s timer fires `window._crbFinalTrigger()` — `triggerCRBDissolve()` fades passage + background + collage to opacity 0 over 2s, then navigates to `GP Office Final Randomised`. Harlowe `(live: 12s)[(goto:)]` in each CRB passage acts as a fallback. `updateBackground()` resets opacity to 1 on every background apply — required to undo the dissolve fade when GP Office Final loads.
 
 ---
 
 ## 9. ENDING SEQUENCE (GP Office Final Randomised)
 
-Tags: `[psychosis ending collage collage-medical decor-medical]`
+Tags: `[examroomdark psychosis ending collage collage-medical decor-medical]`
 
-Triggered by `applyEndingSequence(passage)` — detected in observer when both `psychosis` and `ending` tags are present. Bypasses standard `applyPsychosisLayout`.
+Detected in observer when both `psychosis` and `ending` tags are present. Passage content is completely replaced by JS-generated scatter elements — the Harlowe passage text acts only as a fallback.
 
 **Sequence:**
-1. Passage centred on screen (`position:fixed`, `55vw`, `transform:translate(-50%,-50%)`)
-2. Typewriter at 20ms/char — body text (~5.2s) then word-salad dialogue (~7.7–9s total)
-3. Word-salad: `.dialogue` div injected before `smooth5`, built by `buildWordSalad()` — scrapes all `tw-passagedata` text, strips Harlowe/HTML syntax, shuffles words, picks 18–28. Different each visit.
-4. `smooth5` fades in at exactly 10s via `setTimeout`
-5. Click LEAVE → Harlowe `(live: 3s)[(stop:)(goto: "Title Screen")]` — 3s then title
+1. Passage cleared (`while (p.firstChild) p.removeChild(p.firstChild)`)
+2. **Word salad** (top half, ~0–47vh): `buildWordSalad()` scrapes all `tw-passagedata`, filters camelCase/digits/short words, shuffles, picks 18–28 words. Scattered as `position:absolute` divs at random `top/left` (4–47vh). Short words (2–4 letters) have a 38% chance of vertical letter-stacking, capped at 4 stacks total.
+3. **Body text** (bottom half, ~52–76vh): 5 fixed sentences scattered at evenly-spaced `top` bands with ±1.5vh jitter. Short words (3–4 letters) have a 35% chance of vertical stacking. Monospace font (`source-code-pro`).
+4. **Pathologise link**: appears at `top: 87vh`, random left. Glowing white, chromatic aberration animation. Click → text changes to "see YOU again SOON", then navigates to Title Screen after 3s.
+5. All elements fade in sequentially via `_psychosisRevealTimers`.
+
+**CSS override** (`tw-story[tags~="psychosis"][tags~="ending"] tw-passage`): overrides the standard ending centred layout — full `100vw/100vh`, `left:0`, `top:0`, `transform:none` so scatter elements fill the whole screen.
+
+**Background:** `GPFINAL.jpg` via `examroomdark` tag. Preloaded at page start. `updateBackground()` resets opacity/transition so the CRB dissolve doesn't leave the bg invisible.
 
 **To adjust:**
 - Word count: change `18 + Math.floor(Math.random() * 10)` in `buildWordSalad()`
-- Typewriter speed: change `20` ms in `applyEndingSequence`
-- Smooth5 timing: change `10000` ms in `applyEndingSequence`
-- Click delay: change `3s` in the passage's `(live: 3s)` macro
+- Stack cap (word salad): `_stackCt < 4` in the ending scatter block
+- Body text stack probability: `Math.random() < 0.35`
+- Body sentences: edit `_bsents` array in the ending scatter block
 
 ---
 

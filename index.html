@@ -88,31 +88,6 @@ tw-story {
 .fullscreen-btn:hover {
   color: white;
 }
-.home-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 0.45em 1.4em;
-  border: 1px solid rgba(255,255,255,0.4);
-  background: transparent;
-  cursor: pointer;
-  z-index: 1000;
-  font-family: 'terminal-grotesque', Arial, Helvetica, sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-}
-.home-btn:hover {
-  color: white;
-  border-color: white;
-  background: rgba(255,255,255,0.08);
-}
-body:has(tw-story[tags~="titlescreen"]) .home-btn,
-body:has(tw-story[tags~="psychosis"]) .home-btn {
-  display: none;
-}
 
 
 /* ── CHARGED WORDS ──────────────────────────────────────────────────────
@@ -378,6 +353,10 @@ tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:hover {
 .wk-github .game-link {
   animation: none;
 }
+.wk-author-name .game-link:hover,
+.wk-github .game-link:hover {
+  animation: link-flicker 0.35s steps(5) forwards;
+}
 tw-story[tags~="titlescreen"] tw-link:hover {
   color: white;
 }
@@ -516,6 +495,16 @@ tw-story[tags~="ending"] tw-passage {
   overflow: visible !important;
   box-sizing: border-box !important;
 }
+tw-story[tags~="psychosis"][tags~="ending"] tw-passage {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100vh !important;
+  left: 0 !important;
+  top: 0 !important;
+  transform: none !important;
+  text-align: left !important;
+  overflow: visible !important;
+}
 tw-story[tags~="ending"] tw-hook[name="smooth5"] {
   position: static !important;
   display: block !important;
@@ -568,18 +557,6 @@ tw-story[tags~="echo"] tw-passage > * {
   70%       { transform: translate(2px, 4px);   opacity: 0.12; }
 }
 
-/* ── DISSOLVING WORDS ────────────────────────────────────────────────────
-   Tag: [dissolve] on a passage.
-   JS wraps every word in a <span class="dw"> and randomly fades them
-   out after a delay, forcing the reader to fill gaps.
-   ────────────────────────────────────────────────────────────────────── */
-.dw {
-  display: inline;
-  transition: opacity 1.4s ease;
-}
-.dw.gone {
-  opacity: 0;
-}
 
 
 /* ── CRB BACKGROUND OVERLAY ─────────────────────────────────────────────
@@ -711,7 +688,15 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
  * Released under the Unlicense, and dedicated to the public domain.
 **/
 #audio-overlay{position:fixed;top:0;right:0;left:0;bottom:0;z-index:100000;background:#111}.lds-ring{display:block;position:relative;top:20%;margin:auto;width:20em;height:20em}.lds-ring div{box-sizing:border-box;display:block;position:absolute;width:18em;height:18em;margin:6px;border:6px solid #fff;border-radius:50%;-webkit-animation:lds-ring 1.2s cubic-bezier(.5,0,.5,1) infinite;animation:lds-ring 1.2s cubic-bezier(.5,0,.5,1) infinite;border-color:#fff transparent transparent transparent}.lds-ring div:nth-child(1){-webkit-animation-delay:-.45s;animation-delay:-.45s}.lds-ring div:nth-child(2){-webkit-animation-delay:-.3s;animation-delay:-.3s}.lds-ring div:nth-child(3){-webkit-animation-delay:-.15s;animation-delay:-.15s}@-webkit-keyframes lds-ring{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes lds-ring{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}input#audio-volume{width:100%;margin:2em 0}span#vol-title{position:relative;bottom:-1em;font-size:1rem;float:left}tw-link#audio-mute{display:inline-block;padding:.3em;width:90%;text-decoration:none;color:#111;background:#eee;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:1px solid #000}tw-link#audio-mute:hover{opacity:.8}tw-link#audio-mute:active{opacity:.6}tw-link#audio-mute span{display:inline-block;width:1em;position:relative;height:1em;top:.2em;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAABF0lEQVR4Ae2VJVREYRSEB3ftuFUaLhF6I22iF7TgLr1XvAc849CwiBac9Xtm3e97cefp/Pec7+mdH0mZrGtMoBomyAEHfjGHXKg07gNxeUS3BuMAqGZswE7YcOIYgqgG7BFlSQgTAgKysC2jNjQmghFQCOpMxq+QmQgmFATU4kcq/YlgfKB1lALUqFSukRIbEwpy4BTZPM/Bu9TaQ362KAsl56sAtSR+Sgv6RCFdr/gjBYiuj65c3J0eNEmXz95TgybocvmoJj3avf5l59L1iD/WglZCP7/uh8zgeQ6epdahaZENFIPCCFvEYNPW4JdNazBGzhkj6caCbSc02DRRu0+8RR/+rb7wx6D505HxCVKvG0zpp+yknHe8MBDkT/s8AAAAAElFTkSuQmCC);background-size:contain}tw-link#audio-mute.muted span{right:4px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAASElEQVR4Ae3WsQ0AMAjAsJ7ez9MTGEmlRGL3BJzPq6prw2DDYMNgw2DDYMOwh1kAMUygQIEC2RejANVxnVE9aDOqJ39GVZWqB5Z3r1ndBX5oAAAAAElFTkSuQmCC)}div#audio-volume{float:left}div#audio-controls{font:100% Georgia,serif;font-size:1.5em;position:fixed;width:8em;height:100%;padding:1em 2em;z-index:10000;top:0;left:0;bottom:0;background:#333;color:#eee;transition:left .3s;text-align:center}div#audio-controls.closed{left:-10.5em}div#audio-controls tw-link#audio-panel-toggle{display:inline-block;width:1.5em;position:absolute;height:1.5em;top:0;right:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-decoration:none;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAYklEQVR4Ae3MsQFAMAAEQMDEagCgN4EuVTrbPcACeUBugDNeSdMQomI0PmYdTEYD9DA5jcVoBKuxGY1kNQ6jGRSaGaIj8gw1aI/KYVUSNqsSzMpiVT2zMjlVN0fqVW5o2luMGHqkQmD9cPYAAAAASUVORK5CYII=);background-size:contain}div#audio-controls.closed tw-link#audio-panel-toggle{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAZElEQVR4Ae3TpwGAMBQAUfrEeHB0cDhcXBSO7ehlgBw9N8BL/YZO95r6uA/UEbOv+ylfHRJ9z1BWLynKJqmWohyS6ijKOygKCpmjZYqXTTA2xUiCsShGAMw8/Q3ArFgFMHek0w3WCaR74eO2YQAAAABJRU5ErkJggg==)}@media screen and (max-width:800px){div#audio-controls.closed{left:-12em}div#audio-controls.closed tw-link#audio-panel-toggle{right:-1.5em}}div#story-menu{margin:1em 0}tw-link.story-menu{width:100%;display:block;font-weight:400;background:#ccc;font-size:.9em;padding:.1em 0;color:#111;border:1px solid #333}tw-link.story-menu.hide{display:none}tw-link.story-menu:hover{opacity:.8}tw-link.story-menu:active{opacity:.6}input[type=range].hal{-webkit-appearance:none;width:100%;margin:2.25px 0}input[type=range].hal:focus{outline:0}input[type=range].hal::-webkit-slider-runnable-track{width:100%;height:15.5px;cursor:pointer;box-shadow:.4px .4px 1px #000,0 0 .4px #0d0d0d;background:#111;border-radius:0;border:0 solid #010101}input[type=range].hal::-webkit-slider-thumb{box-shadow:0 0 2.2px rgba(17,17,17,.1),0 0 0 rgba(30,30,30,.1);border:0 solid #fff;height:20px;width:11px;border-radius:0;background:rgba(255,255,255,.93);cursor:pointer;-webkit-appearance:none;margin-top:-2.25px}input[type=range].hal:focus::-webkit-slider-runnable-track{background:#444}input[type=range].hal::-moz-range-track{width:100%;height:15.5px;cursor:pointer;box-shadow:.4px .4px 1px #000,0 0 .4px #0d0d0d;background:#111;border-radius:0;border:0 solid #010101}input[type=range].hal::-moz-range-thumb{box-shadow:0 0 2.2px rgba(17,17,17,.1),0 0 0 rgba(30,30,30,.1);border:0 solid #fff;height:20px;width:11px;border-radius:0;background:rgba(255,255,255,.93);cursor:pointer}input[type=range].hal::-ms-track{width:100%;height:15.5px;cursor:pointer;background:0 0;border-color:transparent;color:transparent}input[type=range].hal::-ms-fill-lower{background:#000;border:0 solid #010101;border-radius:0;box-shadow:.4px .4px 1px #000,0 0 .4px #0d0d0d}input[type=range].hal::-ms-fill-upper{background:#111;border:0 solid #010101;border-radius:0;box-shadow:.4px .4px 1px #000,0 0 .4px #0d0d0d}input[type=range].hal::-ms-thumb{box-shadow:0 0 2.2px rgba(17,17,17,.1),0 0 0 rgba(30,30,30,.1);border:0 solid #fff;height:20px;width:11px;border-radius:0;background:rgba(255,255,255,.93);cursor:pointer;height:15.5px}input[type=range].hal:focus::-ms-fill-lower{background:#111}input[type=range].hal:focus::-ms-fill-upper{background:#444}
-/** End of HAL code */</style><script role="script" id="twine-user-script" type="text/twine-javascript">/**
+/** End of HAL code */</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* ── CRITICAL IMAGE PRELOAD ─────────────────────────────────────────────
+   Fires before any game code so the browser fetches examroomdark
+   immediately on page load — avoids blank background on first visit.
+   ─────────────────────────────────────────────────────────────────── */
+window._gpBgImg = new Image();
+window._gpBgImg.src = './images/GPFINAL.jpg';
+window._toiletBgImg = new Image();
+window._toiletBgImg.src = './images/brokentoilet.jpg';
+/**
  * Harlowe Audio Library (HAL), by Chapel, v2.3.0
  * for Harlowe 2.1.0 and higher
  * Released under the Unlicense, and dedicated to the public domain.
@@ -1131,15 +1116,6 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   }).observe(document.documentElement, { childList: true, subtree: true });
 })();
 
-(function() {
-  var btn = document.createElement('div');
-  btn.className = 'home-btn';
-  btn.textContent = 'Home';
-  btn.addEventListener('click', function() {
-    Engine.goToPassage('Title Screen');
-  });
-  document.body.appendChild(btn);
-})();
 
 
 (function() {
@@ -1173,14 +1149,14 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     'psychward':      './images/psychward.jpg',
     'toilet':         './images/toilet.jpg',
     'ezymart':        './images/ezymart.jpg',
-    'jail':           './images/jail.jpg',
+    'jail':           './images/JAILFINAL.jpg',
     'nightambience':  './images/nightambience.jpg',
     'citywalk':       './images/citywalk.png',
     'citycommute':    './images/citycommute.png',
     'pinktexture':    './images/pinktexture.gif',
     'glitter':        './images/lightjitter.gif',
     'examroom':       './images/Doctor\'s_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg',
-    'examroomdark':   './images/2_Doctor\'s_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg',
+    'examroomdark':   './images/GPFINAL.jpg', /* GP Office Final bg */
     'cliniccorridor': './images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_16_de_junio_de_2023.jpg',
     'cliniccorridor2':'./images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_16_de_junio_de_2023_2.jpg',
     'clinicwaiting':  './images/Consultorio_médico_en_una_Farmacia_Similares,_Mazatlán,_21_de_febrero_de_2025.jpg',
@@ -1238,6 +1214,8 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     });
     var isGif = img && img.slice(-4) === '.gif';
     if (img) {
+      layer.style.transition = '';
+      layer.style.opacity = '1';
       layer.style.backgroundImage = 'url("' + img + '")';
       layer.style.backgroundColor = '';
       layer.className = '';
@@ -1652,67 +1630,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     if (passage) passage.removeAttribute('data-echo');
   }
 
-  /* ── DISSOLVING WORDS ────────────────────────────────────────────────────
-     Tag: [dissolve] on a passage. Wraps every word in .dw spans, then
-     schedules random words to fade to opacity 0.
-     ────────────────────────────────────────────────────────────────────── */
-  var _dissolveTimers = [];
-  function stopDissolveWords() {
-    _dissolveTimers.forEach(clearTimeout);
-    _dissolveTimers = [];
-    document.querySelectorAll('.dw').forEach(function (s) {
-      var parent = s.parentNode;
-      if (parent) parent.replaceChild(document.createTextNode(s.textContent), s);
-    });
-  }
-  function startDissolveWords(passage) {
-    stopDissolveWords();
-    // Only wrap text nodes that are direct or shallow children of tw-passage
-    // Avoid wrapping link text (tw-link) to keep navigation intact
-    var walker = document.createTreeWalker(
-      passage,
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode: function (node) {
-          var p = node.parentNode;
-          // Skip text inside interactive elements
-          if (p && (p.tagName === 'TW-LINK' || p.tagName === 'A' || p.tagName === 'BUTTON')) {
-            return NodeFilter.FILTER_REJECT;
-          }
-          return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
-        }
-      }
-    );
-    var textNodes = [];
-    var n;
-    while ((n = walker.nextNode())) textNodes.push(n);
-
-    var allSpans = [];
-    textNodes.forEach(function (tn) {
-      var words = tn.textContent.split(/(\s+)/);
-      var frag = document.createDocumentFragment();
-      words.forEach(function (w) {
-        if (/^\s+$/.test(w) || w === '') {
-          frag.appendChild(document.createTextNode(w));
-        } else {
-          var sp = document.createElement('span');
-          sp.className = 'dw';
-          sp.textContent = w;
-          frag.appendChild(sp);
-          allSpans.push(sp);
-        }
-      });
-      tn.parentNode.replaceChild(frag, tn);
-    });
-
-    // Pick ~30% of words to dissolve, with random delays
-    var targets = allSpans.filter(function () { return Math.random() < 0.3; });
-    targets.forEach(function (sp) {
-      var delay = 3000 + Math.random() * 12000; // 3–15s after arrival
-      var t = setTimeout(function () { sp.classList.add('gone'); }, delay);
-      _dissolveTimers.push(t);
-    });
-  }
+  function stopDissolveWords() {}
 
 
   /* ── FRAGMENT POOL ───────────────────────────────────────────────────────
@@ -2020,7 +1938,8 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
         .replace(/\|[a-z0-9]+>\[[\s\S]*?\]/g, ' ')
         .replace(/<[^>]+>/g, ' ')
         .replace(/[^a-zA-Z\s'-]/g, ' ');
-      text.split(/\s+/).forEach(function(w) { if (w.length > 3) words.push(w); });
+      var _wsExclude = ['RMIT', 'Konrad', 'Ryu', 'GitHub', 'Pathologisation'];
+      text.split(/\s+/).forEach(function(w) { if (w.length > 3 && w.length < 16 && !/[a-z][A-Z]/.test(w) && !/[0-9]/.test(w) && _wsExclude.indexOf(w) === -1) words.push(w); });
     });
     for (var i = words.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -2642,7 +2561,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
     });
 
     var nonEmpty = fragments.filter(function(f) { return f !== null; }).length;
-    if (nonEmpty <= 1) return;
+    if (nonEmpty === 0) return;
 
     // Rebuild container: each sentence fragment → block div with its own paddingLeft
     while (container.firstChild) container.removeChild(container.firstChild);
@@ -2718,6 +2637,9 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   }
 
   var _lastRunTags = null;
+  var _psychWardTimer = null;
+  var _jsCrbCount = 0;
+  var _crbEndTimer = null;
   // Track which link texts have been clicked so .visited can be re-applied after DOM replacement
   var _visitedLinks = new Set();
   document.addEventListener('click', function(e) {
@@ -2747,6 +2669,8 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
         var tags = story ? (story.getAttribute('tags') || '') : '';
         var tagsChanged = tags !== _lastRunTags;
         clearPsychosisReveal();
+        if (_psychWardTimer) { clearTimeout(_psychWardTimer); _psychWardTimer = null; }
+        if (_crbEndTimer) { clearTimeout(_crbEndTimer); _crbEndTimer = null; }
         if (tagsChanged) {
           _lastRunTags = tags;
           updateBackground(tags);
@@ -2757,33 +2681,133 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
           } else {
             stopEchoText(p);
           }
-          if (tags.indexOf('dissolve') !== -1) {
-            startDissolveWords(p);
-          } else {
-            stopDissolveWords();
-          }
+          stopDissolveWords();
           setTimeout(function() { startBgCollage(tags); }, 500);
+          if (tags.indexOf('hospitalward') !== -1) {
+            var _crbs = ['Complete Reality Breakdown 1', 'Complete Reality Breakdown 2', 'Complete Reality Breakdown 3', 'Complete Reality Breakdown 4'];
+            _psychWardTimer = setTimeout(function() {
+              Engine.goToPassage(_crbs[Math.floor(Math.random() * _crbs.length)]);
+            }, 5000);
+          }
+          if (tags.indexOf('decor-crb') !== -1) {
+            _jsCrbCount++;
+            if (_jsCrbCount >= 3) {
+              _crbEndTimer = setTimeout(function() {
+                if (typeof window._crbFinalTrigger === 'function') window._crbFinalTrigger();
+              }, 7000);
+            }
+          }
         }
         // ── always run per-navigation ───────────────────────────────────
         markVisitedLinks();
         applyFontCombo(story, tags);
         applyLayout(p, tags);
         startFloatingImages(p, tags);
+        if (tags.indexOf('decor-crb') !== -1 && _jsCrbCount >= 3) {
+          setTimeout(function() {
+            var _passage = document.querySelector('tw-passage');
+            if (!_passage) return;
+            var _crbLinks = _passage.querySelectorAll('tw-link');
+            for (var _cli = 0; _cli < _crbLinks.length; _cli++) { _crbLinks[_cli].style.display = 'none'; }
+          }, 400);
+        }
         if (tags.indexOf('psychosis') !== -1 && tags.indexOf('ending') !== -1) {
-          var _s5 = p.querySelector('tw-hook[name="smooth5"]');
-          Array.from(p.childNodes).forEach(function(n) { if (n !== _s5) p.removeChild(n); });
-          p.insertBefore(document.createTextNode(buildWordSalad()), _s5);
-          injectFragmentPoolBody(p, tags);
-          applyPsychosisLayout(p);
-          injectFragmentPool(p, tags);
+          while (p.firstChild) p.removeChild(p.firstChild);
+          var _sw = buildWordSalad().split(/\s+/).filter(Boolean);
+          var _stime = 0;
+          var _stackCt = 0;
+          var _wi = 0;
+          while (_wi < _sw.length) {
+            var _word = _sw[_wi];
+            var _walpha = _word.replace(/[^a-zA-Z]/g, "");
+            if (_walpha.length >= 2 && _walpha.length <= 4 && _stackCt < 4 && Math.random() < 0.38) {
+              _stackCt++;
+              var _sL = (5 + Math.random() * 82).toFixed(1);
+              var _sT = parseFloat((4 + Math.random() * 42).toFixed(1));
+              (function(w, sL, sT, t) {
+                w.split("").forEach(function(letter, li) {
+                  var ld = document.createElement("div");
+                  ld.style.cssText = "position:absolute;opacity:0;font-size:1.3rem;font-style:italic;line-height:1;";
+                  ld.style.left = (parseFloat(sL) + (Math.random() - 0.5) * 1.5).toFixed(1) + "vw";
+                  ld.style.top = (sT + li * 2.6).toFixed(1) + "vh";
+                  ld.appendChild(document.createTextNode(letter));
+                  p.appendChild(ld);
+                  _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.25s"; el.style.opacity = "1"; }; }(ld), t + li * 70));
+                });
+              })(_word, _sL, _sT, _stime);
+              _stime += _word.length * 70 + 80;
+              _wi++;
+            } else {
+              var _cnt = 2 + Math.floor(Math.random() * 2);
+              var _chunk = _sw.slice(_wi, _wi + _cnt).join(" ");
+              var d = document.createElement("div");
+              d.style.cssText = "position:absolute;opacity:0;font-size:1.25rem;font-style:italic;max-width:38vw;";
+              d.style.left = (4 + Math.random() * 68).toFixed(1) + "vw";
+              d.style.top = (4 + Math.random() * 43).toFixed(1) + "vh";
+              d.appendChild(document.createTextNode(_chunk));
+              p.appendChild(d);
+              _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.3s"; el.style.opacity = "1"; }; }(d), _stime));
+              _stime += 110;
+              _wi += _cnt;
+            }
+          }
+          var _ad = _stime + 300;
+
+          var _bsents = ["THE ROOM is bright and exposing.", "The doctor CRUMPLES his GAUNT face into his notebook.", "HE can’t LOOK you in the eyes.", "HE can’t HELP you.", "YOU’re going to have to SAVE yourself."];
+          var _bTops = [52, 57, 63, 69, 76];
+          _bsents.forEach(function(sent, i) {
+            var _bTop = _bTops[i] + (Math.random() - 0.5) * 1.5;
+            var _bLeft = (4 + Math.random() * 52).toFixed(1);
+            var _bwords = sent.replace(/[^a-zA-Z\s]/g, " ").split(/\s+/).filter(function(w) { return w.length >= 3 && w.length <= 4; });
+            if (_bwords.length > 0 && Math.random() < 0.35) {
+              var _bsw = _bwords[Math.floor(Math.random() * _bwords.length)];
+              var _bsL = (5 + Math.random() * 80).toFixed(1);
+              var _bsT = 52 + Math.random() * 26;
+              (function(w, sL, sT, delay) {
+                w.split("").forEach(function(letter, li) {
+                  var ld = document.createElement("div");
+                  ld.style.cssText = "position:absolute;opacity:0;font-family:’source-code-pro’,monospace;font-size:1.1rem;line-height:1;";
+                  ld.style.left = (parseFloat(sL) + (Math.random() - 0.5)).toFixed(1) + "vw";
+                  ld.style.top = (sT + li * 2.4).toFixed(1) + "vh";
+                  ld.appendChild(document.createTextNode(letter));
+                  p.appendChild(ld);
+                  _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.3s"; el.style.opacity = "1"; }; }(ld), delay + li * 60));
+                });
+              })(_bsw, _bsL, _bsT, _ad + i * 150 + 80);
+            }
+            var bd = document.createElement("div");
+            bd.style.cssText = "position:absolute;font-family:’source-code-pro’,monospace;font-style:normal;font-size:1.25rem;opacity:0;max-width:55vw;line-height:1.5;";
+            bd.style.left = _bLeft + "vw";
+            bd.style.top = _bTop.toFixed(1) + "vh";
+            bd.appendChild(document.createTextNode(sent));
+            p.appendChild(bd);
+            _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.4s"; el.style.opacity = "1"; }; }(bd), _ad + i * 150));
+          });
+          var _ld = _ad + _bsents.length * 150 + 500;
+          var _lv = document.createElement("div");
+          _lv.style.cssText = "position:absolute;font-family:’source-code-pro’,monospace;font-size:2.2rem;cursor:pointer;opacity:0;color:#fff;text-shadow:0 0 12px rgba(255,255,255,0.8),0 0 4px rgba(255,255,255,0.5),0 0 20px #fff;animation:chromatic-ab 1.8s steps(1) infinite;";
+          _lv.style.left = (8 + Math.random() * 55).toFixed(1) + "vw";
+          _lv.style.top = "87vh";
+          _lv.appendChild(document.createTextNode("Pathologise"));
+          _lv.addEventListener("mouseenter", function() {
+            _lv.style.animation = "link-flicker 0.35s steps(5) forwards, chromatic-ab 1.8s steps(1) infinite";
+          });
+          _lv.addEventListener("mouseleave", function() {
+            _lv.style.animation = "chromatic-ab 1.8s steps(1) infinite";
+          });
+          _lv.addEventListener("click", function() {
+            _lv.style.animation = "none";
+            _lv.textContent = "see YOU again SOON";
+            _psychosisRevealTimers.push(setTimeout(function() { Engine.goToPassage("Title Screen"); }, 3000));
+          });
+          p.appendChild(_lv);
+          _psychosisRevealTimers.push(setTimeout(function() { _lv.style.transition = "opacity 0.6s"; _lv.style.opacity = "1"; }, _ld));
           p.style.opacity = '1';
-          startPsychosisWander(p);
         } else if (tags.indexOf('psychosis') !== -1) {
-          injectFragmentPoolBody(p, tags);
+          if (tags.indexOf('hospitalward') === -1) { injectFragmentPoolBody(p, tags); }
           applyPsychosisLayout(p);
-          injectFragmentPool(p, tags);
+          if (tags.indexOf('hospitalward') === -1) { injectFragmentPool(p, tags); startPsychosisWander(p); }
           p.style.opacity = '1';
-          startPsychosisWander(p);
         } else {
           stopPsychosisWander();
           if (tags.indexOf('titlescreen') === -1) {
@@ -2832,7 +2856,7 @@ You look at the door. You could [[Car Park&lt;-leave]] the appointment now or [[
 &lt;div class=&quot;dialogue&quot;&gt;Hello? Are you there? //he asks.//&lt;/div&gt;
 His far away. You can&#x27;t find the words or the way back.
 
-[[GP Office 1&lt;-RETURN]] or [[Exeloo&lt;-IGNORE]]</tw-passagedata>
+[[GP Office 1&lt;-RETURN]] to the present or keep [[Exeloo&lt;-floating]] away.</tw-passagedata>
 <tw-passagedata pid="6" name="hal.tracks" tags="" position="1900,2075" size="100,100">background:      ./audio/background.mp3
 clock:           ./audio/clock.mp3
 crickets:        ./audio/crickets.mp3
@@ -2903,7 +2927,7 @@ Do you [[Park Psychosis&lt;-talk]] with the junkie OR [[Dream&lt;-leave]] briskl
 
 Your finger bleeds from a piece of glass. The DEAD pixels glisten at you.
 
-(live: 10s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Jail&quot;))]</tw-passagedata>
+(live: 10s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Complete Reality Breakdown 1&quot;))]</tw-passagedata>
 <tw-passagedata pid="17" name="GP Office 2" tags="doctorsoffice3 floating collage collage-medical decor-medical" position="850,775" size="100,100">You&#x27;re back. The doctor seems to have AGED: the crinkles and LUMPS on his face form a DERANGED and spiteful grin. YOU can&#x27;t remember if you |charged&gt;[TOOK] the pills or not. What medication was it? Which one for fucks sake? 
 &lt;div class=&quot;dialogue&quot;&gt;I trust you&#x27;ve taken your pills this time? //he asks//&lt;/div&gt;
 
@@ -2977,7 +3001,7 @@ You CATCH yourself before it DESCENDS further. The doctor doesn&#x27;t respond. 
 smooth2: I WIELD the syringe with more precision and grace than those nurses at EMERGENCY, loading up and preparing my arm all in a matter of seconds before STARING into my red, sickly BLOOD on the drawback. | Every day of shooting up is another chance to escape the present situation and rise above the troubles of our  intolerable and SENSELESS reality. | The night will find you eventually, you can hide in the routine all you like before the crushing walls of contingency eventually come closing in. We all get strangled by the coarse rope of truth. 
 smooth3: That’s the WORST part of all this — looking at your ROTTEN INSIDES. I proceed to SHOOT the counteragent down my veins. The PLUNGE is beautiful; the storm comes on like a Stravinsky SYMPHONY. | The fucking ER won’t give me SHIT. That Mr. SMITH over there is trying to KILL Me. There’s a battle between good and evil taking place out here. It’s dangerous. Can’t you see it you SILLY fuck. Can’t YOU? | None of you scum will bloody LISTEN so what&#x27;s the point. I&#x27;ll talk to the VOICES in my head. I won&#x27;t waste another word on YOU. 
 smooth4: It&#x27;s a MESS. The whole lot of it. A SHINY mess with nothing good to COME OUT of it. Even the sparrows in the trees are SICK. | PROTECT your energy. Stick your CHEST out and fight back. Don&#x27;t be a coward like the rest of them. | There&#x27;s only lies, only glittery, glossy FABRICATIONS. Where is the TRUTH? The truth is PUTRID, the truth is DEATH &amp; this is the LIE.</tw-passagedata>
-<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb psychosis" position="1175,1650" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+<tw-passagedata pid="32" name="Complete Reality Breakdown 1" tags="collage collage-psychosis decor-crb psychosis" position="1175,1650" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
@@ -2991,13 +3015,13 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
 (if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
-(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Theft Psychosis&lt;-CARceral ARchipelago]]]
 (if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="33" name="GP Office 2 Unsure" tags="cliniccorridor dissolve collage collage-medical decor-medical" position="975,900" size="100,100">You CAN&#x27;T strand the words together. The doctor looks disgusted as he listens to you. Even you are taken ABACK by how pathetic you sound, LABOURing to FORM a sentence.
 &lt;div class=&quot;dialogue&quot;&gt;Are you done?//he asks,//&lt;/div&gt; as you give up.
 
 It&#x27;s not too late to [[Psych Ward&lt;-switch up]] on him or [[Train&lt;-get out]].</tw-passagedata>
-<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis" position="1025,1925" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+<tw-passagedata pid="34" name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis" position="1025,1925" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
@@ -3011,9 +3035,9 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
 (if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
-(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Theft Psychosis&lt;-CARceral ARchipelago]]]
 (if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
-<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis" position="550,1700" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+<tw-passagedata pid="35" name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis" position="550,1700" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
@@ -3027,16 +3051,14 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
 (if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
-(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Theft Psychosis&lt;-CARceral ARchipelago]]]
 (if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="36" name="Psych Ward Escape" tags="clinicwaiting collage collage-medical decor-medical" position="750,1225" size="100,100">A middle-AGED man drools over you as he hobbles past with his QUAD cane. A woman THINKS you&#x27;re HER LONG LOST RELATIVE. 
 
 IT&#x27;s a joke. THIS building is not for YOU. YOU see the WORLD for what it is.
 
-[[Train&lt;-Prove]] your sanity to the staff or [[Jail&lt;-escape]].</tw-passagedata>
-<tw-passagedata pid="37" name="Psych Ward Stay" tags="hospitalward collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve been shooting in your arm. It&#x27;s been LAZY. It&#x27;s been easy. YOU float upon WAVES of DOUBT and EAT pizza by the TV.
-
-(live: 10s)[(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))]</tw-passagedata>
+[[Train&lt;-Prove]] your sanity to the staff or [[Night Walk&lt;-escape]].</tw-passagedata>
+<tw-passagedata pid="37" name="Psych Ward Stay" tags="hospitalward psychosis collage collage-medical decor-medical" position="975,1225" size="100,100">You feel DIFFERENT. Not better. It must be the Paliperidone injections they&#x27;ve been shooting in your arm. It&#x27;s been LAZY. It&#x27;s been easy. YOU float upon WAVES of DOUBT and EAT pizza by the TV.</tw-passagedata>
 <tw-passagedata pid="38" name="GP Office Final Randomised" tags="examroomdark psychosis ending collage collage-medical decor-medical" position="850,2050" size="100,100">THE ROOM is bright and exposing. The doctor CRUMPLES his sunken face into his notebook. HE can&#x27;t LOOK you in the eyes. YOU SPARK a cigarette and put your feet on his table.
 
 You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are bouncing off you.
@@ -3045,7 +3067,7 @@ You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are boun
 <tw-passagedata pid="39" name="Jail Escape" tags="stationunderpass collage collage-city decor-city" position="750,1775" size="100,100">THE officer LETS you out for nothing. HE says nothing as he unLOCKS a corridor. What on EARTH are YOU escaping. This can&#x27;t be JAIL. THIS can&#x27;t be anything that remotely  exists in ACTUALITY.
 
 Where to go? Who to see? 
-Where you [[Servo 2&lt;-WANT]] or [[Home&lt;-NEED]]?</tw-passagedata>
+Go where you [[Servo 2&lt;-WANT]] or where you [[Home&lt;-NEED]]?</tw-passagedata>
 <tw-passagedata pid="40" name="Jail Stay" tags="jailstay collage collage-city decor-city" position="1025,1775" size="100,100">YOU try TO WALK down the halls with PURPOSE. Like you BELONG. It&#x27;s possible that YOU do. You&#x27;ve BEEN belted SO many times. It&#x27;s weak. It&#x27;s a matter of survival in HERE.
 
 Maybe you [[GP Office 3&lt;-fight]] back or maybe you  (link: &quot;CAVE&quot;)[(goto: (either: &quot;Complete Reality Breakdown 1&quot;, &quot;Complete Reality Breakdown 2&quot;, &quot;Complete Reality Breakdown 3&quot;, &quot;Complete Reality Breakdown 4&quot;))] to the DESIRES of idiots.</tw-passagedata>
@@ -3062,7 +3084,7 @@ Maybe you [[GP Office 3&lt;-fight]] back or maybe you  (link: &quot;CAVE&quot;)[
 |smooth5&gt;[(link-replace: (either: &quot;leave&quot;, &quot;run&quot;, &quot;get out&quot;))[(either: &quot;nice try&quot;, &quot;you&#x27;re tripping&quot;)]]
 
 (live: 15s)[(goto: (either: &quot;GP Office 2&quot;, &quot;Psych Ward&quot;))]</tw-passagedata>
-<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb psychosis" position="650,1950" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 1s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
+<tw-passagedata pid="42" name="Complete Reality Breakdown 4" tags="collage collage-psychosis decor-crb psychosis" position="650,1950" size="100,100">(set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, For some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
 
@@ -3076,7 +3098,7 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (if: _t is 4)[YOU OFTEN get confused and think you are capable of change and CONTROL. YOU set out with big ASPIRATIONS before FALTing against the everchanging WAVES and ODDS. The world DOMINATES you not the other way round. OK?]
 (set: _l to (random: 1, 3))
 (if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
-(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Jail&lt;-CARceral ARchipelago]]]
+(if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Theft Psychosis&lt;-CARceral ARchipelago]]]
 (if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata>
 <tw-passagedata pid="43" name="CRB Decor Pool" tags="decor decor-crb" position="1750,1950" size="100,100">It flickers,
 spins,
@@ -3303,9 +3325,9 @@ She stumbles up to you and curls her lips up into a patronising smirk.
 [[Abuse Witch&lt;-RESPOND]] to her or [[Ignore Witch&lt;-ignore]] her commentary?</tw-passagedata>
 <tw-passagedata pid="56" name="City Transit" tags="citycommute collage collage-city decor-city" position="1450,1050" size="100,100">Rain starts in the through the CRACKS in the sky. Most obscure their faces beneath hoods and umbrellas. You let the droplets WASH over you. The rain is RELENTless. 
 
-You enjoy the WAY the lights reflect off the wet BITUMEN. The TYRES wet tyresrolling over the earth.
+You enjoy the WAY the lights reflect off the wet BITUMEN. The wet TYRES rolling over the earth. It&#x27;s nice
 
-Maybe you [[Night Walk&lt;-SAVOUR]] the experience, maybe you get OUT of the [[Train&lt;-et]].</tw-passagedata>
+Maybe you [[Night Walk&lt;-SAVOUR]] the experience, maybe you get OUT of the rain and and make way for [[Train&lt;-shelter]].</tw-passagedata>
 <tw-passagedata pid="57" name="Insomnia" tags="echo collage collage-subsist decor-subsist" position="1125,850" size="100,100">You STILL can&#x27;t sleep. The birds have started up. They |charged&gt;[LAUGH] and tweet derogatory things. CHIRPS of ridicule and judgement. It&#x27;s pissing you RIGHT off. You get UP. You&#x27;re staying up then.
 
 What will it be. 
@@ -3329,7 +3351,7 @@ You can only stand and [[Jail&lt;-enjoy]] the show.</tw-passagedata>
 <tw-passagedata pid="61" name="Theft Psychosis" tags="theftpsychosis psychosis collage collage-city" position="1375,1600" size="100,100">STUFFING shit in your PANTS in YOUR BACKPACK and pockets. Your losing control in the store here. YOU&#x27;re grabbing shit for the sake of it. WHEN are YOU gonna use 5w40 engine OIL? You DON&#x27;T own a CAR.
 
 You BETTER get OUT fast before you get PINCHED.
-(live: 10s)[(goto: (either: &quot;Jail&quot;, &quot;GP Office 3&quot;))]</tw-passagedata>
+(live: 10s)[(goto: (either: &quot;GP Office 3&quot;, &quot;Smash Up&quot;))]</tw-passagedata>
 <tw-passagedata pid="62" name="Abuse Witch" tags="citychurch breakdownfont collage collage-city decor-city" position="1050,1375" size="100,100">&lt;div class=&quot;dialogue&quot;&gt;Fuck OFF and die you EVIL bitch. //you yell.//&lt;/div&gt;
 You yell REALLY loud. Too LOUD. Half the street turns to look at you. Their STARES, their COLD eyes of |charged&gt;[critique] pierce through you.
 
