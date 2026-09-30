@@ -242,7 +242,7 @@ Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plai
 ```html
 <a class="game-link" href="https://..." target="_blank">Link text</a>
 ```
-Currently used in: Title Screen (Ryu Konrad name, README, Proof).
+Currently used in: Title Screen (Ryu Konrad name, ReadMe, Proof).
 
 **Title Screen author block structure:**
 - `.wk-author-name` — "Ryu Konrad" link, `redaction-70` regular weight, no fidget/flicker, no strikethrough
@@ -250,7 +250,7 @@ Currently used in: Title Screen (Ryu Konrad name, README, Proof).
 - `.wk-desc` — description text, `redaction-20`. Current text: "Pathologisation — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none."
 - `.wk-warning` (with `.wk-info`) — content & photosensitivity warning under the description, same small italic style as the credit line. Its text is stripped out of the ending's word salad in `buildWordSalad()`.
 - `.wk-corner` — the two corner links, both `position: fixed; bottom: 1.2rem`, `redaction-70` regular weight (matches Ryu Konrad style), no fidget, flicker on hover:
-  - `.wk-readme` — "README" → `./readme.html`, bottom-left (`left: 1.4rem`)
+  - `.wk-readme` — "ReadMe" → `./readme.html`, bottom-left (`left: 1.4rem`)
   - `.wk-proof` — "Proof" → `./proof.html`, bottom-right (`right: 1.4rem`)
   Both open in a new tab.
 - Spacing: `.wk-block` has `margin-top: -2.2em` (pulls the text up towards the ASCII title) and `.title-actions` has `margin-top: -1.8em` (pulls Start/Fullscreen up towards the warning).
@@ -326,7 +326,7 @@ All links tremble slightly in a continuous micro-animation (`fidget` keyframes, 
 
 **Title Screen link behaviour:**
 - **Start** — `terminal-grotesque` italic uppercase (displays as START), 2.6rem, letter-spacing 0.65em, `chroma-aberration` + `chroma-pulse` animation, colour flicker on hover. No strikethrough. Styled via `.start-link` wrapper span + CSS. Links to GP Reception.
-- **Ryu Konrad / README / Proof** — static (no fidget), colour flicker on hover, no strikethrough.
+- **Ryu Konrad / ReadMe / Proof** — static (no fidget), colour flicker on hover, no strikethrough.
 - **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough.
 
 ### Link flicker on hover
@@ -472,7 +472,7 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | smooth5 fake escape link | `tt-hoves-pro` 2.2rem, JS chromatic aberration (200ms interval), appears at 2s, body-level proxy |
 | Title screen Start link | `terminal-grotesque` italic uppercase, 2.6rem, letter-spacing 0.65em, chroma animation + flicker |
 | Title screen "Ryu Konrad" | `redaction-70` regular weight, no fidget |
-| Title screen README / Proof links | `redaction-70` regular weight, no fidget |
+| Title screen ReadMe / Proof links | `redaction-70` regular weight, no fidget |
 | Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
 | Intrusion words (`.lp-intrusion`) | JS-randomised from `redaction` / `redaction-10` / `redaction-20` / `redaction-35` / `redaction-50` — independent of combo |
 | CRB decor | `redaction-70` or `redaction-100` |
@@ -554,7 +554,7 @@ Detected in observer when both `psychosis` and `ending` tags are present. Passag
 
 **Sequence:**
 1. Passage cleared (`while (p.firstChild) p.removeChild(p.firstChild)`)
-2. **Word salad** (top half, ~0–47vh): `buildWordSalad()` scrapes all `tw-passagedata`, filters camelCase/digits/short words and the title-screen words in `_wsExclude` (RMIT, Konrad, Ryu, Proof, README, Pathologisation), shuffles, picks 18–28 words. Scattered as `position:absolute` divs at random `top/left` (4–47vh). Short words (2–4 letters) have a 38% chance of vertical letter-stacking, capped at 4 stacks total.
+2. **Word salad** (top half, ~0–47vh): `buildWordSalad()` scrapes all `tw-passagedata`, filters camelCase/digits/short words and the title-screen words in `_wsExclude` (RMIT, Konrad, Ryu, Proof, ReadMe, Pathologisation), shuffles, picks 18–28 words. Scattered as `position:absolute` divs at random `top/left` (4–47vh). Short words (2–4 letters) have a 38% chance of vertical letter-stacking, capped at 4 stacks total.
 3. **Body text** (bottom half, ~52–76vh): 5 fixed sentences scattered at evenly-spaced `top` bands with ±1.5vh jitter. Short words (3–4 letters) have a 35% chance of vertical stacking. Monospace font (`source-code-pro`).
 4. **Pathologise link**: appears at `top: 87vh`, random left. Glowing white, chromatic aberration animation. Click → text changes to "see YOU again SOON", then navigates to Title Screen after 3s.
 5. All elements fade in sequentially via `_psychosisRevealTimers`.
@@ -580,7 +580,7 @@ Detected in observer when both `psychosis` and `ending` tags are present. Passag
 | Hover | Colour flicker (red→cyan→yellow→magenta→white), stays fidgeting |
 | Visited hover | No change (locked) |
 
-**Exceptions:** Ryu Konrad, README and Proof (`.game-link` on title screen) have no fidget and no strikethrough, but flicker on hover. Start link has its own chroma animation + flicker. Fullscreen has no fidget. All title screen links exempt from strikethrough.
+**Exceptions:** Ryu Konrad, ReadMe and Proof (`.game-link` on title screen) have no fidget and no strikethrough, but flicker on hover. Start link has its own chroma animation + flicker. Fullscreen has no fidget. All title screen links exempt from strikethrough.
 
 There is no home button anywhere in the work, and the old `[dev]` test link has been removed from the Title Screen.
 
@@ -661,7 +661,7 @@ All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700p
 | Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh with internal vertical scroll |
 | Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll, scatter 5vw (hooks) / 6–11vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
 | Ending scatter | word-salad chunks max 62vw at left 4–34vw; body sentences max 88vw at left 4–10vw; Pathologise link left 8–28vw |
-| Title screen | page can scroll, START 2rem / 0.45em spacing, Start + Fullscreen wrap onto two lines if needed, README / Proof links 0.8rem from the bottom, 1rem from the sides |
+| Title screen | page can scroll, START 2rem / 0.45em spacing, Start + Fullscreen wrap onto two lines if needed, ReadMe / Proof links 0.8rem from the bottom, 1rem from the sides |
 
 To tune phones only, edit inside `if (isMobile())` blocks or the mobile `@media` block.
 
