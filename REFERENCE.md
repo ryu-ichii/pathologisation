@@ -649,6 +649,8 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 
 **Note:** `html_to_twee.py` writes the start passage by name (`"start": "Title Screen"`, taken from Twine's start passage), and `twee_to_html.py` sets `startnode` from that name — so the game always starts on Title Screen even if Twine saves passages in a different order. `story.twee` is not tracked in the game repo — it lives in the `twine-twee-edit` source repo.
 
+**Favicon:** `twee_to_html.py` adds `<link rel="icon" href="./favicon.ico">` after `<title>` (Twine's publish drops it; every build puts it back), and `proof.html` / `readme.html` include the same line. It's needed because GitHub Pages serves the game from `/pathologisation/`, and browsers only find `favicon.ico` automatically at the site root.
+
 **Proof sections:**
 1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
 2. **Unlinked** — story passages not yet connected to the graph (works in progress, incomplete branches)
