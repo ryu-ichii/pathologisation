@@ -137,6 +137,8 @@ Note `phonepsychosis` is shared by Mirror and Phone Psychosis, so both play `ele
 
 **To add images to an existing pool:** drop files into the folder and add their paths to `COLLAGE_POOLS['collage-category']`.
 
+**Image size limit:** keep every image to **2560px on its longest side** (about 5 megapixels). iPhone browsers (Safari and Chrome, both WebKit) can refuse to decode very large images and show a blue "?" box instead — this happened in Exeloo with a 3474×4632 `city12.jpg`. On 1 Oct the six oversized collage images (`city12`, `gloss6`, `subsist6`, `title6`, `natural3`, `natural4`) were resized to 1920×2560 with `sips -Z 2560`; full-size originals are in `pathologisation-image-originals/pre-resize-2026-10-01/`.
+
 Combines cleanly with all other tags. Can be used with `[psychosis]` but may be visually busy.
 
 ### Decor Tags
