@@ -707,7 +707,15 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   .wk-corner { bottom: 0.8rem; }
   .wk-readme { left: 1rem; }
   .wk-proof  { right: 1rem; }
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* ── CRITICAL IMAGE PRELOAD ─────────────────────────────────────────────
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* ── RELOAD RETURNS TO TITLE SCREEN ──────────────────────────────────
+   Harlowe saves the current game in sessionStorage ("Saved Session") and
+   resumes it on reload. Story JavaScript runs before that restore, so
+   clearing it here makes every page load start fresh at the Title Screen
+   (CRB counter, variables and struck-through links all reset).
+   ─────────────────────────────────────────────────────────────────── */
+try { if (window.sessionStorage) sessionStorage.removeItem('Saved Session'); } catch (e) {}
+
+/* ── CRITICAL IMAGE PRELOAD ─────────────────────────────────────────────
    Fires before any game code so the browser fetches examroomdark
    immediately on page load — avoids blank background on first visit.
    ─────────────────────────────────────────────────────────────────── */
@@ -2617,23 +2625,33 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   // Keyed by room (tw-story tags) + link text, so clicking "escape" in one room doesn't
   // strike through a different "escape" link in another room. Harlowe separately adds
   // .visited to any link whose destination passage has already been visited.
-  var _visitedLinks = new Set();
+  // Strikethroughs expire: each key remembers when it was first struck, and after
+  // VISITED_EXPIRE_MS the .visited class is removed (Harlowe's own marks included).
+  // Clicking the link again restarts its timer.
+  var VISITED_EXPIRE_MS = 2 * 60 * 1000;
+  var _visitedLinks = new Map(); // key -> time first struck
   function visitedKey(link) {
     var st = document.querySelector('tw-story');
     return (st ? (st.getAttribute('tags') || '') : '') + '|' + link.textContent.trim();
   }
   document.addEventListener('click', function(e) {
     var link = e.target && e.target.closest ? e.target.closest('tw-link') : null;
-    if (link) _visitedLinks.add(visitedKey(link));
+    if (link) _visitedLinks.set(visitedKey(link), Date.now());
   }, true);
 
   function markVisitedLinks() {
+    var now = Date.now();
     document.querySelectorAll('tw-link').forEach(function(link) {
-      if (_visitedLinks.has(visitedKey(link))) {
-        link.classList.add('visited');
-      }
+      var key = visitedKey(link);
+      // Harlowe marked it (destination already visited) — start its timer on first sight
+      if (link.classList.contains('visited') && !_visitedLinks.has(key)) _visitedLinks.set(key, now);
+      if (!_visitedLinks.has(key)) return;
+      if (now - _visitedLinks.get(key) < VISITED_EXPIRE_MS) link.classList.add('visited');
+      else link.classList.remove('visited');
     });
   }
+  // Also clear expired strikethroughs while the player sits in a room
+  setInterval(markVisitedLinks, 5000);
 
   function onPassageChange() {
     var story = document.querySelector('tw-story');
