@@ -57,7 +57,7 @@ h3.sub-divider
 <body>
 <h1>Pathologisation</h1>
 <tw-passagedata name="Title Screen" tags="titlescreen static collage collage-title"><span class="tags">[titlescreen static collage collage-title]</span>
-&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/ascii_title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
+&lt;img class=&quot;wk-title-svg&quot; src=&quot;./images/title.svg&quot; alt=&quot;Pathologisation&quot;&gt;
 
 &lt;div class=&quot;wk-block&quot;&gt;&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryukonrad.com/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;wk-info&quot;&gt;eLiterature work created for Digital Writing, RMIT (2026).&lt;/div&gt;&lt;div class=&quot;wk-desc&quot;&gt;Pathologisation — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none.&lt;/div&gt;&lt;div class=&quot;wk-info wk-warning&quot;&gt;Content warning: drug use, violence, suicidal themes and depictions of psychosis. Contains flashing images and rapid flicker.&lt;/div&gt;&lt;/div&gt;
 &lt;div class=&quot;wk-github&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;./proof.html&quot; target=&quot;_blank&quot;&gt;Proof&lt;/a&gt;&lt;/div&gt;
@@ -329,7 +329,7 @@ You&#x27;ve ascended. The DOCTOR&#x27;s phrases and medical terminology are boun
 |smooth5&gt;[(link-replace: &quot;Pathologise&quot;)[see YOU again SOON(live: 3s)[(stop:)(goto: &quot;Title Screen&quot;)]]]</tw-passagedata><tw-passagedata name="Servo 2" tags="servotv collage collage-gloss decor-gloss"><span class="tags">[servotv collage collage-gloss decor-gloss]</span>
 Another DAY another bloody SERVO. More labels, and wants. It FEEls as if this can of ENERGY drink might save you from something or someone. HALF of the stuff in here could be the ANTIdote. 
 
-DO you [[Theft Psychosis&lt;-steal]] and fill up a bag or [[Night Walk&lt;-LEAVE]] it?</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis"><span class="tags">[collage collage-psychosis decor-crb psychosis]</span>
+DO you [[Theft Psychosis&lt;-steal]] and fill up a bag or [[Night Walk&lt;-LEAVE]] it?</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis"><span class="tags">[collage collage-psychosis decor-crb psychosis]</span>
 (set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, for some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
@@ -361,7 +361,7 @@ The PLUNGE is beautiful; the RUSH, the storm comes on like a Stravinsky SYMPHONY
 (set: _l to (random: 1, 3))
 (if: _l is 1)[[[Night Walk&lt;-CatholicISm]]       or          [[Psych Ward&lt;-methyLENEdioxypyrOvalerone]]]
 (if: _l is 2)[[[Drugs&lt;-DopAmine]] or         [[Theft Psychosis&lt;-CARceral ARchipelago]]]
-(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 2" tags="collage collage-psychosis decor-crb psychosis"><span class="tags">[collage collage-psychosis decor-crb psychosis]</span>
+(if: _l is 3)[[[Home&lt;-HeteroTOPIA]]                               or          [[GP Office 2&lt;-Supermodernity]]]</tw-passagedata><tw-passagedata name="Complete Reality Breakdown 3" tags="collage collage-psychosis decor-crb psychosis"><span class="tags">[collage collage-psychosis decor-crb psychosis]</span>
 (set: $crbCount to $crbCount + 1)(if: $crbCount &gt;= 3)[(live: 12s)[(goto: &quot;GP Office Final Randomised&quot;)(stop:)]]
 (set: _t to (random: 1, 4))
 (if: _t is 1)[NOW, for some reason you&#x27;re in the GUTTER looking for cigarettes, scrambling for a WAY OUT. People step over you as you CRAWL on all fours.
@@ -579,9 +579,9 @@ siren:           ./audio/siren.mp3
 electrichum:     ./audio/electrichum.mp3
 electricwhine:   ./audio/electricwhine.mp3
 traffic:         ./audio/traffic.mp3
-train-arrive:    ./audio/62031__lukeirl__underground-train-pulls-into-station.mp3
-tube-announce:   ./audio/327942__kwahmah_02__london-underground-mind-the-gap.mp3
-alarm-clock:     ./audio/171043__st303__mechanical-alarm-clock-is-ticking-slava.mp3
-whitenoise:      ./audio/322446__tapepusher__offbeat-white-noise-128bpm.mp3
-metal-door:      ./audio/264014__cell31_sound_productions__door_metal_groans_ext.mp3</tw-passagedata><tw-passagedata name="hal.config">showControls: false</tw-passagedata>
+train-arrive:    ./audio/trainarrive.mp3
+tube-announce:   ./audio/mindthegap.mp3
+alarm-clock:     ./audio/alarmclock.mp3
+whitenoise:      ./audio/whitenoise.mp3
+metal-door:      ./audio/metaldoor.mp3</tw-passagedata><tw-passagedata name="hal.config">showControls: false</tw-passagedata>
 </body></html>

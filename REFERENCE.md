@@ -10,11 +10,13 @@
 >
 > **Folder layout:** `twine-twee-edit/` must sit next to `pathologisation/` (both in `~/Desktop/digital-writing/`) — all scripts read/write `../pathologisation/` relative to themselves. A stale backup copy of both folders also exists in `~/Documents/digital-writing/`; don't edit there.
 >
+> **File names:** all images and audio use simple one-word lowercase names — room backgrounds are named after their tag (e.g. `examroom.jpg`), CRB backgrounds `crb1–4`, collage images `<folder><n>` (e.g. `city4.jpg`). Keep new files to the same pattern. The old→new list is in `~/Desktop/digital-writing/pathologisation-image-originals/RENAME-MAP.txt`.
+>
 > **Images:** large JPG/PNGs were resized (max 2560px long edge) and JPGs re-saved at 82% quality on 1 Oct 2026 — same filenames and formats. Full-resolution originals are backed up in `~/Desktop/digital-writing/pathologisation-image-originals/` (outside the repo). GIFs were left untouched. When adding new images, keep them around 2560px / under ~2MB.
 >
 > **Credits:** third-party image/audio/font credits and the content warning are in `README.md` — add new sources there.
 >
-> **Audit:** `audit.py` runs automatically after `html_to_twee.py` (full report) and after `twee_to_html.py` (snapshot only). It flags missing assets and anything in this file that's out of sync with the code. Known false positive: it reports the `examroom` image as missing because the apostrophe in `Doctor's_office…jpg` breaks its parser — the file exists.
+> **Audit:** `audit.py` runs automatically after `html_to_twee.py` (full report) and after `twee_to_html.py` (snapshot only). It flags missing assets and anything in this file that's out of sync with the code.
 
 ---
 
@@ -48,44 +50,44 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `parkpsychosis` | `parkpsychosis.gif` | Park Psychosis |
 | `brokentoilet` | `brokentoilet.jpg` | Exeloo Episode |
 | `doctorsoffice3` | `gp3.jpg` | GP Office 2 |
-| `examroom` | `Doctor's_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg` | GP Office 3, GP Office 3 Scream, GP Office 3 Kill |
-| `examroomdark` | `GPFINAL.jpg` | GP Office 2 Abuse, GP Office Final Randomised (ending) |
-| `cliniccorridor` | `Consultorio_médico_…_16_de_junio_de_2023.jpg` | GP Office 2 Unsure |
-| `cliniccorridor2` | `Consultorio_médico_…_16_de_junio_de_2023_2.jpg` | New Medication |
-| `clinicwaiting` | `Consultorio_médico_…_21_de_febrero_de_2025.jpg` | Psych Ward Escape |
-| `hospitalward` | `Inauguración_del_Hospital_Regional_de_Apatzingán._(20503993770).jpg` | Psych Ward Stay |
+| `examroom` | `examroom.jpg` | GP Office 3, GP Office 3 Scream, GP Office 3 Kill |
+| `examroomdark` | `gpfinal.jpg` | GP Office 2 Abuse, GP Office Final Randomised (ending) |
+| `cliniccorridor` | `cliniccorridor.jpg` | GP Office 2 Unsure |
+| `cliniccorridor2` | `cliniccorridor2.jpg` | New Medication |
+| `clinicwaiting` | `clinicwaiting.jpg` | Psych Ward Escape |
+| `hospitalward` | `hospitalward.jpg` | Psych Ward Stay |
 | `psychward` | `psychward.jpg` | Psych Ward |
 | `elevator` | `elevator.jpg` | Elevator |
 | `toilet` | `toilet.jpg` | Exeloo |
 | `ezymart` | `ezymart.jpg` | Servo |
-| `servotv` | `IMAG0475_Original.jpg` | Servo 2 |
-| `pharmacy` | `phatmacy.png` | Pharmacy |
-| `phonefog` | `download (2).png` | Phone |
-| `phonepsychosis` | `London_1110092.jpg` | Mirror, Phone Psychosis |
-| `publictiolet` | `jupiter-nz-gold-interior-accessible-lhs.jpg.1200x800_q90_crop-smart_upscale.jpg` | Phone Toilet |
+| `servotv` | `servotv.jpg` | Servo 2 |
+| `pharmacy` | `pharmacy.png` | Pharmacy |
+| `phonefog` | `phonefog.png` | Phone |
+| `phonepsychosis` | `phonepsychosis.jpg` | Mirror, Phone Psychosis |
+| `publictiolet` | `publictoilet.jpg` | Phone Toilet |
 | `nightambience` | `nightambience.jpg` | Night Walk |
 | `citywalk` | `citywalk.png` | Witch Encounter |
 | `citycommute` | `citycommute.png` | City Transit |
 | `glitter` | `lightjitter.gif` | City Dissociation |
 | `parliamentstation` | `parliamentstation.jpg` | Train |
-| `stationunderpass` | `Patterson_Station_underpass_-_panoramio.jpg` | Jail Escape |
-| `jail` | `JAILFINAL.jpg` | Jail |
-| `jailstay` | `imageedit_574_5932585311.jpg` | Jail Stay |
-| `librarylookout` | `Library_Out_View_(2652170151).jpg` | The Faces |
-| `nightalley` | `Ruelle_avec_neige.jpg` | Smash Up |
-| `citychurch` | `Screenshot_2014-11-20-19-29-31~2_Original.jpg` | Abuse Witch |
-| `fluoro` | `IMG_0238_Original.jpg` | Ignore Witch |
-| `theftpsychosis` | `imageedit_588_2085636959.gif` | Theft Psychosis |
+| `stationunderpass` | `stationunderpass.jpg` | Jail Escape |
+| `jail` | `jail.jpg` | Jail |
+| `jailstay` | `jailstay.jpg` | Jail Stay |
+| `librarylookout` | `librarylookout.jpg` | The Faces |
+| `nightalley` | `nightalley.jpg` | Smash Up |
+| `citychurch` | `citychurch.jpg` | Abuse Witch |
+| `fluoro` | `fluoro.jpg` | Ignore Witch |
+| `theftpsychosis` | `theftpsychosis.gif` | Theft Psychosis |
 | `pinktexture` | `pinktexture.gif` | GP Reflection |
-| `homedecay` | `subsisttttt.jpg` | Home |
+| `homedecay` | `homedecay.jpg` | Home |
 | `demolished` | `abstractsurface.jpg` | Drugs |
-| `naturlworld` | `Naturlworld.jpg` | Dream |
+| `naturlworld` | `naturalworld.jpg` | Dream |
 
 **No static background** (collage only): GP Daydream, Cigarette, Insomnia. CRB 1–4 use `CRB_BACKGROUNDS` instead (§8).
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
-**Critical backgrounds preloaded at page load:** `GPFINAL.jpg` and `brokentoilet.jpg` are preloaded via `new Image()` at the very top of Story JavaScript (`window._gpBgImg`, `window._toiletBgImg`) to ensure they're available on first visit without a page refresh. If you replace these images, update both `TAG_BACKGROUNDS` and those two preload lines.
+**Critical backgrounds preloaded at page load:** `gpfinal.jpg` and `brokentoilet.jpg` are preloaded via `new Image()` at the very top of Story JavaScript (`window._gpBgImg`, `window._toiletBgImg`) to ensure they're available on first visit without a page refresh. If you replace these images, update both `TAG_BACKGROUNDS` and those two preload lines.
 
 ### Audio Tags
 
@@ -246,7 +248,7 @@ Currently used in: Title Screen (Ryu Konrad name, Proof).
 - `.wk-desc` — description text, `redaction-20`. Current text: "Pathologisation — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none."
 - `.wk-warning` (with `.wk-info`) — content & photosensitivity warning under the description, same small italic style as the credit line. Its text is stripped out of the ending's word salad in `buildWordSalad()`.
 - `.wk-github` — "Proof" link to `./proof.html` (opens in a new tab), `position: fixed; bottom: 1.2rem; left: 1.4rem`, `redaction-70` regular weight (matches Ryu Konrad style), no fidget, flicker on hover
-- The title itself is an SVG: `images/ascii_title.svg` (`.wk-title-svg`, sized by `fitAsciiTitle()`).
+- The title itself is an SVG: `images/title.svg` (`.wk-title-svg`, sized by `fitAsciiTitle()`).
 
 ---
 
@@ -365,11 +367,11 @@ Handles all background images. Always present, invisible when no background is a
 | `siren` | `siren.mp3` | Tag-based (`theftpsychosis`) |
 | `traffic` | `traffic.mp3` | Tag-based (`parkinglot`) — Car Park |
 | `psychobirds` | `psychosisbirds.mp3` | Tag-based (`parkpsychosis`) — Park Psychosis |
-| `train-arrive` | `62031__lukeirl__underground-train-pulls-into-station.mp3` | Tag-based (`parliamentstation`) — Train |
-| `tube-announce` | `327942__kwahmah_02__london-underground-mind-the-gap.mp3` | Tag-based (`stationunderpass`) — Jail Escape |
-| `alarm-clock` | `171043__st303__mechanical-alarm-clock-is-ticking-slava.mp3` | Tag-based (`hospitalward`) — Psych Ward Stay |
-| `whitenoise` | `322446__tapepusher__offbeat-white-noise-128bpm.mp3` | Tag-based (`jailstay`) — Jail Stay |
-| `metal-door` | `264014__cell31_sound_productions__door_metal_groans_ext.mp3` | Tag-based (`jail`) — Jail |
+| `train-arrive` | `trainarrive.mp3` | Tag-based (`parliamentstation`) — Train |
+| `tube-announce` | `mindthegap.mp3` | Tag-based (`stationunderpass`) — Jail Escape |
+| `alarm-clock` | `alarmclock.mp3` | Tag-based (`hospitalward`) — Psych Ward Stay |
+| `whitenoise` | `whitenoise.mp3` | Tag-based (`jailstay`) — Jail Stay |
+| `metal-door` | `metaldoor.mp3` | Tag-based (`jail`) — Jail |
 | `printer` | `printer.mp3` | Manual — `(track: 'printer', 'seek', 3)` in New Medication |
 
 `hal.config` sets `showControls: false` (no HAL audio controls shown).
@@ -492,10 +494,10 @@ Each CRB passage (1–4) independently randomises its own text (4 options) and e
 **Background:** randomly picked from `CRB_BACKGROUNDS` in Story JavaScript on each visit (triggered by the `collage-psychosis` tag):
 ```javascript
 var CRB_BACKGROUNDS = [
-  './images/imageedit_285_8113537643.jpg',
-  './images/imageedit_449_8256361766.gif',
-  './images/81130024_Original.jpg',
-  './images/IMG_20180317_232214874_Original.jpg',
+  './images/crb1.jpg',
+  './images/crb2.gif',
+  './images/crb3.jpg',
+  './images/crb4.jpg',
 ];
 ```
 Add or swap paths here to change CRB background options.
@@ -553,7 +555,7 @@ Detected in observer when both `psychosis` and `ending` tags are present. Passag
 
 **CSS override** (`tw-story[tags~="psychosis"][tags~="ending"] tw-passage`): overrides the standard ending centred layout — full `100vw/100vh`, `left:0`, `top:0`, `transform:none` so scatter elements fill the whole screen.
 
-**Background:** `GPFINAL.jpg` via `examroomdark` tag. Preloaded at page start. `updateBackground()` resets opacity/transition so the CRB dissolve doesn't leave the bg invisible.
+**Background:** `gpfinal.jpg` via `examroomdark` tag. Preloaded at page start. `updateBackground()` resets opacity/transition so the CRB dissolve doesn't leave the bg invisible.
 
 **To adjust:**
 - Word count: change `18 + Math.floor(Math.random() * 10)` in `buildWordSalad()`

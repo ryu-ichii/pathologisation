@@ -15,26 +15,26 @@ Contains drug use, violence, suicidal themes and depictions of psychosis. Contai
 ## Credits
 
 ### Images (Wikimedia Commons)
-- *Doctor's office – New Orleans Medical District, Sept 2023* — Infrogmation of New Orleans, [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
-- *Consultorio médico en una Farmacia Similares, Mazatlán, 16 de junio de 2023* — El Nuevo Doge, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
-- *Consultorio médico en una Farmacia Similares, Mazatlán, 21 de febrero de 2025* — DogeGamer2015MZT, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
-- *Inauguración del Hospital Regional de Apatzingán* — Presidencia de la República Mexicana, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
-- *Library Out View* — Alan Levine, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
-- *Patterson Station underpass* — gary4now, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
-- *Ruelle avec neige* — Miguel Angel Omaña Rojas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
-- *London 1110092* — Nevit Dilmen, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) / GFDL 1.2
-- *White pigeon walking on cracked pavement, King Street, Gillingham, Kent* — OathOn, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
-- *Medical Office – Exam Room* — Tony Webster, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
-- *2025 Degraves Street Subway Platform 4 & 5 Stairway Arch* — 100percent ballerina, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- *Doctor's office – New Orleans Medical District, Sept 2023* (`examroom.jpg`) — Infrogmation of New Orleans, [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
+- *Consultorio médico en una Farmacia Similares, Mazatlán, 16 de junio de 2023* (`cliniccorridor.jpg, cliniccorridor2.jpg`) — El Nuevo Doge, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+- *Consultorio médico en una Farmacia Similares, Mazatlán, 21 de febrero de 2025* (`clinicwaiting.jpg`) — DogeGamer2015MZT, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+- *Inauguración del Hospital Regional de Apatzingán* (`hospitalward.jpg`) — Presidencia de la República Mexicana, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+- *Library Out View* (`librarylookout.jpg`) — Alan Levine, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+- *Patterson Station underpass* (`stationunderpass.jpg`) — gary4now, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- *Ruelle avec neige* (`nightalley.jpg`) — Miguel Angel Omaña Rojas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- *London 1110092* (`phonepsychosis.jpg`) — Nevit Dilmen, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) / GFDL 1.2
+- *White pigeon walking on cracked pavement, King Street, Gillingham, Kent* (`collage/natural/natural9.jpg`) — OathOn, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- *Medical Office – Exam Room* (`collage/medical/medical4.jpg`) — Tony Webster, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+- *2025 Degraves Street Subway Platform 4 & 5 Stairway Arch* (`collage/city/city4.jpg, collage/gloss/gloss1.jpg`) — 100percent ballerina, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 Some images have been cropped, edited or recoloured for use in the work.
 
 ### Audio (Freesound)
-- *Underground train pulls into station* — LukeIRL, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-- *London Underground – Mind The Gap* — kwahmah_02, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
-- *Mechanical alarm clock is ticking (SLAVA)* — ST303, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
-- *Offbeat white noise 128bpm* — Tapepusher, [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
-- *Door Metal Groans Ext* — Cell31 Sound Productions, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- *Underground train pulls into station* (`trainarrive.mp3`) — LukeIRL, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- *London Underground – Mind The Gap* (`mindthegap.mp3`) — kwahmah_02, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- *Mechanical alarm clock is ticking (SLAVA)* (`alarmclock.mp3`) — ST303, [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+- *Offbeat white noise 128bpm* (`whitenoise.mp3`) — Tapepusher, [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+- *Door Metal Groans Ext* (`metaldoor.mp3`) — Cell31 Sound Productions, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### Fonts
 - Redaction — Jeremy Mickel & Forest Young
