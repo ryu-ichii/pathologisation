@@ -656,7 +656,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 
 ## 13. MOBILE (screens ≤ 700px wide)
 
-All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700px)')`) and an `@media (max-width: 700px)` block at the end of Story Stylesheet. **Desktop layout is unaffected** — every desktop value is unchanged when `isMobile()` is false.
+No screen scrolls as a page on phones — long passage text scrolls inside its own box as a fallback. All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700px)')`) and an `@media (max-width: 700px)` block at the end of Story Stylesheet. **Desktop layout is unaffected** — every desktop value is unchanged when `isMobile()` is false.
 
 | Area | Phone behaviour |
 |------|-----------------|
@@ -664,7 +664,7 @@ All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700p
 | Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll (fallback only), scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
 | CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling |
 | Ending scatter | word-salad chunks max 62vw at left 4–34vw; body sentences max 88vw at left 4–10vw; Pathologise link left 8–28vw |
-| Title screen | page can scroll (title screen only — every other screen stays fixed, via `html:has(tw-story[tags~="titlescreen"])`), text block pull-up `-0.4em` and Start/Fullscreen `+0.2em` (instead of desktop's -2.2em / -1.8em), START 2rem / 0.45em spacing, Start + Fullscreen wrap if needed, ReadMe / Proof links 0.8rem from the bottom, 1rem from the sides |
+| Title screen | fits one screen, no scrolling: ASCII title 100% wide (no side bleed), name 1.35rem, info/warning 0.72rem, description 0.8rem, START 1.6rem, Fullscreen 0.9rem (hidden on iPhone), ReadMe/Proof 1rem; no text pull-up (desktop -2.2em), Start/Fullscreen 0.8rem below the warning (desktop -1.8em), wrap onto two lines if needed |
 
 To tune phones only, edit inside `if (isMobile())` blocks or the mobile `@media` block.
 

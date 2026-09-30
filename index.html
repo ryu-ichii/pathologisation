@@ -682,14 +682,19 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
    Phones only — desktop is unaffected. Layout JS also checks isMobile().
    ────────────────────────────────────────────────────────────────────── */
 @media (max-width: 700px) {
-  /* page scroll on the title screen only — elsewhere oversized decor/collage would make the page scrollable */
-  html:has(tw-story[tags~="titlescreen"]),
-  html:has(tw-story[tags~="titlescreen"]) body { overflow-y: auto; }
   tw-story[tags~="psychosis"] tw-passage { font-size: 1.15rem !important; }
   tw-story[tags~="collage-psychosis"] tw-passage { font-size: 1rem !important; } /* CRBs: fit without scrolling */
-  /* title spacing: the desktop pull-ups (-2.2em / -1.8em) are too strong at phone size */
-  .wk-block { margin-top: -0.4em; }
-  .title-actions { margin-top: 0.2em; }
+  /* title screen: everything sized to fit one phone screen, no scrolling */
+  .wk-title-svg { width: 100%; margin: 0 0 0.3rem 0; }   /* no side bleed — desktop uses -20vw margins */
+  .wk-block { margin-top: 0; gap: 0.15rem; }             /* desktop pull-up is -2.2em */
+  .wk-author-name { font-size: 1.35rem; }
+  .wk-info { font-size: 0.72rem; line-height: 1.35; }    /* also tightens the 2-line content warning */
+  .wk-desc { font-size: 0.8rem; line-height: 1.4; }
+  .title-actions { margin-top: 0.8rem; gap: 0.4rem 1rem; } /* desktop pull-up is -1.8em */
+  tw-story[tags~="titlescreen"] .fullscreen-btn { padding: 0.2em 0; }
+  tw-story[tags~="titlescreen"] .fullscreen-btn tw-link,
+  tw-story[tags~="titlescreen"] .fullscreen-btn tw-link:link { font-size: 0.9rem; letter-spacing: 0.3em; }
+  .wk-corner { font-size: 1rem; }
   tw-story[tags~="psychosis"] tw-hook[name="smooth1"],
   tw-story[tags~="psychosis"] tw-hook[name="smooth2"],
   tw-story[tags~="psychosis"] tw-hook[name="smooth3"],
@@ -698,7 +703,7 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
   tw-story[tags~="psychosis"] tw-hook[name="smooth5"] tw-link { font-size: 1.6rem !important; }
   .title-actions { flex-wrap: wrap; gap: 0.6rem; }
   tw-story[tags~="titlescreen"] .start-link tw-link,
-  tw-story[tags~="titlescreen"] .start-link tw-link:link { font-size: 2rem; letter-spacing: 0.45em; }
+  tw-story[tags~="titlescreen"] .start-link tw-link:link { font-size: 1.6rem; letter-spacing: 0.4em; }
   .wk-corner { bottom: 0.8rem; }
   .wk-readme { left: 1rem; }
   .wk-proof  { right: 1rem; }
