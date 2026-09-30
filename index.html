@@ -1702,6 +1702,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
 
   function startPsychosisWander(passage) {
     stopPsychosisWander();
+    var mob = isMobile(); // phones: smaller fragments, kept fully on screen
 
     /* Shuffle quadrant zones — one per hook, forced apart on screen */
     var zones = [
@@ -1726,10 +1727,10 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         'position:fixed',
         'z-index:200',
         "font-family:'velvelyne',Georgia,serif",
-        'font-size:1.6rem',
+        'font-size:' + (mob ? '1.05rem' : '1.6rem'),
         'color:#fff',
         'pointer-events:none',
-        'max-width:55vw',
+        'max-width:' + (mob ? '72vw' : '55vw'),
         'white-space:normal'
       ].join(';');
       document.body.appendChild(proxy);
@@ -1738,8 +1739,17 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       var timer = null;
       var cancelled = false;
 
-      proxy.style.top  = (zone.top  + Math.random() * 42).toFixed(1) + '%';
-      proxy.style.left = (zone.left + Math.random() * 38).toFixed(1) + '%';
+      // Phones only: clamp a position (in %) so the whole fragment stays on screen
+      function fit(top, left) {
+        if (!mob) return [top, left];
+        var hPct = proxy.offsetHeight / window.innerHeight * 100;
+        var wPct = proxy.offsetWidth / window.innerWidth * 100;
+        return [Math.max(1, Math.min(+top, 98 - hPct)).toFixed(1), Math.max(1, Math.min(+left, 99 - wPct)).toFixed(1)];
+      }
+
+      var _start = fit((zone.top  + Math.random() * 42).toFixed(1), (zone.left + Math.random() * 38).toFixed(1));
+      proxy.style.top  = _start[0] + '%';
+      proxy.style.left = _start[1] + '%';
 
       function wander() {
         if (cancelled) return;
@@ -1752,6 +1762,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
           top  = (zone.top  + Math.random() * 44).toFixed(1);
           left = (zone.left + Math.random() * 44).toFixed(1);
         }
+        var _fit = fit(top, left); top = _fit[0]; left = _fit[1];
         var dur = Math.floor(100 + Math.random() * 300); /* snappier */
         proxy.style.transition = 'top ' + dur + 'ms ease-in-out, left ' + dur + 'ms ease-in-out';
         proxy.style.top  = top + '%';
@@ -1777,16 +1788,18 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         if (!escLink) return;
         var top  = (20 + Math.random() * 55).toFixed(1);
         var left = (10 + Math.random() * 60).toFixed(1);
+        if (mob) left = (3 + Math.random() * 12).toFixed(1); // phones: keep the link inside the right edge
         var escProxy = document.createElement('div');
         escProxy.id = '_smooth5-body';
         escProxy.style.cssText = [
           'position:fixed',
           'display:block',
           "font-family:'tt-hoves-pro',Arial,Helvetica,sans-serif",
-          'font-size:2.2rem',
+          'font-size:' + (mob ? '1.5rem' : '2.2rem'),
           'color:#fff',
           'z-index:500',
           'cursor:pointer',
+          'max-width:' + (mob ? '90vw' : 'none'),
           'top:' + top + '%',
           'left:' + left + '%'
         ].join(';');
@@ -2269,20 +2282,20 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         var band = vertBands[hookIdx];
         var pos = {
           top:  (band[0] + Math.random() * (band[1] - band[0])).toFixed(1) + 'vh',
-          left: (3 + Math.random() * 55).toFixed(1) + '%'
+          left: (isMobile() ? (3 + Math.random() * 9) : (3 + Math.random() * 55)).toFixed(1) + '%' // phones: 3–12%
         };
         var sc = document.createElement('div');
         sc.className = '_psych-settle';
         sc.style.cssText = [
           'position:fixed',
-          'width:38vw',
+          'width:' + (isMobile() ? '80vw' : '38vw'),
           'max-width:560px',
           'top:' + pos.top,
           'left:' + pos.left,
           'z-index:100',
           'pointer-events:none',
           "font-family:'velvelyne',Georgia,serif",
-          'font-size:1.6rem',
+          'font-size:' + (isMobile() ? '1.05rem' : '1.6rem'),
           'color:#fff',
           'line-height:1.15'
         ].join(';');
@@ -2305,6 +2318,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         });
 
         document.body.appendChild(sc);
+        if (isMobile()) {
+          // Phones: pull the block up if it would run past the bottom of the screen
+          var _scBottom = sc.getBoundingClientRect().bottom;
+          if (_scBottom > window.innerHeight - 8) {
+            sc.style.top = Math.max(8, sc.offsetTop - (_scBottom - (window.innerHeight - 8))) + 'px';
+          }
+        }
       });
     }, SETTLE_DELAY);
     _psychosisRevealTimers.push(settleTimer);

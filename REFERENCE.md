@@ -663,6 +663,9 @@ No screen scrolls as a page on phones — long passage text scrolls inside its o
 | Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh with internal vertical scroll |
 | Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll (fallback only), scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
 | CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling |
+| Wandering smooth1–4 fragments | 1.05rem (desktop 1.6rem), max 72vw wide, every position clamped (`fit()`) so the whole fragment stays on screen |
+| smooth5 fake escape link | 1.5rem (desktop 2.2rem), left 3–15%, max 90vw |
+| Settle lines (6–10s) | 80vw wide at left 3–12%, 1.05rem, pulled up if they'd run past the bottom |
 | Ending scatter | word-salad chunks max 62vw at left 4–34vw; body sentences max 88vw at left 4–10vw; Pathologise link left 8–28vw |
 | Title screen | fits one screen, no scrolling: ASCII title 100% wide (no side bleed), name 1.35rem, info/warning 0.72rem, description 0.8rem, START 1.6rem, Fullscreen 0.9rem (hidden on iPhone), ReadMe/Proof 1rem; no text pull-up (desktop -2.2em), Start/Fullscreen 0.8rem below the warning (desktop -1.8em), wrap onto two lines if needed |
 
