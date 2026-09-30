@@ -7,6 +7,14 @@
 > **Twine → code workflow:** edit in Twine → save → `cd twine-twee-edit && python3 html_to_twee.py` (reads from `pathologisation/index.html`) → make code edits to `story.twee` → `python3 twee_to_html.py`.
 >
 > **Proof:** `proof.html` is auto-regenerated on every `twee_to_html.py` compile via `twee_to_proof.py`. Run `python3 twee_to_proof.py` standalone to regenerate without a full compile.
+>
+> **Folder layout:** `twine-twee-edit/` must sit next to `pathologisation/` (both in `~/Desktop/digital-writing/`) — all scripts read/write `../pathologisation/` relative to themselves. A stale backup copy of both folders also exists in `~/Documents/digital-writing/`; don't edit there.
+>
+> **Images:** large JPG/PNGs were resized (max 2560px long edge) and JPGs re-saved at 82% quality on 1 Oct 2026 — same filenames and formats. Full-resolution originals are backed up in `~/Desktop/digital-writing/pathologisation-image-originals/` (outside the repo). GIFs were left untouched. When adding new images, keep them around 2560px / under ~2MB.
+>
+> **Credits:** third-party image/audio/font credits and the content warning are in `README.md` — add new sources there.
+>
+> **Audit:** `audit.py` runs automatically after `html_to_twee.py` (full report) and after `twee_to_html.py` (snapshot only). It flags missing assets and anything in this file that's out of sync with the code. Known false positive: it reports the `examroom` image as missing because the apostrophe in `Doctor's_office…jpg` breaks its parser — the file exists.
 
 ---
 
@@ -18,12 +26,12 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
-| `titlescreen` | Title screen layout, no home button, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
-| `breakdownfont` | `redaction-20` body at 0.9em, links pinned to 48px `tt-hoves-pro`, random BD distress effect (tremor/blur/glitch), stagger layout (same as other passages, top constrained to 3–8vh). Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs, Smash Up, Abuse Witch |
-| `psychosis` | `redaction-50` body at `1rem !important`, chromatic aberration, cummings body layout (10s reveal delay), wandering smooth1–4 hooks, smooth5 fake escape link, no font combos, no home button, no BD distress effects | Park Psychosis, Public Toilet Psychosis, TV Psychosis, Phone Psychosis, Servo 2, Theft Psychosis |
+| `titlescreen` | Title screen layout, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
+| `breakdownfont` | `redaction-20` body at 1.1em, links `tt-hoves-pro` at 1em, random BD distress effect (tremor/blur/glitch), normal layout but with a smaller indent range (2–7vw) and top constrained to 3–15vh. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs, Smash Up, Abuse Witch |
+| `psychosis` | `redaction-50` body at `1.5rem !important`, chromatic aberration, cummings body layout, no font combos, no BD distress effects. Passages *with* smooth hooks get wandering smooth1–4 + smooth5 fake escape link; passages *without* hooks get the wide CRB-style layout (see §4). | With hooks: Park Psychosis, Exeloo Episode. Without hooks: Mirror, Phone Psychosis, Theft Psychosis, Psych Ward Stay, Complete Reality Breakdown 1–4. Also GP Office Final Randomised (with `ending`, see §9) |
+| `ending` | Combined with `psychosis`: replaces the passage with the JS ending scatter (§9) | GP Office Final Randomised |
 | `pinktexture` | `pinktexture.gif` background | GP Reflection |
-| `floating` | Loads all images from `FLOATING_POOL` (Story JavaScript) as drifting `floating-img` elements. No `<img>` tags needed in passage. Add paths to `FLOATING_POOL`, drop files in `images/floating/`. | GP Reflection |
-| `erratic` | Loads 2–4 random images from `ERRATIC_POOL` (Story JavaScript) as jittery `erratic-img` elements. Add paths to `ERRATIC_POOL`, drop files in `images/erratic/`. | Complete Reality Breakdown 1–4 |
+| `floating` | Loads all images from `FLOATING_POOL` (Story JavaScript) as drifting `floating-img` elements. No `<img>` tags needed in passage. Add paths to `FLOATING_POOL`, drop files in `images/floating/`. | GP Reflection, GP Office 2, Pharmacy |
 
 ### Background Image Tags
 
@@ -38,28 +46,46 @@ Add the tag and its image path in `TAG_BACKGROUNDS` (Story JavaScript):
 | `parkbench` | `parkbench.jpg` | Park Encounter |
 | `static` | `static.gif` | Title Screen |
 | `parkpsychosis` | `parkpsychosis.gif` | Park Psychosis |
-| `brokentoilet` | `brokentoilet.jpg` | Public Toilet Psychosis |
+| `brokentoilet` | `brokentoilet.jpg` | Exeloo Episode |
 | `doctorsoffice3` | `gp3.jpg` | GP Office 2 |
-| `elevator` | `elevator.jpg` | Elevator |
+| `examroom` | `Doctor's_office_-_New_Orleans_Medical_District,_Sept_2023_-_1.jpg` | GP Office 3, GP Office 3 Scream, GP Office 3 Kill |
+| `examroomdark` | `GPFINAL.jpg` | GP Office 2 Abuse, GP Office Final Randomised (ending) |
+| `cliniccorridor` | `Consultorio_médico_…_16_de_junio_de_2023.jpg` | GP Office 2 Unsure |
+| `cliniccorridor2` | `Consultorio_médico_…_16_de_junio_de_2023_2.jpg` | New Medication |
+| `clinicwaiting` | `Consultorio_médico_…_21_de_febrero_de_2025.jpg` | Psych Ward Escape |
+| `hospitalward` | `Inauguración_del_Hospital_Regional_de_Apatzingán._(20503993770).jpg` | Psych Ward Stay |
 | `psychward` | `psychward.jpg` | Psych Ward |
-| `toilet` | `toilet.jpg` | Public Toilet |
-| `ezymart` | `ezymart.jpg` | Ezymart |
+| `elevator` | `elevator.jpg` | Elevator |
+| `toilet` | `toilet.jpg` | Exeloo |
+| `ezymart` | `ezymart.jpg` | Servo |
+| `servotv` | `IMAG0475_Original.jpg` | Servo 2 |
+| `pharmacy` | `phatmacy.png` | Pharmacy |
+| `phonefog` | `download (2).png` | Phone |
+| `phonepsychosis` | `London_1110092.jpg` | Mirror, Phone Psychosis |
+| `publictiolet` | `jupiter-nz-gold-interior-accessible-lhs.jpg.1200x800_q90_crop-smart_upscale.jpg` | Phone Toilet |
 | `nightambience` | `nightambience.jpg` | Night Walk |
-| `citywalk` | `citywalk.png` | City Walk |
+| `citywalk` | `citywalk.png` | Witch Encounter |
 | `citycommute` | `citycommute.png` | City Transit |
-| `pinktexture` | `pinktexture.gif` | GP Reflection |
 | `glitter` | `lightjitter.gif` | City Dissociation |
+| `parliamentstation` | `parliamentstation.jpg` | Train |
+| `stationunderpass` | `Patterson_Station_underpass_-_panoramio.jpg` | Jail Escape |
 | `jail` | `JAILFINAL.jpg` | Jail |
+| `jailstay` | `imageedit_574_5932585311.jpg` | Jail Stay |
+| `librarylookout` | `Library_Out_View_(2652170151).jpg` | The Faces |
+| `nightalley` | `Ruelle_avec_neige.jpg` | Smash Up |
+| `citychurch` | `Screenshot_2014-11-20-19-29-31~2_Original.jpg` | Abuse Witch |
+| `fluoro` | `IMG_0238_Original.jpg` | Ignore Witch |
+| `theftpsychosis` | `imageedit_588_2085636959.gif` | Theft Psychosis |
+| `pinktexture` | `pinktexture.gif` | GP Reflection |
+| `homedecay` | `subsisttttt.jpg` | Home |
+| `demolished` | `abstractsurface.jpg` | Drugs |
+| `naturlworld` | `Naturlworld.jpg` | Dream |
 
-| `examroomdark` | `GPFINAL.jpg` | GP Office Final (ending) |
+**No static background** (collage only): GP Daydream, Cigarette, Insomnia. CRB 1–4 use `CRB_BACKGROUNDS` instead (§8).
 
 **To add a new background:** drop the image in `images/`, add one line to `TAG_BACKGROUNDS`, add the tag to your passage.
 
 **Critical backgrounds preloaded at page load:** `GPFINAL.jpg` and `brokentoilet.jpg` are preloaded via `new Image()` at the very top of Story JavaScript (`window._gpBgImg`, `window._toiletBgImg`) to ensure they're available on first visit without a page refresh. If you replace these images, update both `TAG_BACKGROUNDS` and those two preload lines.
-
-### Solid Colour Background Tags
-
-The `SOLID_COLORS` map in `updateBackground()` is currently empty — no solid colour rooms active. To add one: `'mytag': '#hexcolor'` in `SOLID_COLORS`, then tag the passage.
 
 ### Audio Tags
 
@@ -74,23 +100,30 @@ Auto-plays a looping track when entering, stops when leaving:
 | `theftpsychosis` | `siren.mp3` | Theft Psychosis |
 | `parkinglot` | `traffic.mp3` | Car Park |
 | `parkpsychosis` | `psychosisbirds.mp3` | Park Psychosis |
+| `parliamentstation` | `train-arrive` (underground train pulls into station) | Train |
+| `stationunderpass` | `tube-announce` (mind the gap) | Jail Escape |
+| `hospitalward` | `alarm-clock` (mechanical alarm clock ticking) | Psych Ward Stay |
+| `jailstay` | `whitenoise` (offbeat white noise) | Jail Stay |
+| `jail` | `metal-door` (metal door groans) | Jail |
+
+Note `phonepsychosis` is shared by Mirror and Phone Psychosis, so both play `electricwhine`.
 
 **To add a new room track:** add the audio file to `audio/`, register it in `hal.tracks` passage, add one line to `TAG_TRACKS` in Story JavaScript.
 
 ### Collage Tags
 
-`[collage]` alone draws from the default pool (`COLLAGE_IMAGES`). Add a named category tag alongside to draw from a specific folder instead. Tags are **independent from decor tags** — mix and match freely.
+`[collage]` must be paired with a named category tag, which picks the image folder (there is no default pool — `[collage]` alone shows nothing). Tags are **independent from decor tags** — mix and match freely.
 
 | Tag | Folder | Currently used on |
 |-----|--------|------------------|
 | `collage` | required on all collage passages | — |
-| `collage-medical` | `images/collage/medical/` (8 images) | GP Office 1, GP Confess, GP Lie, GP Reception, GP Reassess, GP Ignore, GP Office 2/3, GP Office 2 Accept/Reject, GP Office 3 Escape/Stay |
-| `collage-natural` | `images/collage/natural/` (13 images) | Park Encounter, Park Psychosis |
-| `collage-city` | `images/collage/city/` (20 images) | Car Park, Public Toilet Psychosis |
-| `collage-gloss` | `images/collage/gloss/` (12 images) | Pharmacy |
-| `collage-subsist` | `images/collage/subsist/` (16 images) | GP Daydream, GP Reflection |
-| `collage-title` | `images/collage/title/` (10 images) | Title Screen |
-| `collage-psychosis` | `images/collage/psychosis/` (5 images) | Complete Reality Breakdown 1–4 |
+| `collage-medical` | `images/collage/medical/` (11 images) | GP Reception, GP Office 1, GP Confess, GP Lie, GP Reassess, New Medication, GP Office 2, GP Office 2 Abuse, GP Office 2 Unsure, GP Office 3, GP Office 3 Scream, GP Office 3 Kill, Psych Ward, Psych Ward Escape, Psych Ward Stay, GP Office Final Randomised |
+| `collage-natural` | `images/collage/natural/` (13 images) | Park Encounter, Park Psychosis, Dream |
+| `collage-city` | `images/collage/city/` (21 images) | Car Park, Exeloo, Exeloo Episode, Elevator, Night Walk, City Dissociation, Witch Encounter, Abuse Witch, Ignore Witch, City Transit, Train, The Faces, Smash Up, Theft Psychosis, Jail, Jail Escape, Jail Stay |
+| `collage-gloss` | `images/collage/gloss/` (13 images) | Phone, Phone Toilet, Phone Psychosis, Mirror, Pharmacy, Servo, Servo 2 |
+| `collage-subsist` | `images/collage/subsist/` (16 images) | GP Daydream, GP Reflection, Home, Cigarette, Insomnia, Drugs |
+| `collage-title` | `images/collage/title/` (11 images) | Title Screen |
+| `collage-psychosis` | `images/collage/psychosis/` (5 images) | Complete Reality Breakdown 1–4 (also triggers the `CRB_BACKGROUNDS` random background) |
 
 **Image sizing:** width randomised 45–85vw per image, max-height 85vh. All pools use the same sizing function — title screen is not differentiated.
 
@@ -108,11 +141,11 @@ Pool-based system — tag a passage `[decor decor-medical]` etc. to add it to th
 
 | Tag | Pool passage | Font | Currently used on |
 |-----|-------------|------|------------------|
-| `decor-medical` | `Medical Decor` | combo redaction (10–50) | GP Confess, GP Lie |
-| `decor-city` | `City Decor` | combo redaction (10–50) | Car Park |
-| `decor-gloss` | `Gloss Decor` | combo redaction (10–50) | Pharmacy |
-| `decor-subsist` | `Subsist Decor` | combo redaction (10–50) | Home |
-| `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter |
+| `decor-medical` | `Medical Decor` | combo redaction (10–50) | All `collage-medical` passages except GP Reception |
+| `decor-city` | `City Decor` | combo redaction (10–50) | All `collage-city` passages except Exeloo Episode and Theft Psychosis |
+| `decor-gloss` | `Gloss Decor` | combo redaction (10–50) | Phone, Phone Toilet, Pharmacy, Servo, Servo 2 |
+| `decor-subsist` | `Subsist Decor` | combo redaction (10–50) | GP Daydream, GP Reflection, Home, Cigarette, Insomnia, Drugs, Exeloo Episode |
+| `decor-natural` | `Natural Decor` | combo redaction (10–50) | Park Encounter, Dream |
 | `decor-crb` | `CRB Decor Pool` | random `redaction-70` or `redaction-100` | Complete Reality Breakdown 1–4 |
 
 **Format of a decor passage** — write in Twine, each option ends with `| size`:
@@ -136,13 +169,7 @@ Size options: `xxl xl lg md sm xs`. Lines starting with `#` are comments. One bl
 
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
-| `echo` | Ghosted shadow of the passage text drifts slightly offset, slowly animated. JS rewrites it with tense/subject shifts (I→you, was→is, etc.). | *(not yet used)* |
-| `dissolve` | ~30% of words in the passage slowly fade to invisible over 3–15s after arrival. | New Medication |
-| `contradict` | Words marked with `data-contradict="alt text"` typewriter-overwrite themselves with the alt, then erase, loop. | Dream |
-
-**Usage:**
-- Add tag to passage header
-- For `contradict`, also wrap words in passage: `<span data-contradict="replacement">original</span>`
+| `echo` | Ghosted shadow of the passage text drifts slightly offset, slowly animated. JS rewrites it with tense/subject shifts (I→you, was→is, etc.). | Night Walk, Insomnia |
 
 ---
 
@@ -154,7 +181,7 @@ Word softly blurs and fades in/out on a 4s cycle. Feels like a word losing focus
 ```
 The |charged>[resonant] ticks.
 ```
-Currently used in: ~50% of passages (applied automatically). Add manually to any word: `|charged>[WORD]`.
+Added manually — not automatic. Currently used in: GP Reassess, GP Office 2, Park Encounter, Phone, Dream, Home, Insomnia, Drugs, The Faces, Smash Up, Abuse Witch.
 
 ### `|smooth1>` `|smooth2>` `|smooth3>` `|smooth4>`
 **Psychosis rooms only.** Text fragments that wander randomly across the screen continuously. Text is injected from a `[fragment-pool]` passage — leave the hook empty in the passage:
@@ -163,12 +190,12 @@ Currently used in: ~50% of passages (applied automatically). Add manually to any
 |smooth1>[ ]
 |smooth2>[ ]
 ```
-Font: **`velvelyne`**. Currently used in: Park Psychosis, Public Toilet Psychosis.
+Font: **`velvelyne`** 1.6rem. Currently used in: Park Psychosis, Exeloo Episode.
 
-Wander behaviour: starts moving immediately on arrival (`void el.offsetTop` forces initial position commit before transition). Position range: `top` 5–77%, `left` 3–68% — stays within viewport. Speed: 250–1450ms per move.
+Wander behaviour: each hook becomes a body-level proxy assigned its own shuffled screen quadrant, with occasional full-screen breakout moves. Starts moving immediately on arrival. Speed: 100–400ms per move.
 
 ### `|smooth5>`
-**Psychosis rooms only.** The fake escape link. Hidden for 5s, then appears at a random screen position. After clicking, lingers 2.5s then fades out. Use with `(link-replace:)`.
+**Psychosis rooms only.** The fake escape link. Appears at 2s at a random screen position as a body-level proxy with JS chromatic aberration. After clicking, the Harlowe response lingers 2.5s then fades out. Use with `(link-replace:)`. Currently used in: Park Psychosis, Exeloo Episode (and GP Office Final Randomised, where the ending scatter replaces it).
 
 ```
 |smooth5>[(link-replace: (either: "leave", "run", "get out"))[(either: "nice try", "you're tripping")]]
@@ -199,24 +226,11 @@ Image that drifts slowly around the screen. Starts hidden, pops in within 0–8s
 **Why hide originals:** Original `<img class="floating-img">` elements remain in the passage DOM after `startFloatingImages` clones them. They have `position: absolute` from the CSS, so they end up stacked at the top-left of their nearest `position: relative` ancestor (a sentence div in the layout system). The `float-breathe` animation then makes the stack visibly pulse in one spot. Setting `display: none` on each original as its src is collected eliminates this.
 
 **Important:** Wrap the `<img>` tags in a container div — do NOT put them as bare children of the passage root. The layout system (`splitAtSentences`) filters out subgroups with no text content; a bare `<img>` with no surrounding text would be silently dropped from the rebuilt DOM. Wrapping in a `<div>` preserves them as element nodes.
-Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection via `[floating]` tag. Floating images live in `images/floating/` (medication PNGs: escitalopram, ambien, seroquel, valium, zopiclone, ativan, paxam, zyprexa).
+Speed/size configurable in `startFloatingImages()`. Currently used in: GP Reflection, GP Office 2, Pharmacy via `[floating]` tag. Floating images live in `images/floating/` (medication PNGs: escitalopram, ambien, seroquel, valium, zopiclone, ativan, paxam, zyprexa).
 
-**Note:** floating images use `position: fixed; z-index: -1`. They only show if `tw-story` is transparent (`has-bg-image` class). Solid-colour and image-backed rooms both add `has-bg-image` via JS, so images always show. Do not give `tw-story` a CSS `background-color` for any room that has floating images.
+**Note:** floating images use `position: fixed; z-index: -1`. They only show if `tw-story` is transparent (`has-bg-image` class). Image-backed and collage rooms add `has-bg-image` via JS, so floating images show. Do not give `tw-story` a CSS `background-color` for any room that has floating images.
 
 **Pool system:** Tag a passage `[floating]` to automatically load all images from `FLOATING_POOL` in Story JavaScript — no `<img>` tags needed in the passage. Add paths to `FLOATING_POOL` to grow the pool. Hardcoded `<img class="floating-img">` tags still work alongside the pool.
-
-### `erratic-img`
-Image that moves fast and jittery, glitch-flickers opacity and colour. Starts hidden, appears within 0–3s.
-
-```html
-<img class="erratic-img" src="./images/erratic/static.gif">
-```
-Images live in `images/erratic/` (static.gif, nightambience.jpg, parkpsychosis.gif, brokentoilet.jpg).
-
-**Pool system:** Tag a passage `[erratic]` to automatically load 2–4 random images from `ERRATIC_POOL` in Story JavaScript. Add paths to `ERRATIC_POOL` to grow the pool. Drop new images in `images/erratic/` and add their paths to activate them.
-
-### `.crrf-bg-overlay`
-Full-screen background image overlay (z-index below text). Available for future use — not currently active (CRB backgrounds are now handled by `CRB_BACKGROUNDS` array in JS).
 
 ### `.game-link`
 Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plain `<a>` tag. Used for external links.
@@ -224,13 +238,15 @@ Styled like a `tw-link` (glow, fidget animation, flicker on hover) but on a plai
 ```html
 <a class="game-link" href="https://..." target="_blank">Link text</a>
 ```
-Currently used in: Title Screen (Ryu Konrad name, GitHub).
+Currently used in: Title Screen (Ryu Konrad name, Proof).
 
 **Title Screen author block structure:**
 - `.wk-author-name` — "Ryu Konrad" link, `redaction-70` regular weight, no fidget/flicker, no strikethrough
 - `.wk-info` — credit line ("eLiterature work created for Digital Writing, RMIT (2026)."), `redaction-50` italic
-- `.wk-desc` — description text, `redaction-20`. Current text: "Psychosis — insatiability and uncertainty within the structures and institutions of modernity. An attempt at finding and articulating truth through the practice of digitisation."
-- `.wk-github` — GitHub link, `position: fixed; bottom: 1.2rem; left: 1.4rem`, `redaction-70` regular weight (matches Ryu Konrad style), no fidget/flicker
+- `.wk-desc` — description text, `redaction-20`. Current text: "Pathologisation — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none."
+- `.wk-warning` (with `.wk-info`) — content & photosensitivity warning under the description, same small italic style as the credit line. Its text is stripped out of the ending's word salad in `buildWordSalad()`.
+- `.wk-github` — "Proof" link to `./proof.html` (opens in a new tab), `position: fixed; bottom: 1.2rem; left: 1.4rem`, `redaction-70` regular weight (matches Ryu Konrad style), no fidget, flicker on hover
+- The title itself is an SVG: `images/ascii_title.svg` (`.wk-title-svg`, sized by `fitAsciiTitle()`).
 
 ---
 
@@ -239,13 +255,13 @@ Currently used in: Title Screen (Ryu Konrad name, GitHub).
 ### Layout randomiser
 Every non-psychosis, non-titlescreen passage gets a random indentation mode and a central screen position on each load. Fires on **every navigation** — the same passage looks different every visit.
 
-**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 3–45vh, `left` 5–30%.
+**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 3–45vh (breakdownfont: 3–15vh), `left` 5–23%.
 
 **How fragments are made:**
 1. Content is split at `<br>` boundaries (paragraph-level)
 2. Each paragraph is further split at sentence boundaries (`. ` `! ` `? `) into sentence-level fragments
 3. Each fragment becomes a block `<div>` with `position: relative; left: Xvw`
-4. **35% chance:** a pure-text fragment (4+ words, no links) is further broken into 2–3 word-group sub-lines, each with its own slightly varied indent — a lighter version of the psychosis scatter
+4. **55% chance:** a pure-text fragment (4+ words, no links) is further broken into word-group sub-lines, each with its own slightly varied indent (see letter-stacking below)
 5. Shifting with `left` (not `padding-left`) keeps every fragment at full width — no narrow columns
 
 **Indentation modes** (one picked at random, `scatter` and `jump` weighted 2×):
@@ -259,32 +275,34 @@ Every non-psychosis, non-titlescreen passage gets a random indentation mode and 
 | `wave` | Sine-wave curve |
 | `reverse` | Right-to-left sweep |
 
-Max indent range: **12–34vw** (re-randomised each load). `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
+Max indent range: **4–14vw** (breakdownfont: 2–7vw), re-randomised each load. `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
 
-**55% chance:** eligible sentence fragments split into word groups. Within the split, words of ≤3 letters have a **50% chance of being letter-stacked vertically** (each letter its own line), capped at **2 stacks per passage** to prevent layout overflow. Psychosis body text is unaffected — it has its own independent layout.
-
-Passage position: `left` 5–23%, `top` 3–42vh.
+Within a word-group split, words of 2–3 letters have a **50% chance of being letter-stacked vertically** (each letter its own line), capped at **2 stacks per passage** to prevent layout overflow. Psychosis body text is unaffected — it has its own independent layout.
 
 Skipped on: `[psychosis]`, `[titlescreen]`.
 
 ### Psychosis layout (`[psychosis]` passages only)
 
-Passage anchored: `position: fixed; width: 42vw; top: 8vh; left: 5–50%` (randomised each load).
+`applyPsychosisLayout()` behaves differently depending on whether the passage contains any smooth hooks.
 
-Body text reveals in three phases:
+**With smooth hooks** (Park Psychosis, Exeloo Episode) — passage `position: fixed; width: 42vw; top: 8vh; left: 5–50%`:
+- **0s:** body text hidden. smooth1–4 wander as body-level proxies (see §2). smooth5 fake escape link appears at 2s.
+- **6–10s (random):** wander stops. Each hook's text is broken into short lines and placed in its own fixed "settle" container, anchored top→bottom down the screen, lines staggering in.
+- **10s:** settle containers fade out and body text reveals one unit at a time at 90ms intervals.
+- **20s:** Harlowe `(live: 20s)` redirects (main text gets ~10s on screen).
 
-**Phase 1 (0–5s):** Body text is hidden (`opacity: 0`). smooth1–4 hooks wander as body-level proxy elements (escaping Harlowe's DOM for true viewport positioning), each assigned a shuffled screen quadrant with 55% full-screen breakout moves. smooth5 fake escape link appears at 2s with JS-driven chromatic aberration (200ms interval).
+**Without smooth hooks** (CRB 1–4, Mirror, Phone Psychosis, Theft Psychosis, Psych Ward Stay) — passage widened to `82vw`, `left: 3–12%`:
+- Body reveals at 1.5s, then the passage's links reveal (each scattered individually) once the body finishes.
+- Words grouped 4–8 per line, no letter-stacking, 8% chance of a mid-word break, wider scatter (18–33vw).
+- Exits: Mirror 15s, Phone Psychosis and Theft Psychosis 10s via `(live:)`; Psych Ward Stay via a 12s JS timer to a random CRB; CRBs see §8.
 
-**Phase 2 (5–25s):** Wander proxies removed. Each hook's text is extracted, broken into 5–7 word lines, and placed in its own fixed container anchored top→bottom (hook 1 ~5vh, hook 2 ~30vh, hook 3 ~56vh, hook 4 ~78vh) with a random `LAYOUT_MODES` scatter indent. Lines stagger in at 70ms intervals.
-
-**Phase 3 (25–40s):** Settle containers fade out (`opacity 0.8s ease`) and body text fragments reveal one unit at a time at 90ms intervals (typewriter over the scattered layout). The text is pre-processed into cummings-style units:
-- **Short words (≤3 letters):** 40% chance of being letter-stacked (each letter its own line). The rest join the word buffer.
+**Cummings-style units (with-hooks passages):**
+- **Short words (≤3 letters):** 40% chance of being letter-stacked (each letter its own line).
 - **Long words (≥7 letters):** 28% chance of a mid-word break 2–5 chars in.
-- **Normal words:** grouped into chunks of up to 4 per scatter div to control total height.
-- **All units** get a bimodal scatter (`left: 0–2.6vw` or `5–12vw`) via `position: relative`.
+- **Normal words:** grouped into chunks of up to 4 per scatter div.
 - Line height: `1.15` (tight, to prevent overflow).
 
-Auto-redirect at 40s fires regardless. Navigating away cancels the reveal cleanly and removes all proxies/settle containers.
+`hospitalward` (Psych Ward Stay) skips the fragment pool and the wander entirely. Navigating away cancels the reveal cleanly and removes all proxies/settle containers.
 
 **CSS transition gotcha — why the hook fade uses `requestAnimationFrame`:** The wander cleanup sets `el.style.transition = 'none'`. If you then set `el.style.transition = 'opacity 0.8s ease'` and `el.style.opacity = '0'` in the same synchronous JS block, the browser collapses both transition assignments into one style recalculation frame — the `none` step is never committed — and the animation may not fire. Wrapping the opacity change in a `requestAnimationFrame` ensures the `none` state is painted first; the following frame then correctly transitions from opacity 1 → 0.
 
@@ -296,11 +314,11 @@ Every passage (except psychosis and titlescreen) animates words in on load. Word
 ### Link fidget
 All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough and dimmed opacity.
 
-**Visited tracking:** The CSS `:visited` pseudo-class doesn't work on custom `tw-link` elements. Instead, a JS `_visitedLinks` Set stores the text of every clicked link. On each passage load, `markVisitedLinks()` re-applies the `.visited` class to any matching links. Title screen links (Start, Fullscreen) are exempt from the strikethrough.
+**Visited tracking:** two things add `.visited` to a link. (1) Harlowe itself marks any link whose *destination* passage has already been visited. (2) A JS `_visitedLinks` Set records each clicked link keyed by **room (tw-story tags) + link text** (`visitedKey()`), and `markVisitedLinks()` re-applies `.visited` on each passage load. Keying by room means clicking "escape" in GP Confess doesn't strike through the different "escape" link in Psych Ward. Title screen links (Start, Fullscreen) are exempt from the strikethrough.
 
 **Title Screen link behaviour:**
-- **Start** — capital S, italic (`terminal-grotesque`), has fidget + colour flicker on hover. No strikethrough. Styled via `.start-link` wrapper span + CSS.
-- **Ryu Konrad / GitHub** — static, no fidget, no flicker, no strikethrough.
+- **Start** — `terminal-grotesque` italic uppercase (displays as START), 2.6rem, letter-spacing 0.65em, `chroma-aberration` + `chroma-pulse` animation, colour flicker on hover. No strikethrough. Styled via `.start-link` wrapper span + CSS. Links to GP Reception.
+- **Ryu Konrad / Proof** — static (no fidget), colour flicker on hover, no strikethrough.
 - **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough.
 
 ### Link flicker on hover
@@ -318,7 +336,7 @@ Suppressed entirely when passage also has `[psychosis]` tag.
 Text-shadow snaps erratically between different red/cyan fringe intensities. Uses `steps(1)` for a sharp, digital glitch feel.
 
 ### Background `#bg-layer`
-Handles all backgrounds — both image and solid colour. Always present, invisible when no background is active. `tw-story` is always kept transparent (`has-bg-image`) whenever a background is active, so `floating-img` elements (z-index: -1) remain visible. Breathing animations live on `#bg-layer` so they never affect text or floating images via filter stacking context.
+Handles all background images. Always present, invisible when no background is active. `tw-story` is always kept transparent (`has-bg-image`) whenever a background is active, so `floating-img` elements (z-index: -1) remain visible.
 
 ---
 
@@ -347,7 +365,14 @@ Handles all backgrounds — both image and solid colour. Always present, invisib
 | `siren` | `siren.mp3` | Tag-based (`theftpsychosis`) |
 | `traffic` | `traffic.mp3` | Tag-based (`parkinglot`) — Car Park |
 | `psychobirds` | `psychosisbirds.mp3` | Tag-based (`parkpsychosis`) — Park Psychosis |
-| `printer` | `printer.mp3` | Manual — `(track: 'printer', 'seek', 5)` in New Medication |
+| `train-arrive` | `62031__lukeirl__underground-train-pulls-into-station.mp3` | Tag-based (`parliamentstation`) — Train |
+| `tube-announce` | `327942__kwahmah_02__london-underground-mind-the-gap.mp3` | Tag-based (`stationunderpass`) — Jail Escape |
+| `alarm-clock` | `171043__st303__mechanical-alarm-clock-is-ticking-slava.mp3` | Tag-based (`hospitalward`) — Psych Ward Stay |
+| `whitenoise` | `322446__tapepusher__offbeat-white-noise-128bpm.mp3` | Tag-based (`jailstay`) — Jail Stay |
+| `metal-door` | `264014__cell31_sound_productions__door_metal_groans_ext.mp3` | Tag-based (`jail`) — Jail |
+| `printer` | `printer.mp3` | Manual — `(track: 'printer', 'seek', 3)` in New Medication |
+
+`hal.config` sets `showControls: false` (no HAL audio controls shown).
 
 ---
 
@@ -418,13 +443,12 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 |---------|------|
 | Global base (`tw-story`) | `1.35em` |
 | Default story base (`redaction-20`) | inherits from `tw-story` |
-| Breakdownfont body | `0.9em` |
-| Breakdownfont links | `48px !important` |
+| Breakdownfont body | `1.1em` |
+| Breakdownfont links | `1em !important` |
 | Psychosis body (`tw-passage`) | `1.5rem !important` — pinned via rem, independent of any em scaling |
 | smooth1–4 hooks | `1.6rem !important` — pinned |
 | smooth5 + its link | `2.2rem` |
-| UI buttons (home, fullscreen) | `0.9rem` |
-| Title screen Start | `1.7rem` |
+| Title screen Start | `2.6rem` |
 | Title screen Fullscreen | `1rem` italic |
 | Title screen author name | `clamp(1.5rem, 2.9vw, 2.2rem)` |
 | Title screen info line | `clamp(0.75rem, 1.4vw, 0.95rem)` italic |
@@ -438,14 +462,15 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Psychosis body text | `redaction-50` |
 | smooth1–4 wandering hooks | `velvelyne` |
 | smooth5 fake escape link | `tt-hoves-pro` 2.2rem, JS chromatic aberration (200ms interval), appears at 2s, body-level proxy |
-| Title screen Start link | `terminal-grotesque`, 1.7rem, letter-spacing 0.55em, fidget + flicker |
+| Title screen Start link | `terminal-grotesque` italic uppercase, 2.6rem, letter-spacing 0.65em, chroma animation + flicker |
 | Title screen "Ryu Konrad" | `redaction-70` regular weight, no fidget |
-| Title screen GitHub | `source-code-pro`, no fidget |
+| Title screen Proof link | `redaction-70` regular weight, no fidget |
 | Title screen Fullscreen | `terminal-grotesque`, italic, lowercase, letter-spacing 0.4em, no fidget |
-| Home button | `terminal-grotesque` |
 | Intrusion words (`.lp-intrusion`) | JS-randomised from `redaction` / `redaction-10` / `redaction-20` / `redaction-35` / `redaction-50` — independent of combo |
-| Breakdownfont body | `redaction-20` at 0.9em |
-| Breakdownfont links | `tt-hoves-pro` at 48px |
+| CRB decor | `redaction-70` or `redaction-100` |
+| Ending sequence body + Pathologise link | `source-code-pro` |
+| Breakdownfont body | `redaction-20` at 1.1em |
+| Breakdownfont links | `tt-hoves-pro` at 1em |
 
 ---
 
@@ -455,26 +480,61 @@ Each CRB passage (1–4) independently randomises its own text (4 options) and e
 
 **Text randomisation:** `(set: _t to (random: 1, 4))` + `(if: _t is N)[...]` — 4 text options per passage.
 
-**Link randomisation:** `(set: _l to (random: 1, 3))` + `(if: _l is N)[...]` — 3 link pairs (Night Walk/Psych Ward, Drugs/Theft Psychosis, Home/GP Office 2).
+**Link randomisation:** `(set: _l to (random: 1, 3))` + `(if: _l is N)[...]` — 3 link pairs, with the link text shown in brackets:
+1. Night Walk (CatholicISm) / Psych Ward (methyLENEdioxypyrOvalerone)
+2. Drugs (DopAmine) / Theft Psychosis (CARceral ARchipelago)
+3. Home (HeteroTOPIA) / GP Office 2 (Supermodernity)
 
 **To add a new text or link option:** edit the `(if:)` blocks directly in each CRB passage and update the `(random: 1, N)` range.
 
-**Background:** randomly picked from `CRB_BACKGROUNDS` array in Story JavaScript on each visit:
+**Tags:** `[collage collage-psychosis decor-crb psychosis]`. Being `psychosis` with no smooth hooks, CRBs get the wide 82vw psychosis layout (§4): body reveals at 1.5s, then the links.
+
+**Background:** randomly picked from `CRB_BACKGROUNDS` in Story JavaScript on each visit (triggered by the `collage-psychosis` tag):
 ```javascript
 var CRB_BACKGROUNDS = [
-  './images/static.gif',
-  './images/parkpsychosis.gif',
-  './images/psychward.jpg',
-  './images/nightambience.jpg',
+  './images/imageedit_285_8113537643.jpg',
+  './images/imageedit_449_8256361766.gif',
+  './images/81130024_Original.jpg',
+  './images/IMG_20180317_232214874_Original.jpg',
 ];
 ```
 Add or swap paths here to change CRB background options.
 
-**Collage:** `[collage collage-psychosis]` — 5 images from `images/collage/psychosis/`.
+**Collage:** `collage-psychosis` — 5 images from `images/collage/psychosis/`. (The older issue where the collage layer covered CRB text is no longer present.)
 
 **Decor:** `[decor-crb]` — draws from `CRB Decor Pool` passage (`redaction-70` or `redaction-100`).
 
-**Exit loop:** Counter tracked in JS (`_jsCrbCount`). On 3rd visit, a 7s timer fires `window._crbFinalTrigger()` — `triggerCRBDissolve()` fades passage + background + collage to opacity 0 over 2s, then navigates to `GP Office Final Randomised`. Harlowe `(live: 12s)[(goto:)]` in each CRB passage acts as a fallback. `updateBackground()` resets opacity to 1 on every background apply — required to undo the dissolve fade when GP Office Final loads.
+**Entry points (the only three ways in):**
+
+| From | Method | Timing | Destination |
+|------|--------|--------|-------------|
+| Psych Ward Stay | JS timer (`_psychWardTimer`, triggered by the `hospitalward` tag) → `window._goToCRB()` | 12s, automatic | Random CRB 1–4 |
+| Phone Psychosis | `(live: 10s)[(if: (random: 1, 2) is 1)[(goto: "GP Office 2")](else:)[<script>window._goToCRB('Complete Reality Breakdown 1');</script>](stop:)]` | 10s, automatic | 50% CRB 1, 50% GP Office 2 |
+| Jail Stay | `(link: "CAVE")[<script>window._goToCRB();</script>]` | On click | Random CRB 1–4 |
+
+**All CRB entries go through `window._goToCRB()`** (Story JavaScript, next to `_crbFinalTrigger`). It navigates with `Engine.goToPassage()` after a 50ms delay, so arriving in a CRB always behaves like a normal link click. No argument → random CRB 1–4 (from `CRB_PASSAGES`); pass a name for a specific one. **To add a new route into the CRBs, call `window._goToCRB()` — don't use a Harlowe `(goto:)` to a CRB.** The proof generator recognises `_goToCRB()` as a link to all four CRBs.
+
+CRBs never link to each other directly — their exits go to Night Walk, Psych Ward, Drugs, Theft Psychosis, Home or GP Office 2.
+
+**Known navigation gotcha:** a Harlowe `(goto:)` fires while Harlowe is still rendering, so the JS passage observer can run before the CRB's content exists. Historically this caused the collage layer to cover the CRB text. `startBgCollage` is now deferred 500ms to allow for this. `Engine.goToPassage()` (JS) behaves like a normal link click and doesn't have the problem — which is why all CRB entries (via `_goToCRB`) and the ending trigger use it.
+
+**Exit loop:** counted twice — Harlowe `$crbCount` (set at the top of each CRB passage) and JS `_jsCrbCount` (incremented on each `decor-crb` visit). On the 3rd visit:
+- the CRB's links are hidden (after 400ms), so the player can't leave;
+- a 7s JS timer fires `window._crbFinalTrigger()` → `triggerCRBDissolve()` fades passage + background + collage to opacity 0 over 2s, then navigates to `GP Office Final Randomised`;
+- Harlowe `(if: $crbCount >= 3)[(live: 12s)[(goto: "GP Office Final Randomised")]]` is the fallback.
+
+Before the 3rd visit there is no auto-redirect — the player picks a link.
+
+**Counter reset:** both counters reset at the start of each run — `$crbCount` via `(set: $crbCount to 0)` in GP Reception, `_jsCrbCount` in JS whenever a `waitingroom` passage (GP Reception) loads. This means replaying from the Title Screen without refreshing starts the count from zero.
+
+**Counter history (why there are two counters):**
+1. 5 Jun — Harlowe `$crbVisits` counter in each CRB passage.
+2. 5 Jun — moved to JS `sessionStorage` (`crbVisits`) with a page-reload check. sessionStorage survives reloads and restarts, so the count leaked between playthroughs.
+3. 6 Jun ("it broke") — back to Harlowe `$crbCount`, reset at GP Reception, with `(live: 1s)` to the ending.
+4. 8 Jun ("FIXED AND FINAL") — added the in-memory JS `_jsCrbCount` + 7s dissolve trigger as the primary mechanism, keeping the Harlowe `(live: 12s)` as fallback. Psych Ward Stay's entry also moved from Harlowe `(live:)[(goto:)]` to the JS timer in this commit.
+5. 1 Oct — all three CRB entries unified through `window._goToCRB()` (same probabilities); Psych Ward Stay timer 5s → 12s; `_jsCrbCount` now resets at GP Reception.
+
+`updateBackground()` resets opacity to 1 on every background apply — required to undo the dissolve fade when GP Office Final loads.
 
 ---
 
@@ -482,11 +542,11 @@ Add or swap paths here to change CRB background options.
 
 Tags: `[examroomdark psychosis ending collage collage-medical decor-medical]`
 
-Detected in observer when both `psychosis` and `ending` tags are present. Passage content is completely replaced by JS-generated scatter elements — the Harlowe passage text acts only as a fallback.
+Detected in observer when both `psychosis` and `ending` tags are present. Passage content is completely replaced by JS-generated scatter elements (inline in `onPassageChange`) — the Harlowe passage text acts only as a fallback.
 
 **Sequence:**
 1. Passage cleared (`while (p.firstChild) p.removeChild(p.firstChild)`)
-2. **Word salad** (top half, ~0–47vh): `buildWordSalad()` scrapes all `tw-passagedata`, filters camelCase/digits/short words, shuffles, picks 18–28 words. Scattered as `position:absolute` divs at random `top/left` (4–47vh). Short words (2–4 letters) have a 38% chance of vertical letter-stacking, capped at 4 stacks total.
+2. **Word salad** (top half, ~0–47vh): `buildWordSalad()` scrapes all `tw-passagedata`, filters camelCase/digits/short words and the title-screen words in `_wsExclude` (RMIT, Konrad, Ryu, Proof, Pathologisation), shuffles, picks 18–28 words. Scattered as `position:absolute` divs at random `top/left` (4–47vh). Short words (2–4 letters) have a 38% chance of vertical letter-stacking, capped at 4 stacks total.
 3. **Body text** (bottom half, ~52–76vh): 5 fixed sentences scattered at evenly-spaced `top` bands with ±1.5vh jitter. Short words (3–4 letters) have a 35% chance of vertical stacking. Monospace font (`source-code-pro`).
 4. **Pathologise link**: appears at `top: 87vh`, random left. Glowing white, chromatic aberration animation. Click → text changes to "see YOU again SOON", then navigates to Title Screen after 3s.
 5. All elements fade in sequentially via `_psychosisRevealTimers`.
@@ -512,9 +572,9 @@ Detected in observer when both `psychosis` and `ending` tags are present. Passag
 | Hover | Colour flicker (red→cyan→yellow→magenta→white), stays fidgeting |
 | Visited hover | No change (locked) |
 
-**Exceptions:** Ryu Konrad and GitHub (`.game-link` on title screen) have no fidget and no strikethrough. Start link has fidget + flicker. Fullscreen has no fidget. All title screen links exempt from strikethrough.
+**Exceptions:** Ryu Konrad and Proof (`.game-link` on title screen) have no fidget and no strikethrough, but flicker on hover. Start link has its own chroma animation + flicker. Fullscreen has no fidget. All title screen links exempt from strikethrough.
 
-A `[dev] toilet psychosis` placeholder link on the Title Screen links directly to Public Toilet Psychosis for testing. Remove when no longer needed.
+There is no home button anywhere in the work, and the old `[dev]` test link has been removed from the Title Screen.
 
 ---
 
@@ -526,13 +586,6 @@ A `[dev] toilet psychosis` placeholder link on the Title Screen links directly t
 ```
 Add to `TAG_BACKGROUNDS`: `'mytag': './images/myimage.jpg'`  
 Add to `TAG_TRACKS`: `'mytag': 'mytrack'`
-
-**New solid-colour room:**
-```
-:: Room Name [blue] {"position": "x,y", "size": "100,100"}
-```
-Add to `SOLID_COLORS` in `updateBackground()`: `'blue': '#0029a3'`  
-Do NOT add a CSS `background-color` rule on `tw-story` for this tag — JS handles it.
 
 **Random text in passage:**
 ```
@@ -554,8 +607,8 @@ Do NOT add a CSS `background-color` rule on `tw-story` for this tag — JS handl
 (live: 40s)[(goto: (either: "Passage A", "Passage B"))]
 ```
 
-**Dissolving/echo/contradict passage:**
-Add tag `[dissolve]`, `[echo]`, or `[contradict]` to the passage header.
+**Echo passage:**
+Add tag `[echo]` to the passage header.
 
 **Decor (floating background text):**
 Create `:: My Passage decor [decor]` with the intrusion poem text.
@@ -577,6 +630,9 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 | `twee_to_html.py` | Compiles `story.twee` → `index.html` (also copies to `pathologisation/`). Auto-runs `twee_to_proof.py` at the end. |
 | `html_to_twee.py` | Extracts `pathologisation/index.html` (Twine's save target) → `story.twee`. Run after editing in Twine. |
 | `twee_to_proof.py` | Generates `pathologisation/proof.html` from `story.twee`. Run standalone or auto-called by compile. |
+| `audit.py` | Health + sync check (missing assets, orphaned audio, psychosis passages missing hooks/redirects, REFERENCE.md drift). Full report after `html_to_twee.py`; `--save-only` after compile just updates `story.snapshot.json`, which it uses to report passage changes since the last build. |
+
+**Note:** `html_to_twee.py` writes `"start": ""` in StoryData, so the start passage is kept only because Title Screen stays at pid 8 in the passage order. `story.twee` is not tracked in git — only `index.html` is committed.
 
 **Proof sections:**
 1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
@@ -587,7 +643,22 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 
 ---
 
-## 12. FRAGMENT POOL SYSTEM
+## 13. MOBILE (screens ≤ 700px wide)
+
+All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700px)')`) and an `@media (max-width: 700px)` block at the end of Story Stylesheet. **Desktop layout is unaffected** — every desktop value is unchanged when `isMobile()` is false.
+
+| Area | Phone behaviour |
+|------|-----------------|
+| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh with internal vertical scroll |
+| Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll, scatter 5vw (hooks) / 6–11vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
+| Ending scatter | word-salad chunks max 62vw at left 4–34vw; body sentences max 88vw at left 4–10vw; Pathologise link left 8–28vw |
+| Title screen | page can scroll, START 2rem / 0.45em spacing, Start + Fullscreen wrap onto two lines if needed, Proof link 0.8rem/1rem from corner |
+
+To tune phones only, edit inside `if (isMobile())` blocks or the mobile `@media` block.
+
+---
+
+## 14. FRAGMENT POOL SYSTEM
 
 Centralises all randomised text for psychosis rooms into dedicated passages, keeping the room passages clean and all content editable in one place.
 
@@ -629,7 +700,7 @@ smooth1: Park-specific fragment. | Another one.
 ...
 ```
 
-JS picks the most specific match (shared tag with room), falls back to the generic pool if none found.
+JS picks the most specific match (shared tag with room), falls back to the generic pool if none found. **Currently only the generic `Psychosis Fragment Pool` exists** — no room-specific pools. All four steps above are skipped for `hospitalward` (Psych Ward Stay) except `applyPsychosisLayout`.
 
 ### Adding new smooth hooks
 
