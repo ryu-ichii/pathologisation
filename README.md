@@ -1,5 +1,4 @@
 # Pathologisation
-Current working version of Ass 3 eLiterature work for RMIT Digital Writing, 2026. 
 
 ## Description
 **Pathologisation** — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none.
