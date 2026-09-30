@@ -322,7 +322,7 @@ Every passage (except psychosis and titlescreen) animates words in on load. Word
 ### Link fidget
 All links tremble slightly in a continuous micro-animation (`fidget` keyframes, `steps(40)`). Visited links lose the animation and get a strikethrough and dimmed opacity.
 
-**Visited tracking:** two things add `.visited` to a link. (1) Harlowe itself marks any link whose *destination* passage has already been visited. (2) A JS `_visitedLinks` Set records each clicked link keyed by **room (tw-story tags) + link text** (`visitedKey()`), and `markVisitedLinks()` re-applies `.visited` on each passage load. Keying by room means clicking "escape" in GP Confess doesn't strike through the different "escape" link in Psych Ward. Title screen links (Start, Fullscreen) are exempt from the strikethrough. **Strikethroughs expire after 2 minutes** (`VISITED_EXPIRE_MS`): each key stores the time it was first struck (Harlowe-marked links start their timer when first seen), `markVisitedLinks()` removes `.visited` once expired, and it also re-runs every 5 s so strikes clear while the player stays in a room. Clicking the link again restarts its timer.
+**Visited tracking:** two things add `.visited` to a link. (1) Harlowe itself marks any link whose *destination* passage has already been visited. (2) A JS `_visitedLinks` Map records each clicked link (with the time it was struck) keyed by **room (tw-story tags) + link text** (`visitedKey()`), and `markVisitedLinks()` re-applies `.visited` on each passage load. Keying by room means clicking "escape" in GP Confess doesn't strike through the different "escape" link in Psych Ward. Title screen links (Start, Fullscreen) are exempt from the strikethrough. **Strikethroughs expire after 2 minutes** (`VISITED_EXPIRE_MS`): each key stores the time it was first struck (Harlowe-marked links start their timer when first seen), `markVisitedLinks()` removes `.visited` once expired, and it also re-runs every 5 s so strikes clear while the player stays in a room. Clicking the link again restarts its timer.
 
 **Reload returns to the Title Screen:** Harlowe normally resumes the game on reload from `sessionStorage` ("Saved Session"). The top of Story JavaScript deletes that key (Story JS runs before Harlowe's restore), so every page load is a fresh run — variables, the JS CRB counter and strikethroughs all reset.
 
@@ -537,14 +537,14 @@ CRBs never link to each other directly — their exits go to Night Walk, Psych W
 
 Before the 3rd visit there is no auto-redirect — the player picks a link.
 
-**Counter reset:** both counters reset at the start of each run — `$crbCount` via `(set: $crbCount to 0)` in GP Reception, `_jsCrbCount` in JS whenever a `waitingroom` passage (GP Reception) loads. This means replaying from the Title Screen without refreshing starts the count from zero.
+**Counter reset:** both counters reset at the start of each run — `$crbCount` via `(set: $crbCount to 0)` in GP Reception, `_jsCrbCount` in JS whenever a `waitingroom` passage (GP Reception) loads. This means replaying from the Title Screen without refreshing starts the count from zero. A page reload also resets both, because reload now always starts a fresh run at the Title Screen (see §4 "Reload returns to the Title Screen") — previously a reload restored `$crbCount` from Harlowe's saved session but wiped `_jsCrbCount`, leaving them out of step.
 
 **Counter history (why there are two counters):**
 1. 5 Jun — Harlowe `$crbVisits` counter in each CRB passage.
 2. 5 Jun — moved to JS `sessionStorage` (`crbVisits`) with a page-reload check. sessionStorage survives reloads and restarts, so the count leaked between playthroughs.
 3. 6 Jun ("it broke") — back to Harlowe `$crbCount`, reset at GP Reception, with `(live: 1s)` to the ending.
 4. 8 Jun ("FIXED AND FINAL") — added the in-memory JS `_jsCrbCount` + 7s dissolve trigger as the primary mechanism, keeping the Harlowe `(live: 12s)` as fallback. Psych Ward Stay's entry also moved from Harlowe `(live:)[(goto:)]` to the JS timer in this commit.
-5. 1 Oct — all three CRB entries unified through `window._goToCRB()` (same probabilities); Psych Ward Stay timer 5s → 12s; `_jsCrbCount` now resets at GP Reception.
+5. 1 Oct — all three CRB entries unified through `window._goToCRB()` (same probabilities); Psych Ward Stay timer 5s → 12s; `_jsCrbCount` now resets at GP Reception. Later on 1 Oct — reload always returns to the Title Screen (Harlowe's "Saved Session" cleared at startup), so both counters also reset on reload.
 
 `updateBackground()` resets opacity to 1 on every background apply — required to undo the dissolve fade when GP Office Final loads.
 
@@ -580,7 +580,7 @@ Detected in observer when both `psychosis` and `ending` tags are present. Passag
 | State | Appearance |
 |-------|-----------|
 | Unvisited | White at 90% opacity, glow, fidget animation |
-| Visited | 55% opacity, strikethrough, no animation |
+| Visited | 55% opacity, strikethrough, no animation — reverts to Unvisited after 2 minutes (see §4 Visited tracking) |
 | Hover | Colour flicker (red→cyan→yellow→magenta→white), stays fidgeting |
 | Visited hover | No change (locked) |
 
