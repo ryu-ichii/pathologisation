@@ -641,7 +641,7 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 | `readme_to_html.py` | Generates `pathologisation/readme.html` from `pathologisation/README.md` (linked from the title screen). Auto-called by compile; run standalone after editing only the README. |
 | `audit.py` | Health + sync check (missing assets, orphaned audio, psychosis passages missing hooks/redirects, REFERENCE.md drift). Full report after `html_to_twee.py`; `--save-only` after compile just updates `story.snapshot.json`, which it uses to report passage changes since the last build. |
 
-**Note:** `html_to_twee.py` writes `"start": ""` in StoryData, so the start passage is kept only because Title Screen stays at pid 8 in the passage order. `story.twee` is not tracked in git — only `index.html` is committed.
+**Note:** `html_to_twee.py` writes the start passage by name (`"start": "Title Screen"`, taken from Twine's start passage), and `twee_to_html.py` sets `startnode` from that name — so the game always starts on Title Screen even if Twine saves passages in a different order. `story.twee` is not tracked in the game repo — it lives in the `twine-twee-edit` source repo.
 
 **Proof sections:**
 1. **Linked** — passages reachable via the link graph from Title Screen, in BFS order
