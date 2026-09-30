@@ -682,8 +682,14 @@ tw-story.font-combo-6 .dialogue em, tw-story.font-combo-6 .dialogue i { font-fam
    Phones only — desktop is unaffected. Layout JS also checks isMobile().
    ────────────────────────────────────────────────────────────────────── */
 @media (max-width: 700px) {
-  html, body { overflow-y: auto; }
+  /* page scroll on the title screen only — elsewhere oversized decor/collage would make the page scrollable */
+  html:has(tw-story[tags~="titlescreen"]),
+  html:has(tw-story[tags~="titlescreen"]) body { overflow-y: auto; }
   tw-story[tags~="psychosis"] tw-passage { font-size: 1.15rem !important; }
+  tw-story[tags~="collage-psychosis"] tw-passage { font-size: 1rem !important; } /* CRBs: fit without scrolling */
+  /* title spacing: the desktop pull-ups (-2.2em / -1.8em) are too strong at phone size */
+  .wk-block { margin-top: -0.4em; }
+  .title-actions { margin-top: 0.2em; }
   tw-story[tags~="psychosis"] tw-hook[name="smooth1"],
   tw-story[tags~="psychosis"] tw-hook[name="smooth2"],
   tw-story[tags~="psychosis"] tw-hook[name="smooth3"],
@@ -1318,6 +1324,23 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
      Called from: Psych Ward Stay (JS timer), Phone Psychosis and Jail Stay
      (inline <script> in the passage).
      ────────────────────────────────────────────────────────────────────── */
+  /* ── FULLSCREEN ─────────────────────────────────────────────────────────
+     Title screen "Fullscreen" link calls window._goFullscreen(). Uses the
+     standard API or the older webkit one (iPad / older Safari). iPhone Safari
+     supports neither, so the button is hidden there (see titlescreen branch
+     in onPassageChange).
+     ────────────────────────────────────────────────────────────────────── */
+  window._canFullscreen = function() {
+    var d = document.documentElement;
+    return !!(d.requestFullscreen || d.webkitRequestFullscreen);
+  };
+  window._goFullscreen = function() {
+    var d = document.documentElement;
+    var f = d.requestFullscreen || d.webkitRequestFullscreen;
+    if (!f) return;
+    try { var r = f.call(d); if (r && r.catch) r.catch(function() {}); } catch (e) {}
+  };
+
   var CRB_PASSAGES = ['Complete Reality Breakdown 1', 'Complete Reality Breakdown 2', 'Complete Reality Breakdown 3', 'Complete Reality Breakdown 4'];
   window._goToCRB = function(name) {
     var target = name || CRB_PASSAGES[Math.floor(Math.random() * CRB_PASSAGES.length)];
@@ -2085,6 +2108,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
 
     var wordBuf = [];
     var CHUNK = !hasHooks ? (4 + Math.floor(Math.random() * 5)) : 4; // CRB: 4–8 words per group
+    if (isMobile() && !hasHooks) CHUNK = 8 + Math.floor(Math.random() * 4); // phones: 8–11 words so CRB text fits without scrolling
     function flushWords() {
       if (wordBuf.length === 0) return;
       fragments.push({ type: 'text', text: wordBuf.join(' ') });
@@ -2142,7 +2166,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     while (container.firstChild) container.removeChild(container.firstChild);
 
     var maxShift = !hasHooks ? (18 + Math.floor(Math.random() * 16)) : 12; // CRB: 18–33vw
-    if (isMobile()) maxShift = !hasHooks ? (6 + Math.floor(Math.random() * 6)) : 5; // phones: 6–11vw / 5vw
+    if (isMobile()) maxShift = !hasHooks ? (3 + Math.floor(Math.random() * 4)) : 5; // phones: 3–6vw / 5vw
     var scatterDivs = [];
 
     fragments.forEach(function(frag) {
@@ -2726,6 +2750,11 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         }
         if (tags.indexOf('titlescreen') !== -1) {
           fitAsciiTitle();
+          // Hide Fullscreen where the browser can't do it (e.g. iPhone Safari)
+          if (!window._canFullscreen()) {
+            var _fsBtn = document.querySelector('.fullscreen-btn');
+            if (_fsBtn) _fsBtn.style.display = 'none';
+          }
         }
       } catch(e) { console.error('[onPassageChange]', e); }
     }, 200);
@@ -2785,7 +2814,7 @@ metal-door:      ./audio/metaldoor.mp3</tw-passagedata>
 &lt;div class=&quot;wk-block&quot;&gt;&lt;div class=&quot;wk-author&quot;&gt;&lt;span class=&quot;wk-author-name&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;https://ryukonrad.com/&quot; target=&quot;_blank&quot;&gt;Ryu Konrad&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;wk-info&quot;&gt;eLiterature work created for Digital Writing, RMIT (2026).&lt;/div&gt;&lt;div class=&quot;wk-desc&quot;&gt;Pathologisation — psychosis, insatiability and uncertainty within the structures and routines of modernity. A simulation of a relentless mess of noise and impossibility, where reality crumbles under the weight of the mind. Pathologisation attempts to systemise the absurd and the arbitrary — it looks for meaning where there is none.&lt;/div&gt;&lt;div class=&quot;wk-info wk-warning&quot;&gt;Content warning: drug use, violence, suicidal themes and depictions of psychosis. Contains flashing images and rapid flicker.&lt;/div&gt;&lt;/div&gt;
 &lt;div class=&quot;wk-corner wk-readme&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;./readme.html&quot; target=&quot;_blank&quot;&gt;ReadMe&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;wk-corner wk-proof&quot;&gt;&lt;a class=&quot;game-link&quot; href=&quot;./proof.html&quot; target=&quot;_blank&quot;&gt;Proof&lt;/a&gt;&lt;/div&gt;
 
-&lt;div class=&quot;title-actions&quot;&gt;&lt;span class=&quot;start-link&quot;&gt;[[GP Reception&lt;-Start]]&lt;/span&gt;&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;document.documentElement.requestFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
+&lt;div class=&quot;title-actions&quot;&gt;&lt;span class=&quot;start-link&quot;&gt;[[GP Reception&lt;-Start]]&lt;/span&gt;&lt;div class=&quot;fullscreen-btn&quot;&gt;(link: &quot;Fullscreen&quot;)[&lt;script&gt;window._goFullscreen();&lt;/script&gt;]&lt;/div&gt;&lt;/div&gt;</tw-passagedata>
 <tw-passagedata pid="9" name="GP Reception" tags="waitingroom collage collage-medical" position="775,50" size="100,100">(set: $crbCount to 0)Welcome to the WAITing area. Your palms are wet, and your HEAD throbs but you should proceed into your appointment shortly.
 
 You may have SOME time to [[GP Reflection&lt;-reflect]] on things before your appointment. Or you could just sit here and [[GP Office 1&lt;-wait]] to go IN.</tw-passagedata>

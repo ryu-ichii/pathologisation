@@ -327,7 +327,7 @@ All links tremble slightly in a continuous micro-animation (`fidget` keyframes, 
 **Title Screen link behaviour:**
 - **Start** — `terminal-grotesque` italic uppercase (displays as START), 2.6rem, letter-spacing 0.65em, `chroma-aberration` + `chroma-pulse` animation, colour flicker on hover. No strikethrough. Styled via `.start-link` wrapper span + CSS. Links to GP Reception.
 - **Ryu Konrad / ReadMe / Proof** — static (no fidget), colour flicker on hover, no strikethrough.
-- **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough.
+- **Fullscreen** — lowercase italic, no fidget, colour flicker on hover, no strikethrough. Calls `window._goFullscreen()` (standard or webkit Fullscreen API). Hidden automatically where the browser has no Fullscreen API (iPhone Safari).
 
 ### Link flicker on hover
 Rapid colour flash: red → cyan → yellow → magenta → white over 0.35s.
@@ -661,9 +661,10 @@ All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700p
 | Area | Phone behaviour |
 |------|-----------------|
 | Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh with internal vertical scroll |
-| Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll, scatter 5vw (hooks) / 6–11vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
+| Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll (fallback only), scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
+| CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling |
 | Ending scatter | word-salad chunks max 62vw at left 4–34vw; body sentences max 88vw at left 4–10vw; Pathologise link left 8–28vw |
-| Title screen | page can scroll, START 2rem / 0.45em spacing, Start + Fullscreen wrap onto two lines if needed, ReadMe / Proof links 0.8rem from the bottom, 1rem from the sides |
+| Title screen | page can scroll (title screen only — every other screen stays fixed, via `html:has(tw-story[tags~="titlescreen"])`), text block pull-up `-0.4em` and Start/Fullscreen `+0.2em` (instead of desktop's -2.2em / -1.8em), START 2rem / 0.45em spacing, Start + Fullscreen wrap if needed, ReadMe / Proof links 0.8rem from the bottom, 1rem from the sides |
 
 To tune phones only, edit inside `if (isMobile())` blocks or the mobile `@media` block.
 
