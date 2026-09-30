@@ -461,6 +461,8 @@ Dialogue always stays italic — only the family changes per combo. Attribution 
 | Title screen author name | `clamp(1.5rem, 2.9vw, 2.2rem)` |
 | Title screen info line | `clamp(0.75rem, 1.4vw, 0.95rem)` italic |
 | Title screen description | `clamp(0.8rem, 1.6vw, 1rem)` |
+| Title screen content warning | `clamp(0.75rem, 1.4vw, 0.95rem)` italic (same as info line) |
+| Title screen ReadMe / Proof links | `clamp(1.15rem, 2.15vw, 1.45rem)` |
 
 ### Fixed fonts (always, regardless of combo)
 
