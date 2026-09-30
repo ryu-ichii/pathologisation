@@ -2445,6 +2445,28 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     return !!(window.matchMedia && window.matchMedia('(max-width: 700px)').matches);
   }
 
+  // Phones only: shrink a passage's text (5% steps, down to 60%) until it fits its
+  // box without scrolling. Keeps watching while dialogue typewriters/reveals add
+  // text. Scrolling remains only as a last resort below 60%.
+  var _fitObserver = null;
+  function fitPassageToScreen(passage) {
+    if (_fitObserver) { _fitObserver.disconnect(); _fitObserver = null; }
+    var size = 1;
+    passage.style.fontSize = '';
+    function check() {
+      var guard = 0;
+      while (passage.scrollHeight > passage.clientHeight + 2 && size > 0.6 && guard++ < 10) {
+        size = Math.round((size - 0.05) * 100) / 100;
+        passage.style.fontSize = size + 'em';
+      }
+    }
+    check();
+    if (window.MutationObserver) {
+      _fitObserver = new MutationObserver(check);
+      _fitObserver.observe(passage, { childList: true, subtree: true, characterData: true });
+    }
+  }
+
   function applyLayout(passage, tags) {
     if (!passage) return;
     if (tags.indexOf('psychosis') !== -1 || tags.indexOf('titlescreen') !== -1) return;
@@ -2584,6 +2606,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     if (topPx + passage.offsetHeight > window.innerHeight - 20) {
       passage.style.top = Math.max(10, window.innerHeight - passage.offsetHeight - 60) + 'px';
     }
+    if (isMobile()) fitPassageToScreen(passage); // phones: shrink text to fit instead of scrolling
   }
 
   var _lastRunTags = null;

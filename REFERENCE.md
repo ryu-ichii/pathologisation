@@ -660,7 +660,7 @@ No screen scrolls as a page on phones — long passage text scrolls inside its o
 
 | Area | Phone behaviour |
 |------|-----------------|
-| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh with internal vertical scroll |
+| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh. `fitPassageToScreen()` shrinks the text in 5% steps (down to 60%) until it fits, re-checking as dialogue types in; internal scroll only as a last resort |
 | Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll (fallback only), scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
 | CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling |
 | Wandering smooth1–4 fragments | 1.05rem (desktop 1.6rem), max 72vw wide, every position clamped (`fit()`) so the whole fragment stays on screen |
