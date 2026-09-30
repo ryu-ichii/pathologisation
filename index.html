@@ -2085,12 +2085,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       passage.style.setProperty('left', leftPct + '%', 'important');
     }
     if (isMobile()) {
-      // Phones: 90vw box near the left edge, scrolls if the scattered text runs long
+      // Phones: 90vw box near the left edge. No scrolling — the text is sized to fit, and
+      // letting it scroll only exposed invisible blank space below the words.
       passage.style.setProperty('width', '90vw', 'important');
       passage.style.setProperty('max-width', 'none', 'important');
       passage.style.setProperty('left', '4vw', 'important');
       passage.style.setProperty('max-height', '86vh', 'important');
-      passage.style.setProperty('overflow-y', 'auto', 'important');
+      passage.style.setProperty('overflow-y', 'hidden', 'important');
       passage.style.setProperty('overflow-x', 'hidden', 'important');
     }
 
@@ -2241,6 +2242,12 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
           lk.style.marginTop = (0.3 + Math.random() * 1.2).toFixed(1) + 'em';
         });
       }
+    }
+
+    // Phones, CRB: the blank lines Harlowe leaves between (set:)/(if:) macro lines are
+    // invisible but still add height, making the box scroll with all text on screen. Hide them.
+    if (isMobile() && !hasHooks) {
+      Array.from(passage.children).forEach(function(c) { if (c.tagName === 'BR') c.style.display = 'none'; });
     }
 
     // Clamp passage to viewport — pull top up if scatter content overflows bottom edge
@@ -2495,14 +2502,15 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     passage.style.boxSizing = 'border-box';
     passage.style.overflow = isBreakdown ? 'visible' : 'hidden';
     if (isMobile()) {
-      // Phones: near full-width, near the top, long text scrolls inside the passage
+      // Phones: near full-width, near the top. No scrolling — fitPassageToScreen() shrinks
+      // long text to fit, so scrolling only ever exposed invisible blank space.
       passage.style.width = '88vw';
       passage.style.maxWidth = 'none';
       passage.style.left = '6vw';
       passage.style.top = (3 + Math.random() * 6) + 'vh';
       passage.style.maxHeight = '88vh';
       passage.style.overflowX = 'hidden';
-      passage.style.overflowY = 'auto';
+      passage.style.overflowY = 'hidden';
     }
 
     // Find the element whose direct children include <br> nodes.

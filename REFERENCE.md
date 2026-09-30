@@ -660,13 +660,13 @@ Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it al
 
 ## 13. MOBILE (screens ≤ 700px wide)
 
-No screen scrolls as a page on phones — long passage text scrolls inside its own box as a fallback. All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700px)')`) and an `@media (max-width: 700px)` block at the end of Story Stylesheet. **Desktop layout is unaffected** — every desktop value is unchanged when `isMobile()` is false.
+Nothing scrolls on phones — neither the page nor the text box (`overflow-y: hidden`). Text is sized to fit instead. Internal scrolling was removed on 1 Oct because it only ever exposed invisible blank space (empty lines Harlowe leaves between macro lines), making rooms like the CRBs and Night Walk scroll with all their words already on screen. Trade-off: if a passage ever genuinely didn't fit, its bottom would be cut off rather than scrollable. All mobile behaviour is gated on `isMobile()` (JS, `matchMedia('(max-width: 700px)')`) and an `@media (max-width: 700px)` block at the end of Story Stylesheet. **Desktop layout is unaffected** — every desktop value is unchanged when `isMobile()` is false.
 
 | Area | Phone behaviour |
 |------|-----------------|
-| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh. `fitPassageToScreen()` shrinks the text in 5% steps (down to 60%) until it fits, re-checking as dialogue types in; internal scroll only as a last resort |
-| Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh with internal scroll (fallback only), scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
-| CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling |
+| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9vh, indents 2–6vw (breakdown 1–3vw), max-height 88vh. `fitPassageToScreen()` shrinks the text in 5% steps (down to 60%) until it fits, re-checking as dialogue types in; no internal scroll |
+| Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86vh, no internal scroll, scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
+| CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling. The blank lines Harlowe leaves between the passage's `(set:)`/`(if:)` lines (bare `<br>` children of `tw-passage`) are hidden so they don't add height |
 | Wandering smooth1–4 fragments | 1.05rem (desktop 1.6rem), max 72vw wide, every position clamped (`fit()`) so the whole fragment stays on screen |
 | smooth5 fake escape link | 1.5rem (desktop 2.2rem), left 3–15%, max 90vw |
 | Settle lines (6–10s) | 80vw wide at left 3–12%, 1.05rem, pulled up if they'd run past the bottom |
