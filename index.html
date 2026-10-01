@@ -2234,13 +2234,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       if (linkHook) {
         linkHook.style.opacity = '0';
         linkHook.style.display = 'block';
-        linkHook.style.marginTop = (1 + Math.random() * 1.2).toFixed(1) + 'em';
+        linkHook.style.marginTop = (isMobile() ? (0.6 + Math.random() * 0.6) : (1 + Math.random() * 1.2)).toFixed(1) + 'em'; // phones: tighter
         // Scatter each link individually across the passage width
         Array.from(linkHook.querySelectorAll('tw-link')).forEach(function(lk) {
           lk.style.display = 'block';
           lk.style.position = 'relative';
           lk.style.left = (Math.random() * maxShift * 1.1).toFixed(1) + 'vw';
-          lk.style.marginTop = (0.3 + Math.random() * 1.2).toFixed(1) + 'em';
+          lk.style.marginTop = (isMobile() ? (0.2 + Math.random() * 0.5) : (0.3 + Math.random() * 1.2)).toFixed(1) + 'em'; // phones: tighter
         });
       }
     }
@@ -2249,6 +2249,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     // invisible but still add height, making the box scroll with all text on screen. Hide them.
     if (isMobile() && !hasHooks) {
       Array.from(passage.children).forEach(function(c) { if (c.tagName === 'BR') c.style.display = 'none'; });
+      // Then shrink the text in 5% steps (down to 70%) until everything, links included, fits —
+      // the box doesn't scroll, so anything past its bottom would be cut off.
+      var _crbSize = 1, _crbGuard = 0;
+      while (passage.scrollHeight > passage.clientHeight + 2 && _crbSize > 0.7 && _crbGuard++ < 8) {
+        _crbSize = Math.round((_crbSize - 0.05) * 100) / 100;
+        passage.style.setProperty('font-size', _crbSize + 'rem', 'important');
+      }
     }
 
     // Clamp passage to viewport — pull top up if scatter content overflows bottom edge
