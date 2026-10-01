@@ -2478,7 +2478,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     passage.style.fontSize = '';
     function check() {
       var guard = 0;
-      while (passage.scrollHeight > passage.clientHeight + 2 && size > 0.6 && guard++ < 10) {
+      while (passage.scrollHeight > passage.clientHeight + 2 && size > 0.45 && guard++ < 12) { // floor 45%: long breakdown rooms (e.g. Train) needed below 60% to keep their links on screen
         size = Math.round((size - 0.05) * 100) / 100;
         passage.style.fontSize = size + 'em';
       }
