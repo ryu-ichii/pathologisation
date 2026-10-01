@@ -2478,8 +2478,8 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
 
   // Phones only: shrink a passage's text (5% steps, down to 45%) until it fits its
   // box (which doesn't scroll). Re-checks while dialogue typewriters/reveals add text,
-  // when web fonts finish loading (Redaction arrives after the first measurement in
-  // breakdown rooms and is larger than the stand-in font), and at 0.3s / 1s / 2.5s.
+  // when web fonts finish loading (the room's font — any of the random font combos —
+  // can arrive after the first measurement and be larger than the stand-in), and at 0.3s / 1s / 2.5s.
   var _fitObserver = null;
   var _fitCheck = null;
   var _fitTimers = [];
