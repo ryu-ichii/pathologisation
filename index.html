@@ -2251,11 +2251,19 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       Array.from(passage.children).forEach(function(c) { if (c.tagName === 'BR') c.style.display = 'none'; });
       // Then shrink the text in 5% steps (down to 70%) until everything, links included, fits —
       // the box doesn't scroll, so anything past its bottom would be cut off.
-      var _crbSize = 1, _crbGuard = 0;
-      while (passage.scrollHeight > passage.clientHeight + 2 && _crbSize > 0.7 && _crbGuard++ < 8) {
-        _crbSize = Math.round((_crbSize - 0.05) * 100) / 100;
-        passage.style.setProperty('font-size', _crbSize + 'rem', 'important');
-      }
+      // Re-checked after web fonts load and at 0.3s / 1s / 2.5s (a late font can make the text taller).
+      var _crbSize = 1;
+      var _crbFit = function() {
+        if (!passage.isConnected) return;
+        var _crbGuard = 0;
+        while (passage.scrollHeight > passage.clientHeight + 2 && _crbSize > 0.7 && _crbGuard++ < 8) {
+          _crbSize = Math.round((_crbSize - 0.05) * 100) / 100;
+          passage.style.setProperty('font-size', _crbSize + 'rem', 'important');
+        }
+      };
+      _crbFit();
+      [300, 1000, 2500].forEach(function(t) { setTimeout(_crbFit, t); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(_crbFit);
     }
 
     // Clamp passage to viewport — pull top up if scatter content overflows bottom edge
@@ -2468,25 +2476,40 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     return !!(window.matchMedia && window.matchMedia('(max-width: 700px)').matches);
   }
 
-  // Phones only: shrink a passage's text (5% steps, down to 60%) until it fits its
-  // box without scrolling. Keeps watching while dialogue typewriters/reveals add
-  // text. Scrolling remains only as a last resort below 60%.
+  // Phones only: shrink a passage's text (5% steps, down to 45%) until it fits its
+  // box (which doesn't scroll). Re-checks while dialogue typewriters/reveals add text,
+  // when web fonts finish loading (Redaction arrives after the first measurement in
+  // breakdown rooms and is larger than the stand-in font), and at 0.3s / 1s / 2.5s.
   var _fitObserver = null;
+  var _fitCheck = null;
+  var _fitTimers = [];
+  var _fitFontsHooked = false;
   function fitPassageToScreen(passage) {
     if (_fitObserver) { _fitObserver.disconnect(); _fitObserver = null; }
+    _fitTimers.forEach(clearTimeout); _fitTimers = [];
     var size = 1;
     passage.style.fontSize = '';
     function check() {
+      if (!passage.isConnected) return;
       var guard = 0;
       while (passage.scrollHeight > passage.clientHeight + 2 && size > 0.45 && guard++ < 12) { // floor 45%: long breakdown rooms (e.g. Train) needed below 60% to keep their links on screen
         size = Math.round((size - 0.05) * 100) / 100;
         passage.style.fontSize = size + 'em';
       }
     }
+    _fitCheck = check;
     check();
     if (window.MutationObserver) {
       _fitObserver = new MutationObserver(check);
       _fitObserver.observe(passage, { childList: true, subtree: true, characterData: true });
+    }
+    [300, 1000, 2500].forEach(function(t) { _fitTimers.push(setTimeout(check, t)); });
+    if (document.fonts) {
+      if (document.fonts.ready) document.fonts.ready.then(function() { if (_fitCheck === check) check(); });
+      if (!_fitFontsHooked && document.fonts.addEventListener) {
+        _fitFontsHooked = true;
+        document.fonts.addEventListener('loadingdone', function() { if (_fitCheck) _fitCheck(); });
+      }
     }
   }
 
