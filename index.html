@@ -2489,6 +2489,10 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     _fitTimers.forEach(clearTimeout); _fitTimers = [];
     var size = 1;
     passage.style.fontSize = '';
+    // Harlowe's line-height is a fixed 1.5em of the story font, so shrinking the text left
+    // the line gaps full-size (huge spacing, little height saved). Unitless 1.5 is identical
+    // at full size and shrinks with the text.
+    passage.style.lineHeight = '1.5';
     function check() {
       if (!passage.isConnected) return;
       var guard = 0;
