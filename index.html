@@ -2091,7 +2091,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       passage.style.setProperty('width', '90vw', 'important');
       passage.style.setProperty('max-width', 'none', 'important');
       passage.style.setProperty('left', '4vw', 'important');
-      passage.style.setProperty('max-height', '86vh', 'important');
+      passage.style.setProperty('max-height', Math.round(window.innerHeight * 0.86) + 'px', 'important'); // visible screen, not vh
       passage.style.setProperty('overflow-y', 'hidden', 'important');
       passage.style.setProperty('overflow-x', 'hidden', 'important');
     }
@@ -2508,8 +2508,11 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       passage.style.width = '88vw';
       passage.style.maxWidth = 'none';
       passage.style.left = '6vw';
-      passage.style.top = (3 + Math.random() * 6) + 'vh';
-      passage.style.maxHeight = '88vh';
+      // Measured in px from the visible screen (innerHeight) — on phones 'vh' is taller than
+      // what's visible while the browser toolbars show, which pushed links to the very bottom.
+      var _topPx = Math.round(window.innerHeight * (0.03 + Math.random() * 0.06));
+      passage.style.top = _topPx + 'px';
+      passage.style.maxHeight = Math.round(window.innerHeight * 0.94 - _topPx) + 'px';
       passage.style.overflowX = 'hidden';
       passage.style.overflowY = 'hidden';
     }
@@ -2719,6 +2722,10 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         }
         if (tags.indexOf('psychosis') !== -1 && tags.indexOf('ending') !== -1) {
           var _mob = isMobile(); // phones: narrower scatter ranges so text stays on screen
+          // Phones: the stage is the visible screen (innerHeight px, not 100vh, which is taller
+          // than what's visible while toolbars show) and every top is a % of it.
+          var _vu = _mob ? '%' : 'vh';
+          if (_mob) p.style.setProperty('height', window.innerHeight + 'px', 'important');
           while (p.firstChild) p.removeChild(p.firstChild);
           var _sw = buildWordSalad().split(/\s+/).filter(Boolean);
           var _stime = 0;
@@ -2736,7 +2743,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
                   var ld = document.createElement("div");
                   ld.style.cssText = "position:absolute;opacity:0;font-size:1.3rem;font-style:italic;line-height:1;";
                   ld.style.left = (parseFloat(sL) + (Math.random() - 0.5) * 1.5).toFixed(1) + "vw";
-                  ld.style.top = (sT + li * 2.6).toFixed(1) + "vh";
+                  ld.style.top = (sT + li * 2.6).toFixed(1) + _vu;
                   ld.appendChild(document.createTextNode(letter));
                   p.appendChild(ld);
                   _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.25s"; el.style.opacity = "1"; }; }(ld), t + li * 70));
@@ -2750,7 +2757,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
               var d = document.createElement("div");
               d.style.cssText = "position:absolute;opacity:0;font-size:1.25rem;font-style:italic;max-width:" + (_mob ? "62vw" : "38vw") + ";";
               d.style.left = (4 + Math.random() * (_mob ? 30 : 68)).toFixed(1) + "vw";
-              d.style.top = (4 + Math.random() * 43).toFixed(1) + "vh";
+              d.style.top = (4 + Math.random() * 43).toFixed(1) + _vu;
               d.appendChild(document.createTextNode(_chunk));
               p.appendChild(d);
               _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.3s"; el.style.opacity = "1"; }; }(d), _stime));
@@ -2761,7 +2768,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
           var _ad = _stime + 300;
 
           var _bsents = ["THE ROOM is bright and exposing.", "The doctor CRUMPLES his GAUNT face into his notebook.", "HE can’t LOOK you in the eyes.", "HE can’t HELP you.", "YOU’re going to have to SAVE yourself."];
-          var _bTops = [52, 57, 63, 69, 76];
+          var _bTops = _mob ? [48, 55, 62, 69, 76] : [52, 57, 63, 69, 76]; // phones: more room for 2-line sentences
           _bsents.forEach(function(sent, i) {
             var _bTop = _bTops[i] + (Math.random() - 0.5) * 1.5;
             var _bLeft = (4 + Math.random() * (_mob ? 6 : 52)).toFixed(1);
@@ -2775,7 +2782,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
                   var ld = document.createElement("div");
                   ld.style.cssText = "position:absolute;opacity:0;font-family:’source-code-pro’,monospace;font-size:1.1rem;line-height:1;";
                   ld.style.left = (parseFloat(sL) + (Math.random() - 0.5)).toFixed(1) + "vw";
-                  ld.style.top = (sT + li * 2.4).toFixed(1) + "vh";
+                  ld.style.top = (sT + li * 2.4).toFixed(1) + _vu;
                   ld.appendChild(document.createTextNode(letter));
                   p.appendChild(ld);
                   _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.3s"; el.style.opacity = "1"; }; }(ld), delay + li * 60));
@@ -2783,9 +2790,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
               })(_bsw, _bsL, _bsT, _ad + i * 150 + 80);
             }
             var bd = document.createElement("div");
-            bd.style.cssText = "position:absolute;font-family:’source-code-pro’,monospace;font-style:normal;font-size:1.25rem;opacity:0;max-width:" + (_mob ? "88vw" : "55vw") + ";line-height:1.5;";
+            bd.style.cssText = "position:absolute;font-family:’source-code-pro’,monospace;font-style:normal;font-size:" + (_mob ? "1.05rem" : "1.25rem") + ";opacity:0;max-width:" + (_mob ? "88vw" : "55vw") + ";line-height:1.5;";
             bd.style.left = _bLeft + "vw";
-            bd.style.top = _bTop.toFixed(1) + "vh";
+            bd.style.top = _bTop.toFixed(1) + _vu;
             bd.appendChild(document.createTextNode(sent));
             p.appendChild(bd);
             _psychosisRevealTimers.push(setTimeout(function(el) { return function() { el.style.transition = "opacity 0.4s"; el.style.opacity = "1"; }; }(bd), _ad + i * 150));
@@ -2794,7 +2801,8 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
           var _lv = document.createElement("div");
           _lv.style.cssText = "position:absolute;font-family:’source-code-pro’,monospace;font-size:2.2rem;cursor:pointer;opacity:0;color:#fff;text-shadow:0 0 12px rgba(255,255,255,0.8),0 0 4px rgba(255,255,255,0.5),0 0 20px #fff;animation:chromatic-ab 1.8s steps(1) infinite;";
           _lv.style.left = (8 + Math.random() * (_mob ? 20 : 55)).toFixed(1) + "vw";
-          _lv.style.top = "87vh";
+          _lv.style.top = "87" + _vu;
+          if (_mob) _lv.style.fontSize = "1.8rem";
           _lv.appendChild(document.createTextNode("Pathologise"));
           _lv.addEventListener("mouseenter", function() {
             _lv.style.animation = "link-flicker 0.35s steps(5) forwards, chromatic-ab 1.8s steps(1) infinite";
