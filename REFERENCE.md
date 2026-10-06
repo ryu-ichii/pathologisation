@@ -531,7 +531,7 @@ Add or swap paths here to change CRB background options.
 
 CRBs never link to each other directly — their exits go to Night Walk, Psych Ward, Drugs, Theft Psychosis, Home or GP Office 2.
 
-**Background FX (Liquid Television-style)** — also used outside the CRBs, documented here: on entering a CRB, the final room or any other psychosis room, the background image is redrawn on a WebGL canvas `#bg-fx` (just above `#bg-layer`, below the collage and text) and warped live by one randomly picked preset (`startBgFx(tier)`, called once per new passage; `stopBgFx()` on every other navigation). The text isn't affected. Rooms with no background image get no FX. Works the same on desktop and phones (phones render at lower resolution). References: Liquid Television (vortex, liquid blobs, cut-out crowd credits) and a late-80s VHS music video (warm smeared tape look). Analogue video and light-show techniques only — a kaleidoscope preset was tried and removed (7 Oct) because it looked like a Photo Booth filter rather than Liquid TV.
+**Background FX (Liquid Television-style)** — also used outside the CRBs, documented here: on entering a CRB, the final room or any other psychosis room, the background image is redrawn on a WebGL canvas `#bg-fx` (just above `#bg-layer`, below the collage and text) and warped live by one randomly picked preset (`startBgFx(tier)`, called once per new passage; `stopBgFx()` on every other navigation). The text isn't affected. Rooms with no background image get no FX. Works the same on desktop and phones (phones render at lower resolution). References: Liquid Television (vortex, liquid blobs, cut-out crowd credits), a late-80s VHS music video (warm smeared tape look), and Takeshi Murata — *Pink Dot* (2007) datamoshing and signal-tear video. Analogue video and light-show techniques only — a kaleidoscope preset was tried and removed (7 Oct) because it looked like a Photo Booth filter rather than Liquid TV.
 
 **Intense tier — CRB rooms and the final room (GP Office Final Randomised):**
 
@@ -541,6 +541,9 @@ CRBs never link to each other directly — their exits go to Night Walk, Psych W
 | `feedback` | analogue video feedback: rotated, shrinking, hue-shifted echoes of the image melting into each other | (built-in hue drift) | scan lines, grain, chroma bleed |
 | `solar` | melt + slight swirl | solarise, with a hue-flip flicker (≈1 per second) | grain, scan lines, chroma |
 | `tracking` | melt + swirl, strong VHS tracking glitches | warm 80s VHS | heavy tape smear, chroma bleed, grain |
+| `pinkdot` | **datamosh** after Takeshi Murata's *Pink Dot* (2007): the previous frame is dragged around in ~10px macroblocks (motion changes ~5×/s) so pixels melt and smear; larger patches occasionally snap back to the real image (I-frame refresh); a pulsing pink dot in the centre gets dragged into the smear | slow bleed towards magenta | scan lines, grain, chroma |
+| `mosh` | the same datamosh, stronger, without the dot | slow bleed towards magenta | scan lines, grain, chroma |
+| `signal` | **signal tearing** (Murata-style sync loss): horizontal bands stretched into streaks, the odd vertical roll | near-black with red/magenta glow | bright sync lines, scan lines, grain, chroma |
 | `cutout` | image tiled into a jerky stepped-time swarm (7 fps); collage images jump about (`.crb-cutout` CSS) | acid | posterised, grain |
 
 **Surreal tier — other psychosis rooms (Park Psychosis, Exeloo Episode, Mirror, Phone/Theft Psychosis, Psych Ward Stay):** slower, but still strange — they never go back to the still image.
@@ -553,6 +556,8 @@ CRBs never link to each other directly — their exits go to Night Walk, Psych W
 | `haze` | slow zoom pulse + light melt | neon false colour | chroma bleed, scan lines |
 | `slowvortex` | slow twisting tunnel | ochre/violet duotone | scan lines, chroma |
 | `vhsfire` | slow churning melt (like burning clouds) | warm 80s VHS | tape smear, light tracking wobble, grain |
+| `slowmosh` | gentler datamosh, more frequent refresh | slow bleed towards magenta | scan lines, light grain |
+| `slowsignal` | slower, softer signal tearing | near-black with red/magenta glow | sync lines, scan lines |
 | `oilshow` | liquid light show (oil projector): slow morphing colour blobs with soft glowing rims oozing over the image | (built-in violet/teal/magenta) | sparkles, light grain |
 
 Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling, 7 warm 80s VHS (burnt orange/red, crushed blacks). Half the time a preset swaps its default for a random colour mode (any of the seven). Every strength varies ±30% per entry, so no two entries match (`window._bgFxPreset` shows the pick, for testing).
@@ -563,7 +568,7 @@ Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 
 - **Psychosis rooms:** peak strength builds through the run with the chaos layout's intensity (`0.65 + 0.35 × chaosIntensity()`, so ~80% early, 100% late), then settles to 55–70% of that peak — always visibly warped.
 The 3rd-CRB dissolve fades `#bg-fx` with the background.
 
-**Safety:** flicker stays at about 1 per second (well under the 3/s seizure guideline; covered by the content warning). Skipped if WebGL is unavailable, if the page is opened from `file://` (browser security blocks the texture — use Live Server), or if the device has *reduce motion* switched on — the still background shows instead. The shader is in `BG_FX_FRAG`; **to add a preset**, add an object with its `tier` to `BG_FX_PRESETS` (fields documented above it).
+**Safety:** flicker stays at about 1 per second (well under the 3/s seizure guideline; covered by the content warning). Skipped if WebGL is unavailable, if the page is opened from `file://` (browser security blocks the texture — use Live Server), or if the device has *reduce motion* switched on — the still background shows instead. The main shader is `BG_FX_FRAG`. Datamosh presets (`mosh` field) instead run `BG_FX_MOSH_FRAG` into two ping-pong framebuffers (it needs the previous frame), then `BG_FX_BLIT_FRAG` draws the result with scan lines/grain/chroma; colour-mode swaps don't apply to them; **to add a preset**, add an object with its `tier` to `BG_FX_PRESETS` (fields documented above it).
 
 **Known navigation gotcha:** a Harlowe `(goto:)` fires while Harlowe is still rendering, so the JS passage observer can run before the CRB's content exists. Historically this caused the collage layer to cover the CRB text. `startBgCollage` is now deferred 500ms to allow for this. `Engine.goToPassage()` (JS) behaves like a normal link click and doesn't have the problem — which is why all CRB entries (via `_goToCRB`) and the ending trigger use it.
 

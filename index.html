@@ -1357,12 +1357,17 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     // else jerky stepped time), mode (colour: 0 none, 1 acid hue cycle, 2 VHS washed, 3 solarise,
     // 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling, 7 warm 80s VHS),
     // smear (tape ghost trail), wobble (VHS tracking),
+    // mosh (datamosh pass: block-smear strength; with refresh = I-frame chance, dot = pink dot),
+    // tear (signal tearing: horizontal streak bands, red/magenta glow, sync lines),
     // strobe, post (posterise), scan, noise, chroma, sparkle, speed
     // intense — CRB rooms and the final room
     { tier: 'intense', name: 'vortex',  swirl: 1.0, melt: 0.3, zoom: 1.0, mode: 2, scan: 1.0, noise: 0.6, chroma: 1.0, speed: 1.0 },
     { tier: 'intense', name: 'feedback', feedback: 1.0, melt: 0.5, swirl: 0.2, chroma: 1.0, scan: 0.6, noise: 0.5, speed: 0.8 },
     { tier: 'intense', name: 'solar',   melt: 0.5, swirl: 0.2, mode: 3, strobe: 1.0, noise: 0.5, scan: 1.0, chroma: 1.5, speed: 1.0 },
     { tier: 'intense', name: 'tracking', melt: 0.6, swirl: 0.25, mode: 7, smear: 1.0, wobble: 1.0, chroma: 1.6, noise: 0.7, scan: 0.8, speed: 0.9 },
+    { tier: 'intense', name: 'pinkdot',  mosh: 1.0, dot: 1.0, refresh: 0.012, scan: 0.4, noise: 0.4, chroma: 0.8, speed: 1.0 },
+    { tier: 'intense', name: 'mosh',     mosh: 1.2, refresh: 0.015, scan: 0.5, noise: 0.5, chroma: 1.0, speed: 1.0 },
+    { tier: 'intense', name: 'signal',   tear: 1.0, melt: 0.2, scan: 0.8, noise: 0.6, chroma: 1.4, speed: 1.0 },
     { tier: 'intense', name: 'cutout',  tile: 3, post: 1.0, fps: 7, mode: 1, noise: 0.4, scan: 0.4, speed: 1.0, jerkCollage: true },
     // surreal — other psychosis rooms: slower, still strange (strength builds through the run)
     { tier: 'surreal', name: 'liquid',      melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.6 },
@@ -1371,13 +1376,15 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     { tier: 'surreal', name: 'haze',        zoom: 0.8, melt: 0.35, mode: 6, chroma: 0.8, scan: 0.6, noise: 0.4, speed: 0.3 },
     { tier: 'surreal', name: 'slowvortex',  swirl: 0.7, melt: 0.3, zoom: 0.5, mode: 5, scan: 0.6, noise: 0.4, chroma: 0.7, speed: 0.35 },
     { tier: 'surreal', name: 'vhsfire',     melt: 0.8, swirl: 0.2, mode: 7, smear: 0.7, wobble: 0.4, chroma: 1.0, noise: 0.5, scan: 0.5, speed: 0.35 },
+    { tier: 'surreal', name: 'slowmosh',    mosh: 0.5, refresh: 0.03, scan: 0.4, noise: 0.3, chroma: 0.6, speed: 0.6 },
+    { tier: 'surreal', name: 'slowsignal',  tear: 0.6, scan: 0.6, noise: 0.4, chroma: 1.0, speed: 0.4 },
     { tier: 'surreal', name: 'oilshow',     oil: 1.0, melt: 0.5, chroma: 0.5, noise: 0.3, sparkle: 0.4, speed: 0.5 }
   ];
 
   var BG_FX_FRAG = [
     'precision mediump float;',
     'uniform sampler2D uTex; uniform vec2 uRes; uniform vec2 uImg;',
-    'uniform float uT, uAmt, uSwirl, uMelt, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle, uSmear, uWobble, uFeedback, uOil;',
+    'uniform float uT, uAmt, uSwirl, uMelt, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle, uSmear, uWobble, uFeedback, uOil, uTear;',
     'varying vec2 vUv;',
     'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);',
@@ -1403,6 +1410,11 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '  if (uWobble > 0.0) {',  // VHS tracking: gentle per-row wave + the odd band jumping sideways
     '    float band = step(0.982, h(vec2(floor(vUv.y*48.0), floor(uT*5.0))));',
     '    iu.x += uWobble*a*(sin(vUv.y*38.0 + uT*2.7)*0.0025 + band*0.035); }',
+    '  if (uTear > 0.0) {',  // signal tearing: horizontal bands stretched into streaks, the odd vertical roll
+    '    float sb = floor(uT*3.0); float bh = floor(vUv.y*14.0 + h(vec2(sb, 1.0))*3.0);',
+    '    float k = mix(1.0, 0.04 + 0.25*h(vec2(bh, sb)), uTear*a); float anc = h(vec2(bh + 7.0, floor(uT*2.0)));',
+    '    iu.x = anc + (iu.x - anc)*k;',
+    '    iu.y += uTear*a*0.08*step(0.93, h(vec2(floor(uT*1.5), 3.0)))*fract(uT*2.0); }',
     '  vec3 c = vec3(texture2D(uTex, iu + vec2(ch, 0.0)).r, texture2D(uTex, iu).g, texture2D(uTex, iu - vec2(ch, 0.0)).b);',
     '  if (uSmear > 0.0) {',  // worn-tape ghost trail dragging to the right
     '    vec3 g1 = texture2D(uTex, iu - vec2(0.012, 0.0)*uSmear*a).rgb, g2 = texture2D(uTex, iu - vec2(0.028, 0.0)*uSmear*a).rgb;',
@@ -1418,6 +1430,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '  else if (uMode == 7.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',  // warm 80s VHS: burnt orange/red, crushed blacks
     '    vec3 warm = mix(c*vec3(1.3, 0.75, 0.45), vec3(1.15, 0.5, 0.2)*l*1.5, 0.5); warm = max(warm - 0.05, 0.0)*1.15;',
     '    c = mix(c, clamp(warm, 0.0, 1.0), a*0.9); }',
+    '  if (uTear > 0.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',  // near-black with red/magenta glow + bright sync lines
+    '    c = mix(c, vec3(1.25, 0.18, 0.5)*pow(l, 1.3)*1.6, uTear*a*0.85);',
+    '    c += step(0.996, h(vec2(floor(vUv.y*uRes.y/2.0), floor(uT*8.0))))*uTear*a*0.8; }',
     '  if (uFeedback > 0.0) {',  // analogue video feedback: rotated, shrinking, hue-shifted echoes melting together
     '    vec3 acc = c; float ws = 1.0; vec2 q = vUv - 0.5; q.x *= asp;',
     '    for (int i = 1; i < 5; i++) { float fi = float(i);',
@@ -1444,6 +1459,50 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '}'
   ].join('\n');
 
+  // Datamosh (after Takeshi Murata's Pink Dot, 2007): a feedback pass that keeps the previous
+  // frame and drags it around in macroblocks, the way broken video compression smears pixels
+  // along the motion of new footage. A few blocks "refresh" from the real image now and then
+  // (like I-frames); smeared areas bleed towards magenta; an optional pulsing pink dot gets
+  // dragged into the smear. Rendered into ping-pong framebuffers, then shown by the blit pass.
+  var BG_FX_COMMON = [
+    'precision mediump float;',
+    'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);',
+    '  return mix(mix(h(i), h(i+vec2(1.0,0.0)), f.x), mix(h(i+vec2(0.0,1.0)), h(i+vec2(1.0,1.0)), f.x), f.y); }'
+  ].join('\n');
+  var BG_FX_MOSH_FRAG = BG_FX_COMMON + '\n' + [
+    'uniform sampler2D uTex, uPrev; uniform vec2 uRes, uImg;',
+    'uniform float uT, uAmt, uMosh, uRefresh, uDot, uFirst, uDt;',
+    'vec2 cover(vec2 uv){ float rs = uRes.x/uRes.y, ri = uImg.x/uImg.y;',
+    '  vec2 s = rs > ri ? vec2(1.0, ri/rs) : vec2(rs/ri, 1.0); return (uv-0.5)*s + 0.5; }',
+    'void main(){',
+    '  vec2 g = gl_FragCoord.xy/uRes;',                       // framebuffer space (bottom-left origin)
+    '  vec2 b = floor(g*floor(uRes/10.0));',                 // ~10px macroblocks
+    '  float tb = floor(uT*5.0);',                           // block motion changes ~5 times a second
+    '  vec2 mv = vec2(n(b*0.12 + tb*0.37), n(b*0.12 + tb*0.37 + 9.7)) - 0.5;',
+    '  vec2 flow = vec2(sin(g.y*5.0 + uT*0.6), cos(g.x*4.0 - uT*0.5));',
+    '  vec2 d = (mv*0.006 + flow*0.0015)*uMosh*uAmt*uDt;',
+    '  vec3 prev = texture2D(uPrev, g - d).rgb;',
+    '  vec3 src = texture2D(uTex, cover(vec2(g.x, 1.0 - g.y))).rgb;',
+    '  float ref = step(1.0 - (uRefresh*4.0 + (1.0 - uAmt)), h(floor(b/4.0) + floor(uT*4.0)*0.37));',  // I-frame refresh in larger, rarer patches
+    '  vec3 c = mix(prev, src, max(ref, uFirst));',
+    '  c = mix(c, c*vec3(1.0015, 0.997, 1.0012) + vec3(0.0007, 0.0, 0.0005), uAmt*min(uDt, 1.0));',  // slow bleed towards magenta
+    '  if (uDot > 0.0) { vec2 q = g - 0.5; q.x *= uRes.x/uRes.y; float pr = 0.07 + 0.025*sin(uT*2.2);',
+    '    c = mix(c, vec3(1.0, 0.25, 0.62), (1.0 - smoothstep(pr, pr + 0.015, length(q)))*uDot*uAmt); }',
+    '  gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0);',
+    '}'
+  ].join('\n');
+  var BG_FX_BLIT_FRAG = BG_FX_COMMON + '\n' + [
+    'uniform sampler2D uPrev; uniform vec2 uRes; uniform float uT, uAmt, uScan, uNoise, uChroma;',
+    'void main(){',
+    '  vec2 g = gl_FragCoord.xy/uRes; float ch = uChroma*uAmt*0.004;',
+    '  vec3 c = vec3(texture2D(uPrev, g + vec2(ch, 0.0)).r, texture2D(uPrev, g).g, texture2D(uPrev, g - vec2(ch, 0.0)).b);',
+    '  c *= 1.0 - uScan*uAmt*0.2*step(0.5, fract(g.y*uRes.y*0.5));',
+    '  c += (h(g*uRes + uT*60.0) - 0.5)*uNoise*uAmt*0.12;',
+    '  gl_FragColor = vec4(c, 1.0);',
+    '}'
+  ].join('\n');
+
   var _bgFx = null;   // { canvas, gl, prog, tex, loc } — one canvas/context, reused
   var _bgFxRun = null; // current run state
   function bgFxSetup() {
@@ -1460,26 +1519,34 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       return o;
     }
     try {
-      var prog = gl.createProgram();
-      gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec2 aP; varying vec2 vUv; void main(){ vUv = aP*0.5 + 0.5; vUv.y = 1.0 - vUv.y; gl_Position = vec4(aP, 0.0, 1.0); }'));
-      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, BG_FX_FRAG));
-      gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
-      gl.useProgram(prog);
+      var VS = 'attribute vec2 aP; varying vec2 vUv; void main(){ vUv = aP*0.5 + 0.5; vUv.y = 1.0 - vUv.y; gl_Position = vec4(aP, 0.0, 1.0); }';
       var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-      var aP = gl.getAttribLocation(prog, 'aP'); gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
-      var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      var loc = {};
-      ['uTex','uRes','uImg','uT','uAmt','uSwirl','uMelt','uZoom','uTile','uMode','uStrobe','uPost','uScan','uNoise','uChroma','uSparkle','uSmear','uWobble','uFeedback','uOil']
-        .forEach(function(u) { loc[u] = gl.getUniformLocation(prog, u); });
+      function mk(fragSrc, uniforms) {
+        var pr = gl.createProgram();
+        gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS));
+        gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fragSrc));
+        gl.linkProgram(pr);
+        if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(pr));
+        var lc = {}; uniforms.forEach(function(u) { lc[u] = gl.getUniformLocation(pr, u); });
+        return { p: pr, aP: gl.getAttribLocation(pr, 'aP'), loc: lc };
+      }
+      var main = mk(BG_FX_FRAG, ['uTex','uRes','uImg','uT','uAmt','uSwirl','uMelt','uZoom','uTile','uMode','uStrobe','uPost','uScan','uNoise','uChroma','uSparkle','uSmear','uWobble','uFeedback','uOil','uTear']);
+      var mosh = mk(BG_FX_MOSH_FRAG, ['uTex','uPrev','uRes','uImg','uT','uAmt','uMosh','uRefresh','uDot','uFirst','uDt']);
+      var blit = mk(BG_FX_BLIT_FRAG, ['uPrev','uRes','uT','uAmt','uScan','uNoise','uChroma']);
+      function newTex() {
+        var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        return t;
+      }
+      var tex = newTex();
       var bg = document.getElementById('bg-layer');
       if (bg && bg.nextSibling) bg.parentNode.insertBefore(canvas, bg.nextSibling); else document.body.insertBefore(canvas, document.body.firstChild);
-      _bgFx = { canvas: canvas, gl: gl, prog: prog, tex: tex, loc: loc };
+      _bgFx = { canvas: canvas, gl: gl, buf: buf, main: main, mosh: mosh, blit: blit, tex: tex, newTex: newTex,
+                fbo: null, fboW: 0, fboH: 0, prog: main.p, loc: main.loc };
     } catch (e) {
       console.error('[bg-fx]', e);
       _bgFx = { failed: true };
@@ -1544,6 +1611,23 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         gl.bindTexture(gl.TEXTURE_2D, fx.tex);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       } catch (e) { return; } // e.g. opened from file:// — leave the still image
+      function useProg(pr) {
+        gl.useProgram(pr.p); gl.bindBuffer(gl.ARRAY_BUFFER, fx.buf);
+        gl.enableVertexAttribArray(pr.aP); gl.vertexAttribPointer(pr.aP, 2, gl.FLOAT, false, 0, 0);
+      }
+      if (P.mosh && (!fx.fbo || fx.fboW !== fx.canvas.width || fx.fboH !== fx.canvas.height)) {
+        // two framebuffers the size of the canvas, swapped every frame
+        fx.fbo = [0, 1].map(function() {
+          var t = fx.newTex();
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, fx.canvas.width, fx.canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+          var fb = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+          gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0);
+          return { tex: t, fb: fb };
+        });
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        fx.fboW = fx.canvas.width; fx.fboH = fx.canvas.height;
+      }
+      run.ping = 0; run.first = true;
       fx.canvas.style.display = 'block';
       run.start = performance.now();
       var L = fx.loc;
@@ -1564,7 +1648,35 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         }
         var tt = t * (P.speed || 1);
         if (P.fps) tt = Math.floor(tt * P.fps) / P.fps; // jerky, stepped motion
+        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fx.tex);
         if (isGif) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img); } catch (e2) {} }
+        var W = fx.canvas.width, H = fx.canvas.height;
+        if (P.mosh) {
+          // datamosh: mosh pass into the next framebuffer, then blit it to the screen
+          var dt = Math.min(3, Math.max(0.25, (now - (run.last || now)) / 16.67)); run.last = now;
+          var src = fx.fbo[run.ping], dst = fx.fbo[1 - run.ping];
+          gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fb); gl.viewport(0, 0, W, H);
+          useProg(fx.mosh); var M = fx.mosh.loc;
+          gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, src.tex);
+          gl.uniform1i(M.uTex, 0); gl.uniform1i(M.uPrev, 1);
+          gl.uniform2f(M.uRes, W, H); gl.uniform2f(M.uImg, img.naturalWidth || 1, img.naturalHeight || 1);
+          gl.uniform1f(M.uT, tt); gl.uniform1f(M.uAmt, amt); gl.uniform1f(M.uMosh, P.mosh);
+          gl.uniform1f(M.uRefresh, P.refresh || 0.02); gl.uniform1f(M.uDot, P.dot || 0);
+          gl.uniform1f(M.uFirst, run.first ? 1 : 0); gl.uniform1f(M.uDt, dt);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          run.first = false;
+          gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, W, H);
+          useProg(fx.blit); var B = fx.blit.loc;
+          gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, dst.tex);
+          gl.uniform1i(B.uPrev, 1); gl.uniform2f(B.uRes, W, H); gl.uniform1f(B.uT, tt); gl.uniform1f(B.uAmt, amt);
+          gl.uniform1f(B.uScan, P.scan || 0); gl.uniform1f(B.uNoise, P.noise || 0); gl.uniform1f(B.uChroma, P.chroma || 0);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          gl.activeTexture(gl.TEXTURE0);
+          run.ping = 1 - run.ping;
+          run.raf = requestAnimationFrame(frame);
+          return;
+        }
+        useProg(fx.main);
         gl.uniform1i(L.uTex, 0);
         gl.uniform2f(L.uRes, fx.canvas.width, fx.canvas.height);
         gl.uniform2f(L.uImg, img.naturalWidth || 1, img.naturalHeight || 1);
@@ -1578,6 +1690,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         gl.uniform1f(L.uChroma, P.chroma || 0); gl.uniform1f(L.uSparkle, P.sparkle || 0);
         gl.uniform1f(L.uSmear, P.smear || 0); gl.uniform1f(L.uWobble, P.wobble || 0);
         gl.uniform1f(L.uFeedback, P.feedback || 0); gl.uniform1f(L.uOil, P.oil || 0);
+        gl.uniform1f(L.uTear, P.tear || 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         run.raf = requestAnimationFrame(frame);
       }
