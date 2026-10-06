@@ -295,21 +295,21 @@ Skipped on: `[psychosis]`, `[titlescreen]`.
 A cummings-style layout for normal rooms, replacing the patterned indents above. It **builds up through the run**. Off for normal visitors: it only runs with **`?chaos`** in the URL (test link, e.g. `ryu-ichii.github.io/pathologisation/?chaos`) or when `CHAOS_LAYOUT_LIVE = true` in Story JavaScript. **`?chaos=max`** forces full intensity from the first room, for testing. With it off, rooms use the original layout randomiser above, unchanged.
 
 **How it looks (modelled on cummings, and on how readable the no-hooks psychosis rooms are):**
-- Text is broken into chunks of whole words (3–9 per line).
+- Text is broken into chunks of whole words (1–8 per line).
 - Some words break at **syllables** into 2–3 letter pieces (`chaosSyllables()`: V-CV and VC-CV rules, silent final *e* kept attached, e.g. can|dy, lu|mi|nous, lo|co|mo|tive). A piece either stays on the same line with a wider gap ("can  dy") or steps down to the next line, nudged right (staircase: "ing / vi / o / lets"). **No letter-by-letter stacking**, and single-letter pieces are rare.
-- **Indents drift**: each line sits a little left or right of the one before, and 25% of the time snaps back near the margin, so the eye can follow it.
+- **Random indents** per line, as in the psychosis rooms: half land near the margin, half well across. Stepped syllable pieces are the exception — they step right from the line above.
 - Line-height 1.2; a blank line in the passage becomes a small 0.4em gap.
 - Links, charged words and other inline elements stay whole inside their chunk; dialogue stays whole on its own line. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
 
-**Intensity** `k` (0–1) = `0.35 + 0.07 × (rooms visited this run − 1) + 0.1 × CRBs visited`, capped at 1 (`chaosIntensity()`). The room counter `_roomsThisRun` counts each new passage once and resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
+**Intensity** `k` (0–1) = `0.45 + 0.07 × (rooms visited this run − 1) + 0.1 × CRBs visited`, capped at 1 (`chaosIntensity()`). The room counter `_roomsThisRun` counts each new passage once and resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
 
-| Setting | k = 0.35 (GP Reception) | k = 1 (≈ 10 rooms in, sooner with CRBs) |
+| Setting | k = 0.45 (GP Reception) | k = 1 (≈ 9 rooms in, sooner with CRBs) |
 |---|---|---|
-| Words per line | 4–8 | 3–6 |
-| Word (4+ letters) broken at syllables | 6% (max 2 per room) | 18% (max 4) |
-| Indent drift range (desktop / phone) | up to 9vw / 4vw | up to 18vw / 7vw |
+| Words per line | 3–6 | 1–4 |
+| Word (4+ letters) broken at syllables | 14% (max 4 per room) | 32% (max 7) |
+| Random indent range (desktop / phone) | up to 14vw / 5vw | up to 24vw / 8vw |
 
-History: the first version (7 Oct) stacked single letters one per line and jumped indents randomly; it read worse than the psychosis rooms, so it was rewritten as above.
+History (7 Oct): v1 stacked single letters one per line — close to the intended look but too many lone letters. v2 swapped in syllable breaks but also toned everything down (3–6 words, drifting indents) and looked like the original layout again. v3 (current) = v1's strength with syllable breaks instead of letter stacks.
 
 **Fit safety:** after building, if the room is too tall (desktop: taller than 88% of the screen; phones: more than 25% over its box, which `fitPassageToScreen()` then shrinks), it rebuilds with `k` lowered by 0.25, up to 4 times. The existing pull-up and phone shrink-to-fit then run as normal.
 

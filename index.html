@@ -2541,9 +2541,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   /* ── CHAOS LAYOUT (normal rooms, in testing) ──────────────────────────
      Cummings-style layout for normal rooms: text is broken into short word
      chunks, some words break at syllables into 2–3 letter pieces (kept on
-     the same line with a gap, or stepped down-and-right), and indents drift
-     from line to line rather than jumping. Intensity (0–1) builds through the run:
-       0.35 at GP Reception, +0.07 per room visited, +0.1 per CRB visited
+     the same line with a gap, or stepped down-and-right), and each line gets
+     its own random indent. Intensity (0–1) builds through the run:
+       0.45 at GP Reception, +0.07 per room visited, +0.1 per CRB visited
      (?chaos=max forces 1 for testing).
      Links, dialogue and other elements are never split.
      Only active when CHAOS_LAYOUT_LIVE is true, or with ?chaos in the URL
@@ -2556,7 +2556,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var _roomsThisRun = 0;
   function chaosIntensity() {
     if (/[?&]chaos=max\b/.test(window.location.search)) return 1; // test link: full intensity from the start
-    return Math.min(1, 0.35 + 0.07 * Math.max(0, _roomsThisRun - 1) + 0.1 * _jsCrbCount);
+    return Math.min(1, 0.45 + 0.07 * Math.max(0, _roomsThisRun - 1) + 0.1 * _jsCrbCount);
   }
 
   // Splits a word at rough English syllable points (V-CV and VC-CV), cummings-style:
@@ -2592,22 +2592,21 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
 
   function buildChaosLines(container, nodes, k, mobile) {
     while (container.firstChild) container.removeChild(container.firstChild);
-    var chunkMin = Math.round(5 - 2 * k), chunkMax = Math.round(9 - 3 * k); // k0: 5–9 words, k1: 3–6 (like the psychosis rooms)
-    var splitChance = 0.18 * k;                                             // words of 4+ letters
-    var maxSplits = 1 + Math.round(3 * k), splits = 0;
-    var maxShift = mobile ? (2 + 5 * k) : (4 + 14 * k);                      // vw
+    var chunkMin = Math.round(4 - 3 * k), chunkMax = Math.round(8 - 4 * k); // k0: 4–8 words, k1: 1–4
+    var splitChance = 0.32 * k;                                             // words of 4+ letters
+    var maxSplits = 1 + Math.round(6 * k), splits = 0;
+    var maxShift = mobile ? (2 + 6 * k) : (6 + 18 * k);                      // vw
     var line = [], target = 0, wordsInLine = 0, brRun = 0;
     var indent = 0, pendingStair = false;
 
-    // Indents drift: each line sits a little left/right of the last, sometimes snapping
-    // back to the margin. A broken word's next line steps right (staircase).
+    // Indents: random per line, landing near the margin or well across (as in the psychosis
+    // rooms). A broken word's next line steps right from the last one instead (staircase).
     function nextIndent() {
       if (pendingStair) {
         indent = Math.min(maxShift, indent + (mobile ? (1 + Math.random() * 1.5) : (1.5 + Math.random() * 2.5)));
-      } else if (Math.random() < 0.25) {
-        indent = Math.random() * maxShift * 0.2;
       } else {
-        indent = Math.max(0, Math.min(maxShift, indent + (Math.random() - 0.5) * maxShift * 0.7));
+        indent = Math.random() < 0.5 ? Math.random() * maxShift * 0.22
+                                     : maxShift * 0.42 + Math.random() * maxShift * 0.58;
       }
       pendingStair = false;
       return indent;
