@@ -294,14 +294,14 @@ Skipped on: `[psychosis]`, `[titlescreen]`.
 ### Chaos layout (normal rooms — IN TESTING, off by default)
 A gentler version of the psychosis layout for normal rooms, replacing the patterned indents above with word-level fragmentation that **builds up through the run**. Off for normal visitors: it only runs with **`?chaos`** in the URL (test link, e.g. `ryu-ichii.github.io/pathologisation/?chaos`) or when `CHAOS_LAYOUT_LIVE = true` in Story JavaScript. With it off, rooms use the original layout randomiser above, unchanged.
 
-**Intensity** `k` (0–1) = `0.2 + 0.08 × (rooms visited this run − 1) + 0.12 × CRBs visited`, capped at 1 (`chaosIntensity()`). The room counter `_roomsThisRun` counts each new passage once, resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
+**Intensity** `k` (0–1) = `0.45 + 0.08 × (rooms visited this run − 1) + 0.12 × CRBs visited`, capped at 1 (`chaosIntensity()`). Started at 0.2 at first, but that looked almost identical to the original layout, so it was raised. **`?chaos=max`** forces k = 1 from the first room, for testing. The room counter `_roomsThisRun` counts each new passage once, resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
 
-| Setting | k = 0.2 (GP Reception) | k = 1 (late run) |
+| Setting | k = 0.45 (GP Reception) | k = 1 (≈ 8 rooms in, sooner with CRBs) |
 |---|---|---|
-| Words per line | 4–8 | 1–4 |
-| Short word (2–3 letters) letter-stacked | 6% (max 2 per room) | 30% (max 6) |
-| Long word (7+) broken mid-word | 4% | 22% |
-| Random shift per line (desktop / phone) | up to 10vw / 3vw | up to 26vw / 8vw |
+| Words per line | 3–7 | 1–4 |
+| Short word (2–3 letters) letter-stacked | 14% (max 3 per room) | 30% (max 6) |
+| Long word (7+) broken mid-word | 10% | 22% |
+| Random shift per line (desktop / phone) | up to 15vw / 5vw | up to 26vw / 8vw |
 
 At k = 1 it's a little tamer than the psychosis rooms (40% stacks, 28% breaks). Lines use line-height 1.2 (stacked letters 1.0); a blank line in the passage becomes a small 0.5em gap. Links, charged words and other inline elements stay whole inside their chunk; dialogue stays whole on its own line. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
 

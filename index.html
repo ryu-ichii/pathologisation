@@ -2543,7 +2543,8 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
      broken into small word chunks, short words sometimes stack letter by
      letter, long words sometimes break mid-word, and every line gets its
      own random shift. Intensity (0–1) builds through the run:
-       0.2 at GP Reception, +0.08 per room visited, +0.12 per CRB visited.
+       0.45 at GP Reception, +0.08 per room visited, +0.12 per CRB visited
+     (?chaos=max forces 1 for testing).
      Links, dialogue and other elements are never split.
      Only active when CHAOS_LAYOUT_LIVE is true, or with ?chaos in the URL
      (test link). Otherwise rooms use the original layout below.
@@ -2554,7 +2555,8 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   }
   var _roomsThisRun = 0;
   function chaosIntensity() {
-    return Math.min(1, 0.2 + 0.08 * Math.max(0, _roomsThisRun - 1) + 0.12 * _jsCrbCount);
+    if (/[?&]chaos=max\b/.test(window.location.search)) return 1; // test link: full intensity from the start
+    return Math.min(1, 0.45 + 0.08 * Math.max(0, _roomsThisRun - 1) + 0.12 * _jsCrbCount);
   }
 
   function buildChaosLines(container, nodes, k, mobile) {
