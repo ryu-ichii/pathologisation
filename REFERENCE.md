@@ -298,6 +298,7 @@ A cummings-style layout for normal rooms, replacing the patterned indents above.
 - Text is broken into chunks of whole words (1–8 per line).
 - Some words break at **syllables** into 2–3 letter pieces (`chaosSyllables()`: V-CV and VC-CV rules, silent final *e* kept attached, e.g. can|dy, lu|mi|nous, lo|co|mo|tive). A piece either stays on the same line with a wider gap ("can  dy") or steps down to the next line, nudged right (staircase: "ing / vi / o / lets"). **No letter-by-letter stacking**, and single-letter pieces are rare.
 - **Random indents** per line, as in the psychosis rooms: half land near the margin, half well across. Stepped syllable pieces are the exception — they step right from the line above.
+- **Desktop box is wider:** 76vw (normal layout: 52vw, max 800px) at left 3–14%, so its right edge is always ≤ 90vw. Indents are padding *inside* the box, so a long line wraps instead of running off the screen (moving lines with `left` is what pushed text off-screen in earlier attempts). Phones keep the 88vw box (§13).
 - Line-height 1.2; a blank line in the passage becomes a small 0.4em gap.
 - Links, charged words and other inline elements stay whole inside their chunk; dialogue stays whole on its own line. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
 
@@ -307,7 +308,7 @@ A cummings-style layout for normal rooms, replacing the patterned indents above.
 |---|---|---|
 | Words per line | 3–6 | 1–4 |
 | Word (4+ letters) broken at syllables | 20% (max 5 per room) | 45% (max 9) — fewer in practice, as some words have no syllable break |
-| Random indent range (desktop / phone) | up to 14vw / 5vw | up to 24vw / 8vw |
+| Random indent range (desktop / phone) | up to 23vw / 5vw | up to 44vw / 8vw |
 
 History (7 Oct): v1 stacked single letters one per line — close to the intended look but too many lone letters. v2 swapped in syllable breaks but also toned everything down (3–6 words, drifting indents) and looked like the original layout again. v3 (current) = v1's strength with syllable breaks instead of letter stacks.
 

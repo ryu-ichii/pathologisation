@@ -2595,7 +2595,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     var chunkMin = Math.round(4 - 3 * k), chunkMax = Math.round(8 - 4 * k); // k0: 4–8 words, k1: 1–4
     var splitChance = 0.45 * k;                                             // words of 4+ letters
     var maxSplits = 1 + Math.round(8 * k), splits = 0;
-    var maxShift = mobile ? (2 + 6 * k) : (6 + 18 * k);                      // vw
+    var maxShift = mobile ? (2 + 6 * k) : (6 + 38 * k);                      // vw (desktop box is 76vw wide)
     var line = [], target = 0, wordsInLine = 0, brRun = 0;
     var indent = 0, pendingStair = false;
 
@@ -2692,6 +2692,14 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     });
     var mobile = isMobile();
     var k = chaosIntensity();
+    if (!mobile) {
+      // Desktop: a wider box so the layout can use the screen's width. Lines are indented
+      // inside the box (padding), and the box's right edge stays within 90vw, so text wraps
+      // rather than ever running off the screen.
+      passage.style.width = '76vw';
+      passage.style.maxWidth = 'none';
+      passage.style.left = (3 + Math.random() * 11).toFixed(1) + '%';
+    }
     // Calm the layout down (in steps) if it would be too tall to fit the screen.
     // Phones allow a little extra because fitPassageToScreen() then shrinks the text.
     for (var tries = 0; tries < 5; tries++) {
