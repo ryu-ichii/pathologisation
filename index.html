@@ -2539,11 +2539,11 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   }
 
   /* ── CHAOS LAYOUT (normal rooms, in testing) ──────────────────────────
-     A gentler version of the psychosis layout for normal rooms: text is
-     broken into small word chunks, short words sometimes stack letter by
-     letter, long words sometimes break mid-word, and every line gets its
-     own random shift. Intensity (0–1) builds through the run:
-       0.45 at GP Reception, +0.08 per room visited, +0.12 per CRB visited
+     Cummings-style layout for normal rooms: text is broken into short word
+     chunks, some words break at syllables into 2–3 letter pieces (kept on
+     the same line with a gap, or stepped down-and-right), and indents drift
+     from line to line rather than jumping. Intensity (0–1) builds through the run:
+       0.35 at GP Reception, +0.07 per room visited, +0.1 per CRB visited
      (?chaos=max forces 1 for testing).
      Links, dialogue and other elements are never split.
      Only active when CHAOS_LAYOUT_LIVE is true, or with ?chaos in the URL
@@ -2556,42 +2556,83 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var _roomsThisRun = 0;
   function chaosIntensity() {
     if (/[?&]chaos=max\b/.test(window.location.search)) return 1; // test link: full intensity from the start
-    return Math.min(1, 0.45 + 0.08 * Math.max(0, _roomsThisRun - 1) + 0.12 * _jsCrbCount);
+    return Math.min(1, 0.35 + 0.07 * Math.max(0, _roomsThisRun - 1) + 0.1 * _jsCrbCount);
+  }
+
+  // Splits a word at rough English syllable points (V-CV and VC-CV), cummings-style:
+  // "candy" → can|dy, "luminous" → lu|mi|nous, "locomotive" → lo|co|mo|tive.
+  // Pieces are 2+ letters (a single letter survives only rarely), a silent final
+  // "e" stays attached, and some split points are randomly skipped for variety.
+  function chaosSyllables(word) {
+    var isV = function(ch, i) { return /[aeiou]/i.test(ch) || (/y/i.test(ch) && i > 0); };
+    var cuts = [];
+    for (var i = 1; i < word.length - 1; i++) {
+      if (!/[a-z]/i.test(word[i]) || !/[a-z]/i.test(word[i - 1])) continue;
+      var vBefore = isV(word[i - 1], i - 1), cHere = !isV(word[i], i);
+      if (vBefore && cHere && i + 1 < word.length && isV(word[i + 1], i + 1)) cuts.push(i);          // V-CV
+      else if (!isV(word[i - 1], i - 1) && i >= 2 && isV(word[i - 2], i - 2) && cHere &&
+               i + 1 < word.length && isV(word[i + 1], i + 1)) cuts.push(i);                         // VC-CV
+    }
+    cuts = cuts.filter(function() { return Math.random() < 0.75; });
+    var pieces = [], last = 0;
+    cuts.forEach(function(c) { pieces.push(word.substring(last, c)); last = c; });
+    pieces.push(word.substring(last));
+    // tidy: silent final e ("tive", "late") and too-short pieces merge into a neighbour
+    for (var j = pieces.length - 1; j > 0; j--) {
+      var letters = pieces[j].replace(/[^a-z]/gi, '');
+      if (letters.length < 2 || (letters.length === 2 && /e$/i.test(letters) && j === pieces.length - 1)) {
+        pieces[j - 1] += pieces[j]; pieces.splice(j, 1);
+      }
+    }
+    if (pieces.length > 1 && pieces[0].replace(/[^a-z]/gi, '').length < 2 && Math.random() < 0.85) {
+      pieces[1] = pieces[0] + pieces[1]; pieces.shift();  // single-letter first piece: rare
+    }
+    return pieces;
   }
 
   function buildChaosLines(container, nodes, k, mobile) {
     while (container.firstChild) container.removeChild(container.firstChild);
-    var chunkMin = Math.round(5 - 4 * k), chunkMax = Math.round(9 - 5 * k); // k0: 5–9 words, k1: 1–4
-    var stackChance = 0.3 * k, breakChance = 0.22 * k;
-    var maxStacks = 1 + Math.round(5 * k), stacks = 0;
-    var maxShift = mobile ? (2 + 6 * k) : (6 + 20 * k);                       // vw
-    var SHORT = /^[a-zA-Z]{2,3}$/;
+    var chunkMin = Math.round(5 - 2 * k), chunkMax = Math.round(9 - 3 * k); // k0: 5–9 words, k1: 3–6 (like the psychosis rooms)
+    var splitChance = 0.18 * k;                                             // words of 4+ letters
+    var maxSplits = 1 + Math.round(3 * k), splits = 0;
+    var maxShift = mobile ? (2 + 5 * k) : (4 + 14 * k);                      // vw
     var line = [], target = 0, wordsInLine = 0, brRun = 0;
+    var indent = 0, pendingStair = false;
 
-    function shift() {
-      return Math.random() < 0.5 ? Math.random() * maxShift * 0.22
-                                 : maxShift * 0.42 + Math.random() * maxShift * 0.58;
+    // Indents drift: each line sits a little left/right of the last, sometimes snapping
+    // back to the margin. A broken word's next line steps right (staircase).
+    function nextIndent() {
+      if (pendingStair) {
+        indent = Math.min(maxShift, indent + (mobile ? (1 + Math.random() * 1.5) : (1.5 + Math.random() * 2.5)));
+      } else if (Math.random() < 0.25) {
+        indent = Math.random() * maxShift * 0.2;
+      } else {
+        indent = Math.max(0, Math.min(maxShift, indent + (Math.random() - 0.5) * maxShift * 0.7));
+      }
+      pendingStair = false;
+      return indent;
     }
     function newTarget() { target = chunkMin + Math.floor(Math.random() * (chunkMax - chunkMin + 1)); }
-    function makeLine(parts, lh) {
-      var div = document.createElement('div');
-      div.className = 'layout-line';
-      div.style.cssText = 'display:block;margin:0;word-wrap:break-word;box-sizing:border-box;';
-      div.style.lineHeight = lh || '1.2';
-      div.style.paddingLeft = shift().toFixed(2) + 'vw';
-      parts.forEach(function(n, i) {
-        // no space before punctuation-only bits (e.g. the "?" after a link)
-        if (i > 0 && !(typeof n === 'string' && /^[^A-Za-z0-9]+$/.test(n))) div.appendChild(document.createTextNode(' '));
-        div.appendChild(typeof n === 'string' ? document.createTextNode(n) : n);
-      });
-      container.appendChild(div);
-    }
     function flush() {
-      if (line.length) makeLine(line);
+      if (line.length) {
+        var div = document.createElement('div');
+        div.className = 'layout-line';
+        div.style.cssText = 'display:block;margin:0;line-height:1.2;word-wrap:break-word;box-sizing:border-box;';
+        div.style.paddingLeft = nextIndent().toFixed(2) + 'vw';
+        line.forEach(function(u, i) {
+          // pieces of a broken word sit apart with a wider gap; no space before bare punctuation
+          if (i > 0) {
+            if (u.gap) div.appendChild(document.createTextNode(' '));
+            else if (!(typeof u.v === 'string' && /^[^A-Za-z0-9]+$/.test(u.v))) div.appendChild(document.createTextNode(' '));
+          }
+          div.appendChild(typeof u.v === 'string' ? document.createTextNode(u.v) : u.v);
+        });
+        container.appendChild(div);
+      }
       line = []; wordsInLine = 0; newTarget();
     }
-    function addUnit(u) {
-      line.push(u); wordsInLine++;
+    function addUnit(v, gap) {
+      line.push({ v: v, gap: !!gap }); wordsInLine++;
       if (wordsInLine >= target) flush();
     }
     newTarget();
@@ -2601,28 +2642,30 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         brRun++;
         flush();
         if (brRun === 2) { // blank line in the passage → small gap
-          var gap = document.createElement('div');
-          gap.style.cssText = 'display:block;height:0.5em;';
-          container.appendChild(gap);
+          var gapDiv = document.createElement('div');
+          gapDiv.style.cssText = 'display:block;height:0.4em;';
+          container.appendChild(gapDiv);
         }
         return;
       }
       brRun = 0;
       if (node.nodeType === 3) {
         node.textContent.split(/\s+/).filter(Boolean).forEach(function(word) {
-          var alpha = word.replace(/[^a-zA-Z]/g, '');
-          if (SHORT.test(alpha) && stacks < maxStacks && Math.random() < stackChance) {
-            stacks++;
-            flush();
-            Array.from(word).forEach(function(ch) { makeLine([ch], '1.0'); });
-          } else if (alpha.length >= 7 && Math.random() < breakChance) {
-            flush();
-            var at = 2 + Math.floor(Math.random() * Math.min(4, word.length - 3));
-            makeLine([word.substring(0, at)]);
-            makeLine([word.substring(at)]);
-          } else {
-            addUnit(word);
+          var pieces = null;
+          if (word.replace(/[^a-zA-Z]/g, '').length >= 4 && splits < maxSplits && Math.random() < splitChance) {
+            pieces = chaosSyllables(word);
           }
+          if (!pieces || pieces.length < 2) { addUnit(word); return; }
+          splits++;
+          pieces.forEach(function(piece, pi) {
+            if (pi === 0) { addUnit(piece); return; }
+            if (Math.random() < 0.5 && line.length) {
+              addUnit(piece, true);            // same line, with a gap: "can  dy  lu"
+            } else {
+              flush(); pendingStair = true;    // next line, stepped right: "ing / vi / o / lets"
+              addUnit(piece);
+            }
+          });
         });
         return;
       }
