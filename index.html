@@ -1340,8 +1340,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
      On entering a CRB, the final room or any other psychosis room, the
      background image is redrawn on a WebGL canvas (#bg-fx, just above
      #bg-layer, below the collage and text) and warped by one randomly
-     picked preset: 'intense' tier in CRBs and the final room, 'calm' tier
-     in other psychosis rooms. Each preset mixes a motion (swirl, melt,
+     picked preset: 'intense' tier in CRBs and the final room (which stays
+     strong), 'surreal' tier in other psychosis rooms (slower, never back to
+     the still image, stronger as the run goes on). Each preset mixes a motion (swirl, melt,
      kaleidoscope, zoom, jerky stepped time), a colour treatment (acid hue
      cycle, washed-out VHS, solarise, violet shift) and a texture (scan lines,
      VHS noise, chroma bleed, sparkles, posterise, cut-out tiling).
@@ -1354,25 +1355,29 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var BG_FX_PRESETS = [
     // swirl, melt, kal (segments, 0 = off), zoom, tile (cut-out grid, 0 = off), fps (0 = smooth,
     // else jerky stepped time), mode (colour: 0 none, 1 acid hue cycle, 2 VHS washed, 3 solarise,
-    // 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling),
+    // 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling, 7 warm 80s VHS),
+    // smear (tape ghost trail), wobble (VHS tracking),
     // strobe, post (posterise), scan, noise, chroma, sparkle, speed
     // intense — CRB rooms and the final room
     { tier: 'intense', name: 'vortex',  swirl: 1.0, melt: 0.3, zoom: 1.0, mode: 2, scan: 1.0, noise: 0.6, chroma: 1.0, speed: 1.0 },
     { tier: 'intense', name: 'kaleido', kal: 6, melt: 0.4, mode: 1, scan: 0.5, chroma: 0.8, speed: 0.7 },
     { tier: 'intense', name: 'solar',   melt: 0.5, swirl: 0.2, mode: 3, strobe: 1.0, noise: 0.5, scan: 1.0, chroma: 1.5, speed: 1.0 },
+    { tier: 'intense', name: 'tracking', melt: 0.6, swirl: 0.25, mode: 7, smear: 1.0, wobble: 1.0, chroma: 1.6, noise: 0.7, scan: 0.8, speed: 0.9 },
     { tier: 'intense', name: 'cutout',  tile: 3, post: 1.0, fps: 7, mode: 1, noise: 0.4, scan: 0.4, speed: 1.0, jerkCollage: true },
-    // calm — psychosis rooms
-    { tier: 'calm', name: 'liquid', melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.8 },
-    { tier: 'calm', name: 'drift',  melt: 0.6, swirl: 0.3, mode: 2, scan: 0.7, noise: 0.5, chroma: 0.5, speed: 0.4 },
-    { tier: 'calm', name: 'ripple', melt: 0.4, swirl: 0.15, mode: 5, scan: 0.5, noise: 0.3, speed: 0.5 },
-    { tier: 'calm', name: 'haze',   zoom: 0.6, melt: 0.25, mode: 2, chroma: 0.8, scan: 0.6, noise: 0.4, speed: 0.35 }
+    // surreal — other psychosis rooms: slower, still strange (strength builds through the run)
+    { tier: 'surreal', name: 'liquid',      melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.6 },
+    { tier: 'surreal', name: 'drift',       melt: 0.7, swirl: 0.35, mode: 2, scan: 0.7, noise: 0.5, chroma: 0.5, speed: 0.35 },
+    { tier: 'surreal', name: 'ripple',      melt: 0.5, swirl: 0.2, mode: 5, scan: 0.5, noise: 0.3, speed: 0.4 },
+    { tier: 'surreal', name: 'haze',        zoom: 0.8, melt: 0.35, mode: 6, chroma: 0.8, scan: 0.6, noise: 0.4, speed: 0.3 },
+    { tier: 'surreal', name: 'slowvortex',  swirl: 0.7, melt: 0.3, zoom: 0.5, mode: 5, scan: 0.6, noise: 0.4, chroma: 0.7, speed: 0.35 },
+    { tier: 'surreal', name: 'vhsfire',     melt: 0.8, swirl: 0.2, mode: 7, smear: 0.7, wobble: 0.4, chroma: 1.0, noise: 0.5, scan: 0.5, speed: 0.35 },
+    { tier: 'surreal', name: 'slowkaleido', kal: 6, melt: 0.3, mode: 4, scan: 0.4, chroma: 0.6, speed: 0.3 }
   ];
-  var BG_FX_CALM_COLOURS = [2, 4, 5]; // calm presets only swap to these softer colours
 
   var BG_FX_FRAG = [
     'precision mediump float;',
     'uniform sampler2D uTex; uniform vec2 uRes; uniform vec2 uImg;',
-    'uniform float uT, uAmt, uSwirl, uMelt, uKal, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle;',
+    'uniform float uT, uAmt, uSwirl, uMelt, uKal, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle, uSmear, uWobble;',
     'varying vec2 vUv;',
     'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);',
@@ -1397,7 +1402,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '    st = fract(g) + (vec2(h(id + floor(uT*4.0)), h(id.yx + floor(uT*4.0) + 3.1)) - 0.5)*0.18*a; }',
     '  st = 1.0 - abs(mod(st, 2.0) - 1.0);',
     '  vec2 iu = cover(st); float ch = uChroma*a*0.006;',
+    '  if (uWobble > 0.0) {',  // VHS tracking: gentle per-row wave + the odd band jumping sideways
+    '    float band = step(0.982, h(vec2(floor(vUv.y*48.0), floor(uT*5.0))));',
+    '    iu.x += uWobble*a*(sin(vUv.y*38.0 + uT*2.7)*0.0025 + band*0.035); }',
     '  vec3 c = vec3(texture2D(uTex, iu + vec2(ch, 0.0)).r, texture2D(uTex, iu).g, texture2D(uTex, iu - vec2(ch, 0.0)).b);',
+    '  if (uSmear > 0.0) {',  // worn-tape ghost trail dragging to the right
+    '    vec3 g1 = texture2D(uTex, iu - vec2(0.012, 0.0)*uSmear*a).rgb, g2 = texture2D(uTex, iu - vec2(0.028, 0.0)*uSmear*a).rgb;',
+    '    c = (c + g1*0.6 + g2*0.35)/1.95; }',
     '  if (uMode == 1.0) c = mix(c, hue(c*1.35, uT*1.2), a);',
     '  else if (uMode == 2.0) { vec3 v = mix(vec3(dot(c, vec3(0.3, 0.59, 0.11))), c, 0.6)*1.15 + vec3(0.1, 0.07, 0.15); c = mix(c, v, a); }',
     '  else if (uMode == 3.0) { vec3 sc = 1.0 - abs(1.0 - c*2.4); sc = mix(vec3(dot(sc, vec3(0.33))), sc, 1.6); c = mix(c, clamp(sc, 0.0, 1.0), a); }',
@@ -1406,6 +1417,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '    c = mix(c, mix(vec3(0.22, 0.12, 0.45), vec3(0.92, 0.72, 0.28), smoothstep(0.15, 0.85, l)), a*0.9); }',
     '  else if (uMode == 6.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',
     '    vec3 pal = 0.5 + 0.5*cos(6.2831853*(vec3(0.0, 0.33, 0.67) + l*1.6 - uT*0.25)); c = mix(c, pal, a*0.85); }',
+    '  else if (uMode == 7.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',  // warm 80s VHS: burnt orange/red, crushed blacks
+    '    vec3 warm = mix(c*vec3(1.3, 0.75, 0.45), vec3(1.15, 0.5, 0.2)*l*1.5, 0.5); warm = max(warm - 0.05, 0.0)*1.15;',
+    '    c = mix(c, clamp(warm, 0.0, 1.0), a*0.9); }',
     '  if (uStrobe > 0.0) { float on = step(0.5, fract(uT*1.0))*uStrobe*a; c = mix(c, hue(c, 3.14159), on); }',
     '  if (uPost > 0.0) { float lv = mix(48.0, 4.0, uPost*a); c = floor(c*lv)/lv; }',
     '  if (uSparkle > 0.0) c += step(0.9975, h(floor(vUv*uRes/2.0) + floor(uT*8.0)))*uSparkle*a;',
@@ -1446,7 +1460,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       var loc = {};
-      ['uTex','uRes','uImg','uT','uAmt','uSwirl','uMelt','uKal','uZoom','uTile','uMode','uStrobe','uPost','uScan','uNoise','uChroma','uSparkle']
+      ['uTex','uRes','uImg','uT','uAmt','uSwirl','uMelt','uKal','uZoom','uTile','uMode','uStrobe','uPost','uScan','uNoise','uChroma','uSparkle','uSmear','uWobble']
         .forEach(function(u) { loc[u] = gl.getUniformLocation(prog, u); });
       var bg = document.getElementById('bg-layer');
       if (bg && bg.nextSibling) bg.parentNode.insertBefore(canvas, bg.nextSibling); else document.body.insertBefore(canvas, document.body.firstChild);
@@ -1475,7 +1489,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     if (fx.failed) return;
 
     // Pick a preset and vary its strengths a little (±30%) so no two entries match
-    var pool = BG_FX_PRESETS.filter(function(pr) { return pr.tier === tier; });
+    var pool = BG_FX_PRESETS.filter(function(pr) { return pr.tier === (tier === 'final' ? 'intense' : tier); });
     var base = pool[Math.floor(Math.random() * pool.length)];
     var P = {};
     Object.keys(base).forEach(function(k) {
@@ -1484,12 +1498,22 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     });
     if (P.kal) P.kal = [5, 6, 8][Math.floor(Math.random() * 3)];
     if (Math.random() < 0.5) { // colour mixed independently half the time
-      P.mode = tier === 'calm' ? BG_FX_CALM_COLOURS[Math.floor(Math.random() * BG_FX_CALM_COLOURS.length)]
-                               : 1 + Math.floor(Math.random() * 6);
+      P.mode = 1 + Math.floor(Math.random() * 7);
     }
-    var run = { P: P, stopped: false, raf: null, start: 0,
-                burst: 4000 + Math.random() * 3000,
-                settle: Math.random() < 0.5 ? 0 : (0.25 + Math.random() * 0.15) }; // 0 = back to still image
+    // Strength: CRBs burst at full and settle back to the still image or a low warp; the final
+    // room bursts at full and stays strong; psychosis rooms never go back to the still image,
+    // and their strength builds through the run with chaosIntensity() (0.45 → 1).
+    var peak = 1, settle;
+    if (tier === 'surreal') {
+      peak = 0.65 + 0.35 * chaosIntensity();
+      settle = peak * (0.55 + Math.random() * 0.15);
+    } else if (tier === 'final') {
+      settle = 0.5 + Math.random() * 0.2;
+    } else {
+      settle = Math.random() < 0.5 ? 0 : (0.25 + Math.random() * 0.15); // 0 = back to still image
+    }
+    var run = { P: P, stopped: false, raf: null, start: 0, peak: peak, settle: settle,
+                burst: 4000 + Math.random() * 3000 };
     _bgFxRun = run;
     window._bgFxPreset = base.name + ' / colour ' + P.mode; // handy when testing: which preset this entry got
 
@@ -1515,9 +1539,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         var ms = now - run.start;
         // envelope: 0.6s ramp up → burst → 2s ease to the settle level
         var amt;
-        if (ms < 600) amt = ms / 600;
-        else if (ms < run.burst) amt = 1;
-        else if (ms < run.burst + 2000) { var e = (ms - run.burst) / 2000; amt = 1 + (run.settle - 1) * (e * e * (3 - 2 * e)); }
+        if (ms < 600) amt = run.peak * ms / 600;
+        else if (ms < run.burst) amt = run.peak;
+        else if (ms < run.burst + 2000) { var e = (ms - run.burst) / 2000; amt = run.peak + (run.settle - run.peak) * (e * e * (3 - 2 * e)); }
         else amt = run.settle;
         if (amt <= 0.001 && ms > run.burst) {
           fx.canvas.style.display = 'none'; // settled back to the still background
@@ -1538,6 +1562,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         gl.uniform1f(L.uStrobe, P.strobe || 0); gl.uniform1f(L.uPost, P.post || 0);
         gl.uniform1f(L.uScan, P.scan || 0);   gl.uniform1f(L.uNoise, P.noise || 0);
         gl.uniform1f(L.uChroma, P.chroma || 0); gl.uniform1f(L.uSparkle, P.sparkle || 0);
+        gl.uniform1f(L.uSmear, P.smear || 0); gl.uniform1f(L.uWobble, P.wobble || 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         run.raf = requestAnimationFrame(frame);
       }
@@ -3023,8 +3048,9 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         if (tags.indexOf('waitingroom') !== -1) _jsCrbCount = 0;
         // Background FX: intense presets in CRBs and the final room, calm ones in other psychosis
         // rooms. Stops on every other navigation; a fresh random preset on each entry.
-        var _fxTier = (tags.indexOf('decor-crb') !== -1 || tags.indexOf('ending') !== -1) ? 'intense'
-                    : (tags.indexOf('psychosis') !== -1 ? 'calm' : null);
+        var _fxTier = tags.indexOf('ending') !== -1 ? 'final'
+                    : tags.indexOf('decor-crb') !== -1 ? 'intense'
+                    : (tags.indexOf('psychosis') !== -1 ? 'surreal' : null);
         if (_fxTier) {
           if (p !== _bgFxPassage) { _bgFxPassage = p; startBgFx(_fxTier); }
         } else { _bgFxPassage = null; stopBgFx(); }
