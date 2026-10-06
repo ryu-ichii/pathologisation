@@ -560,7 +560,7 @@ CRBs never link to each other directly — their exits go to Night Walk, Psych W
 | `slowsignal` | slower, softer signal tearing | near-black with red/magenta glow | sync lines, scan lines |
 | `oilshow` | liquid light show (oil projector): slow morphing colour blobs with soft glowing rims oozing over the image | (built-in violet/teal/magenta) | sparkles, light grain |
 
-Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling, 7 warm 80s VHS (burnt orange/red, crushed blacks). Half the time a preset swaps its default for a random colour mode (any of the seven). Every strength varies ±30% per entry, so no two entries match (`window._bgFxPreset` shows the pick, for testing).
+Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling, 7 warm 80s VHS (burnt orange/red, crushed blacks). Half the time a preset swaps its default for a random colour mode (any of the seven). Every strength varies ±30% per entry, so no two entries match.
 
 **Strength and envelope:** 0.6s ramp up → 4–7s burst → 2s ease to a settle level.
 - **CRB rooms:** burst at full strength, then settle to either 0 (back to the still image; canvas hides) or 25–40% (a low warp that stays).
