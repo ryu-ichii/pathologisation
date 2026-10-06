@@ -443,6 +443,18 @@ tw-story[tags~="psychosis"] tw-hook[name="smooth4"] {
   display: block;
   object-fit: contain;
 }
+/* CRB "cutout" FX preset: collage images jump about like paper cut-outs (stepped, no easing) */
+@keyframes crb-cutout-jerk {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  20%  { transform: translate(-3vw, 2vh) rotate(-4deg) scale(1.04); }
+  40%  { transform: translate(2vw, -3vh) rotate(3deg) scale(0.97); }
+  60%  { transform: translate(-1vw, -1vh) rotate(-2deg) scale(1.06) scaleX(-1); }
+  80%  { transform: translate(3vw, 1vh) rotate(5deg) scale(0.95); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+#bg-collage-layer.crb-cutout img { animation: crb-cutout-jerk 2.4s steps(1) infinite; }
+#bg-collage-layer.crb-cutout img:nth-child(2) { animation-duration: 1.9s; animation-direction: reverse; }
+#bg-collage-layer.crb-cutout img:nth-child(3) { animation-duration: 2.9s; }
 
 /* #floating-layer sits between #bg-layer (z:-1) and tw-passage (z:100) */
 #floating-layer {
@@ -1314,6 +1326,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     var els = [
       document.querySelector('tw-passage'),
       document.getElementById('bg-layer'),
+      document.getElementById('crb-fx'),
       _collageLayer
     ];
     els.forEach(function(el) {
@@ -1321,6 +1334,212 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       el.style.transition = 'opacity 2s ease';
       el.style.opacity = '0';
     });
+  }
+
+  /* ── CRB BACKGROUND FX (Liquid Television-style) ───────────────────────
+     On every CRB entry the background image is redrawn on a WebGL canvas
+     (#crb-fx, just above #bg-layer, below the collage and text) and warped
+     by one randomly picked preset. Each preset mixes a motion (swirl, melt,
+     kaleidoscope, zoom, jerky stepped time), a colour treatment (acid hue
+     cycle, washed-out VHS, solarise, violet shift) and a texture (scan lines,
+     VHS noise, chroma bleed, sparkles, posterise, cut-out tiling).
+     Envelope: ramps up, bursts for 4–7s, then either settles back to the
+     still image (canvas fades out) or eases down and stays as a low warp.
+     Skipped if WebGL is unavailable or the device asks for reduced motion.
+     Strobing stays at 2 flashes/s or less.
+     To add a preset: add an object to CRB_FX_PRESETS (fields below).
+     ────────────────────────────────────────────────────────────────────── */
+  var CRB_FX_PRESETS = [
+    // swirl, melt, kal (segments, 0 = off), zoom, tile (cut-out grid, 0 = off), fps (0 = smooth,
+    // else jerky stepped time), mode (colour: 0 none, 1 acid hue cycle, 2 VHS washed, 3 solarise,
+    // 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling),
+    // strobe, post (posterise), scan, noise, chroma, sparkle, speed
+    { name: 'vortex',  swirl: 1.0, melt: 0.3, zoom: 1.0, mode: 2, scan: 1.0, noise: 0.6, chroma: 1.0, speed: 1.0 },
+    { name: 'liquid',  melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.8 },
+    { name: 'kaleido', kal: 6, melt: 0.4, mode: 1, scan: 0.5, chroma: 0.8, speed: 0.7 },
+    { name: 'solar',   melt: 0.5, swirl: 0.2, mode: 3, strobe: 1.0, noise: 0.5, scan: 1.0, chroma: 1.5, speed: 1.0 },
+    { name: 'cutout',  tile: 3, post: 1.0, fps: 7, mode: 1, noise: 0.4, scan: 0.4, speed: 1.0, jerkCollage: true },
+    { name: 'drift',   melt: 0.6, swirl: 0.3, mode: 2, scan: 0.7, noise: 0.5, chroma: 0.5, speed: 0.4 }
+  ];
+
+  var CRB_FX_FRAG = [
+    'precision mediump float;',
+    'uniform sampler2D uTex; uniform vec2 uRes; uniform vec2 uImg;',
+    'uniform float uT, uAmt, uSwirl, uMelt, uKal, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle;',
+    'varying vec2 vUv;',
+    'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);',
+    '  return mix(mix(h(i), h(i+vec2(1.0,0.0)), f.x), mix(h(i+vec2(0.0,1.0)), h(i+vec2(1.0,1.0)), f.x), f.y); }',
+    'float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a*n(p); p *= 2.03; a *= 0.5; } return v; }',
+    'vec3 hue(vec3 c, float a){ vec3 k = vec3(0.57735); float ca = cos(a); return c*ca + cross(k, c)*sin(a) + k*dot(k, c)*(1.0-ca); }',
+    'vec2 cover(vec2 uv){ float rs = uRes.x/uRes.y, ri = uImg.x/uImg.y;',
+    '  vec2 s = rs > ri ? vec2(1.0, ri/rs) : vec2(rs/ri, 1.0); return (uv-0.5)*s + 0.5; }',
+    'void main(){',
+    '  float a = uAmt; float asp = uRes.x/uRes.y;',
+    '  vec2 p = vUv - 0.5; p.x *= asp;',
+    '  if (uKal > 0.0) { float r = length(p), th = atan(p.y, p.x) + uT*0.1; float seg = 6.2831853/uKal;',
+    '    th = mod(th, seg); th = abs(th - seg*0.5); p = mix(p, vec2(cos(th), sin(th))*r, a); }',
+    '  float r = length(p);',
+    '  float ang = uSwirl*a*(3.5*(1.0 - smoothstep(0.0, 0.9, r)) + uT*0.6);',
+    '  p = mat2(cos(ang), -sin(ang), sin(ang), cos(ang)) * p;',
+    '  p *= 1.0 - uZoom*a*0.3*(0.5 + 0.5*sin(uT*0.5));',
+    '  vec2 w = vec2(fbm(p*3.0 + uT*0.15), fbm(p*3.0 - uT*0.12 + 5.2)) - 0.5;',
+    '  p += w*uMelt*a*0.35;',
+    '  p.x /= asp; vec2 st = p + 0.5;',
+    '  if (uTile > 0.0) { float tl = mix(1.0, uTile, a); vec2 g = st*tl; vec2 id = floor(g);',
+    '    st = fract(g) + (vec2(h(id + floor(uT*4.0)), h(id.yx + floor(uT*4.0) + 3.1)) - 0.5)*0.18*a; }',
+    '  st = 1.0 - abs(mod(st, 2.0) - 1.0);',
+    '  vec2 iu = cover(st); float ch = uChroma*a*0.006;',
+    '  vec3 c = vec3(texture2D(uTex, iu + vec2(ch, 0.0)).r, texture2D(uTex, iu).g, texture2D(uTex, iu - vec2(ch, 0.0)).b);',
+    '  if (uMode == 1.0) c = mix(c, hue(c*1.35, uT*1.2), a);',
+    '  else if (uMode == 2.0) { vec3 v = mix(vec3(dot(c, vec3(0.3, 0.59, 0.11))), c, 0.6)*1.15 + vec3(0.1, 0.07, 0.15); c = mix(c, v, a); }',
+    '  else if (uMode == 3.0) { vec3 sc = 1.0 - abs(1.0 - c*2.4); sc = mix(vec3(dot(sc, vec3(0.33))), sc, 1.6); c = mix(c, clamp(sc, 0.0, 1.0), a); }',
+    '  else if (uMode == 4.0) c = mix(c, clamp(hue(c, 2.6)*vec3(0.75, 0.65, 1.3), 0.0, 1.0), a*0.85);',
+    '  else if (uMode == 5.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',
+    '    c = mix(c, mix(vec3(0.22, 0.12, 0.45), vec3(0.92, 0.72, 0.28), smoothstep(0.15, 0.85, l)), a*0.9); }',
+    '  else if (uMode == 6.0) { float l = dot(c, vec3(0.3, 0.59, 0.11));',
+    '    vec3 pal = 0.5 + 0.5*cos(6.2831853*(vec3(0.0, 0.33, 0.67) + l*1.6 - uT*0.25)); c = mix(c, pal, a*0.85); }',
+    '  if (uStrobe > 0.0) { float on = step(0.5, fract(uT*1.0))*uStrobe*a; c = mix(c, hue(c, 3.14159), on); }',
+    '  if (uPost > 0.0) { float lv = mix(48.0, 4.0, uPost*a); c = floor(c*lv)/lv; }',
+    '  if (uSparkle > 0.0) c += step(0.9975, h(floor(vUv*uRes/2.0) + floor(uT*8.0)))*uSparkle*a;',
+    '  c *= 1.0 - uScan*a*0.2*step(0.5, fract(vUv.y*uRes.y*0.5));',
+    '  c += (h(vUv*uRes + uT*60.0) - 0.5)*uNoise*a*0.12;',
+    '  gl_FragColor = vec4(c, 1.0);',
+    '}'
+  ].join('\n');
+
+  var _crbFx = null;   // { canvas, gl, prog, tex, loc } — one canvas/context, reused
+  var _crbFxRun = null; // current run state
+  function crbFxSetup() {
+    if (_crbFx) return _crbFx;
+    var canvas = document.createElement('canvas');
+    canvas.id = 'crb-fx';
+    canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;display:none;opacity:1;';
+    var gl = null;
+    try { gl = canvas.getContext('webgl', { premultipliedAlpha: false, preserveDrawingBuffer: false }) || canvas.getContext('experimental-webgl'); } catch (e) {}
+    if (!gl) { _crbFx = { failed: true }; return _crbFx; }
+    function sh(type, src) {
+      var o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o);
+      if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o));
+      return o;
+    }
+    try {
+      var prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec2 aP; varying vec2 vUv; void main(){ vUv = aP*0.5 + 0.5; vUv.y = 1.0 - vUv.y; gl_Position = vec4(aP, 0.0, 1.0); }'));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, CRB_FX_FRAG));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+      gl.useProgram(prog);
+      var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+      var aP = gl.getAttribLocation(prog, 'aP'); gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+      var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      var loc = {};
+      ['uTex','uRes','uImg','uT','uAmt','uSwirl','uMelt','uKal','uZoom','uTile','uMode','uStrobe','uPost','uScan','uNoise','uChroma','uSparkle']
+        .forEach(function(u) { loc[u] = gl.getUniformLocation(prog, u); });
+      var bg = document.getElementById('bg-layer');
+      if (bg && bg.nextSibling) bg.parentNode.insertBefore(canvas, bg.nextSibling); else document.body.insertBefore(canvas, document.body.firstChild);
+      _crbFx = { canvas: canvas, gl: gl, prog: prog, tex: tex, loc: loc };
+    } catch (e) {
+      console.error('[crb-fx]', e);
+      _crbFx = { failed: true };
+    }
+    return _crbFx;
+  }
+
+  function stopCrbFx() {
+    if (_crbFxRun) { _crbFxRun.stopped = true; if (_crbFxRun.raf) cancelAnimationFrame(_crbFxRun.raf); _crbFxRun = null; }
+    if (_crbFx && _crbFx.canvas) { _crbFx.canvas.style.display = 'none'; _crbFx.canvas.style.transition = ''; _crbFx.canvas.style.opacity = '1'; }
+    var cl = document.getElementById('bg-collage-layer');
+    if (cl) cl.classList.remove('crb-cutout');
+  }
+
+  function startCrbFx() {
+    stopCrbFx();
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bg = document.getElementById('bg-layer');
+    var m = bg && /url\(["']?([^"')]+)["']?\)/.exec(bg.style.backgroundImage || '');
+    if (!m) return;
+    var fx = crbFxSetup();
+    if (fx.failed) return;
+
+    // Pick a preset and vary its strengths a little (±30%) so no two entries match
+    var base = CRB_FX_PRESETS[Math.floor(Math.random() * CRB_FX_PRESETS.length)];
+    var P = {};
+    Object.keys(base).forEach(function(k) {
+      var v = base[k];
+      P[k] = (typeof v === 'number' && ['mode','kal','tile','fps'].indexOf(k) === -1) ? v * (0.7 + Math.random() * 0.6) : v;
+    });
+    if (P.kal) P.kal = [5, 6, 8][Math.floor(Math.random() * 3)];
+    if (Math.random() < 0.5) P.mode = 1 + Math.floor(Math.random() * 6); // colour mixed independently half the time
+    var run = { P: P, stopped: false, raf: null, start: 0,
+                burst: 4000 + Math.random() * 3000,
+                settle: Math.random() < 0.5 ? 0 : (0.25 + Math.random() * 0.15) }; // 0 = back to still image
+    _crbFxRun = run;
+    window._crbFxPreset = base.name + ' / colour ' + P.mode; // handy when testing: which preset this entry got
+
+    var img = new Image();
+    var isGif = /\.gif$/i.test(m[1]);
+    img.onload = function() {
+      if (run.stopped) return;
+      var gl = fx.gl;
+      var scale = (typeof isMobile === 'function' && isMobile()) ? 0.4 : 0.6; // low-res render: cheaper, and VHS-soft
+      fx.canvas.width = Math.max(2, Math.round(window.innerWidth * scale));
+      fx.canvas.height = Math.max(2, Math.round(window.innerHeight * scale));
+      gl.viewport(0, 0, fx.canvas.width, fx.canvas.height);
+      try {
+        gl.bindTexture(gl.TEXTURE_2D, fx.tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      } catch (e) { return; } // e.g. opened from file:// — leave the still image
+      fx.canvas.style.display = 'block';
+      run.start = performance.now();
+      var L = fx.loc;
+      function frame(now) {
+        if (run.stopped) return;
+        var t = (now - run.start) / 1000;
+        var ms = now - run.start;
+        // envelope: 0.6s ramp up → burst → 2s ease to the settle level
+        var amt;
+        if (ms < 600) amt = ms / 600;
+        else if (ms < run.burst) amt = 1;
+        else if (ms < run.burst + 2000) { var e = (ms - run.burst) / 2000; amt = 1 + (run.settle - 1) * (e * e * (3 - 2 * e)); }
+        else amt = run.settle;
+        if (amt <= 0.001 && ms > run.burst) {
+          fx.canvas.style.display = 'none'; // settled back to the still background
+          var cl0 = document.getElementById('bg-collage-layer'); if (cl0) cl0.classList.remove('crb-cutout');
+          return;
+        }
+        var tt = t * (P.speed || 1);
+        if (P.fps) tt = Math.floor(tt * P.fps) / P.fps; // jerky, stepped motion
+        if (isGif) { try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img); } catch (e2) {} }
+        gl.uniform1i(L.uTex, 0);
+        gl.uniform2f(L.uRes, fx.canvas.width, fx.canvas.height);
+        gl.uniform2f(L.uImg, img.naturalWidth || 1, img.naturalHeight || 1);
+        gl.uniform1f(L.uT, tt);
+        gl.uniform1f(L.uAmt, amt);
+        gl.uniform1f(L.uSwirl, P.swirl || 0); gl.uniform1f(L.uMelt, P.melt || 0);
+        gl.uniform1f(L.uKal, P.kal || 0);     gl.uniform1f(L.uZoom, P.zoom || 0);
+        gl.uniform1f(L.uTile, P.tile || 0);   gl.uniform1f(L.uMode, P.mode || 0);
+        gl.uniform1f(L.uStrobe, P.strobe || 0); gl.uniform1f(L.uPost, P.post || 0);
+        gl.uniform1f(L.uScan, P.scan || 0);   gl.uniform1f(L.uNoise, P.noise || 0);
+        gl.uniform1f(L.uChroma, P.chroma || 0); gl.uniform1f(L.uSparkle, P.sparkle || 0);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        run.raf = requestAnimationFrame(frame);
+      }
+      run.raf = requestAnimationFrame(frame);
+      if (P.jerkCollage) {
+        // cut-out preset: the collage images jump about too (the collage layer appears ~500ms in)
+        setTimeout(function() {
+          if (run.stopped) return;
+          var cl = document.getElementById('bg-collage-layer'); if (cl) cl.classList.add('crb-cutout');
+        }, 700);
+      }
+    };
+    img.src = m[1];
   }
 
   window._crbFinalTrigger = function() {
@@ -2714,6 +2933,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var _psychWardTimer = null;
   var _jsCrbCount = 0;
   var _lastCountedPassage = null;
+  var _crbFxPassage = null;
   var _crbEndTimer = null;
   // Track which links have been clicked so .visited can be re-applied after DOM replacement.
   // Keyed by room (tw-story tags) + link text, so clicking "escape" in one room doesn't
@@ -2790,6 +3010,10 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         // ── always run per-navigation ───────────────────────────────────
         // New run starts at GP Reception: reset the JS CRB counter to match $crbCount
         if (tags.indexOf('waitingroom') !== -1) _jsCrbCount = 0;
+        // CRB background FX: stop on every navigation, start a fresh random preset on each CRB entry
+        if (tags.indexOf('decor-crb') !== -1) {
+          if (p !== _crbFxPassage) { _crbFxPassage = p; startCrbFx(); }
+        } else { _crbFxPassage = null; stopCrbFx(); }
         // Rooms visited this run (drives the chaos layout's build-up). Counted once per new passage.
         if (p !== _lastCountedPassage) {
           _lastCountedPassage = p;
