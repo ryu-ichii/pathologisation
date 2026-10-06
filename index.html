@@ -1326,7 +1326,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     var els = [
       document.querySelector('tw-passage'),
       document.getElementById('bg-layer'),
-      document.getElementById('crb-fx'),
+      document.getElementById('bg-fx'),
       _collageLayer
     ];
     els.forEach(function(el) {
@@ -1336,10 +1336,12 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     });
   }
 
-  /* ── CRB BACKGROUND FX (Liquid Television-style) ───────────────────────
-     On every CRB entry the background image is redrawn on a WebGL canvas
-     (#crb-fx, just above #bg-layer, below the collage and text) and warped
-     by one randomly picked preset. Each preset mixes a motion (swirl, melt,
+  /* ── BACKGROUND FX (Liquid Television-style) ───────────────────────────
+     On entering a CRB, the final room or any other psychosis room, the
+     background image is redrawn on a WebGL canvas (#bg-fx, just above
+     #bg-layer, below the collage and text) and warped by one randomly
+     picked preset: 'intense' tier in CRBs and the final room, 'calm' tier
+     in other psychosis rooms. Each preset mixes a motion (swirl, melt,
      kaleidoscope, zoom, jerky stepped time), a colour treatment (acid hue
      cycle, washed-out VHS, solarise, violet shift) and a texture (scan lines,
      VHS noise, chroma bleed, sparkles, posterise, cut-out tiling).
@@ -1347,22 +1349,27 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
      still image (canvas fades out) or eases down and stays as a low warp.
      Skipped if WebGL is unavailable or the device asks for reduced motion.
      Strobing stays at 2 flashes/s or less.
-     To add a preset: add an object to CRB_FX_PRESETS (fields below).
+     To add a preset: add an object to BG_FX_PRESETS (fields below) with its tier.
      ────────────────────────────────────────────────────────────────────── */
-  var CRB_FX_PRESETS = [
+  var BG_FX_PRESETS = [
     // swirl, melt, kal (segments, 0 = off), zoom, tile (cut-out grid, 0 = off), fps (0 = smooth,
     // else jerky stepped time), mode (colour: 0 none, 1 acid hue cycle, 2 VHS washed, 3 solarise,
     // 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling),
     // strobe, post (posterise), scan, noise, chroma, sparkle, speed
-    { name: 'vortex',  swirl: 1.0, melt: 0.3, zoom: 1.0, mode: 2, scan: 1.0, noise: 0.6, chroma: 1.0, speed: 1.0 },
-    { name: 'liquid',  melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.8 },
-    { name: 'kaleido', kal: 6, melt: 0.4, mode: 1, scan: 0.5, chroma: 0.8, speed: 0.7 },
-    { name: 'solar',   melt: 0.5, swirl: 0.2, mode: 3, strobe: 1.0, noise: 0.5, scan: 1.0, chroma: 1.5, speed: 1.0 },
-    { name: 'cutout',  tile: 3, post: 1.0, fps: 7, mode: 1, noise: 0.4, scan: 0.4, speed: 1.0, jerkCollage: true },
-    { name: 'drift',   melt: 0.6, swirl: 0.3, mode: 2, scan: 0.7, noise: 0.5, chroma: 0.5, speed: 0.4 }
+    // intense — CRB rooms and the final room
+    { tier: 'intense', name: 'vortex',  swirl: 1.0, melt: 0.3, zoom: 1.0, mode: 2, scan: 1.0, noise: 0.6, chroma: 1.0, speed: 1.0 },
+    { tier: 'intense', name: 'kaleido', kal: 6, melt: 0.4, mode: 1, scan: 0.5, chroma: 0.8, speed: 0.7 },
+    { tier: 'intense', name: 'solar',   melt: 0.5, swirl: 0.2, mode: 3, strobe: 1.0, noise: 0.5, scan: 1.0, chroma: 1.5, speed: 1.0 },
+    { tier: 'intense', name: 'cutout',  tile: 3, post: 1.0, fps: 7, mode: 1, noise: 0.4, scan: 0.4, speed: 1.0, jerkCollage: true },
+    // calm — psychosis rooms
+    { tier: 'calm', name: 'liquid', melt: 1.0, mode: 4, sparkle: 1.0, chroma: 0.6, noise: 0.3, speed: 0.8 },
+    { tier: 'calm', name: 'drift',  melt: 0.6, swirl: 0.3, mode: 2, scan: 0.7, noise: 0.5, chroma: 0.5, speed: 0.4 },
+    { tier: 'calm', name: 'ripple', melt: 0.4, swirl: 0.15, mode: 5, scan: 0.5, noise: 0.3, speed: 0.5 },
+    { tier: 'calm', name: 'haze',   zoom: 0.6, melt: 0.25, mode: 2, chroma: 0.8, scan: 0.6, noise: 0.4, speed: 0.35 }
   ];
+  var BG_FX_CALM_COLOURS = [2, 4, 5]; // calm presets only swap to these softer colours
 
-  var CRB_FX_FRAG = [
+  var BG_FX_FRAG = [
     'precision mediump float;',
     'uniform sampler2D uTex; uniform vec2 uRes; uniform vec2 uImg;',
     'uniform float uT, uAmt, uSwirl, uMelt, uKal, uZoom, uTile, uMode, uStrobe, uPost, uScan, uNoise, uChroma, uSparkle;',
@@ -1408,16 +1415,16 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     '}'
   ].join('\n');
 
-  var _crbFx = null;   // { canvas, gl, prog, tex, loc } — one canvas/context, reused
-  var _crbFxRun = null; // current run state
-  function crbFxSetup() {
-    if (_crbFx) return _crbFx;
+  var _bgFx = null;   // { canvas, gl, prog, tex, loc } — one canvas/context, reused
+  var _bgFxRun = null; // current run state
+  function bgFxSetup() {
+    if (_bgFx) return _bgFx;
     var canvas = document.createElement('canvas');
-    canvas.id = 'crb-fx';
+    canvas.id = 'bg-fx';
     canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;display:none;opacity:1;';
     var gl = null;
     try { gl = canvas.getContext('webgl', { premultipliedAlpha: false, preserveDrawingBuffer: false }) || canvas.getContext('experimental-webgl'); } catch (e) {}
-    if (!gl) { _crbFx = { failed: true }; return _crbFx; }
+    if (!gl) { _bgFx = { failed: true }; return _bgFx; }
     function sh(type, src) {
       var o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o);
       if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o));
@@ -1426,7 +1433,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     try {
       var prog = gl.createProgram();
       gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec2 aP; varying vec2 vUv; void main(){ vUv = aP*0.5 + 0.5; vUv.y = 1.0 - vUv.y; gl_Position = vec4(aP, 0.0, 1.0); }'));
-      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, CRB_FX_FRAG));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, BG_FX_FRAG));
       gl.linkProgram(prog);
       if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
       gl.useProgram(prog);
@@ -1443,44 +1450,48 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         .forEach(function(u) { loc[u] = gl.getUniformLocation(prog, u); });
       var bg = document.getElementById('bg-layer');
       if (bg && bg.nextSibling) bg.parentNode.insertBefore(canvas, bg.nextSibling); else document.body.insertBefore(canvas, document.body.firstChild);
-      _crbFx = { canvas: canvas, gl: gl, prog: prog, tex: tex, loc: loc };
+      _bgFx = { canvas: canvas, gl: gl, prog: prog, tex: tex, loc: loc };
     } catch (e) {
-      console.error('[crb-fx]', e);
-      _crbFx = { failed: true };
+      console.error('[bg-fx]', e);
+      _bgFx = { failed: true };
     }
-    return _crbFx;
+    return _bgFx;
   }
 
-  function stopCrbFx() {
-    if (_crbFxRun) { _crbFxRun.stopped = true; if (_crbFxRun.raf) cancelAnimationFrame(_crbFxRun.raf); _crbFxRun = null; }
-    if (_crbFx && _crbFx.canvas) { _crbFx.canvas.style.display = 'none'; _crbFx.canvas.style.transition = ''; _crbFx.canvas.style.opacity = '1'; }
+  function stopBgFx() {
+    if (_bgFxRun) { _bgFxRun.stopped = true; if (_bgFxRun.raf) cancelAnimationFrame(_bgFxRun.raf); _bgFxRun = null; }
+    if (_bgFx && _bgFx.canvas) { _bgFx.canvas.style.display = 'none'; _bgFx.canvas.style.transition = ''; _bgFx.canvas.style.opacity = '1'; }
     var cl = document.getElementById('bg-collage-layer');
     if (cl) cl.classList.remove('crb-cutout');
   }
 
-  function startCrbFx() {
-    stopCrbFx();
+  function startBgFx(tier) {
+    stopBgFx();
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var bg = document.getElementById('bg-layer');
     var m = bg && /url\(["']?([^"')]+)["']?\)/.exec(bg.style.backgroundImage || '');
     if (!m) return;
-    var fx = crbFxSetup();
+    var fx = bgFxSetup();
     if (fx.failed) return;
 
     // Pick a preset and vary its strengths a little (±30%) so no two entries match
-    var base = CRB_FX_PRESETS[Math.floor(Math.random() * CRB_FX_PRESETS.length)];
+    var pool = BG_FX_PRESETS.filter(function(pr) { return pr.tier === tier; });
+    var base = pool[Math.floor(Math.random() * pool.length)];
     var P = {};
     Object.keys(base).forEach(function(k) {
       var v = base[k];
       P[k] = (typeof v === 'number' && ['mode','kal','tile','fps'].indexOf(k) === -1) ? v * (0.7 + Math.random() * 0.6) : v;
     });
     if (P.kal) P.kal = [5, 6, 8][Math.floor(Math.random() * 3)];
-    if (Math.random() < 0.5) P.mode = 1 + Math.floor(Math.random() * 6); // colour mixed independently half the time
+    if (Math.random() < 0.5) { // colour mixed independently half the time
+      P.mode = tier === 'calm' ? BG_FX_CALM_COLOURS[Math.floor(Math.random() * BG_FX_CALM_COLOURS.length)]
+                               : 1 + Math.floor(Math.random() * 6);
+    }
     var run = { P: P, stopped: false, raf: null, start: 0,
                 burst: 4000 + Math.random() * 3000,
                 settle: Math.random() < 0.5 ? 0 : (0.25 + Math.random() * 0.15) }; // 0 = back to still image
-    _crbFxRun = run;
-    window._crbFxPreset = base.name + ' / colour ' + P.mode; // handy when testing: which preset this entry got
+    _bgFxRun = run;
+    window._bgFxPreset = base.name + ' / colour ' + P.mode; // handy when testing: which preset this entry got
 
     var img = new Image();
     var isGif = /\.gif$/i.test(m[1]);
@@ -2933,7 +2944,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var _psychWardTimer = null;
   var _jsCrbCount = 0;
   var _lastCountedPassage = null;
-  var _crbFxPassage = null;
+  var _bgFxPassage = null;
   var _crbEndTimer = null;
   // Track which links have been clicked so .visited can be re-applied after DOM replacement.
   // Keyed by room (tw-story tags) + link text, so clicking "escape" in one room doesn't
@@ -3010,10 +3021,13 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         // ── always run per-navigation ───────────────────────────────────
         // New run starts at GP Reception: reset the JS CRB counter to match $crbCount
         if (tags.indexOf('waitingroom') !== -1) _jsCrbCount = 0;
-        // CRB background FX: stop on every navigation, start a fresh random preset on each CRB entry
-        if (tags.indexOf('decor-crb') !== -1) {
-          if (p !== _crbFxPassage) { _crbFxPassage = p; startCrbFx(); }
-        } else { _crbFxPassage = null; stopCrbFx(); }
+        // Background FX: intense presets in CRBs and the final room, calm ones in other psychosis
+        // rooms. Stops on every other navigation; a fresh random preset on each entry.
+        var _fxTier = (tags.indexOf('decor-crb') !== -1 || tags.indexOf('ending') !== -1) ? 'intense'
+                    : (tags.indexOf('psychosis') !== -1 ? 'calm' : null);
+        if (_fxTier) {
+          if (p !== _bgFxPassage) { _bgFxPassage = p; startBgFx(_fxTier); }
+        } else { _bgFxPassage = null; stopBgFx(); }
         // Rooms visited this run (drives the chaos layout's build-up). Counted once per new passage.
         if (p !== _lastCountedPassage) {
           _lastCountedPassage = p;

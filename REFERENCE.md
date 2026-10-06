@@ -531,22 +531,31 @@ Add or swap paths here to change CRB background options.
 
 CRBs never link to each other directly — their exits go to Night Walk, Psych Ward, Drugs, Theft Psychosis, Home or GP Office 2.
 
-**Background FX (Liquid Television-style):** on every CRB entry the background image (`crb1`–`crb4`) is redrawn on a WebGL canvas `#crb-fx` (just above `#bg-layer`, below the collage and text) and warped live by one randomly picked preset (`startCrbFx()`, called per navigation when the passage has `decor-crb`; `stopCrbFx()` on every other navigation). The text isn't affected. Works the same on desktop and phones (phones render at lower resolution).
+**Background FX (Liquid Television-style)** — also used outside the CRBs, documented here: on entering a CRB, the final room or any other psychosis room, the background image is redrawn on a WebGL canvas `#bg-fx` (just above `#bg-layer`, below the collage and text) and warped live by one randomly picked preset (`startBgFx(tier)`, called once per new passage; `stopBgFx()` on every other navigation). The text isn't affected. Rooms with no background image get no FX. Works the same on desktop and phones (phones render at lower resolution).
+
+**Intense tier — CRB rooms and the final room (GP Office Final Randomised):**
 
 | Preset | Motion | Colour (default) | Texture |
 |---|---|---|---|
 | `vortex` | twisting, spinning tunnel + zoom pulse | washed-out VHS | scan lines, grain, chroma bleed |
-| `liquid` | oozing melt | violet shift | sparkles, chroma bleed |
 | `kaleido` | 5/6/8-segment kaleidoscope, slow rotate | acid hue cycle | scan lines |
 | `solar` | melt + slight swirl | solarise, with a hue-flip flicker (≈1 per second) | grain, scan lines, chroma |
 | `cutout` | image tiled into a jerky stepped-time swarm (7 fps); collage images jump about (`.crb-cutout` CSS) | acid | posterised, grain |
+
+**Calm tier — other psychosis rooms (Park Psychosis, Exeloo Episode, Mirror, Phone/Theft Psychosis, Psych Ward Stay):**
+
+| Preset | Motion | Colour (default) | Texture |
+|---|---|---|---|
+| `liquid` | oozing melt | violet shift | sparkles, chroma bleed |
 | `drift` | slow dreamy melt + swirl | washed-out VHS | scan lines, grain |
+| `ripple` | slow melt, slight swirl | ochre/violet duotone | scan lines, light grain |
+| `haze` | slow zoom pulse + light melt | washed-out VHS | chroma bleed, scan lines |
 
-Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling. Half the time a preset swaps its default for a random colour mode, and every strength varies ±30% per entry, so no two entries match (`window._crbFxPreset` shows the pick, for testing).
+Colour modes: 1 acid hue cycle, 2 washed-out VHS, 3 solarise, 4 violet shift, 5 ochre/violet duotone, 6 neon false-colour palette cycling. Half the time a preset swaps its default for a random colour — any of the six for intense presets, only the softer 2/4/5 for calm ones (`BG_FX_CALM_COLOURS`). Every strength varies ±30% per entry, so no two entries match (`window._bgFxPreset` shows the pick, for testing).
 
-**Envelope:** 0.6s ramp up → 4–7s burst → 2s ease to the settle level, which is either 0 (back to the still image; canvas hides) or 25–40% (a low warp that stays for the rest of the room). The 3rd-CRB dissolve fades `#crb-fx` with the background.
+**Envelope:** 0.6s ramp up → 4–7s burst → 2s ease to the settle level, which is either 0 (back to the still image; canvas hides) or 25–40% (a low warp that stays for the rest of the room). The 3rd-CRB dissolve fades `#bg-fx` with the background.
 
-**Safety:** flicker stays at about 1 per second (well under the 3/s seizure guideline; covered by the content warning). Skipped if WebGL is unavailable, if the page is opened from `file://` (browser security blocks the texture — use Live Server), or if the device has *reduce motion* switched on — the still background shows instead. The shader is in `CRB_FX_FRAG`; **to add a preset**, add an object to `CRB_FX_PRESETS` (fields documented above it).
+**Safety:** flicker stays at about 1 per second (well under the 3/s seizure guideline; covered by the content warning). Skipped if WebGL is unavailable, if the page is opened from `file://` (browser security blocks the texture — use Live Server), or if the device has *reduce motion* switched on — the still background shows instead. The shader is in `BG_FX_FRAG`; **to add a preset**, add an object with its `tier` to `BG_FX_PRESETS` (fields documented above it).
 
 **Known navigation gotcha:** a Harlowe `(goto:)` fires while Harlowe is still rendering, so the JS passage observer can run before the CRB's content exists. Historically this caused the collage layer to cover the CRB text. `startBgCollage` is now deferred 500ms to allow for this. `Engine.goToPassage()` (JS) behaves like a normal link click and doesn't have the problem — which is why all CRB entries (via `_goToCRB`) and the ending trigger use it.
 
