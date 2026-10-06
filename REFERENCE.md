@@ -291,6 +291,24 @@ Within a word-group split, words of 2–3 letters have a **50% chance of being l
 
 Skipped on: `[psychosis]`, `[titlescreen]`.
 
+### Chaos layout (normal rooms — IN TESTING, off by default)
+A gentler version of the psychosis layout for normal rooms, replacing the patterned indents above with word-level fragmentation that **builds up through the run**. Off for normal visitors: it only runs with **`?chaos`** in the URL (test link, e.g. `ryu-ichii.github.io/pathologisation/?chaos`) or when `CHAOS_LAYOUT_LIVE = true` in Story JavaScript. With it off, rooms use the original layout randomiser above, unchanged.
+
+**Intensity** `k` (0–1) = `0.2 + 0.08 × (rooms visited this run − 1) + 0.12 × CRBs visited`, capped at 1 (`chaosIntensity()`). The room counter `_roomsThisRun` counts each new passage once, resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
+
+| Setting | k = 0.2 (GP Reception) | k = 1 (late run) |
+|---|---|---|
+| Words per line | 4–8 | 1–4 |
+| Short word (2–3 letters) letter-stacked | 6% (max 2 per room) | 30% (max 6) |
+| Long word (7+) broken mid-word | 4% | 22% |
+| Random shift per line (desktop / phone) | up to 10vw / 3vw | up to 26vw / 8vw |
+
+At k = 1 it's a little tamer than the psychosis rooms (40% stacks, 28% breaks). Lines use line-height 1.2 (stacked letters 1.0); a blank line in the passage becomes a small 0.5em gap. Links, charged words and other inline elements stay whole inside their chunk; dialogue stays whole on its own line. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
+
+**Fit safety:** after building, if the room is too tall (desktop: taller than 88% of the screen; phones: more than 25% over its box, which `fitPassageToScreen()` then shrinks), it rebuilds with `k` lowered by 0.25, up to 4 times. The existing pull-up and phone shrink-to-fit then run as normal.
+
+**To switch on for everyone:** set `CHAOS_LAYOUT_LIVE = true`. **To tune:** the numbers are in `buildChaosLines()` and `chaosIntensity()`.
+
 ### Psychosis layout (`[psychosis]` passages only)
 
 `applyPsychosisLayout()` behaves differently depending on whether the passage contains any smooth hooks.
@@ -310,6 +328,8 @@ Skipped on: `[psychosis]`, `[titlescreen]`.
 - **Short words (≤3 letters):** 40% chance of being letter-stacked (each letter its own line).
 - **Long words (≥7 letters):** 28% chance of a mid-word break 2–5 chars in.
 - **Normal words:** grouped into chunks of up to 4 per scatter div.
+
+**Desktop fit (all psychosis passages):** if the laid-out text is taller than 90% of the screen (e.g. Park Psychosis on a laptop), scatter lines tighten (line-height 1.0, stacked single letters 0.85), the passage is pulled up as before, and if it still runs off the bottom the text shrinks in 5% steps down to 75%. Rooms that already fit are untouched. Phones have their own sizing (§13).
 - Line height: `1.15` (tight, to prevent overflow).
 
 `hospitalward` (Psych Ward Stay) skips the fragment pool and the wander entirely. Navigating away cancels the reveal cleanly and removes all proxies/settle containers.

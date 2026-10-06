@@ -2266,12 +2266,33 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(_crbFit);
     }
 
+    // Desktop: if the scatter would run off the bottom (e.g. Park Psychosis on a laptop),
+    // first tighten the line spacing — stacked single letters most — keeping the formatting.
+    if (!isMobile()) {
+      void passage.offsetHeight;
+      if (passage.getBoundingClientRect().height > window.innerHeight * 0.9) {
+        scatterDivs.forEach(function(d) {
+          d.style.lineHeight = d.textContent.trim().length <= 1 ? '0.85' : '1.0';
+        });
+      }
+    }
+
     // Clamp passage to viewport — pull top up if scatter content overflows bottom edge
     void passage.offsetHeight;
     var rect = passage.getBoundingClientRect();
     if (rect.bottom > window.innerHeight - 60) {
       var newTopPx = Math.max(window.innerHeight * 0.02, rect.top - (rect.bottom - (window.innerHeight - 60)));
       passage.style.setProperty('top', (newTopPx / window.innerHeight * 100).toFixed(1) + 'vh', 'important');
+    }
+
+    // Desktop: still too tall after pulling it up → shrink the text in 5% steps (down to 75%).
+    if (!isMobile()) {
+      var _psBase = parseFloat(window.getComputedStyle(passage).fontSize) || 24;
+      var _psSize = 1, _psGuard = 0;
+      while (passage.getBoundingClientRect().bottom > window.innerHeight - 30 && _psSize > 0.75 && _psGuard++ < 6) {
+        _psSize = Math.round((_psSize - 0.05) * 100) / 100;
+        passage.style.setProperty('font-size', (_psBase * _psSize).toFixed(1) + 'px', 'important');
+      }
     }
 
     var SETTLE_DELAY = hasHooks ? (6000 + Math.floor(Math.random() * 4001)) : 5000;
@@ -2517,6 +2538,130 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     }
   }
 
+  /* ── CHAOS LAYOUT (normal rooms, in testing) ──────────────────────────
+     A gentler version of the psychosis layout for normal rooms: text is
+     broken into small word chunks, short words sometimes stack letter by
+     letter, long words sometimes break mid-word, and every line gets its
+     own random shift. Intensity (0–1) builds through the run:
+       0.2 at GP Reception, +0.08 per room visited, +0.12 per CRB visited.
+     Links, dialogue and other elements are never split.
+     Only active when CHAOS_LAYOUT_LIVE is true, or with ?chaos in the URL
+     (test link). Otherwise rooms use the original layout below.
+     ────────────────────────────────────────────────────────────────────── */
+  var CHAOS_LAYOUT_LIVE = false;
+  function chaosOn() {
+    return CHAOS_LAYOUT_LIVE || /[?&]chaos\b/.test(window.location.search);
+  }
+  var _roomsThisRun = 0;
+  function chaosIntensity() {
+    return Math.min(1, 0.2 + 0.08 * Math.max(0, _roomsThisRun - 1) + 0.12 * _jsCrbCount);
+  }
+
+  function buildChaosLines(container, nodes, k, mobile) {
+    while (container.firstChild) container.removeChild(container.firstChild);
+    var chunkMin = Math.round(5 - 4 * k), chunkMax = Math.round(9 - 5 * k); // k0: 5–9 words, k1: 1–4
+    var stackChance = 0.3 * k, breakChance = 0.22 * k;
+    var maxStacks = 1 + Math.round(5 * k), stacks = 0;
+    var maxShift = mobile ? (2 + 6 * k) : (6 + 20 * k);                       // vw
+    var SHORT = /^[a-zA-Z]{2,3}$/;
+    var line = [], target = 0, wordsInLine = 0, brRun = 0;
+
+    function shift() {
+      return Math.random() < 0.5 ? Math.random() * maxShift * 0.22
+                                 : maxShift * 0.42 + Math.random() * maxShift * 0.58;
+    }
+    function newTarget() { target = chunkMin + Math.floor(Math.random() * (chunkMax - chunkMin + 1)); }
+    function makeLine(parts, lh) {
+      var div = document.createElement('div');
+      div.className = 'layout-line';
+      div.style.cssText = 'display:block;margin:0;word-wrap:break-word;box-sizing:border-box;';
+      div.style.lineHeight = lh || '1.2';
+      div.style.paddingLeft = shift().toFixed(2) + 'vw';
+      parts.forEach(function(n, i) {
+        // no space before punctuation-only bits (e.g. the "?" after a link)
+        if (i > 0 && !(typeof n === 'string' && /^[^A-Za-z0-9]+$/.test(n))) div.appendChild(document.createTextNode(' '));
+        div.appendChild(typeof n === 'string' ? document.createTextNode(n) : n);
+      });
+      container.appendChild(div);
+    }
+    function flush() {
+      if (line.length) makeLine(line);
+      line = []; wordsInLine = 0; newTarget();
+    }
+    function addUnit(u) {
+      line.push(u); wordsInLine++;
+      if (wordsInLine >= target) flush();
+    }
+    newTarget();
+
+    nodes.forEach(function(node) {
+      if (node.nodeName === 'BR') {
+        brRun++;
+        flush();
+        if (brRun === 2) { // blank line in the passage → small gap
+          var gap = document.createElement('div');
+          gap.style.cssText = 'display:block;height:0.5em;';
+          container.appendChild(gap);
+        }
+        return;
+      }
+      brRun = 0;
+      if (node.nodeType === 3) {
+        node.textContent.split(/\s+/).filter(Boolean).forEach(function(word) {
+          var alpha = word.replace(/[^a-zA-Z]/g, '');
+          if (SHORT.test(alpha) && stacks < maxStacks && Math.random() < stackChance) {
+            stacks++;
+            flush();
+            Array.from(word).forEach(function(ch) { makeLine([ch], '1.0'); });
+          } else if (alpha.length >= 7 && Math.random() < breakChance) {
+            flush();
+            var at = 2 + Math.floor(Math.random() * Math.min(4, word.length - 3));
+            makeLine([word.substring(0, at)]);
+            makeLine([word.substring(at)]);
+          } else {
+            addUnit(word);
+          }
+        });
+        return;
+      }
+      if (node.nodeType === 1) {
+        if (node._chaosBlock) {
+          flush();
+          container.appendChild(node); // dialogue etc. stays whole, on its own
+        } else {
+          addUnit(node);               // links, charged words: kept whole, inline with the chunk
+        }
+      }
+    });
+    flush();
+  }
+
+  // Lays out a normal room in the chaos style. Returns false if it couldn't (no text).
+  function applyChaosLayout(passage, container, tags) {
+    var nodes = Array.from(container.childNodes);
+    if (!nodes.some(function(n) { return n.nodeType === 3 && n.textContent.trim(); })) return false;
+    // Decide which elements are blocks (dialogue etc.) while they're still in the page
+    nodes.forEach(function(n) {
+      if (n.nodeType !== 1) return;
+      var disp = window.getComputedStyle(n).display;
+      n._chaosBlock = disp === 'block' || disp === 'flex' || (n.classList && n.classList.contains('dialogue'));
+    });
+    var mobile = isMobile();
+    var k = chaosIntensity();
+    // Calm the layout down (in steps) if it would be too tall to fit the screen.
+    // Phones allow a little extra because fitPassageToScreen() then shrinks the text.
+    for (var tries = 0; tries < 5; tries++) {
+      buildChaosLines(container, nodes, k, mobile);
+      void passage.offsetHeight;
+      var tooTall = mobile
+        ? passage.scrollHeight > passage.clientHeight * 1.25
+        : passage.offsetHeight - 60 > window.innerHeight * 0.88;
+      if (!tooTall || k <= 0) break;
+      k = Math.max(0, k - 0.25);
+    }
+    return true;
+  }
+
   function applyLayout(passage, tags) {
     if (!passage) return;
     if (tags.indexOf('psychosis') !== -1 || tags.indexOf('titlescreen') !== -1) return;
@@ -2566,6 +2711,15 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         }
         return false;
       });
+    }
+
+    if (chaosOn() && applyChaosLayout(passage, container, tags)) {
+      var _cTopPx = parseFloat(passage.style.top) * (passage.style.top.indexOf('vh') !== -1 ? window.innerHeight / 100 : 1);
+      if (_cTopPx + passage.offsetHeight > window.innerHeight - 20) {
+        passage.style.top = Math.max(10, window.innerHeight - passage.offsetHeight - 60) + 'px';
+      }
+      if (isMobile()) fitPassageToScreen(passage);
+      return;
     }
 
     // Split container's direct children at <br> boundaries
@@ -2666,6 +2820,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   var _lastRunTags = null;
   var _psychWardTimer = null;
   var _jsCrbCount = 0;
+  var _lastCountedPassage = null;
   var _crbEndTimer = null;
   // Track which links have been clicked so .visited can be re-applied after DOM replacement.
   // Keyed by room (tw-story tags) + link text, so clicking "escape" in one room doesn't
@@ -2742,6 +2897,12 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
         // ── always run per-navigation ───────────────────────────────────
         // New run starts at GP Reception: reset the JS CRB counter to match $crbCount
         if (tags.indexOf('waitingroom') !== -1) _jsCrbCount = 0;
+        // Rooms visited this run (drives the chaos layout's build-up). Counted once per new passage.
+        if (p !== _lastCountedPassage) {
+          _lastCountedPassage = p;
+          if (tags.indexOf('titlescreen') !== -1 || tags.indexOf('waitingroom') !== -1) _roomsThisRun = 0;
+          if (tags.indexOf('titlescreen') === -1) _roomsThisRun++;
+        }
         markVisitedLinks();
         applyFontCombo(story, tags);
         applyLayout(p, tags);
