@@ -2059,12 +2059,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     story.classList.add(combo);
   }
 
-  /* ── LAYOUT RANDOMISER ─────────────────────────────────────────────────
-     Per-passage: picks a random indentation mode and positions the passage
-     centrally. Each line group (split at <br>) gets a paddingLeft indent.
-     Skipped for psychosis and titlescreen passages.
-     Modes: stagger · scatter · cascade · wave · reverse
-     ────────────────────────────────────────────────────────────────────── */
+  /* Normal-room layout: see CHAOS LAYOUT and applyLayout() further down. */
   /* ── PSYCHOSIS LAYOUT ──────────────────────────────────────────────────
      Runs on [psychosis] passages only. Works at word level:
      • Short words (≤3 letters): each letter becomes its own line
@@ -2423,7 +2418,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     });
   }
 
-  // scatter, jump weighted more heavily — these create the most visual variance
+  // Indent patterns for the psychosis settle lines (scatter, jump weighted more heavily)
   var LAYOUT_MODES = ['scatter', 'scatter', 'jump', 'jump', 'stagger', 'cascade', 'wave', 'reverse'];
 
   function layoutIndent(mode, lineIdx, total, maxIndent, staggerPool) {
@@ -2447,49 +2442,6 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       default:
         return Math.random() * maxIndent;
     }
-  }
-
-  // Split a group of nodes at sentence boundaries (. ! ?) within text nodes.
-  // Element nodes (tw-link etc.) stay attached to whichever sentence surrounds them.
-  function splitAtSentences(group) {
-    var subGroups = [[]];
-
-    group.forEach(function(node) {
-      if (node.nodeType !== 3) {
-        // Element node — append to current sentence fragment
-        subGroups[subGroups.length - 1].push(node);
-        return;
-      }
-      var text = node.textContent;
-      // Scan for sentence-end: punctuation followed by whitespace + next word
-      var re = /([.!?])\s+(?=\S)/g;
-      var parts = [];
-      var last = 0;
-      var m;
-      while ((m = re.exec(text)) !== null) {
-        parts.push(text.substring(last, m.index + 1)); // up to and including punctuation
-        last = m.index + m[0].length;                   // skip the gap
-      }
-      parts.push(text.substring(last));
-      parts = parts.filter(function(p) { return p.trim(); });
-
-      if (parts.length <= 1) {
-        subGroups[subGroups.length - 1].push(node);
-        return;
-      }
-      parts.forEach(function(part, i) {
-        var tn = document.createTextNode(i < parts.length - 1 ? part + ' ' : part);
-        subGroups[subGroups.length - 1].push(tn);
-        if (i < parts.length - 1) subGroups.push([]);
-      });
-    });
-
-    return subGroups.filter(function(sg) {
-      return sg.some(function(n) {
-        /* Keep subgroups with text content OR element nodes (e.g. image containers) */
-        return (n.textContent || '').trim() || n.nodeType === 1;
-      });
-    });
   }
 
   // Phones / narrow screens only. Every mobile tweak is gated on this, so desktop layout is untouched.
@@ -2538,24 +2490,16 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     }
   }
 
-  /* ── CHAOS LAYOUT (normal rooms, in testing) ──────────────────────────
+  /* ── CHAOS LAYOUT (normal rooms) ──────────────────────────────────────
      Cummings-style layout for normal rooms: text is broken into short word
      chunks, some words break at syllables into 2–3 letter pieces (kept on
      the same line with a gap, or stepped down-and-right), and each line gets
      its own random indent. Intensity (0–1) builds through the run:
-       0.45 at GP Reception, +0.07 per room visited, +0.1 per CRB visited
-     (?chaos=max forces 1 for testing).
+       0.45 at GP Reception, +0.07 per room visited, +0.1 per CRB visited.
      Links, dialogue and other elements are never split.
-     Only active when CHAOS_LAYOUT_LIVE is true, or with ?chaos in the URL
-     (test link). Otherwise rooms use the original layout below.
      ────────────────────────────────────────────────────────────────────── */
-  var CHAOS_LAYOUT_LIVE = false;
-  function chaosOn() {
-    return CHAOS_LAYOUT_LIVE || /[?&]chaos\b/.test(window.location.search);
-  }
   var _roomsThisRun = 0;
   function chaosIntensity() {
-    if (/[?&]chaos=max\b/.test(window.location.search)) return 1; // test link: full intensity from the start
     return Math.min(1, 0.45 + 0.07 * Math.max(0, _roomsThisRun - 1) + 0.1 * _jsCrbCount);
   }
 
@@ -2680,10 +2624,10 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
     flush();
   }
 
-  // Lays out a normal room in the chaos style. Returns false if it couldn't (no text).
+  // Lays out a normal room in the chaos style. Returns false if the room is empty.
   function applyChaosLayout(passage, container, tags) {
     var nodes = Array.from(container.childNodes);
-    if (!nodes.some(function(n) { return n.nodeType === 3 && n.textContent.trim(); })) return false;
+    if (!nodes.some(function(n) { return n.nodeName !== 'BR' && n.textContent.trim(); })) return false;
     // Decide which elements are blocks (dialogue etc.) while they're still in the page
     nodes.forEach(function(n) {
       if (n.nodeType !== 1) return;
@@ -2717,20 +2661,11 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   function applyLayout(passage, tags) {
     if (!passage) return;
     if (tags.indexOf('psychosis') !== -1 || tags.indexOf('titlescreen') !== -1) return;
-
-    var mode = LAYOUT_MODES[Math.floor(Math.random() * LAYOUT_MODES.length)];
     var isBreakdown = tags.indexOf('breakdownfont') !== -1;
-    var maxIndent = isBreakdown ? (2 + Math.random() * 5) : (4 + Math.random() * 10); // breakdown: 2–7vw, normal: 4–14vw
-    if (isMobile()) maxIndent = isBreakdown ? (1 + Math.random() * 2) : (2 + Math.random() * 4); // phones: 1–3vw / 2–6vw
-    var staggerPool = [0, 0.15, 0.35, 0.6, 0.8, 1.0].map(function(v) { return v * maxIndent; });
-    staggerPool.sort(function() { return Math.random() - 0.5; });
 
-    // Position passage on screen
+    // Position passage on screen (desktop width/left are set in applyChaosLayout)
     passage.style.position = 'fixed';
-    passage.style.width = '52vw';
-    passage.style.maxWidth = '800px';
     passage.style.top = (3 + Math.random() * (isBreakdown ? 12 : 42)) + 'vh';
-    passage.style.left = (5 + Math.random() * 18) + '%';
     passage.style.boxSizing = 'border-box';
     passage.style.overflow = isBreakdown ? 'visible' : 'hidden';
     if (isMobile()) {
@@ -2765,101 +2700,7 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
       });
     }
 
-    if (chaosOn() && applyChaosLayout(passage, container, tags)) {
-      var _cTopPx = parseFloat(passage.style.top) * (passage.style.top.indexOf('vh') !== -1 ? window.innerHeight / 100 : 1);
-      if (_cTopPx + passage.offsetHeight > window.innerHeight - 20) {
-        passage.style.top = Math.max(10, window.innerHeight - passage.offsetHeight - 60) + 'px';
-      }
-      if (isMobile()) fitPassageToScreen(passage);
-      return;
-    }
-
-    // Split container's direct children at <br> boundaries
-    var allNodes = Array.from(container.childNodes);
-    var groups = [[]];
-    allNodes.forEach(function(node) {
-      if (node.nodeName === 'BR') { groups.push([]); }
-      else { groups[groups.length - 1].push(node); }
-    });
-
-    // Further split each group at sentence boundaries → sentence-level fragments
-    var fragments = [];
-    groups.forEach(function(group) {
-      if (group.length === 0) {
-        fragments.push(null); // null = blank-line separator
-        return;
-      }
-      splitAtSentences(group).forEach(function(sg) { fragments.push(sg); });
-    });
-
-    var nonEmpty = fragments.filter(function(f) { return f !== null; }).length;
-    if (nonEmpty === 0) return;
-
-    // Rebuild container: each sentence fragment → block div with its own paddingLeft
-    while (container.firstChild) container.removeChild(container.firstChild);
-
-    var lineIdx = 0;
-    var stackCount = 0; /* max 2 vertical letter-stacks per passage */
-    fragments.forEach(function(fragment) {
-      if (fragment === null) {
-        container.appendChild(document.createElement('br'));
-        return;
-      }
-      var indent = layoutIndent(mode, lineIdx, nonEmpty, maxIndent, staggerPool);
-      lineIdx++;
-
-      // ~55% chance: split a pure-text fragment into word-group sub-lines
-      // Short words (≤3 letters) get a 50% chance to be letter-stacked vertically, max 2 stacks per passage
-      var hasElements = fragment.some(function(n) { return n.nodeType === 1; });
-      var fullText = fragment.map(function(n) { return n.textContent; }).join('').trim();
-      var words = fullText.split(/\s+/).filter(Boolean);
-      if (!hasElements && words.length >= 4 && Math.random() < 0.55) {
-        var numGroups = 2 + Math.floor(Math.random() * 2);
-        var targetSize = Math.ceil(words.length / numGroups);
-        var wi = 0;
-        while (wi < words.length) {
-          var subIndent = Math.max(0, Math.min(indent + (Math.random() - 0.35) * maxIndent * 0.5, maxIndent));
-          var word = words[wi];
-          var alpha = word.replace(/[^a-zA-Z]/g, '');
-          if (alpha.length >= 2 && alpha.length <= 3 && Math.random() < 0.5 && stackCount < 2) {
-            stackCount++;
-            // Stack short word vertically — slight random drift per letter
-            word.split('').forEach(function(letter) {
-              var ld = document.createElement('div');
-              ld.className = 'layout-line';
-              ld.style.cssText = 'display:block;line-height:inherit;margin:0;word-wrap:break-word;box-sizing:border-box;';
-              var drift = subIndent + (Math.random() - 0.5) * 2.5;
-              ld.style.paddingLeft = Math.max(0, drift).toFixed(2) + 'vw';
-              ld.appendChild(document.createTextNode(letter));
-              container.appendChild(ld);
-            });
-            wi++;
-          } else {
-            var end = Math.min(wi + targetSize, words.length);
-            var chunk = words.slice(wi, end).join(' ');
-            var subDiv = document.createElement('div');
-            subDiv.className = 'layout-line';
-            subDiv.style.cssText = 'display:block;line-height:inherit;margin:0;word-wrap:break-word;box-sizing:border-box;';
-            subDiv.style.paddingLeft = subIndent.toFixed(2) + 'vw';
-            subDiv.appendChild(document.createTextNode(chunk));
-            container.appendChild(subDiv);
-            wi = end;
-          }
-        }
-        return;
-      }
-
-      var div = document.createElement('div');
-      div.className = 'layout-line';
-      div.style.display = 'block';
-      div.style.lineHeight = 'inherit';
-      div.style.margin = '0';
-      div.style.wordWrap = 'break-word';
-      div.style.boxSizing = 'border-box';
-      div.style.paddingLeft = indent.toFixed(2) + 'vw';
-      fragment.forEach(function(n) { div.appendChild(n); });
-      container.appendChild(div);
-    });
+    if (!applyChaosLayout(passage, container, tags)) return;
 
     // Clamp top so content never overflows the viewport bottom
     var topPx = parseFloat(passage.style.top) * (passage.style.top.indexOf('vh') !== -1 ? window.innerHeight / 100 : 1);

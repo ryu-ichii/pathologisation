@@ -31,7 +31,7 @@ Add tags in the passage header: `:: Passage Name [tag1 tag2] {...}`
 | Tag | Effect | Currently used on |
 |-----|--------|------------------|
 | `titlescreen` | Title screen layout, no font combos, static background, special link styling. Has a `::before` black overlay at `rgba(0,0,0,0.4)` to dim the background without fully obscuring collage images. | Title Screen |
-| `breakdownfont` | `redaction-20` body at 1.1em, links `tt-hoves-pro` at 1em, random BD distress effect (tremor/blur/glitch), normal layout but with a smaller indent range (2–7vw) and top constrained to 3–15vh. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs, Smash Up, Abuse Witch |
+| `breakdownfont` | `redaction-20` body at 1.1em, links `tt-hoves-pro` at 1em, random BD distress effect (tremor/blur/glitch), normal (chaos) layout with top constrained to 3–15vh. Do not combine with `[psychosis]` — psychosis overrides all breakdownfont visuals. | Psych Ward, Train, Drugs, Smash Up, Abuse Witch |
 | `psychosis` | `redaction-50` body at `1.5rem !important`, chromatic aberration, cummings body layout, no font combos, no BD distress effects. Passages *with* smooth hooks get wandering smooth1–4 + smooth5 fake escape link; passages *without* hooks get the wide CRB-style layout (see §4). | With hooks: Park Psychosis, Exeloo Episode. Without hooks: Mirror, Phone Psychosis, Theft Psychosis, Psych Ward Stay, Complete Reality Breakdown 1–4. Also GP Office Final Randomised (with `ending`, see §9) |
 | `ending` | Combined with `psychosis`: replaces the passage with the JS ending scatter (§9) | GP Office Final Randomised |
 | `pinktexture` | `pinktexture.gif` background | GP Reflection |
@@ -262,45 +262,17 @@ Currently used in: Title Screen (Ryu Konrad name, ReadMe, Proof).
 
 ## 4. AUTOMATIC EFFECTS (always on, no configuration needed)
 
-### Layout randomiser
-Every non-psychosis, non-titlescreen passage gets a random indentation mode and a central screen position on each load. Fires on **every navigation** — the same passage looks different every visit.
+### Chaos layout (normal rooms)
+Every non-psychosis, non-titlescreen passage is laid out cummings-style on each load (`applyLayout()` → `applyChaosLayout()` → `buildChaosLines()`). Fires on **every navigation** — the same passage looks different every visit — and **builds up through the run**. It replaced the original layout randomiser (sentence lines with five indent patterns) on 7 Oct; the old code is in git history.
 
-**Position:** `position: fixed`, `width: 52vw` (max 800px), `top` 3–45vh (breakdownfont: 3–15vh), `left` 5–23%.
-
-**How fragments are made:**
-1. Content is split at `<br>` boundaries (paragraph-level)
-2. Each paragraph is further split at sentence boundaries (`. ` `! ` `? `) into sentence-level fragments
-3. Each fragment becomes a block `<div>` with `position: relative; left: Xvw`
-4. **55% chance:** a pure-text fragment (4+ words, no links) is further broken into word-group sub-lines, each with its own slightly varied indent (see letter-stacking below)
-5. Shifting with `left` (not `padding-left`) keeps every fragment at full width — no narrow columns
-
-**Indentation modes** (one picked at random, `scatter` and `jump` weighted 2×):
-
-| Mode | Pattern |
-|------|---------|
-| `scatter` | Two-cluster random — lines land near left edge or far right |
-| `jump` | Hard alternation: even lines left, odd lines far right |
-| `stagger` | Shuffled 6-step pool |
-| `cascade` | Steady left-to-right sweep |
-| `wave` | Sine-wave curve |
-| `reverse` | Right-to-left sweep |
-
-Max indent range: **4–14vw** (breakdownfont: 2–7vw), re-randomised each load. `tw-link` handlers survive because nodes are moved, not cloned. Dialogue blocks (`.dialogue`) are never split or indented.
-
-Within a word-group split, words of 2–3 letters have a **50% chance of being letter-stacked vertically** (each letter its own line), capped at **2 stacks per passage** to prevent layout overflow. Psychosis body text is unaffected — it has its own independent layout.
-
-Skipped on: `[psychosis]`, `[titlescreen]`.
-
-### Chaos layout (normal rooms — IN TESTING, off by default)
-A cummings-style layout for normal rooms, replacing the patterned indents above. It **builds up through the run**. Off for normal visitors: it only runs with **`?chaos`** in the URL (test link, e.g. `ryu-ichii.github.io/pathologisation/?chaos`) or when `CHAOS_LAYOUT_LIVE = true` in Story JavaScript. **`?chaos=max`** forces full intensity from the first room, for testing. With it off, rooms use the original layout randomiser above, unchanged.
+**Position:** `position: fixed`, `top` 3–45vh (breakdownfont: 3–15vh). **Desktop box:** 76vw wide at left 3–14%, so its right edge is always ≤ 90vw. Indents are padding *inside* the box, so a long line wraps instead of running off the screen (moving lines with `left` is what pushed text off-screen in earlier attempts). Phones: 88vw box (§13).
 
 **How it looks (modelled on cummings, and on how readable the no-hooks psychosis rooms are):**
 - Text is broken into chunks of whole words (1–8 per line).
 - Some words break at **syllables** into 2–3 letter pieces (`chaosSyllables()`: V-CV and VC-CV rules, silent final *e* kept attached, e.g. can|dy, lu|mi|nous, lo|co|mo|tive). A piece either stays on the same line with a wider gap ("can  dy") or steps down to the next line, nudged right (staircase: "ing / vi / o / lets"). **No letter-by-letter stacking**, and single-letter pieces are rare.
-- **Random indents** per line, as in the psychosis rooms: half land near the margin, half well across. Stepped syllable pieces are the exception — they step right from the line above.
-- **Desktop box is wider:** 76vw (normal layout: 52vw, max 800px) at left 3–14%, so its right edge is always ≤ 90vw. Indents are padding *inside* the box, so a long line wraps instead of running off the screen (moving lines with `left` is what pushed text off-screen in earlier attempts). Phones keep the 88vw box (§13).
+- **Random indents** per line, as in the psychosis rooms: half land near the margin, half well across. Stepped syllable pieces step right from the line above.
 - Line-height 1.2; a blank line in the passage becomes a small 0.4em gap.
-- Links, charged words and other inline elements stay whole inside their chunk; dialogue stays whole on its own line. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
+- Links, charged words and other inline elements stay whole inside their chunk; dialogue (`.dialogue`) stays whole on its own line. `tw-link` handlers survive because nodes are moved, not cloned. Font combos, the word-by-word fade-in and dialogue typewriter are unchanged.
 
 **Intensity** `k` (0–1) = `0.45 + 0.07 × (rooms visited this run − 1) + 0.1 × CRBs visited`, capped at 1 (`chaosIntensity()`). The room counter `_roomsThisRun` counts each new passage once and resets at the Title Screen and GP Reception (like `_jsCrbCount`). Breakdown rooms get no extra boost (they'll get their own FX later).
 
@@ -310,11 +282,13 @@ A cummings-style layout for normal rooms, replacing the patterned indents above.
 | Word (4+ letters) broken at syllables | 20% (max 5 per room) | 45% (max 9) — fewer in practice, as some words have no syllable break |
 | Random indent range (desktop / phone) | up to 23vw / 5vw | up to 44vw / 8vw |
 
-History (7 Oct): v1 stacked single letters one per line — close to the intended look but too many lone letters. v2 swapped in syllable breaks but also toned everything down (3–6 words, drifting indents) and looked like the original layout again. v3 (current) = v1's strength with syllable breaks instead of letter stacks.
+**Fit safety:** after building, if the room is too tall (desktop: taller than 88% of the screen; phones: more than 25% over its box, which `fitPassageToScreen()` then shrinks), it rebuilds with `k` lowered by 0.25, up to 4 times. The pull-up (top moved up if the passage would pass the bottom) and phone shrink-to-fit then run as normal.
 
-**Fit safety:** after building, if the room is too tall (desktop: taller than 88% of the screen; phones: more than 25% over its box, which `fitPassageToScreen()` then shrinks), it rebuilds with `k` lowered by 0.25, up to 4 times. The existing pull-up and phone shrink-to-fit then run as normal.
+**To tune:** the numbers are in `buildChaosLines()` and `chaosIntensity()`.
 
-**To switch on for everyone:** set `CHAOS_LAYOUT_LIVE = true`. **To tune:** the numbers are in `buildChaosLines()` and `chaosIntensity()`.
+History (7 Oct): v1 stacked single letters one per line — close to the intended look but too many lone letters. v2 swapped in syllable breaks but toned everything down and looked like the old layout again. v3 (current) = v1's strength with syllable breaks instead of letter stacks, plus the wider desktop box. Tested via a `?chaos` URL flag, removed once it went live.
+
+Skipped on: `[psychosis]`, `[titlescreen]`.
 
 ### Psychosis layout (`[psychosis]` passages only)
 
@@ -659,7 +633,7 @@ Create `:: My Passage decor [decor]` with the intrusion poem text.
 <a class="game-link" href="https://..." target="_blank">link text</a>
 ```
 
-**Layout randomiser — suppress for a passage (opt-out):**
+**Chaos layout — suppress for a passage (opt-out):**
 Add `psychosis` or `titlescreen` tag. No per-passage disable otherwise — it always runs on normal passages.
 
 ---
@@ -695,7 +669,7 @@ Nothing scrolls on phones — neither the page nor the text box (`overflow-y: hi
 
 | Area | Phone behaviour |
 |------|-----------------|
-| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9% of the visible screen, indents 2–6vw (breakdown 1–3vw), bottom edge at most 94% of the visible screen (max-height = `innerHeight × 0.94 − top`, in px). `fitPassageToScreen()` shrinks the text in 5% steps (down to 45% — lowered from 60% because long breakdown rooms like Train still cut off their links) until it fits; rooms that already fit are untouched. It re-checks when the passage's text changes, when web fonts finish loading, and at 0.3s / 1s / 2.5s — a room's web font (whichever random font combo it gets, from Adobe Fonts or the local fonts) can arrive after the first measurement and be larger than the stand-in font. It also sets the passage's line-height to unitless `1.5` on phones: Harlowe's own `line-height: 1.5em` is a fixed size taken from the story font, so shrunk text kept full-size line gaps (very wide spacing, and almost no height saved). Unitless 1.5 is identical at full size and shrinks with the text, re-checking as dialogue types in; no internal scroll |
+| Normal passages (`applyLayout`) | 88vw wide, left 6vw, top 3–9% of the visible screen, chaos-layout indents up to 5–8vw (§4), bottom edge at most 94% of the visible screen (max-height = `innerHeight × 0.94 − top`, in px). `fitPassageToScreen()` shrinks the text in 5% steps (down to 45% — lowered from 60% because long breakdown rooms like Train still cut off their links) until it fits; rooms that already fit are untouched. It re-checks when the passage's text changes, when web fonts finish loading, and at 0.3s / 1s / 2.5s — a room's web font (whichever random font combo it gets, from Adobe Fonts or the local fonts) can arrive after the first measurement and be larger than the stand-in font. It also sets the passage's line-height to unitless `1.5` on phones: Harlowe's own `line-height: 1.5em` is a fixed size taken from the story font, so shrunk text kept full-size line gaps (very wide spacing, and almost no height saved). Unitless 1.5 is identical at full size and shrinks with the text, re-checking as dialogue types in; no internal scroll |
 | Psychosis passages (`applyPsychosisLayout`) | 90vw wide, left 4vw, max-height 86% of the visible screen (px), no internal scroll, scatter 5vw (hooks) / 3–6vw (no hooks); body 1.15rem, smooth1–4 1.2rem, smooth5 1.6rem |
 | CRBs | 1rem text, 8–11 words per line, so the text fits without scrolling. The blank lines Harlowe leaves between the passage's `(set:)`/`(if:)` lines (bare `<br>` children of `tw-passage`) are hidden so they don't add height. Then the text (links included) shrinks in 5% steps down to 70% until everything fits (re-checked after fonts load and at 0.3s / 1s / 2.5s) — e.g. when the two links land on separate lines. The gap above the links is tighter on phones (hook 0.6–1.2em, each link 0.2–0.7em; desktop 1–2.2em / 0.3–1.5em) |
 | Wandering smooth1–4 fragments | 1.05rem (desktop 1.6rem), max 72vw wide, every position clamped (`fit()`) so the whole fragment stays on screen |
