@@ -306,7 +306,7 @@ A cummings-style layout for normal rooms, replacing the patterned indents above.
 | Setting | k = 0.45 (GP Reception) | k = 1 (≈ 9 rooms in, sooner with CRBs) |
 |---|---|---|
 | Words per line | 3–6 | 1–4 |
-| Word (4+ letters) broken at syllables | 14% (max 4 per room) | 32% (max 7) |
+| Word (4+ letters) broken at syllables | 20% (max 5 per room) | 45% (max 9) — fewer in practice, as some words have no syllable break |
 | Random indent range (desktop / phone) | up to 14vw / 5vw | up to 24vw / 8vw |
 
 History (7 Oct): v1 stacked single letters one per line — close to the intended look but too many lone letters. v2 swapped in syllable breaks but also toned everything down (3–6 words, drifting indents) and looked like the original layout again. v3 (current) = v1's strength with syllable breaks instead of letter stacks.

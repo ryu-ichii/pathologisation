@@ -2593,8 +2593,8 @@ window._toiletBgImg.src = './images/brokentoilet.jpg';
   function buildChaosLines(container, nodes, k, mobile) {
     while (container.firstChild) container.removeChild(container.firstChild);
     var chunkMin = Math.round(4 - 3 * k), chunkMax = Math.round(8 - 4 * k); // k0: 4–8 words, k1: 1–4
-    var splitChance = 0.32 * k;                                             // words of 4+ letters
-    var maxSplits = 1 + Math.round(6 * k), splits = 0;
+    var splitChance = 0.45 * k;                                             // words of 4+ letters
+    var maxSplits = 1 + Math.round(8 * k), splits = 0;
     var maxShift = mobile ? (2 + 6 * k) : (6 + 18 * k);                      // vw
     var line = [], target = 0, wordsInLine = 0, brRun = 0;
     var indent = 0, pendingStair = false;
